@@ -1,0 +1,64 @@
+name: ANTLR Grammar Lint
+
+on:
+  push:
+    paths:
+      - '**/*.g4'
+  pull_request:
+    paths:
+      - '**/*.g4'
+  workflow_dispatch:
+
+jobs:
+  lint-grammars:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        include:
+          - dialect: redshift
+            path: redshift
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      
+      - name: Install antlr-v4-linter
+        run: |
+          pip install antlr4-python3-runtime
+          pip install antlr-v4-linter
+      
+      - name: Lint ${{ matrix.dialect }} grammar files
+        run: |
+          echo "Linting ANTLR grammar files for ${{ matrix.dialect }}"
+          
+          # Find all .g4 files in the dialect directory
+          find ${{ matrix.path }} -name "*.g4" -type f | while read -r file; do
+            echo "Checking: $file"
+            antlr-v4-linter "$file" || exit_code=$?
+            
+            if [ "${exit_code:-0}" -ne 0 ]; then
+              echo "::error file=$file::ANTLR grammar linting failed"
+              exit 1
+            fi
+          done
+          
+          echo "✅ All grammar files for ${{ matrix.dialect }} passed linting"
+      
+      - name: Summary
+        if: always()
+        run: |
+          echo "## ANTLR Grammar Lint Results" >> $GITHUB_STEP_SUMMARY
+          echo "Dialect: **${{ matrix.dialect }}**" >> $GITHUB_STEP_SUMMARY
+          echo "Path: \`${{ matrix.path }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          echo "### Files checked:" >> $GITHUB_STEP_SUMMARY
+          find ${{ matrix.path }} -name "*.g4" -type f | while read -r file; do
+            echo "- \`$file\`" >> $GITHUB_STEP_SUMMARY
+          done
