@@ -90,17 +90,6 @@ jobs:
           go-version-file: go.mod
           cache-dependency-path: go.sum
 
-      - name: Build parser
-        working-directory: ${{ matrix.parser }}
-        run: |
-          # Generate parser code from ANTLR grammar if build script exists
-          if [ -f "build.sh" ]; then
-            chmod +x build.sh
-            ./build.sh
-          elif [ -f "Makefile" ] && grep -q "^build:" Makefile; then
-            make build
-          fi
-
       - name: Run all tests
         working-directory: ${{ matrix.parser }}
         run: go test -p=8 -timeout 30m -ldflags "-w -s" -v ./... | tee test.log; exit ${PIPESTATUS[0]}
