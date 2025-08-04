@@ -148,53 +148,47 @@ jobs:
             
             # Run linter and capture output
             output_file=$(mktemp)
-            if antlr-lint lint $verbose_opt $config_opt "$file" 2>&1 | tee "$output_file"; then
-              echo "✅ PASSED: No issues found"
-              passed_files=$((passed_files + 1))
-            else
+            antlr-lint lint $verbose_opt $config_opt "$file" 2>&1 | tee "$output_file"
+            
+            # Check if there are any errors or warnings in the output
+            if grep -E "ERROR|WARNING" "$output_file" > /dev/null; then
               echo "❌ FAILED: Issues detected"
               failed_files=$((failed_files + 1))
               
               # Parse the output for GitHub annotations
-              # Extract file path, line numbers, and messages for GitHub annotations
+              # Look for the table format with Location, Severity, Rule, and Message
               while IFS= read -r line; do
-                # Look for patterns like "filename:line:column: severity: message"
-                # or "filename:line: severity: message"
-                if echo "$line" | grep -E "^.*\.g4:[0-9]+:" > /dev/null; then
-                  # Extract components
-                  file_path=$(echo "$line" | cut -d: -f1)
-                  line_num=$(echo "$line" | cut -d: -f2)
+                # Look for lines with the format: │ 827:1    │  ERROR   │ S001 │ Message...
+                if echo "$line" | grep -E "^│ [0-9]+:[0-9]+" > /dev/null; then
+                  # Extract location (line:column)
+                  location=$(echo "$line" | sed -n 's/^│ *\([0-9]*:[0-9]*\).*/\1/p' | tr -d ' ')
+                  line_num=$(echo "$location" | cut -d: -f1)
+                  col_num=$(echo "$location" | cut -d: -f2)
                   
-                  # Check if there's a column number
-                  if echo "$line" | cut -d: -f3 | grep -E "^[0-9]+$" > /dev/null; then
-                    col_num=$(echo "$line" | cut -d: -f3)
-                    rest=$(echo "$line" | cut -d: -f4-)
-                  else
-                    col_num=""
-                    rest=$(echo "$line" | cut -d: -f3-)
-                  fi
-                  
-                  # Determine severity and message
-                  if echo "$rest" | grep -i "error" > /dev/null; then
+                  # Extract severity
+                  if echo "$line" | grep -i "ERROR" > /dev/null; then
                     severity="error"
-                    message=$(echo "$rest" | sed 's/^ *error: *//')
-                  elif echo "$rest" | grep -i "warning" > /dev/null; then
+                  elif echo "$line" | grep -i "WARNING" > /dev/null; then
                     severity="warning"
-                    message=$(echo "$rest" | sed 's/^ *warning: *//')
                   else
                     severity="notice"
-                    message=$(echo "$rest" | sed 's/^ *//')
                   fi
                   
+                  # Extract rule code
+                  rule=$(echo "$line" | sed -n 's/.*│ *\([A-Z][0-9]*\) *│.*/\1/p')
+                  
+                  # Extract message - everything after the rule code
+                  message=$(echo "$line" | sed -n 's/.*│ [A-Z][0-9]* *│ *\(.*\) *│$/\1/p' | sed 's/ *$//')
+                  
                   # Output GitHub annotation
-                  if [ -n "$col_num" ]; then
-                    echo "::${severity} file=${file_path},line=${line_num},col=${col_num}::${message}"
+                  if [ -n "$col_num" ] && [ "$col_num" != "1" ]; then
+                    echo "::${severity} file=${file},line=${line_num},col=${col_num}::[$rule] ${message}"
                   else
-                    echo "::${severity} file=${file_path},line=${line_num}::${message}"
+                    echo "::${severity} file=${file},line=${line_num}::[$rule] ${message}"
                   fi
                   
                   # Store for summary
-                  echo "${severity}: ${file_path}:${line_num} - ${message}" >> "$issues_file"
+                  echo "${severity}: ${file}:${line_num} - [$rule] ${message}" >> "$issues_file"
                 fi
               done < "$output_file"
               
@@ -202,6 +196,9 @@ jobs:
               if ! grep -q "::" "$output_file"; then
                 echo "::error file=${file}::ANTLR grammar linting failed. Check the workflow logs for details."
               fi
+            else
+              echo "✅ PASSED: No issues found"
+              passed_files=$((passed_files + 1))
             fi
             
             rm -f "$output_file"
@@ -263,11 +260,12 @@ jobs:
           echo "|------|--------|" >> $GITHUB_STEP_SUMMARY
           
           for file in $(find ${{ matrix.path }} -name "*.g4" -type f | sort); do
-            # Check if this file had issues (simplified check)
-            if antlr-lint lint "$file" > /dev/null 2>&1; then
-              echo "| \`${file}\` | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
-            else
+            # Check if this file had issues
+            output=$(antlr-lint lint "$file" 2>&1)
+            if echo "$output" | grep -E "ERROR|WARNING" > /dev/null; then
               echo "| \`${file}\` | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "| \`${file}\` | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
             fi
           done
           
