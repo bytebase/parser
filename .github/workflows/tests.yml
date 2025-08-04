@@ -41,7 +41,9 @@ jobs:
           CHANGED_PARSERS=""
 
           for parser in $ALL_PARSERS; do
+            echo "Checking changes for parser: $parser"
             if echo "$CHANGED_FILES" | grep -q "^$parser/"; then
+            echo "True - $parser has changes."  
               if [ -z "$CHANGED_PARSERS" ]; then
                 CHANGED_PARSERS="\"$parser\""
               else
