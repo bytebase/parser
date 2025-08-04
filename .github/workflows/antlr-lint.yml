@@ -271,8 +271,8 @@ jobs:
           fi
           
           for file in $(find ${{ matrix.path }} -name "*.g4" -type f | sort); do
-            # Check if this file had issues
-            output=$(antlr-lint lint $config_opt "$file" 2>&1)
+            # Check if this file had issues (ignore exit code)
+            output=$(antlr-lint lint $config_opt "$file" 2>&1 || true)
             if echo "$output" | grep -E "ERROR|WARNING" > /dev/null; then
               echo "| \`${file}\` | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
             else
