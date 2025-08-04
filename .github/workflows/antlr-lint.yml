@@ -262,9 +262,17 @@ jobs:
           echo "| File | Status |" >> $GITHUB_STEP_SUMMARY
           echo "|------|--------|" >> $GITHUB_STEP_SUMMARY
           
+          # Get config file path from environment
+          config_opt=""
+          if [ -f "${{ matrix.path }}/antlr-lint.json" ]; then
+            config_opt="--config ${{ matrix.path }}/antlr-lint.json"
+          elif [ -f "antlr-lint.json" ]; then
+            config_opt="--config antlr-lint.json"
+          fi
+          
           for file in $(find ${{ matrix.path }} -name "*.g4" -type f | sort); do
             # Check if this file had issues
-            output=$(antlr-lint lint "$file" 2>&1)
+            output=$(antlr-lint lint $config_opt "$file" 2>&1)
             if echo "$output" | grep -E "ERROR|WARNING" > /dev/null; then
               echo "| \`${file}\` | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
             else
