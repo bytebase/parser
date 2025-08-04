@@ -57,7 +57,7 @@ jobs:
             echo "Checking: $file"
             
             # Run antlr-lint on the grammar file
-            if antlr-lint "$file"; then
+            if antlr-lint lint "$file"; then
               echo "✅ $file: Passed linting"
             else
               echo "❌ $file: Failed linting"
