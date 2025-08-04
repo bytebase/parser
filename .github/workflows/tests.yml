@@ -21,11 +21,13 @@ jobs:
         id: changed-files
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            echo "changed_files=$(git diff --name-only origin/${{ github.base_ref }}..HEAD | xargs)" >> $GITHUB_OUTPUT
-            echo "Debug: Changed files in PR: $(git diff --name-only origin/${{ github.base_ref }}..HEAD | xargs)"
+            echo "changed_files<<EOF" >> $GITHUB_OUTPUT
+            git diff --name-only origin/${{ github.base_ref }}..HEAD >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
           else
-            echo "changed_files=$(git diff --name-only HEAD~1..HEAD | xargs)" >> $GITHUB_OUTPUT
-            echo "Debug: Changed files in push: $(git diff --name-only HEAD~1..HEAD | xargs)"
+            echo "changed_files<<EOF" >> $GITHUB_OUTPUT
+            git diff --name-only HEAD~1..HEAD >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
           fi
 
       - name: Set matrix for changed parsers
@@ -37,13 +39,10 @@ jobs:
           # ALL_PARSERS="redshift mysql postgresql"
 
           CHANGED_FILES="${{ steps.changed-files.outputs.changed_files }}"
-          echo "Debug: Changed files: $CHANGED_FILES"
           CHANGED_PARSERS=""
 
           for parser in $ALL_PARSERS; do
-            echo "Checking changes for parser: $parser"
             if echo "$CHANGED_FILES" | grep -q "^$parser/"; then
-            echo "True - $parser has changes."  
               if [ -z "$CHANGED_PARSERS" ]; then
                 CHANGED_PARSERS="\"$parser\""
               else
