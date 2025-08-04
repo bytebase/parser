@@ -12,8 +12,11 @@ name: ANTLR Grammar Lint
 # - Token management best practices
 
 on:
-  # Trigger on push events that modify grammar files
+  # Trigger on push events that modify grammar files (only on main/master branch)
   push:
+    branches:
+      - main
+      - master
     paths:
       - '**/*.g4'
       - '.github/workflows/antlr-lint.yml'  # Re-run if workflow itself changes
