@@ -1,88 +1,276 @@
 name: ANTLR Grammar Lint
 
+# This workflow runs the antlr-v4-linter on all ANTLR grammar files (.g4)
+# to ensure they follow best practices and coding standards.
+#
+# The linter will check for:
+# - Naming conventions (rules, tokens, labels)
+# - Grammar complexity issues
+# - Documentation requirements
+# - Performance optimizations
+# - Syntax and structural problems
+# - Token management best practices
+
 on:
+  # Trigger on push events that modify grammar files
   push:
     paths:
       - '**/*.g4'
+      - '.github/workflows/antlr-lint.yml'  # Re-run if workflow itself changes
+  
+  # Trigger on pull requests that modify grammar files
   pull_request:
     paths:
       - '**/*.g4'
+      - '.github/workflows/antlr-lint.yml'
+  
+  # Allow manual triggering from Actions tab
   workflow_dispatch:
+    inputs:
+      verbose:
+        description: 'Enable verbose output'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
 
 jobs:
   lint-grammars:
+    name: Lint ANTLR Grammars
     runs-on: ubuntu-latest
     
+    # Define the dialects to check
+    # Add new dialects here as they are added to the repository
     strategy:
       matrix:
         include:
           - dialect: redshift
             path: redshift
+          # Future dialects can be added like:
+          # - dialect: postgres
+          #   path: postgres
+          # - dialect: mysql
+          #   path: mysql
     
     steps:
-      - name: Checkout parser repository
+      # Step 1: Checkout the parser repository containing grammar files
+      - name: 📥 Checkout parser repository
         uses: actions/checkout@v4
         with:
           path: parser
       
-      - name: Checkout antlr-v4-linter repository
+      # Step 2: Checkout the antlr-v4-linter tool repository
+      - name: 📥 Checkout antlr-v4-linter tool
         uses: actions/checkout@v4
         with:
           repository: bytebase/antlr-v4-linter
           path: antlr-v4-linter
       
-      - name: Set up Python
+      # Step 3: Set up Python environment
+      - name: 🐍 Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
+          cache: 'pip'
+          cache-dependency-path: 'antlr-v4-linter/pyproject.toml'
       
-      - name: Install antlr-v4-linter
+      # Step 4: Install the antlr-v4-linter tool
+      - name: 📦 Install antlr-v4-linter
         run: |
+          echo "Installing antlr-v4-linter and its dependencies..."
           cd antlr-v4-linter
+          
+          # Install in editable mode for development
           pip install -e .
-          # Verify installation
+          
+          # Verify installation was successful
+          echo "Verifying installation..."
           which antlr-lint
-          antlr-lint --version || true
+          antlr-lint --version || echo "Version command not available"
+          
+          # Show available commands
+          echo "Available commands:"
+          antlr-lint --help
       
-      - name: Lint ${{ matrix.dialect }} grammar files
+      # Step 5: Create or check for configuration file
+      - name: ⚙️ Setup linter configuration
         working-directory: parser
         run: |
-          echo "Linting ANTLR grammar files for ${{ matrix.dialect }}"
-          
-          # Track if any errors occurred
-          has_errors=false
-          
-          # Find all .g4 files in the dialect directory
-          for file in $(find ${{ matrix.path }} -name "*.g4" -type f); do
-            echo "Checking: $file"
-            
-            # Run antlr-lint on the grammar file
-            if antlr-lint lint "$file"; then
-              echo "✅ $file: Passed linting"
-            else
-              echo "❌ $file: Failed linting"
-              echo "::error file=$file::ANTLR grammar linting failed"
-              has_errors=true
-            fi
-          done
-          
-          if [ "$has_errors" = true ]; then
-            echo "❌ Grammar linting failed for ${{ matrix.dialect }}"
-            exit 1
+          # Check if a custom configuration exists for this dialect
+          if [ -f "${{ matrix.path }}/antlr-lint.json" ]; then
+            echo "✅ Found custom configuration for ${{ matrix.dialect }}"
+            echo "CONFIG_FILE=${{ matrix.path }}/antlr-lint.json" >> $GITHUB_ENV
+          elif [ -f "antlr-lint.json" ]; then
+            echo "✅ Found global configuration"
+            echo "CONFIG_FILE=antlr-lint.json" >> $GITHUB_ENV
           else
-            echo "✅ All grammar files for ${{ matrix.dialect }} passed linting"
+            echo "ℹ️ No configuration found, using defaults"
+            echo "CONFIG_FILE=" >> $GITHUB_ENV
           fi
       
-      - name: Summary
+      # Step 6: Run the linter on grammar files with detailed output
+      - name: 🔍 Lint ${{ matrix.dialect }} grammar files
+        working-directory: parser
+        run: |
+          echo "========================================="
+          echo "Linting ANTLR grammar files for: ${{ matrix.dialect }}"
+          echo "Path: ${{ matrix.path }}"
+          echo "========================================="
+          echo ""
+          
+          # Initialize counters
+          total_files=0
+          failed_files=0
+          passed_files=0
+          
+          # Create a temporary file to store all issues
+          issues_file=$(mktemp)
+          
+          # Process each .g4 file
+          for file in $(find ${{ matrix.path }} -name "*.g4" -type f | sort); do
+            total_files=$((total_files + 1))
+            echo "📄 Checking: $file"
+            echo "----------------------------------------"
+            
+            # Prepare config option if config file exists
+            config_opt=""
+            if [ -n "$CONFIG_FILE" ]; then
+              config_opt="--config $CONFIG_FILE"
+            fi
+            
+            # Add verbose flag if requested
+            verbose_opt=""
+            if [ "${{ github.event.inputs.verbose }}" = "true" ]; then
+              verbose_opt="--verbose"
+            fi
+            
+            # Run linter and capture output
+            output_file=$(mktemp)
+            if antlr-lint lint $verbose_opt $config_opt "$file" 2>&1 | tee "$output_file"; then
+              echo "✅ PASSED: No issues found"
+              passed_files=$((passed_files + 1))
+            else
+              echo "❌ FAILED: Issues detected"
+              failed_files=$((failed_files + 1))
+              
+              # Parse the output for GitHub annotations
+              # Extract file path, line numbers, and messages for GitHub annotations
+              while IFS= read -r line; do
+                # Look for patterns like "filename:line:column: severity: message"
+                # or "filename:line: severity: message"
+                if echo "$line" | grep -E "^.*\.g4:[0-9]+:" > /dev/null; then
+                  # Extract components
+                  file_path=$(echo "$line" | cut -d: -f1)
+                  line_num=$(echo "$line" | cut -d: -f2)
+                  
+                  # Check if there's a column number
+                  if echo "$line" | cut -d: -f3 | grep -E "^[0-9]+$" > /dev/null; then
+                    col_num=$(echo "$line" | cut -d: -f3)
+                    rest=$(echo "$line" | cut -d: -f4-)
+                  else
+                    col_num=""
+                    rest=$(echo "$line" | cut -d: -f3-)
+                  fi
+                  
+                  # Determine severity and message
+                  if echo "$rest" | grep -i "error" > /dev/null; then
+                    severity="error"
+                    message=$(echo "$rest" | sed 's/^ *error: *//')
+                  elif echo "$rest" | grep -i "warning" > /dev/null; then
+                    severity="warning"
+                    message=$(echo "$rest" | sed 's/^ *warning: *//')
+                  else
+                    severity="notice"
+                    message=$(echo "$rest" | sed 's/^ *//')
+                  fi
+                  
+                  # Output GitHub annotation
+                  if [ -n "$col_num" ]; then
+                    echo "::${severity} file=${file_path},line=${line_num},col=${col_num}::${message}"
+                  else
+                    echo "::${severity} file=${file_path},line=${line_num}::${message}"
+                  fi
+                  
+                  # Store for summary
+                  echo "${severity}: ${file_path}:${line_num} - ${message}" >> "$issues_file"
+                fi
+              done < "$output_file"
+              
+              # If no specific line annotations were found, create a general file-level annotation
+              if ! grep -q "::" "$output_file"; then
+                echo "::error file=${file}::ANTLR grammar linting failed. Check the workflow logs for details."
+              fi
+            fi
+            
+            rm -f "$output_file"
+            echo ""
+          done
+          
+          # Summary statistics
+          echo "========================================="
+          echo "📊 Linting Summary for ${{ matrix.dialect }}"
+          echo "========================================="
+          echo "Total files checked: ${total_files}"
+          echo "✅ Passed: ${passed_files}"
+          echo "❌ Failed: ${failed_files}"
+          echo ""
+          
+          # If there were failures, show a summary of issues
+          if [ $failed_files -gt 0 ]; then
+            echo "📋 Issues Summary:"
+            echo "----------------------------------------"
+            cat "$issues_file" | sort | uniq
+            echo ""
+            echo "❌ Grammar linting failed for ${{ matrix.dialect }}"
+            echo "Please fix the issues above and try again."
+            rm -f "$issues_file"
+            exit 1
+          else
+            echo "✅ All grammar files for ${{ matrix.dialect }} passed linting!"
+            rm -f "$issues_file"
+          fi
+      
+      # Step 7: Upload linter results as artifacts (useful for debugging)
+      - name: 📤 Upload linting results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: linting-results-${{ matrix.dialect }}
+          path: |
+            parser/${{ matrix.path }}/*.g4
+            parser/antlr-lint.json
+            parser/${{ matrix.path }}/antlr-lint.json
+          retention-days: 7
+      
+      # Step 8: Create job summary
+      - name: 📝 Create job summary
         if: always()
         working-directory: parser
         run: |
-          echo "## ANTLR Grammar Lint Results" >> $GITHUB_STEP_SUMMARY
-          echo "Dialect: **${{ matrix.dialect }}**" >> $GITHUB_STEP_SUMMARY
-          echo "Path: \`${{ matrix.path }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "# 🔍 ANTLR Grammar Lint Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
-          echo "### Files checked:" >> $GITHUB_STEP_SUMMARY
-          find ${{ matrix.path }} -name "*.g4" -type f | while read -r file; do
-            echo "- \`$file\`" >> $GITHUB_STEP_SUMMARY
+          echo "## Dialect: \`${{ matrix.dialect }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Path:** \`${{ matrix.path }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          echo "### 📄 Grammar Files Checked:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          echo "| File | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|--------|" >> $GITHUB_STEP_SUMMARY
+          
+          for file in $(find ${{ matrix.path }} -name "*.g4" -type f | sort); do
+            # Check if this file had issues (simplified check)
+            if antlr-lint lint "$file" > /dev/null 2>&1; then
+              echo "| \`${file}\` | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "| \`${file}\` | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
+            fi
           done
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "*Workflow run at: $(date -u '+%Y-%m-%d %H:%M:%S UTC')*" >> $GITHUB_STEP_SUMMARY
