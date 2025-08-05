@@ -6947,8 +6947,10 @@ plsql_unreserved_keyword
    | OUTER_P
    ;
 
+// sql_expression is not just an a_expr, but historically it can include just about anything that can follow SELECT.
+// https://github.com/postgres/postgres/blob/master/src/backend/parser/gram.y#L17607
 sql_expression
-   : opt_target_list? into_clause? from_clause? where_clause? group_clause? having_clause? window_clause?
+   : distinct_clause? opt_target_list from_clause? where_clause? group_clause? having_clause? window_clause? opt_sort_clause? opt_select_limit? opt_for_locking_clause?
    ;
 
 expr_until_then
