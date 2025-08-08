@@ -3288,12 +3288,12 @@ fromredshiftclause
 
 iamrolevalue
     : DEFAULT
-    | SESSION_TOKEN
+    | SESSION
     | sconst
     ;
 
 catalogrolevalue
-    : SESSION_TOKEN
+    : SESSION
     | sconst
     ;
 
@@ -5953,8 +5953,8 @@ unreserved_keyword
    | DEFINITION | DATASHARE | PUBLICACCESSIBLE | INCLUDENEW
    | IAM_ROLE | CATALOG_ROLE | CATALOG_ID | HIVE | METASTORE | URI
    | POSTGRES | MYSQL | SECRET_ARN | KINESIS | KAFKA | MSK
-   | AUTHENTICATION | AUTHENTICATION_ARN | SESSION_TOKEN | MTLS
-   | MASKING | RLS | IDENTITY | PROVIDER | PROTECTED
+   | AUTHENTICATION | AUTHENTICATION_ARN | SESSION | MTLS
+   | MASKING | RLS | IDENTITY_P | PROVIDER | PROTECTED
    | MODEL | TARGET | SAGEMAKER | AUTO | MODEL_TYPE | PROBLEM_TYPE
    | OBJECTIVE | PREPROCESSORS | HYPERPARAMETERS | XGBOOST | MLP
    | LINEAR_LEARNER | KMEANS | FORECAST | REGRESSION | BINARY_CLASSIFICATION
@@ -5979,7 +5979,7 @@ unreserved_keyword
    | ACCEPTINVCHARS | ACCEPTANYDATE | IGNOREHEADER | IGNOREBLANKLINES
    | COMPUPDATE | STATUPDATE | EXPLICIT_IDS | READRATIO | ROUNDEC
    | TRIMBLANKS | PRESET | ACCESS_KEY_ID | SECRET_ACCESS_KEY
-   | SESSION_TOKEN_KW | HEADER | SETTINGS | FUNCTION_NAME
+   | SESSION_TOKEN_KW | HEADER_P | SETTINGS | FUNCTION_NAME
    ;
 
 col_name_keyword
@@ -6947,8 +6947,10 @@ plsql_unreserved_keyword
    | OUTER_P
    ;
 
+// sql_expression is not just an a_expr, but historically it can include just about anything that can follow SELECT.
+// https://github.com/postgres/postgres/blob/master/src/backend/parser/gram.y#L17607
 sql_expression
-   : opt_target_list? into_clause? from_clause? where_clause? group_clause? having_clause? window_clause?
+   : distinct_clause? opt_target_list from_clause? where_clause? group_clause? having_clause? window_clause? opt_sort_clause? opt_select_limit? opt_for_locking_clause?
    ;
 
 expr_until_then
