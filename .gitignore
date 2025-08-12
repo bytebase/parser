@@ -34,3 +34,8 @@ go.work.sum
 # Plguin
 # Intellij ANTLR plugin
 **/gen/
+
+# ANTLR generated files
+**/*.interp
+**/*.tokens
+
