@@ -1,0 +1,102 @@
+{
+  "rules": {
+    "S001": {
+      "description": "Main parser rule should end with EOF token",
+      "enabled": true,
+      "severity": "error"
+    },
+    "S002": {
+      "description": "Duplicate rule definition",
+      "enabled": true,
+      "severity": "warning"
+    },
+    "S003": {
+      "description": "Invalid grammar declaration",
+      "enabled": true,
+      "severity": "error"
+    },
+    "N001": {
+      "description": "Parser rule should start with lowercase letter",
+      "enabled": true,
+      "severity": "error"
+    },
+    "N002": {
+      "description": "Lexer rule should start with uppercase letter",
+      "enabled": true,
+      "severity": "error"
+    },
+    "N003": {
+      "description": "Rule name doesn't follow camelCase/UPPER_CASE convention",
+      "enabled": true,
+      "severity": "warning"
+    },
+    "L001": {
+      "description": "Missing labels for alternatives in parser rules",
+      "enabled": true,
+      "severity": "warning"
+    },
+    "L002": {
+      "description": "Inconsistent label naming convention",
+      "enabled": true,
+      "severity": "info"
+    },
+    "L003": {
+      "description": "Duplicate label names within the same rule",
+      "enabled": true,
+      "severity": "warning"
+    },
+    "C001": {
+      "description": "Rule exceeds complexity thresholds",
+      "enabled": true,
+      "severity": "warning",
+      "thresholds": {
+        "maxAlternatives": 10,
+        "maxNestingDepth": 5,
+        "maxTokens": 50
+      }
+    },
+    "C002": {
+      "description": "Deeply nested rule structure",
+      "enabled": true,
+      "severity": "warning"
+    },
+    "C003": {
+      "description": "Very long rule definition (consider breaking it up)",
+      "enabled": true,
+      "severity": "info"
+    },
+    "T001": {
+      "description": "Overlapping token definitions",
+      "enabled": true,
+      "severity": "warning"
+    },
+    "T002": {
+      "description": "Unreachable token rule",
+      "enabled": true,
+      "severity": "warning"
+    },
+    "T003": {
+      "description": "Token defined but never used",
+      "enabled": true,
+      "severity": "info"
+    },
+    "E001": {
+      "description": "Missing error recovery strategy",
+      "enabled": false,
+      "severity": "info"
+    },
+    "E002": {
+      "description": "Potential ambiguity in grammar",
+      "enabled": true,
+      "severity": "warning"
+    }
+  },
+  "excludePatterns": [
+    "*.generated.g4",
+    "*Test*.g4",
+    "node_modules/**/*.g4",
+    "dist/**/*.g4",
+    "build/**/*.g4"
+  ],
+  "outputFormat": "text"
+}
