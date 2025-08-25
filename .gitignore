@@ -31,9 +31,11 @@ go.work.sum
 # Editor/IDE
 .idea/
 
-# Plguin
+# Plugin
 # Intellij ANTLR plugin
 **/gen/
+# VSCode ANTLR plugin
+**/.antlr/
 
 # ANTLR generated files
 **/*.interp
