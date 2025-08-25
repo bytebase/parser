@@ -41,3 +41,5 @@ go.work.sum
 **/*.interp
 **/*.tokens
 
+# node_modules
+**/node_modules/

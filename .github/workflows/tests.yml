@@ -102,13 +102,60 @@ jobs:
         # awk: accumulate sum by test time in seconds
         run: grep --color=never -e '--- PASS:' -e '--- FAIL:' test.log | sed 's/[:()]//g' | awk '{print $2,$3,$4}' | sort -t' ' -nk3 -r | awk '{sum += $3; print $1,$2,$3,sum"s"}'
 
+  antlr-grammar-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for grammar file changes
+        id: check-grammar-changes
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}..HEAD)
+          else
+            CHANGED_FILES=$(git diff --name-only HEAD~1..HEAD)
+          fi
+          
+          # Check if any .g4 files or tools/grammar/ files changed (Go target only)
+          if echo "$CHANGED_FILES" | grep -E '\.(g4)$|^tools/grammar/'; then
+            echo "grammar_changed=true" >> $GITHUB_OUTPUT
+            echo "Grammar files or tools/grammar/ changed, running Go ANTLR tests"
+          else
+            echo "grammar_changed=false" >> $GITHUB_OUTPUT
+            echo "No grammar file changes detected, skipping ANTLR tests"
+          fi
+
+      - uses: actions/setup-go@v5
+        if: steps.check-grammar-changes.outputs.grammar_changed == 'true'
+        with:
+          go-version-file: go.mod
+          cache-dependency-path: go.sum
+
+      - name: Run Go ANTLR grammar tests
+        if: steps.check-grammar-changes.outputs.grammar_changed == 'true'
+        working-directory: tools/grammar
+        run: go test -p=8 -timeout 30m -ldflags "-w -s" -v ./... | tee test.log; exit ${PIPESTATUS[0]}
+
+      - name: Pretty print grammar tests running time
+        if: steps.check-grammar-changes.outputs.grammar_changed == 'true'
+        working-directory: tools/grammar
+        # grep: filter out lines like "--- PASS: Test (15.04s)"
+        # sed: remove unnecessary characters
+        # awk: re-format lines to "PASS: Test (15.04s)"
+        # sort: cut into columns by delimiter ' ' (single space) and sort by column 3 (test time in seconds) as numeric type in reverse order (largest comes first)
+        # awk: accumulate sum by test time in seconds
+        run: grep --color=never -e '--- PASS:' -e '--- FAIL:' test.log | sed 's/[:()]//g' | awk '{print $2,$3,$4}' | sort -t' ' -nk3 -r | awk '{sum += $3; print $1,$2,$3,sum"s"}'
+
   all-tests-passed:
       runs-on: ubuntu-latest
-      # This job needs both detect-changes and go-tests
-      needs: [detect-changes, go-tests]
+      # This job needs detect-changes, go-tests, and antlr-grammar-tests
+      needs: [detect-changes, go-tests, antlr-grammar-tests]
       # This condition is key:
       # - Run if no files were changed (the 'go-tests' job was skipped).
       # - Or run if the 'go-tests' job (the whole matrix) succeeded.
+      # - And run if antlr-grammar-tests succeeded or was skipped.
       if: success() || needs.detect-changes.outputs.any_changed == 'false'
       steps:
         - name: Report overall status
