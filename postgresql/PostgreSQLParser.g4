@@ -4538,6 +4538,7 @@ builtin_function_name
    | DEGREES
    | DIV
    | EXP
+   | ENCODE
    | FACTORIAL
    | FLOOR
    | GCD
