@@ -292,9 +292,6 @@ type PostgreSQLParserListener interface {
 	// EnterColumnDef is called when entering the columnDef production.
 	EnterColumnDef(c *ColumnDefContext)
 
-	// EnterRs_colattributes is called when entering the rs_colattributes production.
-	EnterRs_colattributes(c *Rs_colattributesContext)
-
 	// EnterColumnOptions is called when entering the columnOptions production.
 	EnterColumnOptions(c *ColumnOptionsContext)
 
@@ -2757,9 +2754,6 @@ type PostgreSQLParserListener interface {
 
 	// ExitColumnDef is called when exiting the columnDef production.
 	ExitColumnDef(c *ColumnDefContext)
-
-	// ExitRs_colattributes is called when exiting the rs_colattributes production.
-	ExitRs_colattributes(c *Rs_colattributesContext)
 
 	// ExitColumnOptions is called when exiting the columnOptions production.
 	ExitColumnOptions(c *ColumnOptionsContext)

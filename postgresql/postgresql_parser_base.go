@@ -6,24 +6,15 @@ import (
 	"github.com/antlr4-go/antlr/v4"
 )
 
-type Engine int
-
-const (
-	EnginePostgreSQL Engine = iota
-	EngineRedshift
-)
-
 type PostgreSQLParserBase struct {
 	*antlr.BaseParser
 
-	Engine      Engine
 	parseErrors []*PostgreSQLParseError
 }
 
 func NewPostgreSQLParserBase(input antlr.TokenStream) *PostgreSQLParserBase {
 	return &PostgreSQLParserBase{
 		BaseParser: antlr.NewBaseParser(input),
-		Engine:     EnginePostgreSQL,
 	}
 }
 

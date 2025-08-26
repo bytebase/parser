@@ -292,9 +292,6 @@ type PostgreSQLParserVisitor interface {
 	// Visit a parse tree produced by PostgreSQLParser#columnDef.
 	VisitColumnDef(ctx *ColumnDefContext) interface{}
 
-	// Visit a parse tree produced by PostgreSQLParser#rs_colattributes.
-	VisitRs_colattributes(ctx *Rs_colattributesContext) interface{}
-
 	// Visit a parse tree produced by PostgreSQLParser#columnOptions.
 	VisitColumnOptions(ctx *ColumnOptionsContext) interface{}
 

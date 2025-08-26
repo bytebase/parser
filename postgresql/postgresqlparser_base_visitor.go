@@ -387,10 +387,6 @@ func (v *BasePostgreSQLParserVisitor) VisitColumnDef(ctx *ColumnDefContext) inte
 	return v.VisitChildren(ctx)
 }
 
-func (v *BasePostgreSQLParserVisitor) VisitRs_colattributes(ctx *Rs_colattributesContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BasePostgreSQLParserVisitor) VisitColumnOptions(ctx *ColumnOptionsContext) interface{} {
 	return v.VisitChildren(ctx)
 }
