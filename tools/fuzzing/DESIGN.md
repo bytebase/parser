@@ -2,229 +2,411 @@
 
 ## Overview
 
-A fuzzing tool that generates valid SQL inputs by analyzing ANTLR v4 grammar files, ensuring comprehensive parser testing with syntactically correct queries that can stress-test parsing performance and correctness.
+A simple fuzzing tool that generates SQL inputs from ANTLR grammar rules to test parser performance on specific constructs.
 
-## Goals
+## Core Problems & Solutions
 
-- **Valid Input Generation**: Generate syntactically correct SQL queries based on grammar rules
-- **Performance Testing**: Create complex queries to test parser performance limits  
-- **Coverage Maximization**: Exercise all grammar rules and edge cases
-- **Automated Testing**: Integrate with CI for continuous parser validation
+### 1. Target Specific Rules
+**Problem**: Performance issues often occur in specific rules (e.g., `createProcedureStatement`)
+**Solution**: Allow users to specify starting rule chains
 
-## Architecture
+```bash
+./fuzzer --grammar postgresql --start-rule createProcedureStatement --count 100
+./fuzzer --grammar cql --start-rule selectStatement.whereClause --count 50
+```
+
+### 2. Recursion Control  
+**Problem**: Grammar rules can be recursive, causing infinite loops during generation
+**Solution**: Limit recursion depth per rule (proven to handle all ANTLR recursion types)
+
+#### ANTLR 4 Recursion Types
+
+**Direct Left Recursion:**
+```antlr
+expr: expr '+' expr | INT    // expr directly refers to itself on left
+```
+
+**Direct Right Recursion:**
+```antlr
+expr: INT '+' expr | INT     // expr directly refers to itself on right  
+```
+
+**Indirect Recursion (Non-Left):**
+```antlr
+selectStmt: SELECT columns fromClause whereClause?
+whereClause: WHERE expr
+expr: '(' selectStmt ')' | INT   // Indirect: expr -> selectStmt -> whereClause -> expr
+```
+*Note: ANTLR 4 does NOT support mutually left recursive grammars. This example is valid because the recursion is not left-recursive (selectStmt doesn't start with selectStmt).*
+
+**Self-Recursion with Alternatives:**
+```antlr
+stmt: ifStmt | whileStmt | blockStmt
+blockStmt: '{' stmt* '}'         // blockStmt contains multiple stmt references
+```
+
+#### Why Depth Control Works
+
+**Theorem**: Any grammar rule expansion terminates in finite steps with depth limiting.
+
+**Proof by Contradiction:**
+1. Assume infinite expansion despite depth limit `D`
+2. Each recursive call increases depth: `depth(rule_n) = depth(rule_{n-1}) + 1`
+3. When `depth ≥ D`, generator forces terminal selection
+4. Therefore, maximum expansion depth is bounded by `D`
+5. Since each rule has finite alternatives and finite elements, total expansion is finite ∎
+
+#### Depth Control Implementation
+
+```go
+func (g *Generator) GenerateFromRule(ruleName string, currentDepth int) string {
+    // Base case: exceed depth limit -> force terminal
+    if currentDepth >= g.maxDepth {
+        return g.forceTerminal(ruleName)
+    }
+    
+    rule := g.grammar.GetRule(ruleName)
+    
+    // Prefer non-recursive alternatives as depth increases
+    alternative := g.selectAlternativeWithDepthBias(rule, currentDepth)
+    
+    result := ""
+    for _, element := range alternative {
+        if element.IsRule() {
+            // Recursive call with incremented depth
+            result += g.GenerateFromRule(element.Name, currentDepth+1)
+        } else {
+            result += element.Literal
+        }
+    }
+    return result
+}
+
+func (g *Generator) forceTerminal(ruleName string) string {
+    rule := g.grammar.GetRule(ruleName)
+    
+    // Find non-recursive alternatives (containing only terminals)
+    for _, alt := range rule.Alternatives {
+        if !alt.ContainsRecursion() {
+            return g.expandAlternative(alt, g.maxDepth)
+        }
+    }
+    
+    // Fallback: use default terminal for this rule type
+    return g.getDefaultTerminal(ruleName)
+}
+```
+
+#### Examples with Depth Control
+
+```bash
+./fuzzer --start-rule expr --max-depth 3 --count 5
+```
+
+**Generated sequences:**
+- Depth 0: `INT` (terminal)
+- Depth 1: `INT + INT` 
+- Depth 2: `(INT + INT) + INT`
+- Depth 3: `((INT + INT) + INT) + INT` (max depth reached)
+
+**Complex mutual recursion:**
+```bash  
+./fuzzer --start-rule selectStmt --max-depth 4 --count 3
+```
+
+**Expansion trace:**
+```
+selectStmt (depth=0)
+├── SELECT columns FROM table whereClause (depth=0)
+    └── whereClause (depth=1)  
+        └── WHERE expr (depth=1)
+            └── '(' selectStmt ')' (depth=2)
+                └── selectStmt (depth=2)
+                    └── SELECT columns FROM table (depth=2, no whereClause to avoid depth=4)
+```
+
+#### Depth Strategy Options
+
+**Conservative (Early Termination):**
+- Lower max depth (3-5)
+- Bias toward terminals as depth increases
+- Prevents deep nesting, faster generation
+
+**Aggressive (Deep Testing):**  
+- Higher max depth (10-15)
+- Equal probability until max depth
+- Tests parser limits, slower generation
+
+```bash
+# Conservative - quick, shallow testing
+./fuzzer --start-rule expr --max-depth 3 --depth-strategy conservative
+
+# Aggressive - deep parser stress testing  
+./fuzzer --start-rule createProcedureStmt --max-depth 12 --depth-strategy aggressive
+```
+
+### 3. Optional Rule Probability
+**Problem**: Optional rules (`selectStmt: SELECT columns FROM table whereClause?`) need probability control
+**Solution**: Configure probability for optional elements (standard in grammar-based fuzzing)
+
+### 4. Quantified Rule Generation
+**Problem**: Quantified rules (`stmt*`, `expr+`, `column{1,5}`) need count control
+**Solution**: Configure generation counts for quantified elements
+
+#### ANTLR 4 Quantifier Types
+
+**Zero or More (`rule*`):**
+```antlr
+blockStmt: '{' stmt* '}'        // Generate 0 to N statements
+selectList: column (',' column)*  // Generate 1 to N columns
+```
+
+**One or More (`rule+`):**  
+```antlr
+identifier: LETTER (LETTER | DIGIT)+  // Generate 1 to N characters
+```
+
+**Exact Count (`rule{n}`):**
+```antlr
+hexDigit: HEX_DIGIT{4}         // Generate exactly 4 hex digits
+```
+
+**Range Count (`rule{min,max}`):**
+```antlr
+varchar: CHAR{1,255}           // Generate 1 to 255 characters
+```
+
+#### Quantifier Control Strategy
+
+**Count Distribution Options:**
+- **Uniform**: Equal probability for each count in range
+- **Exponential**: Higher probability for lower counts (realistic)  
+- **Fixed**: Always generate specific count
+
+```bash
+# Basic usage - user specifies max count
+./fuzzer --start-rule blockStmt --max-quantifier 10 --count 100
+
+# User controls both min and max for quantifiers  
+./fuzzer --start-rule selectList --min-quantifier 1 --max-quantifier 5 --count 50
+
+# Fixed count for performance testing
+./fuzzer --start-rule selectStmt --quantifier-count 100 --count 10
+```
+
+#### Implementation Logic
+
+```go
+type QuantifierConfig struct {
+    Strategy   string // "uniform", "exponential", "fixed"
+    MinRepeat  int    // Minimum repetitions (overrides grammar min)
+    MaxRepeat  int    // Maximum repetitions (overrides grammar max)  
+    FixedCount int    // Fixed count for "fixed" strategy
+}
+
+func (g *Generator) generateQuantified(element *GrammarElement, config QuantifierConfig) string {
+    var count int
+    
+    switch element.Quantifier {
+    case "*": // Zero or more
+        min := max(0, config.MinRepeat)
+        max := min(config.MaxRepeat, 50) // Reasonable default limit
+        count = g.selectCount(min, max, config.Strategy)
+        
+    case "+": // One or more  
+        min := max(1, config.MinRepeat)
+        max := min(config.MaxRepeat, 50)
+        count = g.selectCount(min, max, config.Strategy)
+        
+    case "{n}": // Exact count
+        if config.Strategy == "fixed" {
+            count = config.FixedCount
+        } else {
+            count = element.ExactCount
+        }
+        
+    case "{min,max}": // Range
+        min := max(element.MinCount, config.MinRepeat)
+        max := min(element.MaxCount, config.MaxRepeat)
+        count = g.selectCount(min, max, config.Strategy)
+    }
+    
+    result := ""
+    for i := 0; i < count; i++ {
+        if element.IsRule() {
+            result += g.GenerateFromRule(element.RuleName, g.currentDepth+1)
+        } else {
+            result += element.Literal
+        }
+        
+        // Add separators for lists (e.g., comma-separated)
+        if i < count-1 && element.HasSeparator() {
+            result += element.Separator
+        }
+    }
+    return result
+}
+
+func (g *Generator) selectCount(min, max int, strategy string) int {
+    if min > max {
+        return min
+    }
+    
+    switch strategy {
+    case "fixed":
+        return min // Use minimum as fixed value
+        
+    case "uniform":
+        return min + g.random.Intn(max-min+1)
+        
+    case "exponential":
+        // Exponential decay: higher probability for lower counts
+        range_size := max - min + 1
+        // Generate exponentially distributed number, then map to range
+        lambda := 2.0 / float64(range_size)
+        exp_val := g.random.ExpFloat64() / lambda
+        count := min + int(exp_val)
+        if count > max {
+            count = max
+        }
+        return count
+        
+    default:
+        return min + g.random.Intn(max-min+1)
+    }
+}
+```
+
+#### Examples with Quantifier Control
+
+**Block statement with multiple statements:**
+```bash
+./fuzzer --start-rule blockStmt --quantifier-strategy exponential --max-repeat 8
+```
+**Generated:**
+- 70% chance: `{ stmt; }` (1 statement)
+- 20% chance: `{ stmt; stmt; }` (2 statements)  
+- 7% chance: `{ stmt; stmt; stmt; }` (3 statements)
+- 3% chance: 4+ statements
+
+**Column list generation:**
+```bash  
+./fuzzer --start-rule selectList --quantifier-strategy uniform --min-repeat 3 --max-repeat 7
+```
+**Generated:**
+- Equal probability: `col1, col2, col3` to `col1, col2, col3, col4, col5, col6, col7`
+
+**Performance testing with large lists:**
+```bash
+./fuzzer --start-rule selectStmt --quantifier-count 100 --count 5
+```
+**Generated:**
+- Always generates exactly 100 columns to test parser performance on large SELECT lists
+
+**Simple user control:**
+```bash
+./fuzzer --start-rule blockStmt --max-quantifier 3 --count 10
+```
+**Generated:**
+- `stmt*` generates 0-3 statements
+- `expr+` generates 1-3 expressions  
+- User controls maximum without complex strategy options
+
+```bash
+./fuzzer --start-rule selectStmt --optional-prob 0.7 --count 100
+# 70% chance to include optional whereClause
+```
+
+## Simple Architecture
 
 ```
 tools/fuzzing/
-├── generator/           # Core generation logic
-│   ├── grammar_analyzer.go    # Parse ANTLR grammar files
-│   ├── rule_expander.go       # Expand grammar rules to concrete syntax
-│   └── query_builder.go       # Build SQL queries from rule expansions
-├── strategies/          # Different generation strategies
-│   ├── depth_first.go         # Generate deeply nested structures
-│   ├── breadth_first.go       # Generate wide, complex queries
-│   └── weighted.go            # Probability-based rule selection
-├── corpus/              # Generated test cases and seeds
-│   ├── seeds/                 # Hand-crafted seed inputs
-│   └── generated/             # Auto-generated test cases
-└── cmd/                 # CLI tools
-    └── fuzzer/               # Main fuzzer executable
+├── main.go              # CLI entry point
+├── generator.go         # Core generation logic
+└── grammar_parser.go    # Reuse tools/grammar/ 
 ```
 
-## Core Components
-
-### 1. Grammar Analyzer
-
-Leverages the existing `tools/grammar/` ANTLR v4 parser to:
-- Parse target grammar files (e.g., `postgresql.g4`, `cql.g4`) 
-- Extract production rules and their alternatives
-- Build dependency graph between rules
-- Identify terminal vs non-terminal symbols
+## Core Logic
 
 ```go
-type GrammarAnalyzer struct {
-    parser *grammar.ANTLRv4Parser
-    rules  map[string]*Rule
+type Generator struct {
+    grammar     *ParsedGrammar
+    maxDepth    int
+    optionalProb float64
+    random      *rand.Rand
 }
 
-type Rule struct {
-    Name         string
-    Alternatives []Alternative
-    Type         RuleType // LEXER, PARSER, FRAGMENT
+func (g *Generator) GenerateFromRule(ruleName string, currentDepth int) string {
+    if currentDepth > g.maxDepth {
+        return g.generateTerminal() // Stop recursion
+    }
+    
+    rule := g.grammar.GetRule(ruleName)
+    alternative := g.selectAlternative(rule)
+    
+    result := ""
+    for _, element := range alternative {
+        if element.IsOptional() && g.random.Float64() > g.optionalProb {
+            continue // Skip optional element
+        }
+        if element.IsRule() {
+            result += g.GenerateFromRule(element.Name, currentDepth+1)
+        } else {
+            result += element.Literal
+        }
+    }
+    return result
 }
-```
-
-### 2. Rule Expander
-
-Recursively expands grammar rules into concrete syntax trees:
-- Handles rule recursion with configurable depth limits
-- Supports probability-weighted alternative selection  
-- Manages lexer rules and literal generation
-- Tracks generation context for smart decisions
-
-```go
-type RuleExpander struct {
-    grammar    *ParsedGrammar
-    maxDepth   int
-    weights    map[string]float64
-    random     *rand.Rand
-}
-```
-
-### 3. Query Builder
-
-Converts syntax trees to executable SQL strings:
-- Handles whitespace and formatting
-- Manages identifier generation (table names, columns)
-- Ensures semantic consistency where possible
-- Outputs parseable query strings
-
-## Generation Strategies
-
-### Depth-First Strategy
-- Generates deeply nested subqueries, expressions
-- Tests parser stack limits and recursion handling
-- Focuses on structural complexity
-
-### Breadth-First Strategy  
-- Creates wide queries with many clauses, joins, columns
-- Tests parser memory usage and performance
-- Focuses on query size and breadth
-
-### Weighted Strategy
-- Uses probability weights for rule selection
-- Biases toward commonly used constructs
-- Configurable via weight files per dialect
-
-## Integration Points
-
-### With Existing Grammar Parser
-```go
-// Reuse tools/grammar/ for parsing target grammars
-analyzer := NewGrammarAnalyzer()
-targetGrammar, err := analyzer.ParseGrammarFile("postgresql/PostgreSQLLexer.g4")
-```
-
-### With Parser Testing
-```go
-// Generate test cases for specific parser
-fuzzer := NewFuzzer(postgresqlGrammar)
-queries := fuzzer.GenerateQueries(1000)
-
-for _, query := range queries {
-    // Test against postgresql parser
-    result := postgresqlParser.Parse(query)
-    // Collect metrics, detect crashes
-}
-```
-
-## Configuration
-
-### Fuzzer Config
-```yaml
-target_grammar: "postgresql"
-strategies:
-  - name: "depth_first"
-    weight: 0.3
-    max_depth: 15
-  - name: "breadth_first" 
-    weight: 0.4
-    max_width: 50
-  - name: "weighted"
-    weight: 0.3
-    weights_file: "postgresql_weights.yaml"
-
-generation:
-  count: 10000
-  max_query_length: 100000
-  seed: 42
-
-output:
-  format: "sql"
-  directory: "corpus/generated"
-```
-
-### Grammar Weights
-```yaml
-# postgresql_weights.yaml
-rules:
-  selectStmt: 0.4
-  insertStmt: 0.2  
-  updateStmt: 0.2
-  deleteStmt: 0.1
-  createStmt: 0.1
-  
-  # Bias toward complex expressions
-  expr:
-    binaryOp: 0.4
-    functionCall: 0.3
-    subquery: 0.2
-    literal: 0.1
 ```
 
 ## CLI Interface
 
 ```bash
-# Generate queries for PostgreSQL
-./fuzzer generate --grammar postgresql --count 1000 --strategy weighted
+# Basic usage - generate from specific rule
+./fuzzer --grammar postgresql --start-rule selectStmt --count 10
 
-# Run continuous fuzzing with performance metrics
-./fuzzer fuzz --grammar cql --duration 1h --metrics
+# Control recursion depth  
+./fuzzer --grammar cql --start-rule expr --max-depth 3 --count 5
 
-# Validate existing corpus against parser
-./fuzzer validate --grammar postgresql --corpus corpus/postgresql/
+# Control optional probability
+./fuzzer --grammar postgresql --start-rule createStmt --optional-prob 0.8 --count 10
+
+# Control quantifier max count (for rule*, rule+)
+./fuzzer --grammar postgresql --start-rule blockStmt --max-quantifier 8 --count 20
+
+# Control all parameters together
+./fuzzer --grammar cql --start-rule selectStmt \
+  --max-depth 5 \
+  --optional-prob 0.7 \
+  --max-quantifier 10 \
+  --count 50
+
+# Output to file
+./fuzzer --grammar postgresql --start-rule selectStmt --count 100 --output queries.sql
 ```
 
-## Performance Metrics
+## Implementation Steps
 
-### Generation Metrics
-- Queries generated per second
-- Grammar rule coverage percentage
-- Distribution of query complexity (depth, width)
+### Step 1: Basic Generator
+- Parse grammar using existing `tools/grammar/`
+- Simple rule expansion with depth limit
+- CLI with `--start-rule`, `--max-depth`, `--count`
 
-### Parser Testing Metrics  
-- Parse success rate
-- Average parse time per query
-- Memory usage during parsing
-- Parser crash/error detection
+### Step 2: Optional Control  
+- Add `--optional-prob` flag
+- Detect optional elements in grammar rules
+- Apply probability during generation
 
-## Implementation Phases
+### Step 3: Integration
+- Test generated queries against parsers
+- Add basic performance timing
+- CI integration for regression testing
 
-### Phase 1: Foundation (Week 1-2)
-- Basic grammar analyzer using existing ANTLR parser
-- Simple rule expander with depth-first strategy
-- Command-line interface for manual testing
+## Common Fuzzing Techniques Used
 
-### Phase 2: Core Features (Week 3-4)
-- Multiple generation strategies
-- Configuration system
-- Basic corpus management
-- Integration with existing parser tests
+1. **Grammar-based generation** - Generate from formal grammar rules
+2. **Depth limiting** - Prevent infinite recursion in recursive grammars  
+3. **Probability-based selection** - Control optional rule inclusion
+4. **Targeted fuzzing** - Focus on specific rule paths instead of full grammar
 
-### Phase 3: Advanced Features (Week 5-6)
-- Weighted generation with probability tuning
-- Performance metrics collection
-- CI integration for continuous fuzzing
-- Corpus minimization and deduplication
-
-### Phase 4: Optimization (Week 7-8)
-- Generation performance optimization
-- Advanced semantic awareness
-- Custom mutation strategies
-- Comprehensive documentation
-
-## Future Enhancements
-
-- **Semantic Awareness**: Generate queries with valid schema references
-- **Mutation-Based Fuzzing**: Mutate existing queries to explore edge cases
-- **Differential Testing**: Compare parser outputs across database dialects
-- **Performance Regression Detection**: Track parser performance over time
-- **Grammar Evolution**: Adapt fuzzing as grammars evolve
-
-## Dependencies
-
-- Existing `tools/grammar/` ANTLR v4 parser
-- Go standard library (`rand`, `fmt`, `strings`)
-- YAML configuration parsing
-- CLI framework (e.g., `cobra`)
-
-This design provides a solid foundation for grammar-aware fuzzing while leveraging our existing ANTLR infrastructure.
+This approach is much simpler but addresses your specific needs for testing parser performance on particular constructs.

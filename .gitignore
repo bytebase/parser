@@ -45,3 +45,6 @@ go.work.sum
 **/node_modules/
 
 **/*.class
+
+# No binary files
+**/bin/**
