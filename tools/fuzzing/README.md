@@ -44,7 +44,7 @@ tools/fuzzing/
 | `--count` | Number of queries to generate | 10 |
 | `--max-depth` | Maximum recursion depth | 5 |
 | `--optional-prob` | Probability of optional elements (0.0-1.0) | 0.5 |
-| `--max-quantifier` | Maximum count for `*` and `+` rules | 5 |
+| `--max-quantifier` | Maximum count for `*` and `+` quantifiers | 5 |
 | `--min-quantifier` | Minimum count override | 0 |
 | `--quantifier-count` | Fixed count for all quantifiers | 0 |
 | `--output` | Output file path | stdout |

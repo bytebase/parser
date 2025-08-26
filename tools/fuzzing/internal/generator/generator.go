@@ -138,24 +138,22 @@ func (g *Generator) generateFromElement(element *grammar.Element, currentDepth i
 	return element.Value
 }
 
-// generateQuantified handles quantified elements (* + {n,m})
+// generateQuantified handles quantified elements (* +)
 func (g *Generator) generateQuantified(element *grammar.Element, currentDepth int) string {
 	var count int
 	
-	switch element.Quantifier {
-	case grammar.ZERO_MORE: // *
-		count = g.random.Intn(g.config.MaxQuantifier + 1) // 0 to MaxQuantifier
-	case grammar.ONE_MORE: // +
-		count = 1 + g.random.Intn(g.config.MaxQuantifier) // 1 to MaxQuantifier
-	case grammar.RANGE: // {n,m}
-		if g.config.QuantifierCount > 0 {
-			count = g.config.QuantifierCount
-		} else {
-			rangeSize := element.Max - element.Min + 1
-			count = element.Min + g.random.Intn(rangeSize)
+	// Use fixed count if specified, otherwise use random count
+	if g.config.QuantifierCount > 0 {
+		count = g.config.QuantifierCount
+	} else {
+		switch element.Quantifier {
+		case grammar.ZERO_MORE: // *
+			count = g.random.Intn(g.config.MaxQuantifier + 1) // 0 to MaxQuantifier
+		case grammar.ONE_MORE: // +
+			count = 1 + g.random.Intn(g.config.MaxQuantifier) // 1 to MaxQuantifier
+		default:
+			count = 1
 		}
-	default:
-		count = 1
 	}
 
 	var results []string

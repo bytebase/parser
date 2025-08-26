@@ -33,7 +33,6 @@ type Element struct {
 	Type       ElementType
 	Value      string
 	Quantifier Quantifier
-	Min, Max   int // for {n,m} quantifiers
 }
 
 // ElementType indicates the type of grammar element
@@ -55,7 +54,6 @@ const (
 	OPTIONAL_Q // ?
 	ZERO_MORE  // *
 	ONE_MORE   // +
-	RANGE      // {n,m}
 )
 
 // ParseGrammarFile parses a .g4 file and extracts rules for fuzzing
@@ -158,7 +156,7 @@ func (e *Element) IsOptional() bool {
 
 // IsQuantified checks if an element has repetition quantifiers
 func (e *Element) IsQuantified() bool {
-	return e.Quantifier == ZERO_MORE || e.Quantifier == ONE_MORE || e.Quantifier == RANGE
+	return e.Quantifier == ZERO_MORE || e.Quantifier == ONE_MORE
 }
 
 // GrammarErrorListener collects parsing errors

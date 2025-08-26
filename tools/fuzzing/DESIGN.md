@@ -166,15 +166,7 @@ selectList: column (',' column)*  // Generate 1 to N columns
 identifier: LETTER (LETTER | DIGIT)+  // Generate 1 to N characters
 ```
 
-**Exact Count (`rule{n}`):**
-```antlr
-hexDigit: HEX_DIGIT{4}         // Generate exactly 4 hex digits
-```
-
-**Range Count (`rule{min,max}`):**
-```antlr
-varchar: CHAR{1,255}           // Generate 1 to 255 characters
-```
+**Note**: ANTLR v4 does not support `{n}` or `{n,m}` quantifier syntax. These are regex-style quantifiers not supported in ANTLR grammar files.
 
 #### Quantifier Control Strategy
 
@@ -218,17 +210,7 @@ func (g *Generator) generateQuantified(element *GrammarElement, config Quantifie
         max := min(config.MaxRepeat, 50)
         count = g.selectCount(min, max, config.Strategy)
         
-    case "{n}": // Exact count
-        if config.Strategy == "fixed" {
-            count = config.FixedCount
-        } else {
-            count = element.ExactCount
-        }
-        
-    case "{min,max}": // Range
-        min := max(element.MinCount, config.MinRepeat)
-        max := min(element.MaxCount, config.MaxRepeat)
-        count = g.selectCount(min, max, config.Strategy)
+    // Note: ANTLR v4 does not support {n} or {min,max} syntax
     }
     
     result := ""
