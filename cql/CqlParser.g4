@@ -110,7 +110,7 @@ priviledge
     : (kwAll | kwAllPermissions)
     | kwAlter
     | kwAuthorize
-    | kwDescibe
+    | kwDescribe
     | kwExecute
     | kwCreate
     | kwDrop
@@ -528,7 +528,17 @@ truncate
     ;
 
 createIndex
-    : kwCreate kwIndex ifNotExist? indexName? kwOn (keyspace DOT)? table syntaxBracketLr indexColumnSpec syntaxBracketRr
+    : kwCreate kwCustom? kwIndex ifNotExist? indexName? kwOn (keyspace DOT)? table syntaxBracketLr indexColumnSpec syntaxBracketRr (kwUsing indexClass)? (kwWith indexOptions)?
+    ;
+
+indexClass
+    : stringLiteral
+    | K_SAI
+    | K_STORAGEATTACHEDINDEX
+    ;
+
+indexOptions
+    : optionHash  // Use optionHash for index options  
     ;
 
 indexName
@@ -538,17 +548,7 @@ indexName
 
 indexColumnSpec
     : column
-    | indexKeysSpec
-    | indexEntriesSSpec
     | indexFullSpec
-    ;
-
-indexKeysSpec
-    : kwKeys syntaxBracketLr OBJECT_NAME syntaxBracketRr
-    ;
-
-indexEntriesSSpec
-    : kwEntries syntaxBracketLr OBJECT_NAME syntaxBracketRr
     ;
 
 indexFullSpec
@@ -655,7 +655,11 @@ ifExist
 
 insertValuesSpec
     : kwValues '(' expressionList ')'
-    | kwJson constant
+    | kwJson constant jsonDefaultUnset?
+    ;
+
+jsonDefaultUnset
+    : kwDefault kwUnset
     ;
 
 insertColumnSpec
@@ -706,6 +710,15 @@ orderSpec
 
 orderSpecElement
     : OBJECT_NAME (kwAsc | kwDesc)?
+    | OBJECT_NAME kwAnn kwOf vectorLiteral (kwLimit DECIMAL_LITERAL)?
+    ;
+
+vectorLiteral
+    : '[' constantList ']'
+    ;
+
+constantList
+    : constant (syntaxComma constant)*
     ;
 
 whereSpec
@@ -768,6 +781,16 @@ functionCall
     : OBJECT_NAME '(' STAR ')'
     | OBJECT_NAME '(' functionArgs? ')'
     | K_UUID '(' ')'
+    | K_NOW '(' ')'
+    | K_FROMJSON '(' functionArgs ')'
+    | K_TOJSON '(' functionArgs ')'
+    | K_MINTIMEUUID '(' functionArgs ')'
+    | K_MAXTIMEUUID '(' functionArgs ')'
+    | K_DATETIMENOW '(' ')'
+    | K_CURRENTTIMESTAMP '(' ')'
+    | K_CURRENTDATE '(' ')'
+    | K_CURRENTTIME '(' ')'
+    | K_CURRENTTIMEUUID '(' ')'
     ;
 
 functionArgs
@@ -854,10 +877,13 @@ dataTypeName
     | K_VARINT
     | K_TIMESTAMP
     | K_UUID
+    | K_VECTOR
+    | K_DURATION
     ;
 
 dataTypeDefinition
     : syntaxBracketLa dataTypeName (syntaxComma dataTypeName)* syntaxBracketRa
+    | syntaxBracketLa dataTypeName syntaxComma DECIMAL_LITERAL syntaxBracketRa  // For VECTOR<type, dimension>
     ;
 
 orderDirection
@@ -994,6 +1020,22 @@ kwCreate
     : K_CREATE
     ;
 
+kwCustom
+    : K_CUSTOM
+    ;
+
+kwDefault
+    : K_DEFAULT
+    ;
+
+kwUnset
+    : K_UNSET
+    ;
+
+kwAnn
+    : K_ANN
+    ;
+
 kwDelete
     : K_DELETE
     ;
@@ -1002,7 +1044,7 @@ kwDesc
     : K_DESC
     ;
 
-kwDescibe
+kwDescribe
     : K_DESCRIBE
     ;
 

@@ -618,6 +618,18 @@ func (s *BaseCqlParserListener) EnterCreateIndex(ctx *CreateIndexContext) {}
 // ExitCreateIndex is called when production createIndex is exited.
 func (s *BaseCqlParserListener) ExitCreateIndex(ctx *CreateIndexContext) {}
 
+// EnterIndexClass is called when production indexClass is entered.
+func (s *BaseCqlParserListener) EnterIndexClass(ctx *IndexClassContext) {}
+
+// ExitIndexClass is called when production indexClass is exited.
+func (s *BaseCqlParserListener) ExitIndexClass(ctx *IndexClassContext) {}
+
+// EnterIndexOptions is called when production indexOptions is entered.
+func (s *BaseCqlParserListener) EnterIndexOptions(ctx *IndexOptionsContext) {}
+
+// ExitIndexOptions is called when production indexOptions is exited.
+func (s *BaseCqlParserListener) ExitIndexOptions(ctx *IndexOptionsContext) {}
+
 // EnterIndexName is called when production indexName is entered.
 func (s *BaseCqlParserListener) EnterIndexName(ctx *IndexNameContext) {}
 
@@ -629,18 +641,6 @@ func (s *BaseCqlParserListener) EnterIndexColumnSpec(ctx *IndexColumnSpecContext
 
 // ExitIndexColumnSpec is called when production indexColumnSpec is exited.
 func (s *BaseCqlParserListener) ExitIndexColumnSpec(ctx *IndexColumnSpecContext) {}
-
-// EnterIndexKeysSpec is called when production indexKeysSpec is entered.
-func (s *BaseCqlParserListener) EnterIndexKeysSpec(ctx *IndexKeysSpecContext) {}
-
-// ExitIndexKeysSpec is called when production indexKeysSpec is exited.
-func (s *BaseCqlParserListener) ExitIndexKeysSpec(ctx *IndexKeysSpecContext) {}
-
-// EnterIndexEntriesSSpec is called when production indexEntriesSSpec is entered.
-func (s *BaseCqlParserListener) EnterIndexEntriesSSpec(ctx *IndexEntriesSSpecContext) {}
-
-// ExitIndexEntriesSSpec is called when production indexEntriesSSpec is exited.
-func (s *BaseCqlParserListener) ExitIndexEntriesSSpec(ctx *IndexEntriesSSpecContext) {}
 
 // EnterIndexFullSpec is called when production indexFullSpec is entered.
 func (s *BaseCqlParserListener) EnterIndexFullSpec(ctx *IndexFullSpecContext) {}
@@ -774,6 +774,12 @@ func (s *BaseCqlParserListener) EnterInsertValuesSpec(ctx *InsertValuesSpecConte
 // ExitInsertValuesSpec is called when production insertValuesSpec is exited.
 func (s *BaseCqlParserListener) ExitInsertValuesSpec(ctx *InsertValuesSpecContext) {}
 
+// EnterJsonDefaultUnset is called when production jsonDefaultUnset is entered.
+func (s *BaseCqlParserListener) EnterJsonDefaultUnset(ctx *JsonDefaultUnsetContext) {}
+
+// ExitJsonDefaultUnset is called when production jsonDefaultUnset is exited.
+func (s *BaseCqlParserListener) ExitJsonDefaultUnset(ctx *JsonDefaultUnsetContext) {}
+
 // EnterInsertColumnSpec is called when production insertColumnSpec is entered.
 func (s *BaseCqlParserListener) EnterInsertColumnSpec(ctx *InsertColumnSpecContext) {}
 
@@ -839,6 +845,18 @@ func (s *BaseCqlParserListener) EnterOrderSpecElement(ctx *OrderSpecElementConte
 
 // ExitOrderSpecElement is called when production orderSpecElement is exited.
 func (s *BaseCqlParserListener) ExitOrderSpecElement(ctx *OrderSpecElementContext) {}
+
+// EnterVectorLiteral is called when production vectorLiteral is entered.
+func (s *BaseCqlParserListener) EnterVectorLiteral(ctx *VectorLiteralContext) {}
+
+// ExitVectorLiteral is called when production vectorLiteral is exited.
+func (s *BaseCqlParserListener) ExitVectorLiteral(ctx *VectorLiteralContext) {}
+
+// EnterConstantList is called when production constantList is entered.
+func (s *BaseCqlParserListener) EnterConstantList(ctx *ConstantListContext) {}
+
+// ExitConstantList is called when production constantList is exited.
+func (s *BaseCqlParserListener) ExitConstantList(ctx *ConstantListContext) {}
 
 // EnterWhereSpec is called when production whereSpec is entered.
 func (s *BaseCqlParserListener) EnterWhereSpec(ctx *WhereSpecContext) {}
@@ -1170,6 +1188,30 @@ func (s *BaseCqlParserListener) EnterKwCreate(ctx *KwCreateContext) {}
 // ExitKwCreate is called when production kwCreate is exited.
 func (s *BaseCqlParserListener) ExitKwCreate(ctx *KwCreateContext) {}
 
+// EnterKwCustom is called when production kwCustom is entered.
+func (s *BaseCqlParserListener) EnterKwCustom(ctx *KwCustomContext) {}
+
+// ExitKwCustom is called when production kwCustom is exited.
+func (s *BaseCqlParserListener) ExitKwCustom(ctx *KwCustomContext) {}
+
+// EnterKwDefault is called when production kwDefault is entered.
+func (s *BaseCqlParserListener) EnterKwDefault(ctx *KwDefaultContext) {}
+
+// ExitKwDefault is called when production kwDefault is exited.
+func (s *BaseCqlParserListener) ExitKwDefault(ctx *KwDefaultContext) {}
+
+// EnterKwUnset is called when production kwUnset is entered.
+func (s *BaseCqlParserListener) EnterKwUnset(ctx *KwUnsetContext) {}
+
+// ExitKwUnset is called when production kwUnset is exited.
+func (s *BaseCqlParserListener) ExitKwUnset(ctx *KwUnsetContext) {}
+
+// EnterKwAnn is called when production kwAnn is entered.
+func (s *BaseCqlParserListener) EnterKwAnn(ctx *KwAnnContext) {}
+
+// ExitKwAnn is called when production kwAnn is exited.
+func (s *BaseCqlParserListener) ExitKwAnn(ctx *KwAnnContext) {}
+
 // EnterKwDelete is called when production kwDelete is entered.
 func (s *BaseCqlParserListener) EnterKwDelete(ctx *KwDeleteContext) {}
 
@@ -1182,11 +1224,11 @@ func (s *BaseCqlParserListener) EnterKwDesc(ctx *KwDescContext) {}
 // ExitKwDesc is called when production kwDesc is exited.
 func (s *BaseCqlParserListener) ExitKwDesc(ctx *KwDescContext) {}
 
-// EnterKwDescibe is called when production kwDescibe is entered.
-func (s *BaseCqlParserListener) EnterKwDescibe(ctx *KwDescibeContext) {}
+// EnterKwDescribe is called when production kwDescribe is entered.
+func (s *BaseCqlParserListener) EnterKwDescribe(ctx *KwDescribeContext) {}
 
-// ExitKwDescibe is called when production kwDescibe is exited.
-func (s *BaseCqlParserListener) ExitKwDescibe(ctx *KwDescibeContext) {}
+// ExitKwDescribe is called when production kwDescribe is exited.
+func (s *BaseCqlParserListener) ExitKwDescribe(ctx *KwDescribeContext) {}
 
 // EnterKwDistinct is called when production kwDistinct is entered.
 func (s *BaseCqlParserListener) EnterKwDistinct(ctx *KwDistinctContext) {}

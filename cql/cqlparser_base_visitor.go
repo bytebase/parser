@@ -403,19 +403,19 @@ func (v *BaseCqlParserVisitor) VisitCreateIndex(ctx *CreateIndexContext) interfa
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCqlParserVisitor) VisitIndexClass(ctx *IndexClassContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCqlParserVisitor) VisitIndexOptions(ctx *IndexOptionsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCqlParserVisitor) VisitIndexName(ctx *IndexNameContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
 func (v *BaseCqlParserVisitor) VisitIndexColumnSpec(ctx *IndexColumnSpecContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseCqlParserVisitor) VisitIndexKeysSpec(ctx *IndexKeysSpecContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseCqlParserVisitor) VisitIndexEntriesSSpec(ctx *IndexEntriesSSpecContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -507,6 +507,10 @@ func (v *BaseCqlParserVisitor) VisitInsertValuesSpec(ctx *InsertValuesSpecContex
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCqlParserVisitor) VisitJsonDefaultUnset(ctx *JsonDefaultUnsetContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCqlParserVisitor) VisitInsertColumnSpec(ctx *InsertColumnSpecContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -548,6 +552,14 @@ func (v *BaseCqlParserVisitor) VisitOrderSpec(ctx *OrderSpecContext) interface{}
 }
 
 func (v *BaseCqlParserVisitor) VisitOrderSpecElement(ctx *OrderSpecElementContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCqlParserVisitor) VisitVectorLiteral(ctx *VectorLiteralContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCqlParserVisitor) VisitConstantList(ctx *ConstantListContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -771,6 +783,22 @@ func (v *BaseCqlParserVisitor) VisitKwCreate(ctx *KwCreateContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCqlParserVisitor) VisitKwCustom(ctx *KwCustomContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCqlParserVisitor) VisitKwDefault(ctx *KwDefaultContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCqlParserVisitor) VisitKwUnset(ctx *KwUnsetContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCqlParserVisitor) VisitKwAnn(ctx *KwAnnContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCqlParserVisitor) VisitKwDelete(ctx *KwDeleteContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -779,7 +807,7 @@ func (v *BaseCqlParserVisitor) VisitKwDesc(ctx *KwDescContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCqlParserVisitor) VisitKwDescibe(ctx *KwDescibeContext) interface{} {
+func (v *BaseCqlParserVisitor) VisitKwDescribe(ctx *KwDescribeContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

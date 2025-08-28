@@ -304,17 +304,17 @@ type CqlParserListener interface {
 	// EnterCreateIndex is called when entering the createIndex production.
 	EnterCreateIndex(c *CreateIndexContext)
 
+	// EnterIndexClass is called when entering the indexClass production.
+	EnterIndexClass(c *IndexClassContext)
+
+	// EnterIndexOptions is called when entering the indexOptions production.
+	EnterIndexOptions(c *IndexOptionsContext)
+
 	// EnterIndexName is called when entering the indexName production.
 	EnterIndexName(c *IndexNameContext)
 
 	// EnterIndexColumnSpec is called when entering the indexColumnSpec production.
 	EnterIndexColumnSpec(c *IndexColumnSpecContext)
-
-	// EnterIndexKeysSpec is called when entering the indexKeysSpec production.
-	EnterIndexKeysSpec(c *IndexKeysSpecContext)
-
-	// EnterIndexEntriesSSpec is called when entering the indexEntriesSSpec production.
-	EnterIndexEntriesSSpec(c *IndexEntriesSSpecContext)
 
 	// EnterIndexFullSpec is called when entering the indexFullSpec production.
 	EnterIndexFullSpec(c *IndexFullSpecContext)
@@ -382,6 +382,9 @@ type CqlParserListener interface {
 	// EnterInsertValuesSpec is called when entering the insertValuesSpec production.
 	EnterInsertValuesSpec(c *InsertValuesSpecContext)
 
+	// EnterJsonDefaultUnset is called when entering the jsonDefaultUnset production.
+	EnterJsonDefaultUnset(c *JsonDefaultUnsetContext)
+
 	// EnterInsertColumnSpec is called when entering the insertColumnSpec production.
 	EnterInsertColumnSpec(c *InsertColumnSpecContext)
 
@@ -414,6 +417,12 @@ type CqlParserListener interface {
 
 	// EnterOrderSpecElement is called when entering the orderSpecElement production.
 	EnterOrderSpecElement(c *OrderSpecElementContext)
+
+	// EnterVectorLiteral is called when entering the vectorLiteral production.
+	EnterVectorLiteral(c *VectorLiteralContext)
+
+	// EnterConstantList is called when entering the constantList production.
+	EnterConstantList(c *ConstantListContext)
 
 	// EnterWhereSpec is called when entering the whereSpec production.
 	EnterWhereSpec(c *WhereSpecContext)
@@ -580,14 +589,26 @@ type CqlParserListener interface {
 	// EnterKwCreate is called when entering the kwCreate production.
 	EnterKwCreate(c *KwCreateContext)
 
+	// EnterKwCustom is called when entering the kwCustom production.
+	EnterKwCustom(c *KwCustomContext)
+
+	// EnterKwDefault is called when entering the kwDefault production.
+	EnterKwDefault(c *KwDefaultContext)
+
+	// EnterKwUnset is called when entering the kwUnset production.
+	EnterKwUnset(c *KwUnsetContext)
+
+	// EnterKwAnn is called when entering the kwAnn production.
+	EnterKwAnn(c *KwAnnContext)
+
 	// EnterKwDelete is called when entering the kwDelete production.
 	EnterKwDelete(c *KwDeleteContext)
 
 	// EnterKwDesc is called when entering the kwDesc production.
 	EnterKwDesc(c *KwDescContext)
 
-	// EnterKwDescibe is called when entering the kwDescibe production.
-	EnterKwDescibe(c *KwDescibeContext)
+	// EnterKwDescribe is called when entering the kwDescribe production.
+	EnterKwDescribe(c *KwDescribeContext)
 
 	// EnterKwDistinct is called when entering the kwDistinct production.
 	EnterKwDistinct(c *KwDistinctContext)
@@ -1135,17 +1156,17 @@ type CqlParserListener interface {
 	// ExitCreateIndex is called when exiting the createIndex production.
 	ExitCreateIndex(c *CreateIndexContext)
 
+	// ExitIndexClass is called when exiting the indexClass production.
+	ExitIndexClass(c *IndexClassContext)
+
+	// ExitIndexOptions is called when exiting the indexOptions production.
+	ExitIndexOptions(c *IndexOptionsContext)
+
 	// ExitIndexName is called when exiting the indexName production.
 	ExitIndexName(c *IndexNameContext)
 
 	// ExitIndexColumnSpec is called when exiting the indexColumnSpec production.
 	ExitIndexColumnSpec(c *IndexColumnSpecContext)
-
-	// ExitIndexKeysSpec is called when exiting the indexKeysSpec production.
-	ExitIndexKeysSpec(c *IndexKeysSpecContext)
-
-	// ExitIndexEntriesSSpec is called when exiting the indexEntriesSSpec production.
-	ExitIndexEntriesSSpec(c *IndexEntriesSSpecContext)
 
 	// ExitIndexFullSpec is called when exiting the indexFullSpec production.
 	ExitIndexFullSpec(c *IndexFullSpecContext)
@@ -1213,6 +1234,9 @@ type CqlParserListener interface {
 	// ExitInsertValuesSpec is called when exiting the insertValuesSpec production.
 	ExitInsertValuesSpec(c *InsertValuesSpecContext)
 
+	// ExitJsonDefaultUnset is called when exiting the jsonDefaultUnset production.
+	ExitJsonDefaultUnset(c *JsonDefaultUnsetContext)
+
 	// ExitInsertColumnSpec is called when exiting the insertColumnSpec production.
 	ExitInsertColumnSpec(c *InsertColumnSpecContext)
 
@@ -1245,6 +1269,12 @@ type CqlParserListener interface {
 
 	// ExitOrderSpecElement is called when exiting the orderSpecElement production.
 	ExitOrderSpecElement(c *OrderSpecElementContext)
+
+	// ExitVectorLiteral is called when exiting the vectorLiteral production.
+	ExitVectorLiteral(c *VectorLiteralContext)
+
+	// ExitConstantList is called when exiting the constantList production.
+	ExitConstantList(c *ConstantListContext)
 
 	// ExitWhereSpec is called when exiting the whereSpec production.
 	ExitWhereSpec(c *WhereSpecContext)
@@ -1411,14 +1441,26 @@ type CqlParserListener interface {
 	// ExitKwCreate is called when exiting the kwCreate production.
 	ExitKwCreate(c *KwCreateContext)
 
+	// ExitKwCustom is called when exiting the kwCustom production.
+	ExitKwCustom(c *KwCustomContext)
+
+	// ExitKwDefault is called when exiting the kwDefault production.
+	ExitKwDefault(c *KwDefaultContext)
+
+	// ExitKwUnset is called when exiting the kwUnset production.
+	ExitKwUnset(c *KwUnsetContext)
+
+	// ExitKwAnn is called when exiting the kwAnn production.
+	ExitKwAnn(c *KwAnnContext)
+
 	// ExitKwDelete is called when exiting the kwDelete production.
 	ExitKwDelete(c *KwDeleteContext)
 
 	// ExitKwDesc is called when exiting the kwDesc production.
 	ExitKwDesc(c *KwDescContext)
 
-	// ExitKwDescibe is called when exiting the kwDescibe production.
-	ExitKwDescibe(c *KwDescibeContext)
+	// ExitKwDescribe is called when exiting the kwDescribe production.
+	ExitKwDescribe(c *KwDescribeContext)
 
 	// ExitKwDistinct is called when exiting the kwDistinct production.
 	ExitKwDistinct(c *KwDistinctContext)

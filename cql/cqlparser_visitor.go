@@ -304,17 +304,17 @@ type CqlParserVisitor interface {
 	// Visit a parse tree produced by CqlParser#createIndex.
 	VisitCreateIndex(ctx *CreateIndexContext) interface{}
 
+	// Visit a parse tree produced by CqlParser#indexClass.
+	VisitIndexClass(ctx *IndexClassContext) interface{}
+
+	// Visit a parse tree produced by CqlParser#indexOptions.
+	VisitIndexOptions(ctx *IndexOptionsContext) interface{}
+
 	// Visit a parse tree produced by CqlParser#indexName.
 	VisitIndexName(ctx *IndexNameContext) interface{}
 
 	// Visit a parse tree produced by CqlParser#indexColumnSpec.
 	VisitIndexColumnSpec(ctx *IndexColumnSpecContext) interface{}
-
-	// Visit a parse tree produced by CqlParser#indexKeysSpec.
-	VisitIndexKeysSpec(ctx *IndexKeysSpecContext) interface{}
-
-	// Visit a parse tree produced by CqlParser#indexEntriesSSpec.
-	VisitIndexEntriesSSpec(ctx *IndexEntriesSSpecContext) interface{}
 
 	// Visit a parse tree produced by CqlParser#indexFullSpec.
 	VisitIndexFullSpec(ctx *IndexFullSpecContext) interface{}
@@ -382,6 +382,9 @@ type CqlParserVisitor interface {
 	// Visit a parse tree produced by CqlParser#insertValuesSpec.
 	VisitInsertValuesSpec(ctx *InsertValuesSpecContext) interface{}
 
+	// Visit a parse tree produced by CqlParser#jsonDefaultUnset.
+	VisitJsonDefaultUnset(ctx *JsonDefaultUnsetContext) interface{}
+
 	// Visit a parse tree produced by CqlParser#insertColumnSpec.
 	VisitInsertColumnSpec(ctx *InsertColumnSpecContext) interface{}
 
@@ -414,6 +417,12 @@ type CqlParserVisitor interface {
 
 	// Visit a parse tree produced by CqlParser#orderSpecElement.
 	VisitOrderSpecElement(ctx *OrderSpecElementContext) interface{}
+
+	// Visit a parse tree produced by CqlParser#vectorLiteral.
+	VisitVectorLiteral(ctx *VectorLiteralContext) interface{}
+
+	// Visit a parse tree produced by CqlParser#constantList.
+	VisitConstantList(ctx *ConstantListContext) interface{}
 
 	// Visit a parse tree produced by CqlParser#whereSpec.
 	VisitWhereSpec(ctx *WhereSpecContext) interface{}
@@ -580,14 +589,26 @@ type CqlParserVisitor interface {
 	// Visit a parse tree produced by CqlParser#kwCreate.
 	VisitKwCreate(ctx *KwCreateContext) interface{}
 
+	// Visit a parse tree produced by CqlParser#kwCustom.
+	VisitKwCustom(ctx *KwCustomContext) interface{}
+
+	// Visit a parse tree produced by CqlParser#kwDefault.
+	VisitKwDefault(ctx *KwDefaultContext) interface{}
+
+	// Visit a parse tree produced by CqlParser#kwUnset.
+	VisitKwUnset(ctx *KwUnsetContext) interface{}
+
+	// Visit a parse tree produced by CqlParser#kwAnn.
+	VisitKwAnn(ctx *KwAnnContext) interface{}
+
 	// Visit a parse tree produced by CqlParser#kwDelete.
 	VisitKwDelete(ctx *KwDeleteContext) interface{}
 
 	// Visit a parse tree produced by CqlParser#kwDesc.
 	VisitKwDesc(ctx *KwDescContext) interface{}
 
-	// Visit a parse tree produced by CqlParser#kwDescibe.
-	VisitKwDescibe(ctx *KwDescibeContext) interface{}
+	// Visit a parse tree produced by CqlParser#kwDescribe.
+	VisitKwDescribe(ctx *KwDescribeContext) interface{}
 
 	// Visit a parse tree produced by CqlParser#kwDistinct.
 	VisitKwDistinct(ctx *KwDistinctContext) interface{}
