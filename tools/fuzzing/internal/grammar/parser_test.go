@@ -217,3 +217,194 @@ func createTempGrammarFile(t *testing.T, content string) string {
 
 	return tmpFile
 }
+
+// TestLexerRuleParsing tests the parsing of lexer rules
+func TestLexerRuleParsing(t *testing.T) {
+	grammarContent := `
+lexer grammar TestLexer;
+
+// Simple string literal
+SELECT: 'SELECT';
+
+// Character range
+LETTER: [a-zA-Z];
+
+// Complex rule with alternatives and quantifiers
+IDENTIFIER: [a-zA-Z_] [a-zA-Z0-9_]*;
+
+// Rule with character set
+DIGIT: [0-9];
+
+// Rule with wildcard and quantifier
+COMMENT: '//' .*? '\n';
+`
+
+	tmpFile := createTempGrammarFile(t, grammarContent)
+	defer os.Remove(tmpFile)
+
+	grammar, err := ParseGrammarFile(tmpFile)
+	if err != nil {
+		t.Fatalf("Failed to parse lexer grammar: %v", err)
+	}
+
+	// Basic grammar properties
+	if grammar == nil {
+		t.Fatal("Grammar is nil")
+	}
+	if len(grammar.ParserRules) != 0 {
+		t.Errorf("Expected 0 parser rules, got %d", len(grammar.ParserRules))
+	}
+	if len(grammar.LexerRules) != 5 {
+		t.Errorf("Expected 5 lexer rules, got %d", len(grammar.LexerRules))
+	}
+
+	// Test cases for lexer rule validation
+	tests := []struct {
+		ruleName     string
+		alternatives int
+		elements     []elementTest
+	}{
+		{
+			ruleName:     "SELECT",
+			alternatives: 1,
+			elements: []elementTest{
+				{altIndex: 0, elementIndex: 0, value: "'SELECT'", quantifier: NONE, elementType: "literal"},
+			},
+		},
+		{
+			ruleName:     "LETTER",
+			alternatives: 1,
+			elements: []elementTest{
+				{altIndex: 0, elementIndex: 0, value: "[a-zA-Z]", quantifier: NONE, elementType: "literal"},
+			},
+		},
+		{
+			ruleName:     "IDENTIFIER",
+			alternatives: 1,
+			elements: []elementTest{
+				{altIndex: 0, elementIndex: 0, value: "[a-zA-Z_]", quantifier: NONE, elementType: "literal"},
+				{altIndex: 0, elementIndex: 1, value: "[a-zA-Z0-9_]", quantifier: ZERO_MORE, elementType: "literal"},
+			},
+		},
+		{
+			ruleName:     "DIGIT",
+			alternatives: 1,
+			elements: []elementTest{
+				{altIndex: 0, elementIndex: 0, value: "[0-9]", quantifier: NONE, elementType: "literal"},
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.ruleName, func(t *testing.T) {
+			rule := grammar.GetRule(tc.ruleName)
+			if rule == nil {
+				t.Fatalf("rule %s not found", tc.ruleName)
+			}
+			if rule.Name != tc.ruleName || !rule.IsLexer {
+				t.Errorf("rule %s has incorrect metadata: IsLexer=%v", tc.ruleName, rule.IsLexer)
+			}
+			if len(rule.Alternatives) != tc.alternatives {
+				t.Errorf("%s: expected %d alternatives, got %d", tc.ruleName, tc.alternatives, len(rule.Alternatives))
+			}
+
+			for _, elem := range tc.elements {
+				altIndex := elem.altIndex
+				elementIndex := elem.elementIndex
+
+				if altIndex >= len(rule.Alternatives) {
+					t.Errorf("%s: alternative %d out of range", tc.ruleName, altIndex)
+					continue
+				}
+
+				elements := rule.Alternatives[altIndex].Elements
+				if elementIndex >= len(elements) {
+					t.Errorf("%s alt %d: element %d out of range", tc.ruleName, altIndex, elementIndex)
+					continue
+				}
+
+				element := elements[elementIndex]
+				if elem.value != "" && element.Value.String() != elem.value {
+					t.Errorf("%s alt %d elem %d: expected value %s, got %s", tc.ruleName, altIndex, elementIndex, elem.value, element.Value.String())
+				}
+				if element.Quantifier != elem.quantifier {
+					t.Errorf("%s alt %d elem %d: expected quantifier %v, got %v", tc.ruleName, altIndex, elementIndex, elem.quantifier, element.Quantifier)
+				}
+				
+				// Validate element type using type assertions
+				switch elem.elementType {
+				case "literal":
+					if _, ok := element.Value.(LiteralValue); !ok {
+						t.Errorf("%s alt %d elem %d: expected LiteralValue, got %T", tc.ruleName, altIndex, elementIndex, element.Value)
+					}
+				case "reference":
+					if _, ok := element.Value.(ReferenceValue); !ok {
+						t.Errorf("%s alt %d elem %d: expected ReferenceValue, got %T", tc.ruleName, altIndex, elementIndex, element.Value)
+					}
+				case "block":
+					if _, ok := element.Value.(BlockValue); !ok {
+						t.Errorf("%s alt %d elem %d: expected BlockValue, got %T", tc.ruleName, altIndex, elementIndex, element.Value)
+					}
+				}
+			}
+		})
+	}
+}
+
+// TestCombinedGrammarParsing tests parsing of combined grammar with both parser and lexer rules
+func TestCombinedGrammarParsing(t *testing.T) {
+	grammarContent := `
+grammar CombinedTest;
+
+// Parser rules
+statement: selectStmt;
+selectStmt: 'SELECT' IDENTIFIER;
+
+// Lexer rules
+IDENTIFIER: [a-zA-Z_] [a-zA-Z0-9_]*;
+WS: [ \t\r\n]+ -> skip;
+`
+
+	tmpFile := createTempGrammarFile(t, grammarContent)
+	defer os.Remove(tmpFile)
+
+	grammar, err := ParseGrammarFile(tmpFile)
+	if err != nil {
+		t.Fatalf("Failed to parse combined grammar: %v", err)
+	}
+
+	// Basic grammar properties
+	if grammar == nil {
+		t.Fatal("Grammar is nil")
+	}
+	if len(grammar.ParserRules) != 2 {
+		t.Errorf("Expected 2 parser rules, got %d", len(grammar.ParserRules))
+	}
+	if len(grammar.LexerRules) != 2 {
+		t.Errorf("Expected 2 lexer rules, got %d", len(grammar.LexerRules))
+	}
+
+	// Test parser rule
+	statement := grammar.GetRule("statement")
+	if statement == nil {
+		t.Fatal("Parser rule 'statement' not found")
+	}
+	if statement.IsLexer {
+		t.Error("Parser rule incorrectly marked as lexer rule")
+	}
+
+	// Test lexer rule  
+	identifier := grammar.GetRule("IDENTIFIER")
+	if identifier == nil {
+		t.Fatal("Lexer rule 'IDENTIFIER' not found")
+	}
+	if !identifier.IsLexer {
+		t.Error("Lexer rule incorrectly marked as parser rule")
+	}
+
+	// Test that GetAllRules returns both types
+	allRules := grammar.GetAllRules()
+	if len(allRules) != 4 {
+		t.Errorf("Expected 4 total rules, got %d", len(allRules))
+	}
+}

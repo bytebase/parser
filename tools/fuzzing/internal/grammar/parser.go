@@ -283,11 +283,14 @@ func (v *GrammarExtractorVisitor) VisitRules(ctx grammar.IRulesContext) interfac
 
 // VisitRuleSpec visits a rule specification (could be parser or lexer rule)
 func (v *GrammarExtractorVisitor) VisitRuleSpec(ctx grammar.IRuleSpecContext) interface{} {
-	// Focus only on parser rules for now
+	// Handle parser rules
 	if parserRuleCtx := ctx.ParserRuleSpec(); parserRuleCtx != nil {
 		v.VisitParserRuleSpec(parserRuleCtx)
 	}
-	// Skip lexer rules for now
+	// Handle lexer rules
+	if lexerRuleCtx := ctx.LexerRuleSpec(); lexerRuleCtx != nil {
+		v.VisitLexerRuleSpec(lexerRuleCtx)
+	}
 	return nil
 }
 
@@ -322,6 +325,37 @@ func (v *GrammarExtractorVisitor) VisitParserRuleSpec(ctx grammar.IParserRuleSpe
 	return nil
 }
 
+// VisitLexerRuleSpec visits a lexer rule specification
+func (v *GrammarExtractorVisitor) VisitLexerRuleSpec(ctx grammar.ILexerRuleSpecContext) interface{} {
+	// Get rule name
+	ruleNameToken := ctx.TOKEN_REF()
+	if ruleNameToken == nil {
+		return nil
+	}
+	ruleName := ruleNameToken.GetText()
+
+	// Get lexer rule block (alternatives)
+	lexerRuleBlockCtx := ctx.LexerRuleBlock()
+	if lexerRuleBlockCtx == nil {
+		return nil
+	}
+
+	// Extract alternatives from lexer rule block
+	alternatives := v.extractLexerAlternatives(lexerRuleBlockCtx)
+
+	// Create rule
+	rule := &Rule{
+		Name:         ruleName,
+		IsLexer:      true,
+		Alternatives: alternatives,
+	}
+
+	// Store rule
+	v.lexerRules[ruleName] = rule
+
+	return nil
+}
+
 // extractAlternatives extracts alternatives from a rule block
 func (v *GrammarExtractorVisitor) extractAlternatives(ruleBlockCtx grammar.IRuleBlockContext) []Alternative {
 	var alternatives []Alternative
@@ -339,6 +373,46 @@ func (v *GrammarExtractorVisitor) extractAlternatives(ruleBlockCtx grammar.IRule
 	}
 
 	return alternatives
+}
+
+// extractLexerAlternatives extracts alternatives from a lexer rule block
+func (v *GrammarExtractorVisitor) extractLexerAlternatives(lexerRuleBlockCtx grammar.ILexerRuleBlockContext) []Alternative {
+	var alternatives []Alternative
+
+	// Get lexer alternative list
+	lexerAltListCtx := lexerRuleBlockCtx.LexerAltList()
+	if lexerAltListCtx == nil {
+		return alternatives
+	}
+
+	// Process each lexer alternative
+	for _, lexerAltCtx := range lexerAltListCtx.AllLexerAlt() {
+		alternative := v.extractLexerAlternative(lexerAltCtx)
+		alternatives = append(alternatives, alternative)
+	}
+
+	return alternatives
+}
+
+// extractLexerAlternative extracts a single lexer alternative
+func (v *GrammarExtractorVisitor) extractLexerAlternative(lexerAltCtx grammar.ILexerAltContext) Alternative {
+	var elements []Element
+
+	// Get lexer elements context
+	lexerElementsCtx := lexerAltCtx.LexerElements()
+	if lexerElementsCtx != nil {
+		// Process each lexer element
+		for _, lexerElementCtx := range lexerElementsCtx.AllLexerElement() {
+			element := v.extractLexerElement(lexerElementCtx)
+			if element != nil {
+				elements = append(elements, *element)
+			}
+		}
+	}
+
+	return Alternative{
+		Elements: elements,
+	}
 }
 
 // extractAlternative extracts a single alternative
@@ -385,6 +459,148 @@ func (v *GrammarExtractorVisitor) extractElement(elementCtx grammar.IElementCont
 	}
 
 	return nil
+}
+
+// extractLexerElement extracts a lexer element from a lexer element context
+func (v *GrammarExtractorVisitor) extractLexerElement(lexerElementCtx grammar.ILexerElementContext) *Element {
+	// Handle lexer atoms (character ranges, terminals, etc.)
+	if lexerAtomCtx := lexerElementCtx.LexerAtom(); lexerAtomCtx != nil {
+		element := v.extractLexerAtom(lexerAtomCtx)
+		// Check for quantifiers
+		if element != nil {
+			element.Quantifier = v.extractQuantifier(lexerElementCtx.EbnfSuffix())
+		}
+		return element
+	}
+
+	// Handle lexer blocks (grouped alternatives)
+	if lexerBlockCtx := lexerElementCtx.LexerBlock(); lexerBlockCtx != nil {
+		element := v.extractLexerBlock(lexerBlockCtx)
+		// Check for quantifiers
+		if element != nil {
+			element.Quantifier = v.extractQuantifier(lexerElementCtx.EbnfSuffix())
+		}
+		return element
+	}
+
+	// Handle action blocks (for now, just return nil as they don't generate text)
+	if lexerElementCtx.ActionBlock() != nil {
+		// Action blocks don't contribute to generated text, so we skip them
+		return nil
+	}
+
+	return nil
+}
+
+// extractLexerAtom extracts a lexer atom (character ranges, terminals, etc.)
+func (v *GrammarExtractorVisitor) extractLexerAtom(lexerAtomCtx grammar.ILexerAtomContext) *Element {
+	// Handle terminal definition (string literal or token reference)
+	if terminalDefCtx := lexerAtomCtx.TerminalDef(); terminalDefCtx != nil {
+		return v.extractTerminalDef(terminalDefCtx)
+	}
+
+	// Handle character range (e.g., [a-z])
+	if characterRangeCtx := lexerAtomCtx.CharacterRange(); characterRangeCtx != nil {
+		return v.extractCharacterRange(characterRangeCtx)
+	}
+
+	// Handle not set (e.g., ~[abc])
+	if notSetCtx := lexerAtomCtx.NotSet(); notSetCtx != nil {
+		return v.extractNotSet(notSetCtx)
+	}
+
+	// Handle lexer character set (e.g., [abc])
+	if lexerCharSetToken := lexerAtomCtx.LEXER_CHAR_SET(); lexerCharSetToken != nil {
+		return &Element{
+			Value: LiteralValue{Text: lexerCharSetToken.GetText()},
+		}
+	}
+
+	// Handle wildcard (.)
+	if wildcardCtx := lexerAtomCtx.Wildcard(); wildcardCtx != nil {
+		return &Element{
+			Value: WildcardValue{},
+		}
+	}
+
+	return nil
+}
+
+// extractLexerBlock extracts a lexer block (grouped alternatives)
+func (v *GrammarExtractorVisitor) extractLexerBlock(lexerBlockCtx grammar.ILexerBlockContext) *Element {
+	// Get the lexer alternative list from the block
+	lexerAltListCtx := lexerBlockCtx.LexerAltList()
+	if lexerAltListCtx == nil {
+		globalBlockID++
+		blockID := fmt.Sprintf("lexer_block_%d_alts", globalBlockID)
+		emptyAlts := []Alternative{}
+		v.blockAltMap[blockID] = emptyAlts
+		
+		return &Element{
+			Value: BlockValue{ID: blockID, Alternatives: emptyAlts},
+		}
+	}
+
+	// Extract all lexer alternatives from the block
+	lexerAlts := lexerAltListCtx.AllLexerAlt()
+	if len(lexerAlts) == 0 {
+		globalBlockID++
+		blockID := fmt.Sprintf("lexer_block_%d_alts", globalBlockID)
+		emptyAlts := []Alternative{}
+		v.blockAltMap[blockID] = emptyAlts
+		
+		return &Element{
+			Value: BlockValue{ID: blockID, Alternatives: emptyAlts},
+		}
+	}
+
+	// Extract all alternatives
+	blockAlternatives := []Alternative{}
+	for _, lexerAltCtx := range lexerAlts {
+		elements := []Element{}
+		if lexerElementsCtx := lexerAltCtx.LexerElements(); lexerElementsCtx != nil {
+			for _, lexerElementCtx := range lexerElementsCtx.AllLexerElement() {
+				element := v.extractLexerElement(lexerElementCtx)
+				if element != nil {
+					elements = append(elements, *element)
+				}
+			}
+		}
+		blockAlternatives = append(blockAlternatives, Alternative{Elements: elements})
+	}
+	
+	// Generate global unique block ID and store mapping
+	globalBlockID++
+	blockID := fmt.Sprintf("lexer_block_%d_alts", globalBlockID)
+	v.blockAltMap[blockID] = blockAlternatives
+	
+	return &Element{
+		Value: BlockValue{ID: blockID, Alternatives: blockAlternatives},
+	}
+}
+
+// extractCharacterRange extracts a character range (e.g., 'a'..'z')
+func (v *GrammarExtractorVisitor) extractCharacterRange(characterRangeCtx grammar.ICharacterRangeContext) *Element {
+	// Get the start and end of the range
+	stringLiterals := characterRangeCtx.AllSTRING_LITERAL()
+	if len(stringLiterals) == 2 {
+		startChar := stringLiterals[0].GetText()
+		endChar := stringLiterals[1].GetText()
+		rangeText := fmt.Sprintf("%s..%s", startChar, endChar)
+		return &Element{
+			Value: LiteralValue{Text: rangeText},
+		}
+	}
+	return nil
+}
+
+// extractNotSet extracts a not set (e.g., ~[abc])
+func (v *GrammarExtractorVisitor) extractNotSet(notSetCtx grammar.INotSetContext) *Element {
+	// For now, represent as a literal text
+	// In a real implementation, this would need more sophisticated handling
+	return &Element{
+		Value: LiteralValue{Text: "~[...]"},
+	}
 }
 
 // extractLabeledElement extracts a labeled element (e.g., label=atom)
