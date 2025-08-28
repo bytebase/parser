@@ -191,6 +191,68 @@ func (g *ParsedGrammar) IsGeneratedBlock(name string) bool {
 	return exists
 }
 
+// MergeGrammar merges another grammar into this one
+func (g *ParsedGrammar) MergeGrammar(other *ParsedGrammar) error {
+	// Merge lexer rules
+	for name, rule := range other.LexerRules {
+		if _, exists := g.LexerRules[name]; exists {
+			return fmt.Errorf("duplicate lexer rule '%s' found in grammars '%s' and '%s'", name, g.FilePath, other.FilePath)
+		}
+		g.LexerRules[name] = rule
+	}
+	
+	// Merge parser rules
+	for name, rule := range other.ParserRules {
+		if _, exists := g.ParserRules[name]; exists {
+			return fmt.Errorf("duplicate parser rule '%s' found in grammars '%s' and '%s'", name, g.FilePath, other.FilePath)
+		}
+		g.ParserRules[name] = rule
+	}
+	
+	// Merge block alternatives map
+	for blockID, alternatives := range other.BlockAltMap {
+		if _, exists := g.BlockAltMap[blockID]; exists {
+			return fmt.Errorf("duplicate block ID '%s' found in grammars '%s' and '%s'", blockID, g.FilePath, other.FilePath)
+		}
+		g.BlockAltMap[blockID] = alternatives
+	}
+	
+	// Update file path to indicate it's a merged grammar
+	if g.FilePath != other.FilePath {
+		g.FilePath = fmt.Sprintf("%s + %s", g.FilePath, other.FilePath)
+	}
+	
+	return nil
+}
+
+// ParseAndMergeGrammarFiles parses multiple grammar files and merges them into a single ParsedGrammar
+func ParseAndMergeGrammarFiles(filePaths []string) (*ParsedGrammar, error) {
+	if len(filePaths) == 0 {
+		return nil, errors.New("no grammar files provided")
+	}
+	
+	// Parse the first grammar file
+	mergedGrammar, err := ParseGrammarFile(filePaths[0])
+	if err != nil {
+		return nil, errors.Wrapf(err, "failed to parse first grammar file %s", filePaths[0])
+	}
+	
+	// Merge additional grammar files
+	for i := 1; i < len(filePaths); i++ {
+		filePath := filePaths[i]
+		grammar, err := ParseGrammarFile(filePath)
+		if err != nil {
+			return nil, errors.Wrapf(err, "failed to parse grammar file %s", filePath)
+		}
+		
+		if err := mergedGrammar.MergeGrammar(grammar); err != nil {
+			return nil, errors.Wrapf(err, "failed to merge grammar file %s", filePath)
+		}
+	}
+	
+	return mergedGrammar, nil
+}
+
 // IsRule checks if an element refers to another rule or generated block
 func (e *Element) IsRule() bool {
 	_, isRef := e.Value.(ReferenceValue)

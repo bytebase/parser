@@ -3,6 +3,7 @@ package grammar
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -218,6 +219,18 @@ func createTempGrammarFile(t *testing.T, content string) string {
 	return tmpFile
 }
 
+func createTempGrammarFileWithName(t *testing.T, content string, filename string) string {
+	tmpDir := os.TempDir()
+	tmpFile := filepath.Join(tmpDir, filename)
+
+	err := os.WriteFile(tmpFile, []byte(content), 0644)
+	if err != nil {
+		t.Fatalf("Failed to create temp grammar file: %v", err)
+	}
+
+	return tmpFile
+}
+
 // TestLexerRuleParsing tests the parsing of lexer rules
 func TestLexerRuleParsing(t *testing.T) {
 	grammarContent := `
@@ -406,5 +419,139 @@ WS: [ \t\r\n]+ -> skip;
 	allRules := grammar.GetAllRules()
 	if len(allRules) != 4 {
 		t.Errorf("Expected 4 total rules, got %d", len(allRules))
+	}
+}
+
+// TestGrammarMerging tests merging multiple grammar files
+func TestGrammarMerging(t *testing.T) {
+	// Create first grammar file (parser rules)
+	parserGrammarContent := `
+parser grammar ParserTest;
+
+options {
+    tokenVocab = LexerTest;
+}
+
+statement: selectStmt;
+selectStmt: 'SELECT' IDENTIFIER;
+`
+	
+	// Create second grammar file (lexer rules)
+	lexerGrammarContent := `
+lexer grammar LexerTest;
+
+IDENTIFIER: [a-zA-Z_] [a-zA-Z0-9_]*;
+WS: [ \t\r\n]+ -> skip;
+`
+
+	// Create temporary files with unique names
+	tmpParserFile := createTempGrammarFileWithName(t, parserGrammarContent, "test_parser.g4")
+	defer os.Remove(tmpParserFile)
+	
+	tmpLexerFile := createTempGrammarFileWithName(t, lexerGrammarContent, "test_lexer.g4")
+	defer os.Remove(tmpLexerFile)
+
+	// Test parsing and merging
+	filePaths := []string{tmpParserFile, tmpLexerFile}
+	mergedGrammar, err := ParseAndMergeGrammarFiles(filePaths)
+	if err != nil {
+		t.Fatalf("Failed to parse and merge grammar files: %v", err)
+	}
+
+	// Verify merged grammar properties
+	if mergedGrammar == nil {
+		t.Fatal("Merged grammar is nil")
+	}
+	
+	if len(mergedGrammar.ParserRules) != 2 {
+		t.Errorf("Expected 2 parser rules, got %d", len(mergedGrammar.ParserRules))
+	}
+	
+	if len(mergedGrammar.LexerRules) != 2 {
+		t.Errorf("Expected 2 lexer rules, got %d", len(mergedGrammar.LexerRules))
+	}
+
+	// Test that both parser and lexer rules are accessible
+	statement := mergedGrammar.GetRule("statement")
+	if statement == nil || statement.IsLexer {
+		t.Error("Parser rule 'statement' not found or incorrectly marked")
+	}
+
+	identifier := mergedGrammar.GetRule("IDENTIFIER")
+	if identifier == nil || !identifier.IsLexer {
+		t.Error("Lexer rule 'IDENTIFIER' not found or incorrectly marked")
+	}
+
+	// Test that merged path is updated
+	if !strings.Contains(mergedGrammar.FilePath, "+") {
+		t.Errorf("Expected merged file path to contain '+', got: %s", mergedGrammar.FilePath)
+	}
+
+	// Test GetAllRules on merged grammar
+	allRules := mergedGrammar.GetAllRules()
+	if len(allRules) != 4 {
+		t.Errorf("Expected 4 total rules in merged grammar, got %d", len(allRules))
+	}
+}
+
+// TestGrammarMergingWithConflicts tests handling of duplicate rule names
+func TestGrammarMergingWithConflicts(t *testing.T) {
+	// Create two grammars with conflicting rule names
+	grammar1Content := `
+lexer grammar Test1;
+IDENTIFIER: [a-z]+;
+`
+	
+	grammar2Content := `
+lexer grammar Test2;
+IDENTIFIER: [A-Z]+;  // Conflict with first grammar
+`
+
+	tmpFile1 := createTempGrammarFileWithName(t, grammar1Content, "conflict1.g4")
+	defer os.Remove(tmpFile1)
+	
+	tmpFile2 := createTempGrammarFileWithName(t, grammar2Content, "conflict2.g4")
+	defer os.Remove(tmpFile2)
+
+	// Test that merging fails with duplicate rule names
+	filePaths := []string{tmpFile1, tmpFile2}
+	_, err := ParseAndMergeGrammarFiles(filePaths)
+	if err == nil {
+		t.Error("Expected error when merging grammars with duplicate rule names")
+	}
+
+	if !strings.Contains(err.Error(), "duplicate") {
+		t.Errorf("Expected error about duplicate rules, got: %v", err)
+	}
+}
+
+// TestParseAndMergeGrammarFilesEdgeCases tests edge cases
+func TestParseAndMergeGrammarFilesEdgeCases(t *testing.T) {
+	// Test with empty file list
+	_, err := ParseAndMergeGrammarFiles([]string{})
+	if err == nil {
+		t.Error("Expected error with empty file list")
+	}
+
+	// Test with single file
+	grammarContent := `
+lexer grammar SingleTest;
+TOKEN: 'test';
+`
+	
+	tmpFile := createTempGrammarFileWithName(t, grammarContent, "single.g4")
+	defer os.Remove(tmpFile)
+
+	grammar, err := ParseAndMergeGrammarFiles([]string{tmpFile})
+	if err != nil {
+		t.Fatalf("Failed to parse single grammar file: %v", err)
+	}
+
+	if len(grammar.LexerRules) != 1 {
+		t.Errorf("Expected 1 lexer rule, got %d", len(grammar.LexerRules))
+	}
+
+	if grammar.GetRule("TOKEN") == nil {
+		t.Error("TOKEN rule not found in single file grammar")
 	}
 }

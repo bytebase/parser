@@ -11,9 +11,9 @@ import (
 
 // Generator handles the fuzzing logic
 type Generator struct {
-	config   *config.Config
-	random   *rand.Rand
-	grammars []*grammar.ParsedGrammar
+	config  *config.Config
+	random  *rand.Rand
+	grammar *grammar.ParsedGrammar
 }
 
 // New creates a new generator with the given configuration
@@ -28,20 +28,18 @@ func New(cfg *config.Config) *Generator {
 func (g *Generator) Generate() error {
 	fmt.Println("Initializing grammar parser...")
 	
-	// Parse all grammar files
-	g.grammars = make([]*grammar.ParsedGrammar, len(g.config.GrammarFiles))
-	for i, filePath := range g.config.GrammarFiles {
-		parsedGrammar, err := grammar.ParseGrammarFile(filePath)
-		if err != nil {
-			return errors.Wrapf(err, "failed to parse grammar file %s", filePath)
-		}
-		g.grammars[i] = parsedGrammar
-		fmt.Printf("Parsed grammar file: %s\n", filePath)
+	// Parse and merge all grammar files into a single grammar
+	var err error
+	g.grammar, err = grammar.ParseAndMergeGrammarFiles(g.config.GrammarFiles)
+	if err != nil {
+		return errors.Wrap(err, "failed to parse and merge grammar files")
 	}
+	
+	fmt.Printf("Parsed and merged %d grammar files into single grammar\n", len(g.config.GrammarFiles))
 
 	// Validate start rule exists
-	if !g.hasRule(g.config.StartRule) {
-		return errors.Errorf("start rule '%s' not found in any grammar file", g.config.StartRule)
+	if g.grammar.GetRule(g.config.StartRule) == nil {
+		return errors.Errorf("start rule '%s' not found in merged grammar", g.config.StartRule)
 	}
 
 	fmt.Printf("Generating %d queries from rule '%s'...\n", g.config.Count, g.config.StartRule)
@@ -55,24 +53,9 @@ func (g *Generator) Generate() error {
 	return nil
 }
 
-// hasRule checks if a rule exists in any of the parsed grammars
-func (g *Generator) hasRule(ruleName string) bool {
-	for _, grammar := range g.grammars {
-		if grammar.GetRule(ruleName) != nil {
-			return true
-		}
-	}
-	return false
-}
-
-// getRule gets a rule from any of the parsed grammars
+// getRule gets a rule from the merged grammar
 func (g *Generator) getRule(ruleName string) *grammar.Rule {
-	for _, grammar := range g.grammars {
-		if rule := grammar.GetRule(ruleName); rule != nil {
-			return rule
-		}
-	}
-	return nil
+	return g.grammar.GetRule(ruleName)
 }
 
 // generateQuery creates a single query using grammar rules
