@@ -9,33 +9,31 @@ import (
 
 	"github.com/bytebase/parser/tools/fuzzing/internal/config"
 	"github.com/bytebase/parser/tools/fuzzing/internal/generator"
-	"github.com/bytebase/parser/tools/fuzzing/internal/grammar"
 )
 
 func main() {
 	cfg := parseFlags()
-	
+
 	if err := cfg.Validate(); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 		os.Exit(1)
 	}
-	
+
 	cfg.Print()
-	
+
 	gen := generator.New(cfg)
 	if err := gen.Generate(); err != nil {
 		fmt.Fprintf(os.Stderr, "Generation failed: %v\n", err)
 		os.Exit(1)
 	}
-	
+
 	fmt.Println("Generation completed successfully!")
 }
 
 func parseFlags() *config.Config {
 	cfg := &config.Config{}
-	var listGrammars bool
 	var grammarArg string
-	
+
 	flag.StringVar(&grammarArg, "grammar", "", "Grammar file(s): single file or comma-separated lexer,parser files")
 	flag.StringVar(&cfg.StartRule, "start-rule", "", "Starting grammar rule name")
 	flag.IntVar(&cfg.Count, "count", 10, "Number of queries to generate")
@@ -46,18 +44,15 @@ func parseFlags() *config.Config {
 	flag.IntVar(&cfg.QuantifierCount, "quantifier-count", 0, "Fixed count for all quantifiers (overrides min/max)")
 	flag.StringVar(&cfg.Output, "output", "", "Output file path (default: stdout)")
 	flag.Int64Var(&cfg.Seed, "seed", time.Now().UnixNano(), "Random seed for reproducible generation")
-	flag.BoolVar(&listGrammars, "list-grammars", false, "List all available grammars and exit")
-	
+
 	// Custom usage message
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, "Grammar-Aware Fuzzing Tool\n\n")
 		fmt.Fprintf(os.Stderr, "Usage: %s [options]\n\n", os.Args[0])
 		fmt.Fprintf(os.Stderr, "Options:\n")
 		flag.PrintDefaults()
-		
+
 		fmt.Fprintf(os.Stderr, "\nExamples:\n")
-		fmt.Fprintf(os.Stderr, "  # List available grammars\n")
-		fmt.Fprintf(os.Stderr, "  %s --list-grammars\n\n", os.Args[0])
 		fmt.Fprintf(os.Stderr, "  # Single combined grammar file\n")
 		fmt.Fprintf(os.Stderr, "  %s --grammar combined.g4 --start-rule selectStmt --count 10\n\n", os.Args[0])
 		fmt.Fprintf(os.Stderr, "  # Separate lexer and parser files\n")
@@ -69,31 +64,9 @@ func parseFlags() *config.Config {
 		fmt.Fprintf(os.Stderr, "  # Output to file\n")
 		fmt.Fprintf(os.Stderr, "  %s --grammar postgresql/PostgreSQLLexer.g4,postgresql/PostgreSQLParser.g4 --start-rule selectStmt --count 100 --output queries.sql\n\n", os.Args[0])
 	}
-	
+
 	flag.Parse()
-	
-	// Handle --list-grammars
-	if listGrammars {
-		grammars, err := grammar.ListAvailableGrammars()
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error listing grammars: %v\n", err)
-			os.Exit(1)
-		}
-		
-		fmt.Println("Available grammars:")
-		for _, g := range grammars {
-			files, err := grammar.DiscoverGrammarFiles(g)
-			if err != nil {
-				fmt.Printf("  %s (error: %v)\n", g, err)
-				continue
-			}
-			fmt.Printf("  %s\n", g)
-			fmt.Printf("    Lexer:  %s\n", files.LexerFile)
-			fmt.Printf("    Parser: %s\n", files.ParserFile)
-		}
-		os.Exit(0)
-	}
-	
+
 	// Parse grammar files from comma-separated argument
 	if grammarArg != "" {
 		files := strings.Split(grammarArg, ",")
@@ -103,6 +76,6 @@ func parseFlags() *config.Config {
 		}
 		cfg.GrammarFiles = files
 	}
-	
+
 	return cfg
 }
