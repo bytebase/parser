@@ -130,12 +130,20 @@ func (g *Generator) generateFromElement(element *grammar.Element, currentDepth i
 
 	// Generate single element
 	if element.IsRule() {
-		return g.generateFromRule(element.Value, currentDepth+1)
+		if refValue, ok := element.Value.(grammar.ReferenceValue); ok {
+			return g.generateFromRule(refValue.Name, currentDepth+1)
+		} else if blockValue, ok := element.Value.(grammar.BlockValue); ok {
+			return g.generateFromBlock(blockValue, currentDepth)
+		}
+		return g.generateFromRule(element.Value.String(), currentDepth+1)
 	} else if element.IsTerminal() {
-		return cleanLiteral(element.Value)
+		if litValue, ok := element.Value.(grammar.LiteralValue); ok {
+			return cleanLiteral(litValue.Text)
+		}
+		return cleanLiteral(element.Value.String())
 	}
 
-	return element.Value
+	return element.Value.String()
 }
 
 // generateQuantified handles quantified elements (* +)
@@ -159,14 +167,48 @@ func (g *Generator) generateQuantified(element *grammar.Element, currentDepth in
 	var results []string
 	for i := 0; i < count; i++ {
 		if element.IsRule() {
-			result := g.generateFromRule(element.Value, currentDepth+1)
-			results = append(results, result)
+			if refValue, ok := element.Value.(grammar.ReferenceValue); ok {
+				result := g.generateFromRule(refValue.Name, currentDepth+1)
+				results = append(results, result)
+			} else {
+				result := g.generateFromRule(element.Value.String(), currentDepth+1)
+				results = append(results, result)
+			}
 		} else if element.IsTerminal() {
-			results = append(results, cleanLiteral(element.Value))
+			if litValue, ok := element.Value.(grammar.LiteralValue); ok {
+				results = append(results, cleanLiteral(litValue.Text))
+			} else {
+				results = append(results, cleanLiteral(element.Value.String()))
+			}
+		} else if blockValue, ok := element.Value.(grammar.BlockValue); ok {
+			result := g.generateFromBlock(blockValue, currentDepth+1)
+			results = append(results, result)
 		}
 	}
 
 	return joinWithSpaces(results)
+}
+
+// generateFromBlock generates content from a block value
+func (g *Generator) generateFromBlock(blockValue grammar.BlockValue, currentDepth int) string {
+	if len(blockValue.Alternatives) == 0 {
+		return ""
+	}
+
+	// Select a random alternative from the block
+	altIndex := g.random.Intn(len(blockValue.Alternatives))
+	alternative := blockValue.Alternatives[altIndex]
+
+	// Generate from all elements in the selected alternative
+	var result []string
+	for _, element := range alternative.Elements {
+		elementResult := g.generateFromElement(&element, currentDepth)
+		if elementResult != "" {
+			result = append(result, elementResult)
+		}
+	}
+
+	return joinWithSpaces(result)
 }
 
 // generateTerminal generates a terminal when depth limit is reached

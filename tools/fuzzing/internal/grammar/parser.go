@@ -3,6 +3,7 @@ package grammar
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/antlr4-go/antlr/v4"
 	"github.com/pkg/errors"
@@ -14,6 +15,9 @@ type ParsedGrammar struct {
 	LexerRules  map[string]*Rule
 	ParserRules map[string]*Rule
 	FilePath    string
+	// BlockAltMap stores temporary block rules for debugging
+	// Key: block ID (e.g., "block_1_alts"), Value: the block alternatives
+	BlockAltMap map[string][]Alternative
 }
 
 // Rule represents a grammar rule with its alternatives
@@ -28,23 +32,60 @@ type Alternative struct {
 	Elements []Element
 }
 
-// Element represents an element within an alternative
-type Element struct {
-	Type       ElementType
-	Value      string
-	Quantifier Quantifier
+// Global block ID counter for generating unique block names
+var globalBlockID = 0
+
+// ElementValue represents different types of element values
+type ElementValue interface {
+	// String returns a string representation for display/debugging
+	String() string
 }
 
-// ElementType indicates the type of grammar element
-type ElementType int
+// LiteralValue represents a literal string (e.g., 'SELECT')
+type LiteralValue struct {
+	Text string
+}
 
-const (
-	RULE_REF ElementType = iota
-	TOKEN_REF
-	LITERAL
-	OPTIONAL
-	QUANTIFIED
-)
+func (l LiteralValue) String() string { return l.Text }
+
+// ReferenceValue represents a reference to a rule or token (e.g., IDENTIFIER, selectStmt)
+type ReferenceValue struct {
+	Name string
+}
+
+func (r ReferenceValue) String() string { return r.Name }
+
+// BlockValue represents a generated block (e.g., (',' column)*)
+type BlockValue struct {
+	ID           string        // Global unique ID like "block_1_alts"
+	Alternatives []Alternative
+}
+
+func (b BlockValue) String() string {
+	if len(b.Alternatives) == 0 {
+		return "<empty_block>"
+	}
+	if len(b.Alternatives) == 1 {
+		elements := []string{}
+		for _, elem := range b.Alternatives[0].Elements {
+			elements = append(elements, elem.Value.String())
+		}
+		return fmt.Sprintf("(%s)", strings.Join(elements, " "))
+	}
+	return b.ID
+}
+
+
+// WildcardValue represents a wildcard (.)
+type WildcardValue struct{}
+
+func (w WildcardValue) String() string { return "." }
+
+// Element represents an element within an alternative
+type Element struct {
+	Value      ElementValue
+	Quantifier Quantifier
+}
 
 // Quantifier indicates repetition type
 type Quantifier int
@@ -102,17 +143,16 @@ func ParseGrammarFile(filePath string) (*ParsedGrammar, error) {
 	}
 
 	// Extract rules from parse tree
-	visitor := &GrammarExtractorVisitor{
-		lexerRules:  make(map[string]*Rule),
-		parserRules: make(map[string]*Rule),
-	}
+	visitor := NewGrammarExtractorVisitor()
+	visitor.VisitGrammarSpec(tree)
 
-	visitor.Visit(tree)
+
 
 	return &ParsedGrammar{
 		LexerRules:  visitor.lexerRules,
 		ParserRules: visitor.parserRules,
 		FilePath:    filePath,
+		BlockAltMap: visitor.blockAltMap,
 	}, nil
 }
 
@@ -139,14 +179,30 @@ func (g *ParsedGrammar) GetAllRules() map[string]*Rule {
 	return allRules
 }
 
-// IsRule checks if an element refers to another rule
+// GetBlockAlternatives returns the alternatives for a generated block ID
+func (g *ParsedGrammar) GetBlockAlternatives(blockID string) ([]Alternative, bool) {
+	alts, exists := g.BlockAltMap[blockID]
+	return alts, exists
+}
+
+// IsGeneratedBlock checks if a name refers to a generated block
+func (g *ParsedGrammar) IsGeneratedBlock(name string) bool {
+	_, exists := g.BlockAltMap[name]
+	return exists
+}
+
+// IsRule checks if an element refers to another rule or generated block
 func (e *Element) IsRule() bool {
-	return e.Type == RULE_REF || e.Type == TOKEN_REF
+	_, isRef := e.Value.(ReferenceValue)
+	_, isBlock := e.Value.(BlockValue)
+	return isRef || isBlock
 }
 
 // IsTerminal checks if an element is a terminal (literal)
 func (e *Element) IsTerminal() bool {
-	return e.Type == LITERAL
+	_, isLit := e.Value.(LiteralValue)
+	_, isWild := e.Value.(WildcardValue)
+	return isLit || isWild
 }
 
 // IsOptional checks if an element has optional quantifier
@@ -190,68 +246,305 @@ func (l *GrammarErrorListener) GetErrors() []string {
 
 // GrammarExtractorVisitor extracts rules from the parse tree
 type GrammarExtractorVisitor struct {
-	antlr.ParseTreeVisitor
+	*grammar.BaseANTLRv4ParserVisitor
 	lexerRules  map[string]*Rule
 	parserRules map[string]*Rule
-	isLexer     bool
+	blockAltMap map[string][]Alternative
 }
 
-func (v *GrammarExtractorVisitor) Visit(tree antlr.ParseTree) interface{} {
-	// TODO: Implement tree visiting to extract rules
-	// This is a placeholder - we'll implement the actual visitor logic
-	// to walk the parse tree and extract rule information
-	
-	// For now, let's create a simple placeholder structure
-	v.extractPlaceholderRules()
-	
+// NewGrammarExtractorVisitor creates a new visitor
+func NewGrammarExtractorVisitor() *GrammarExtractorVisitor {
+	v := &GrammarExtractorVisitor{
+		BaseANTLRv4ParserVisitor: &grammar.BaseANTLRv4ParserVisitor{},
+		lexerRules:               make(map[string]*Rule),
+		parserRules:              make(map[string]*Rule),
+		blockAltMap:              make(map[string][]Alternative),
+	}
+	return v
+}
+
+// VisitGrammarSpec visits the grammar specification
+func (v *GrammarExtractorVisitor) VisitGrammarSpec(ctx grammar.IGrammarSpecContext) interface{} {
+	// Visit rules section
+	if rulesCtx := ctx.Rules(); rulesCtx != nil {
+		v.VisitRules(rulesCtx)
+	}
 	return nil
 }
 
-// extractPlaceholderRules creates placeholder rules for testing
-func (v *GrammarExtractorVisitor) extractPlaceholderRules() {
-	// Add some basic rules for testing
-	v.parserRules["selectStmt"] = &Rule{
-		Name:    "selectStmt",
-		IsLexer: false,
-		Alternatives: []Alternative{
-			{
-				Elements: []Element{
-					{Type: LITERAL, Value: "SELECT"},
-					{Type: RULE_REF, Value: "columnList"},
-					{Type: LITERAL, Value: "FROM"},
-					{Type: RULE_REF, Value: "tableRef"},
-					{Type: RULE_REF, Value: "whereClause", Quantifier: OPTIONAL_Q},
-				},
-			},
-		},
+// VisitRules visits the rules section
+func (v *GrammarExtractorVisitor) VisitRules(ctx grammar.IRulesContext) interface{} {
+	// Visit all rule specifications
+	for _, ruleSpecCtx := range ctx.AllRuleSpec() {
+		v.VisitRuleSpec(ruleSpecCtx)
 	}
-	
-	v.parserRules["columnList"] = &Rule{
-		Name:    "columnList",
-		IsLexer: false,
-		Alternatives: []Alternative{
-			{
-				Elements: []Element{
-					{Type: RULE_REF, Value: "column"},
-					{
-						Type:       RULE_REF,
-						Value:      "column",
-						Quantifier: ZERO_MORE,
-					},
-				},
-			},
-		},
+	return nil
+}
+
+// VisitRuleSpec visits a rule specification (could be parser or lexer rule)
+func (v *GrammarExtractorVisitor) VisitRuleSpec(ctx grammar.IRuleSpecContext) interface{} {
+	// Focus only on parser rules for now
+	if parserRuleCtx := ctx.ParserRuleSpec(); parserRuleCtx != nil {
+		v.VisitParserRuleSpec(parserRuleCtx)
+	}
+	// Skip lexer rules for now
+	return nil
+}
+
+// VisitParserRuleSpec visits a parser rule specification
+func (v *GrammarExtractorVisitor) VisitParserRuleSpec(ctx grammar.IParserRuleSpecContext) interface{} {
+	// Get rule name
+	ruleNameToken := ctx.RULE_REF()
+	if ruleNameToken == nil {
+		return nil
+	}
+	ruleName := ruleNameToken.GetText()
+
+	// Get rule block (alternatives)
+	ruleBlockCtx := ctx.RuleBlock()
+	if ruleBlockCtx == nil {
+		return nil
 	}
 
-	v.lexerRules["SELECT"] = &Rule{
-		Name:    "SELECT",
-		IsLexer: true,
-		Alternatives: []Alternative{
-			{
-				Elements: []Element{
-					{Type: LITERAL, Value: "'SELECT'"},
-				},
-			},
-		},
+	// Extract alternatives
+	alternatives := v.extractAlternatives(ruleBlockCtx)
+
+	// Create rule
+	rule := &Rule{
+		Name:         ruleName,
+		IsLexer:      false,
+		Alternatives: alternatives,
 	}
+
+	// Store rule
+	v.parserRules[ruleName] = rule
+
+	return nil
+}
+
+// extractAlternatives extracts alternatives from a rule block
+func (v *GrammarExtractorVisitor) extractAlternatives(ruleBlockCtx grammar.IRuleBlockContext) []Alternative {
+	var alternatives []Alternative
+
+	// Get rule alternative list
+	ruleAltListCtx := ruleBlockCtx.RuleAltList()
+	if ruleAltListCtx == nil {
+		return alternatives
+	}
+
+	// Process each labeled alternative
+	for _, labeledAltCtx := range ruleAltListCtx.AllLabeledAlt() {
+		alternative := v.extractAlternative(labeledAltCtx)
+		alternatives = append(alternatives, alternative)
+	}
+
+	return alternatives
+}
+
+// extractAlternative extracts a single alternative
+func (v *GrammarExtractorVisitor) extractAlternative(labeledAltCtx grammar.ILabeledAltContext) Alternative {
+	var elements []Element
+
+	// Get alternative context
+	altCtx := labeledAltCtx.Alternative()
+	if altCtx != nil {
+		// Process each element in the alternative
+		for _, elementCtx := range altCtx.AllElement() {
+			element := v.extractElement(elementCtx)
+			if element != nil {
+				elements = append(elements, *element)
+			}
+		}
+	}
+
+	return Alternative{
+		Elements: elements,
+	}
+}
+
+// extractElement extracts an element from an element context
+func (v *GrammarExtractorVisitor) extractElement(elementCtx grammar.IElementContext) *Element {
+	// Handle labeled elements
+	if labeledElementCtx := elementCtx.LabeledElement(); labeledElementCtx != nil {
+		return v.extractLabeledElement(labeledElementCtx)
+	}
+
+	// Handle atoms (terminals/non-terminals)
+	if atomCtx := elementCtx.Atom(); atomCtx != nil {
+		element := v.extractAtom(atomCtx)
+		// Check for quantifiers
+		if element != nil {
+			element.Quantifier = v.extractQuantifier(elementCtx.EbnfSuffix())
+		}
+		return element
+	}
+
+	// Handle EBNF constructs (blocks with quantifiers)
+	if ebnfCtx := elementCtx.Ebnf(); ebnfCtx != nil {
+		return v.extractEbnf(ebnfCtx)
+	}
+
+	return nil
+}
+
+// extractLabeledElement extracts a labeled element (e.g., label=atom)
+func (v *GrammarExtractorVisitor) extractLabeledElement(labeledElementCtx grammar.ILabeledElementContext) *Element {
+	// For now, just extract the atom part and ignore the label
+	if atomCtx := labeledElementCtx.Atom(); atomCtx != nil {
+		return v.extractAtom(atomCtx)
+	}
+	if blockCtx := labeledElementCtx.Block(); blockCtx != nil {
+		return v.extractBlock(blockCtx)
+	}
+	return nil
+}
+
+// extractAtom extracts an atom (terminal or non-terminal)
+func (v *GrammarExtractorVisitor) extractAtom(atomCtx grammar.IAtomContext) *Element {
+	// Handle terminal definition (string literal or token reference)
+	if terminalDefCtx := atomCtx.TerminalDef(); terminalDefCtx != nil {
+		return v.extractTerminalDef(terminalDefCtx)
+	}
+
+	// Handle rule reference
+	if rulerefCtx := atomCtx.Ruleref(); rulerefCtx != nil {
+		return v.extractRuleRef(rulerefCtx)
+	}
+
+	// Handle wildcard (.)
+	if wildcardCtx := atomCtx.Wildcard(); wildcardCtx != nil {
+		return &Element{
+			Value: WildcardValue{},
+		}
+	}
+
+	// Handle not sets, ranges, etc. - for now just return nil
+	return nil
+}
+
+// extractTerminalDef extracts a terminal definition (literal string or token reference)
+func (v *GrammarExtractorVisitor) extractTerminalDef(terminalDefCtx grammar.ITerminalDefContext) *Element {
+	if stringLiteralToken := terminalDefCtx.STRING_LITERAL(); stringLiteralToken != nil {
+		return &Element{
+			Value: LiteralValue{Text: stringLiteralToken.GetText()},
+		}
+	}
+	if tokenRefToken := terminalDefCtx.TOKEN_REF(); tokenRefToken != nil {
+		return &Element{
+			Value: ReferenceValue{Name: tokenRefToken.GetText()},
+		}
+	}
+	return nil
+}
+
+
+// extractRuleRef extracts a rule reference
+func (v *GrammarExtractorVisitor) extractRuleRef(rulerefCtx grammar.IRulerefContext) *Element {
+	if ruleRefToken := rulerefCtx.RULE_REF(); ruleRefToken != nil {
+		return &Element{
+			Value: ReferenceValue{Name: ruleRefToken.GetText()},
+		}
+	}
+	return nil
+}
+
+// extractBlock extracts a block (grouped alternatives)
+func (v *GrammarExtractorVisitor) extractBlock(blockCtx grammar.IBlockContext) *Element {
+	// Get the alternative list from the block
+	altListCtx := blockCtx.AltList()
+	if altListCtx == nil {
+		globalBlockID++
+		blockID := fmt.Sprintf("block_%d_alts", globalBlockID)
+		emptyAlts := []Alternative{}
+		v.blockAltMap[blockID] = emptyAlts
+		
+		return &Element{
+			Value: BlockValue{ID: blockID, Alternatives: emptyAlts},
+		}
+	}
+
+	// Extract all alternatives from the block
+	alts := altListCtx.AllAlternative()
+	if len(alts) == 0 {
+		globalBlockID++
+		blockID := fmt.Sprintf("block_%d_alts", globalBlockID)
+		emptyAlts := []Alternative{}
+		v.blockAltMap[blockID] = emptyAlts
+		
+		return &Element{
+			Value: BlockValue{ID: blockID, Alternatives: emptyAlts},
+		}
+	}
+
+	// Extract all alternatives
+	blockAlternatives := []Alternative{}
+	for _, altCtx := range alts {
+		elements := []Element{}
+		for _, elementCtx := range altCtx.AllElement() {
+			element := v.extractElement(elementCtx)
+			if element != nil {
+				elements = append(elements, *element)
+			}
+		}
+		blockAlternatives = append(blockAlternatives, Alternative{Elements: elements})
+	}
+
+	// If it's a single element in a single alternative, we can simplify
+	if len(blockAlternatives) == 1 && len(blockAlternatives[0].Elements) == 1 {
+		return &blockAlternatives[0].Elements[0]
+	}
+	
+	// Generate global unique block ID and store mapping
+	globalBlockID++
+	blockID := fmt.Sprintf("block_%d_alts", globalBlockID)
+	v.blockAltMap[blockID] = blockAlternatives
+	
+	return &Element{
+		Value: BlockValue{ID: blockID, Alternatives: blockAlternatives},
+	}
+}
+
+// extractEbnf extracts EBNF constructs (blocks with suffixes)
+func (v *GrammarExtractorVisitor) extractEbnf(ebnfCtx grammar.IEbnfContext) *Element {
+	// Get the block
+	blockCtx := ebnfCtx.Block()
+	if blockCtx == nil {
+		return nil
+	}
+
+	element := v.extractBlock(blockCtx)
+	if element != nil {
+		// Apply quantifier from block suffix
+		if blockSuffixCtx := ebnfCtx.BlockSuffix(); blockSuffixCtx != nil {
+			if ebnfSuffixCtx := blockSuffixCtx.EbnfSuffix(); ebnfSuffixCtx != nil {
+				element.Quantifier = v.extractQuantifier(ebnfSuffixCtx)
+			}
+		}
+	}
+
+	return element
+}
+
+// extractQuantifier extracts quantifier from EBNF suffix
+func (v *GrammarExtractorVisitor) extractQuantifier(ebnfSuffixCtx grammar.IEbnfSuffixContext) Quantifier {
+	if ebnfSuffixCtx == nil {
+		return NONE
+	}
+
+	// Check for question mark (optional)
+	if ebnfSuffixCtx.QUESTION(0) != nil {
+		return OPTIONAL_Q
+	}
+
+	// Check for star (zero or more)
+	if ebnfSuffixCtx.STAR() != nil {
+		return ZERO_MORE
+	}
+
+	// Check for plus (one or more)
+	if ebnfSuffixCtx.PLUS() != nil {
+		return ONE_MORE
+	}
+
+	return NONE
 }
