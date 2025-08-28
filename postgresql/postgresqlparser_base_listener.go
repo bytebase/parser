@@ -610,12 +610,6 @@ func (s *BasePostgreSQLParserListener) EnterColumnDef(ctx *ColumnDefContext) {}
 // ExitColumnDef is called when production columnDef is exited.
 func (s *BasePostgreSQLParserListener) ExitColumnDef(ctx *ColumnDefContext) {}
 
-// EnterRs_colattributes is called when production rs_colattributes is entered.
-func (s *BasePostgreSQLParserListener) EnterRs_colattributes(ctx *Rs_colattributesContext) {}
-
-// ExitRs_colattributes is called when production rs_colattributes is exited.
-func (s *BasePostgreSQLParserListener) ExitRs_colattributes(ctx *Rs_colattributesContext) {}
-
 // EnterColumnOptions is called when production columnOptions is entered.
 func (s *BasePostgreSQLParserListener) EnterColumnOptions(ctx *ColumnOptionsContext) {}
 
