@@ -6,6 +6,28 @@ import (
 	"github.com/pkg/errors"
 )
 
+// OutputFormat represents different output formatting options
+type OutputFormat int
+
+const (
+	// CompactOutput shows cleaner, more readable output (default)
+	CompactOutput OutputFormat = iota
+	// VerboseOutput shows full grammar rule traversal with comments
+	VerboseOutput
+)
+
+// ParseOutputFormat parses a string into an OutputFormat
+func ParseOutputFormat(s string) OutputFormat {
+	switch s {
+	case "compact", "":
+		return CompactOutput
+	case "verbose":
+		return VerboseOutput
+	default:
+		return CompactOutput
+	}
+}
+
 // Config holds all configuration options for the fuzzer
 type Config struct {
 	GrammarFiles    []string // Can be one file (combined) or two files (lexer,parser)
@@ -17,6 +39,7 @@ type Config struct {
 	MinQuantifier   int
 	QuantifierCount int
 	Output          string
+	OutputFormat    OutputFormat // How to format the output
 	Seed            int64
 }
 
