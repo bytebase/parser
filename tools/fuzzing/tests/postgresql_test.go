@@ -19,7 +19,7 @@ func getRepoRoot() string {
 
 func TestPostgreSQLSelectStmt(t *testing.T) {
 	repoRoot := getRepoRoot()
-	
+
 	// PostgreSQL grammar file paths
 	lexerPath := filepath.Join(repoRoot, "postgresql", "PostgreSQLLexer.g4")
 	parserPath := filepath.Join(repoRoot, "postgresql", "PostgreSQLParser.g4")
@@ -36,7 +36,7 @@ func TestPostgreSQLSelectStmt(t *testing.T) {
 			name:         "Simple SELECT statements",
 			startRule:    "selectstmt",
 			count:        3,
-			maxDepth:     5,
+			maxDepth:     10,
 			optionalProb: 0.7,
 			seed:         42,
 		},
@@ -74,7 +74,7 @@ func TestPostgreSQLSelectStmt(t *testing.T) {
 			}
 
 			fmt.Printf("\n=== %s ===\n", tt.name)
-			fmt.Printf("Config: MaxDepth=%d, OptionalProb=%.1f, Count=%d, Seed=%d\n", 
+			fmt.Printf("Config: MaxDepth=%d, OptionalProb=%.1f, Count=%d, Seed=%d\n",
 				tt.maxDepth, tt.optionalProb, tt.count, tt.seed)
 			fmt.Println()
 
@@ -92,7 +92,7 @@ func TestPostgreSQLSelectStmt(t *testing.T) {
 
 func TestPostgreSQLExpressions(t *testing.T) {
 	repoRoot := getRepoRoot()
-	
+
 	// PostgreSQL grammar file paths
 	lexerPath := filepath.Join(repoRoot, "postgresql", "PostgreSQLLexer.g4")
 	parserPath := filepath.Join(repoRoot, "postgresql", "PostgreSQLParser.g4")
@@ -126,7 +126,7 @@ func TestPostgreSQLExpressions(t *testing.T) {
 
 func TestPostgreSQLVerboseOutput(t *testing.T) {
 	repoRoot := getRepoRoot()
-	
+
 	// PostgreSQL grammar file paths
 	lexerPath := filepath.Join(repoRoot, "postgresql", "PostgreSQLLexer.g4")
 	parserPath := filepath.Join(repoRoot, "postgresql", "PostgreSQLParser.g4")
@@ -161,7 +161,7 @@ func TestPostgreSQLVerboseOutput(t *testing.T) {
 // Benchmark test for performance measurement
 func BenchmarkPostgreSQLGeneration(b *testing.B) {
 	repoRoot := getRepoRoot()
-	
+
 	lexerPath := filepath.Join(repoRoot, "postgresql", "PostgreSQLLexer.g4")
 	parserPath := filepath.Join(repoRoot, "postgresql", "PostgreSQLParser.g4")
 

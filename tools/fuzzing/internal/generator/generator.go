@@ -77,10 +77,6 @@ func (g *Generator) generateQuery(index int) string {
 
 // generateFromRule generates text from a grammar rule
 func (g *Generator) generateFromRule(ruleName string, currentDepth int) string {
-	// Check depth limit to prevent infinite recursion
-	if currentDepth >= g.config.MaxDepth {
-		return fmt.Sprintf("<%s_MAX_DEPTH>", ruleName)
-	}
 
 	// Get the rule
 	rule := g.getRule(ruleName)
