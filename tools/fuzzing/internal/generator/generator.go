@@ -61,9 +61,9 @@ func (g *Generator) Generate() error {
 		return errors.Errorf("start rule '%s' not found in merged grammar", g.config.StartRule)
 	}
 
-	// Check if start rule has terminal alternatives
-	if !g.dependencyGraph.HasTerminalAlternatives(g.config.StartRule) {
-		fmt.Printf("Warning: start rule '%s' has no terminal alternatives\n", g.config.StartRule)
+	// Check if start rule has immediately terminal alternatives
+	if !g.dependencyGraph.HasImmediatelyTerminalAlternatives(g.config.StartRule) {
+		fmt.Printf("Warning: start rule '%s' has no immediately terminal alternatives\n", g.config.StartRule)
 	}
 
 	fmt.Printf("Generating %d queries from rule '%s'...\n", g.config.Count, g.config.StartRule)
@@ -137,17 +137,25 @@ func (g *Generator) generateFromRuleWithRecursionTracking(ruleName string, activ
 
 // forceTerminalGeneration forces generation of terminal alternatives when recursion is detected
 func (g *Generator) forceTerminalGeneration(ruleName string) string {
-	// Get terminal alternatives - dependency graph guarantees these exist
-	terminalAlts := g.dependencyGraph.GetTerminalAlternatives(ruleName)
+	// Get immediately terminal alternatives first (preferred)
+	immediateTerminalAlts := g.dependencyGraph.GetImmediatelyTerminalAlternatives(ruleName)
 	rule := g.getRule(ruleName)
 
-	// Randomly select from available terminal alternatives
-	randomIndex := g.random.Intn(len(terminalAlts))
-	altIndex := terminalAlts[randomIndex]
-	alternative := rule.Alternatives[altIndex]
+	// Check if we have immediately terminal alternatives
+	if len(immediateTerminalAlts) == 0 {
+		// Fallback for rules that don't have immediately terminal alternatives
+		// This can happen with forward references or missing rules
+		fmt.Printf("Warning: Rule %s has no immediately terminal alternatives, generating simple fallback\n", ruleName)
+		return generateSimpleFallback(ruleName)
+	}
+	
+	randomIndex := g.random.Intn(len(immediateTerminalAlts))
+	selectedAltIndex := immediateTerminalAlts[randomIndex]
 
-	// Generate using aggressive terminal mode
-	result := g.generateFromAlternativeAggressiveTerminal(&alternative, ruleName)
+	alternative := rule.Alternatives[selectedAltIndex]
+
+	// Generate using normal generation since this is an immediately terminal alternative
+	result := g.generateFromImmediatelyTerminalAlternative(&alternative)
 
 	switch g.config.OutputFormat {
 	case config.CompactOutput:
@@ -157,6 +165,18 @@ func (g *Generator) forceTerminalGeneration(ruleName string) string {
 	default:
 		return result
 	}
+}
+
+
+// ForceTerminalGenerationPublic exposes forceTerminalGeneration for testing
+func (g *Generator) ForceTerminalGenerationPublic(ruleName string) string {
+	return g.forceTerminalGeneration(ruleName)
+}
+
+// SetGrammarForTesting sets the grammar for testing purposes
+func (g *Generator) SetGrammarForTesting(grammar *grammar.ParsedGrammar) {
+	g.grammar = grammar
+	g.dependencyGraph = grammar.GetDependencyGraph()
 }
 
 // generateFromRule generates text from a grammar rule (legacy method, kept for compatibility)
@@ -508,47 +528,51 @@ func (g *Generator) generateFromRuleOrTokenWithRecursionTracking(ruleName string
 	return g.generateFromRuleWithRecursionTracking(ruleName, activeRules, depth)
 }
 
-// generateFromAlternativeAggressiveTerminal generates from an alternative using aggressive terminal mode
-func (g *Generator) generateFromAlternativeAggressiveTerminal(alt *grammar.Alternative, ruleName string) string {
+// generateFromImmediatelyTerminalAlternative generates from an immediately terminal alternative using normal generation
+// Since the alternative is immediately terminal, we can safely generate without recursion tracking
+func (g *Generator) generateFromImmediatelyTerminalAlternative(alt *grammar.Alternative) string {
 	var result []string
 
 	for _, element := range alt.Elements {
-		elementResult := g.generateFromElementAggressiveTerminal(&element, ruleName)
+		elementResult := g.generateFromImmediatelyTerminalElement(&element)
 		if elementResult != "" {
 			result = append(result, elementResult)
 		}
 	}
 
-	if len(result) == 0 {
-		// Ultimate fallback - use simple pattern based on rule name
-		return g.generateSimpleFallback(ruleName)
-	}
-
 	return joinWithSpaces(result)
 }
 
-// generateFromElementAggressiveTerminal generates from an element using aggressive terminal mode
-func (g *Generator) generateFromElementAggressiveTerminal(element *grammar.Element, contextRuleName string) string {
-	// Handle quantified elements - be very conservative
+// generateFromImmediatelyTerminalElement generates from an element that's part of an immediately terminal alternative
+func (g *Generator) generateFromImmediatelyTerminalElement(element *grammar.Element) string {
+	// Handle quantified elements
 	if element.IsQuantified() {
 		switch element.Quantifier {
 		case grammar.ZERO_MORE, grammar.OPTIONAL_Q:
+			// Generate 0 or 1 occurrences for optional elements
+			if g.random.Float32() < float32(g.config.OptionalProb) {
+				nonQuantifiedElement := grammar.Element{
+					Value:      element.Value,
+					Quantifier: grammar.NONE,
+				}
+				return g.generateFromImmediatelyTerminalElement(&nonQuantifiedElement)
+			}
 			return ""
 		case grammar.ONE_MORE:
-			// Generate exactly one for ONE_MORE
+			// Generate exactly 1 occurrence for ONE_MORE to stay minimal
 			nonQuantifiedElement := grammar.Element{
 				Value:      element.Value,
 				Quantifier: grammar.NONE,
 			}
-			return g.generateFromElementAggressiveTerminal(&nonQuantifiedElement, contextRuleName)
+			return g.generateFromImmediatelyTerminalElement(&nonQuantifiedElement)
 		}
 	}
 
 	// Handle different element types
 	if element.IsTerminal() {
-		// Direct literal - just return it
+		// Direct literal - use existing generation logic that handles character sets, literals, etc.
 		if literal, ok := element.Value.(grammar.LiteralValue); ok {
-			return strings.Trim(literal.Text, "'\"")
+			return g.generateFromLiteral(literal.Text)
 		}
 		return element.Value.String()
 	}
@@ -556,18 +580,22 @@ func (g *Generator) generateFromElementAggressiveTerminal(element *grammar.Eleme
 	if element.IsRule() {
 		switch value := element.Value.(type) {
 		case grammar.ReferenceValue:
-			// Check if it's a simple lexer rule
-			if g.isSimpleLexerRule(value.Name) {
-				return g.generateConcreteToken(value.Name)
-			}
-
-			// For parser rules, generate simple fallback based on rule name
-			return g.generateSimpleFallback(value.Name)
+			// For rule references in immediately terminal alternatives, use normal generation with empty recursion tracking
+			// Since we know this is immediately terminal, we can generate safely
+			return g.generateFromRuleWithRecursionTracking(value.Name, make(map[string]bool), 0)
 
 		case grammar.BlockValue:
-			// For blocks, try the first alternative only
+			// For blocks, randomly select an alternative that's immediately terminal
 			if len(value.Alternatives) > 0 {
-				return g.generateFromAlternativeAggressiveTerminal(&value.Alternatives[0], contextRuleName)
+				// Find immediately terminal alternatives within the block
+				for _, alt := range value.Alternatives {
+					// Use dependency graph to check if this alternative is immediately terminal
+					if g.dependencyGraph.CanAlternativeTerminateImmediately(alt) {
+						return g.generateFromImmediatelyTerminalAlternative(&alt)
+					}
+				}
+				// Fallback to first alternative if none found (shouldn't happen)
+				return g.generateFromImmediatelyTerminalAlternative(&value.Alternatives[0])
 			}
 			return ""
 		}
@@ -576,46 +604,22 @@ func (g *Generator) generateFromElementAggressiveTerminal(element *grammar.Eleme
 	return ""
 }
 
-// isSimpleLexerRule checks if a rule is a simple lexer rule that can be safely generated
-func (g *Generator) isSimpleLexerRule(ruleName string) bool {
-	rule := g.getRule(ruleName)
-	if rule == nil || !rule.IsLexer {
-		return false
-	}
-
-	// Consider lexer rules with simple patterns as safe
-	simpleLexerRules := map[string]bool{
-		"IDENTIFIER": true, "ID": true, "NAME": true,
-		"INTEGER": true, "NUMBER": true, "NUMERIC": true, "INT": true,
-		"STRING": true, "STRING_LITERAL": true,
-		"SELECT": true, "FROM": true, "WHERE": true, "AND": true, "OR": true,
-		"COMMA": true, "SEMICOLON": true, "DOT": true,
-		"OPEN_PAREN": true, "CLOSE_PAREN": true,
-		"PLUS": true, "MINUS": true, "STAR": true, "SLASH": true,
-	}
-
-	return simpleLexerRules[ruleName]
-}
-
 // generateSimpleFallback generates a simple fallback value based on rule name patterns
-func (g *Generator) generateSimpleFallback(ruleName string) string {
+func generateSimpleFallback(ruleName string) string {
 	// Generate context-appropriate fallbacks
 	ruleLower := strings.ToLower(ruleName)
 
-	if strings.Contains(ruleLower, "expr") || strings.Contains(ruleLower, "expression") {
+	if strings.Contains(ruleLower, "string") || strings.Contains(ruleLower, "constant") {
+		return "'fallback'"
+	} else if strings.Contains(ruleLower, "expr") || strings.Contains(ruleLower, "expression") {
 		return "1"
 	} else if strings.Contains(ruleLower, "name") || strings.Contains(ruleLower, "id") {
 		return "col1"
-	} else if strings.Contains(ruleLower, "list") {
+	} else if strings.Contains(ruleLower, "number") || strings.Contains(ruleLower, "numeric") {
 		return "1"
-	} else if strings.Contains(ruleLower, "clause") {
-		return "1"
-	} else if strings.Contains(ruleLower, "stmt") || strings.Contains(ruleLower, "statement") {
-		return "SELECT 1"
-	} else if strings.Contains(ruleLower, "select") {
-		return "SELECT 1"
 	} else {
 		// Generic fallback
 		return "1"
 	}
 }
+

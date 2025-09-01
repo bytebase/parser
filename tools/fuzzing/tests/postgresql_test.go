@@ -17,7 +17,7 @@ func getRepoRoot() string {
 	return filepath.Join(filepath.Dir(filename), "..", "..", "..")
 }
 
-func TestPostgreSQLSelectStmt(t *testing.T) {
+func TestPostgreSQLRootStmt(t *testing.T) {
 	repoRoot := getRepoRoot()
 
 	// PostgreSQL grammar file paths
@@ -33,24 +33,24 @@ func TestPostgreSQLSelectStmt(t *testing.T) {
 		seed         int64
 	}{
 		{
-			name:         "Simple SELECT statements",
-			startRule:    "selectstmt",
+			name:         "Simple root",
+			startRule:    "root",
 			count:        3,
 			maxDepth:     10,
 			optionalProb: 0.7,
 			seed:         42,
 		},
 		{
-			name:         "Deep SELECT statements",
-			startRule:    "selectstmt",
+			name:         "Deep root",
+			startRule:    "root",
 			count:        2,
 			maxDepth:     8,
 			optionalProb: 0.5,
 			seed:         123,
 		},
 		{
-			name:         "Minimal SELECT statements",
-			startRule:    "selectstmt",
+			name:         "Minimal root",
+			startRule:    "root",
 			count:        5,
 			maxDepth:     3,
 			optionalProb: 0.3,
