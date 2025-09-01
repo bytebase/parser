@@ -43,12 +43,24 @@ func (g *DependencyGraph) GetNode(ruleName string) *GraphNode {
 }
 
 // AnalyzeTerminalReachability performs terminal reachability analysis on the graph
-func (g *DependencyGraph) AnalyzeTerminalReachability() {
+func (g *DependencyGraph) AnalyzeTerminalReachability() error {
+	return g.AnalyzeTerminalReachabilityWithValidation(false)
+}
+
+// AnalyzeTerminalReachabilityWithValidation performs terminal reachability analysis with optional validation
+func (g *DependencyGraph) AnalyzeTerminalReachabilityWithValidation(validateUnterminated bool) error {
 	// Phase 1: Mark lexer rules as terminal
 	g.markLexerRulesAsTerminal()
 	
 	// Phase 2: Propagate terminal reachability using fixed-point iteration
 	g.propagateTerminalReachability()
+	
+	// Phase 3: Check for unterminated nodes and report error (only if requested)
+	if validateUnterminated {
+		return g.validateTerminalReachability()
+	}
+	
+	return nil
 }
 
 // markLexerRulesAsTerminal marks all lexer rules as having terminal alternatives
@@ -101,6 +113,24 @@ func (g *DependencyGraph) propagateTerminalReachability() {
 	if iterations >= maxIterations {
 		fmt.Printf("Warning: Terminal reachability analysis reached max iterations (%d)\n", maxIterations)
 	}
+}
+
+// validateTerminalReachability checks for rules without terminal alternatives and reports errors
+func (g *DependencyGraph) validateTerminalReachability() error {
+	var unterminatedRules []string
+	
+	for ruleName, node := range g.Nodes {
+		if !node.HasTerminalAlternatives {
+			unterminatedRules = append(unterminatedRules, ruleName)
+		}
+	}
+	
+	if len(unterminatedRules) > 0 {
+		return fmt.Errorf("grammar contains %d rules without terminal alternatives: %v", 
+			len(unterminatedRules), unterminatedRules)
+	}
+	
+	return nil
 }
 
 // isAlternativeAlreadyMarked checks if an alternative is already in the terminal list

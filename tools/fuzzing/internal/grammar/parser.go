@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"github.com/antlr4-go/antlr/v4"
-	"github.com/pkg/errors"
 	grammar "github.com/bytebase/parser/tools/grammar"
+	"github.com/pkg/errors"
 )
 
 // ParsedGrammar represents a parsed grammar with extracted rules
@@ -59,7 +59,7 @@ func (r ReferenceValue) String() string { return r.Name }
 
 // BlockValue represents a generated block (e.g., (',' column)*)
 type BlockValue struct {
-	ID           string        // Global unique ID like "block_1_alts"
+	ID           string // Global unique ID like "block_1_alts"
 	Alternatives []Alternative
 }
 
@@ -77,7 +77,6 @@ func (b BlockValue) String() string {
 	return b.ID
 }
 
-
 // WildcardValue represents a wildcard (.)
 type WildcardValue struct{}
 
@@ -93,10 +92,10 @@ type Element struct {
 type Quantifier int
 
 const (
-	NONE Quantifier = iota
-	OPTIONAL_Q // ?
-	ZERO_MORE  // *
-	ONE_MORE   // +
+	NONE       Quantifier = iota
+	OPTIONAL_Q            // ?
+	ZERO_MORE             // *
+	ONE_MORE              // +
 )
 
 // ParseGrammarFile parses a .g4 file and extracts rules for fuzzing
@@ -148,8 +147,6 @@ func ParseGrammarFile(filePath string) (*ParsedGrammar, error) {
 	visitor := NewGrammarExtractorVisitor()
 	visitor.VisitGrammarSpec(tree)
 
-
-
 	parsedGrammar := &ParsedGrammar{
 		LexerRules:      visitor.lexerRules,
 		ParserRules:     visitor.parserRules,
@@ -157,27 +154,38 @@ func ParseGrammarFile(filePath string) (*ParsedGrammar, error) {
 		BlockAltMap:     visitor.blockAltMap,
 		DependencyGraph: NewDependencyGraph(),
 	}
-	
+
 	// Build dependency graph
-	buildDependencyGraph(parsedGrammar)
-	
+	if err := buildDependencyGraph(parsedGrammar); err != nil {
+		return nil, fmt.Errorf("failed to build dependency graph: %w", err)
+	}
+
 	return parsedGrammar, nil
 }
 
 // buildDependencyGraph constructs the dependency graph for the parsed grammar
-func buildDependencyGraph(parsedGrammar *ParsedGrammar) {
+func buildDependencyGraph(parsedGrammar *ParsedGrammar) error {
+	return buildDependencyGraphWithValidation(parsedGrammar, false)
+}
+
+// buildDependencyGraphWithValidation constructs the dependency graph with optional validation
+func buildDependencyGraphWithValidation(parsedGrammar *ParsedGrammar, validateUnterminated bool) error {
 	// Add all lexer rules to the graph
 	for ruleName, rule := range parsedGrammar.LexerRules {
 		parsedGrammar.DependencyGraph.AddNode(ruleName, rule)
 	}
-	
+
 	// Add all parser rules to the graph
 	for ruleName, rule := range parsedGrammar.ParserRules {
 		parsedGrammar.DependencyGraph.AddNode(ruleName, rule)
 	}
-	
-	// Perform terminal reachability analysis
-	parsedGrammar.DependencyGraph.AnalyzeTerminalReachability()
+
+	// Perform terminal reachability analysis with optional validation
+	if err := parsedGrammar.DependencyGraph.AnalyzeTerminalReachabilityWithValidation(validateUnterminated); err != nil {
+		return fmt.Errorf("terminal reachability analysis failed: %w", err)
+	}
+
+	return nil
 }
 
 // GetRule gets a rule by name from either lexer or parser rules
@@ -224,7 +232,7 @@ func (g *ParsedGrammar) MergeGrammar(other *ParsedGrammar) error {
 		}
 		g.LexerRules[name] = rule
 	}
-	
+
 	// Merge parser rules
 	for name, rule := range other.ParserRules {
 		if _, exists := g.ParserRules[name]; exists {
@@ -232,7 +240,7 @@ func (g *ParsedGrammar) MergeGrammar(other *ParsedGrammar) error {
 		}
 		g.ParserRules[name] = rule
 	}
-	
+
 	// Merge block alternatives map
 	for blockID, alternatives := range other.BlockAltMap {
 		if _, exists := g.BlockAltMap[blockID]; exists {
@@ -240,16 +248,18 @@ func (g *ParsedGrammar) MergeGrammar(other *ParsedGrammar) error {
 		}
 		g.BlockAltMap[blockID] = alternatives
 	}
-	
+
 	// Update file path to indicate it's a merged grammar
 	if g.FilePath != other.FilePath {
 		g.FilePath = fmt.Sprintf("%s + %s", g.FilePath, other.FilePath)
 	}
-	
-	// Rebuild dependency graph with merged rules
+
+	// Rebuild dependency graph with merged rules and validate
 	g.DependencyGraph = NewDependencyGraph()
-	buildDependencyGraph(g)
-	
+	if err := buildDependencyGraphWithValidation(g, true); err != nil {
+		return fmt.Errorf("failed to rebuild dependency graph after merge: %w", err)
+	}
+
 	return nil
 }
 
@@ -258,13 +268,13 @@ func ParseAndMergeGrammarFiles(filePaths []string) (*ParsedGrammar, error) {
 	if len(filePaths) == 0 {
 		return nil, errors.New("no grammar files provided")
 	}
-	
+
 	// Parse the first grammar file
 	mergedGrammar, err := ParseGrammarFile(filePaths[0])
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to parse first grammar file %s", filePaths[0])
 	}
-	
+
 	// Merge additional grammar files
 	for i := 1; i < len(filePaths); i++ {
 		filePath := filePaths[i]
@@ -272,12 +282,12 @@ func ParseAndMergeGrammarFiles(filePaths []string) (*ParsedGrammar, error) {
 		if err != nil {
 			return nil, errors.Wrapf(err, "failed to parse grammar file %s", filePath)
 		}
-		
+
 		if err := mergedGrammar.MergeGrammar(grammar); err != nil {
 			return nil, errors.Wrapf(err, "failed to merge grammar file %s", filePath)
 		}
 	}
-	
+
 	return mergedGrammar, nil
 }
 
@@ -616,7 +626,7 @@ func (v *GrammarExtractorVisitor) extractLexerAtom(lexerAtomCtx grammar.ILexerAt
 
 	// Handle not set (e.g., ~[abc])
 	if notSetCtx := lexerAtomCtx.NotSet(); notSetCtx != nil {
-		return v.extractNotSet(notSetCtx)
+		return v.extractNotSet()
 	}
 
 	// Handle lexer character set (e.g., [abc])
@@ -645,7 +655,7 @@ func (v *GrammarExtractorVisitor) extractLexerBlock(lexerBlockCtx grammar.ILexer
 		blockID := fmt.Sprintf("lexer_block_%d_alts", globalBlockID)
 		emptyAlts := []Alternative{}
 		v.blockAltMap[blockID] = emptyAlts
-		
+
 		return &Element{
 			Value: BlockValue{ID: blockID, Alternatives: emptyAlts},
 		}
@@ -658,7 +668,7 @@ func (v *GrammarExtractorVisitor) extractLexerBlock(lexerBlockCtx grammar.ILexer
 		blockID := fmt.Sprintf("lexer_block_%d_alts", globalBlockID)
 		emptyAlts := []Alternative{}
 		v.blockAltMap[blockID] = emptyAlts
-		
+
 		return &Element{
 			Value: BlockValue{ID: blockID, Alternatives: emptyAlts},
 		}
@@ -678,12 +688,12 @@ func (v *GrammarExtractorVisitor) extractLexerBlock(lexerBlockCtx grammar.ILexer
 		}
 		blockAlternatives = append(blockAlternatives, Alternative{Elements: elements})
 	}
-	
+
 	// Generate global unique block ID and store mapping
 	globalBlockID++
 	blockID := fmt.Sprintf("lexer_block_%d_alts", globalBlockID)
 	v.blockAltMap[blockID] = blockAlternatives
-	
+
 	return &Element{
 		Value: BlockValue{ID: blockID, Alternatives: blockAlternatives},
 	}
@@ -705,7 +715,7 @@ func (v *GrammarExtractorVisitor) extractCharacterRange(characterRangeCtx gramma
 }
 
 // extractNotSet extracts a not set (e.g., ~[abc])
-func (v *GrammarExtractorVisitor) extractNotSet(notSetCtx grammar.INotSetContext) *Element {
+func (v *GrammarExtractorVisitor) extractNotSet() *Element {
 	// For now, represent as a literal text
 	// In a real implementation, this would need more sophisticated handling
 	return &Element{
@@ -763,7 +773,6 @@ func (v *GrammarExtractorVisitor) extractTerminalDef(terminalDefCtx grammar.ITer
 	return nil
 }
 
-
 // extractRuleRef extracts a rule reference
 func (v *GrammarExtractorVisitor) extractRuleRef(rulerefCtx grammar.IRulerefContext) *Element {
 	if ruleRefToken := rulerefCtx.RULE_REF(); ruleRefToken != nil {
@@ -783,7 +792,7 @@ func (v *GrammarExtractorVisitor) extractBlock(blockCtx grammar.IBlockContext) *
 		blockID := fmt.Sprintf("block_%d_alts", globalBlockID)
 		emptyAlts := []Alternative{}
 		v.blockAltMap[blockID] = emptyAlts
-		
+
 		return &Element{
 			Value: BlockValue{ID: blockID, Alternatives: emptyAlts},
 		}
@@ -796,7 +805,7 @@ func (v *GrammarExtractorVisitor) extractBlock(blockCtx grammar.IBlockContext) *
 		blockID := fmt.Sprintf("block_%d_alts", globalBlockID)
 		emptyAlts := []Alternative{}
 		v.blockAltMap[blockID] = emptyAlts
-		
+
 		return &Element{
 			Value: BlockValue{ID: blockID, Alternatives: emptyAlts},
 		}
@@ -819,12 +828,12 @@ func (v *GrammarExtractorVisitor) extractBlock(blockCtx grammar.IBlockContext) *
 	if len(blockAlternatives) == 1 && len(blockAlternatives[0].Elements) == 1 {
 		return &blockAlternatives[0].Elements[0]
 	}
-	
+
 	// Generate global unique block ID and store mapping
 	globalBlockID++
 	blockID := fmt.Sprintf("block_%d_alts", globalBlockID)
 	v.blockAltMap[blockID] = blockAlternatives
-	
+
 	return &Element{
 		Value: BlockValue{ID: blockID, Alternatives: blockAlternatives},
 	}
