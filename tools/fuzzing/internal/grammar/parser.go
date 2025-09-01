@@ -18,6 +18,8 @@ type ParsedGrammar struct {
 	// BlockAltMap stores temporary block rules for debugging
 	// Key: block ID (e.g., "block_1_alts"), Value: the block alternatives
 	BlockAltMap map[string][]Alternative
+	// DependencyGraph for recursion analysis
+	DependencyGraph *DependencyGraph
 }
 
 // Rule represents a grammar rule with its alternatives
@@ -148,12 +150,34 @@ func ParseGrammarFile(filePath string) (*ParsedGrammar, error) {
 
 
 
-	return &ParsedGrammar{
-		LexerRules:  visitor.lexerRules,
-		ParserRules: visitor.parserRules,
-		FilePath:    filePath,
-		BlockAltMap: visitor.blockAltMap,
-	}, nil
+	parsedGrammar := &ParsedGrammar{
+		LexerRules:      visitor.lexerRules,
+		ParserRules:     visitor.parserRules,
+		FilePath:        filePath,
+		BlockAltMap:     visitor.blockAltMap,
+		DependencyGraph: NewDependencyGraph(),
+	}
+	
+	// Build dependency graph
+	buildDependencyGraph(parsedGrammar)
+	
+	return parsedGrammar, nil
+}
+
+// buildDependencyGraph constructs the dependency graph for the parsed grammar
+func buildDependencyGraph(parsedGrammar *ParsedGrammar) {
+	// Add all lexer rules to the graph
+	for ruleName, rule := range parsedGrammar.LexerRules {
+		parsedGrammar.DependencyGraph.AddNode(ruleName, rule)
+	}
+	
+	// Add all parser rules to the graph
+	for ruleName, rule := range parsedGrammar.ParserRules {
+		parsedGrammar.DependencyGraph.AddNode(ruleName, rule)
+	}
+	
+	// Perform terminal reachability analysis
+	parsedGrammar.DependencyGraph.AnalyzeTerminalReachability()
 }
 
 // GetRule gets a rule by name from either lexer or parser rules
@@ -222,6 +246,10 @@ func (g *ParsedGrammar) MergeGrammar(other *ParsedGrammar) error {
 		g.FilePath = fmt.Sprintf("%s + %s", g.FilePath, other.FilePath)
 	}
 	
+	// Rebuild dependency graph with merged rules
+	g.DependencyGraph = NewDependencyGraph()
+	buildDependencyGraph(g)
+	
 	return nil
 }
 
@@ -253,6 +281,26 @@ func ParseAndMergeGrammarFiles(filePaths []string) (*ParsedGrammar, error) {
 	return mergedGrammar, nil
 }
 
+// GetDependencyGraph returns the dependency graph for the parsed grammar
+func (g *ParsedGrammar) GetDependencyGraph() *DependencyGraph {
+	return g.DependencyGraph
+}
+
+// ValidateGrammar validates that the grammar has valid dependency structure
+func (g *ParsedGrammar) ValidateGrammar() error {
+	if g.DependencyGraph == nil {
+		return fmt.Errorf("dependency graph not built")
+	}
+	return g.DependencyGraph.ValidateGrammar()
+}
+
+// PrintDependencyAnalysis prints dependency graph analysis for debugging
+func (g *ParsedGrammar) PrintDependencyAnalysis() {
+	if g.DependencyGraph != nil {
+		g.DependencyGraph.PrintAnalysisResults()
+	}
+}
+
 // IsRule checks if an element refers to another rule or generated block
 func (e *Element) IsRule() bool {
 	_, isRef := e.Value.(ReferenceValue)
@@ -274,7 +322,7 @@ func (e *Element) IsOptional() bool {
 
 // IsQuantified checks if an element has repetition quantifiers
 func (e *Element) IsQuantified() bool {
-	return e.Quantifier == ZERO_MORE || e.Quantifier == ONE_MORE
+	return e.Quantifier == ZERO_MORE || e.Quantifier == ONE_MORE || e.Quantifier == OPTIONAL_Q
 }
 
 // GrammarErrorListener collects parsing errors
