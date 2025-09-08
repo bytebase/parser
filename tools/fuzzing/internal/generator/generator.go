@@ -109,7 +109,8 @@ func (g *Generator) generateFromRuleWithRecursionTracking(ruleName string, activ
 
 	// Select a random alternative
 	if len(rule.Alternatives) == 0 {
-		return fmt.Sprintf("<%s>", ruleName)
+		// rule:; is valid but has no alternatives, return empty directly.
+		return ""
 	}
 
 	altIndex := g.random.Intn(len(rule.Alternatives))
@@ -148,7 +149,7 @@ func (g *Generator) forceTerminalGeneration(ruleName string) string {
 		fmt.Printf("Warning: Rule %s has no immediately terminal alternatives, generating simple fallback\n", ruleName)
 		return generateSimpleFallback(ruleName)
 	}
-	
+
 	randomIndex := g.random.Intn(len(immediateTerminalAlts))
 	selectedAltIndex := immediateTerminalAlts[randomIndex]
 
@@ -166,7 +167,6 @@ func (g *Generator) forceTerminalGeneration(ruleName string) string {
 		return result
 	}
 }
-
 
 // ForceTerminalGenerationPublic exposes forceTerminalGeneration for testing
 func (g *Generator) ForceTerminalGenerationPublic(ruleName string) string {

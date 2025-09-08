@@ -11,11 +11,11 @@ type DependencyGraph struct {
 
 // GraphNode represents a single rule in the dependency graph
 type GraphNode struct {
-	RuleName                         string        // Rule name (e.g., "selectStmt", "expr")
-	Alternatives                    []Alternative  // All alternatives for this rule
-	HasImmediatelyTerminalAlternatives bool        // Has at least one immediately terminal alternative
-	ImmediatelyTerminalAlternativeIndex []int      // Indices of alternatives that are immediately terminal
-	IsLexer                         bool          // Whether this is a lexer rule
+	RuleName                            string        // Rule name (e.g., "selectStmt", "expr")
+	Alternatives                        []Alternative // All alternatives for this rule
+	HasImmediatelyTerminalAlternatives  bool          // Has at least one immediately terminal alternative
+	ImmediatelyTerminalAlternativeIndex []int         // Indices of alternatives that are immediately terminal
+	IsLexer                             bool          // Whether this is a lexer rule
 }
 
 // NewDependencyGraph creates a new dependency graph
@@ -28,11 +28,11 @@ func NewDependencyGraph() *DependencyGraph {
 // AddNode adds a rule node to the dependency graph
 func (g *DependencyGraph) AddNode(ruleName string, rule *Rule) {
 	node := &GraphNode{
-		RuleName:                         ruleName,
-		Alternatives:                    rule.Alternatives,
-		HasImmediatelyTerminalAlternatives: false,
+		RuleName:                            ruleName,
+		Alternatives:                        rule.Alternatives,
+		HasImmediatelyTerminalAlternatives:  false,
 		ImmediatelyTerminalAlternativeIndex: []int{},
-		IsLexer:                         rule.IsLexer,
+		IsLexer:                             rule.IsLexer,
 	}
 	g.Nodes[ruleName] = node
 }
@@ -51,15 +51,15 @@ func (g *DependencyGraph) AnalyzeTerminalReachability() error {
 func (g *DependencyGraph) AnalyzeTerminalReachabilityWithValidation(validateUnterminated bool) error {
 	// Phase 1: Mark lexer rules as immediately terminal
 	g.markLexerRulesAsImmediatelyTerminal()
-	
+
 	// Phase 2: Analyze immediately terminal alternatives
 	g.analyzeImmediatelyTerminalAlternatives()
-	
+
 	// Phase 3: Check for nodes without immediately terminal alternatives and report error (only if requested)
 	if validateUnterminated {
 		return g.validateImmediatelyTerminalReachability()
 	}
-	
+
 	return nil
 }
 
@@ -82,23 +82,23 @@ func (g *DependencyGraph) analyzeImmediatelyTerminalAlternatives() {
 	changed := true
 	iterations := 0
 	maxIterations := len(g.Nodes) * 2 // Prevent infinite loops
-	
+
 	for changed && iterations < maxIterations {
 		changed = false
 		iterations++
-		
+
 		for _, node := range g.Nodes {
 			if node.IsLexer {
 				continue // Already processed
 			}
-			
+
 			// Check each alternative to see if it's immediately terminal
 			for altIndex, alt := range node.Alternatives {
 				// Skip if this alternative is already marked as immediately terminal
 				if g.isAlternativeAlreadyMarkedImmediate(node, altIndex) {
 					continue
 				}
-				
+
 				if g.canAlternativeTerminateImmediately(alt) {
 					if !node.HasImmediatelyTerminalAlternatives {
 						node.HasImmediatelyTerminalAlternatives = true
@@ -110,7 +110,7 @@ func (g *DependencyGraph) analyzeImmediatelyTerminalAlternatives() {
 			}
 		}
 	}
-	
+
 	if iterations >= maxIterations {
 		fmt.Printf("Warning: Immediately terminal analysis reached max iterations (%d)\\n", maxIterations)
 	}
@@ -119,18 +119,18 @@ func (g *DependencyGraph) analyzeImmediatelyTerminalAlternatives() {
 // validateImmediatelyTerminalReachability checks for rules without immediately terminal alternatives and reports errors
 func (g *DependencyGraph) validateImmediatelyTerminalReachability() error {
 	var unterminatedRules []string
-	
+
 	for ruleName, node := range g.Nodes {
 		if !node.HasImmediatelyTerminalAlternatives {
 			unterminatedRules = append(unterminatedRules, ruleName)
 		}
 	}
-	
+
 	if len(unterminatedRules) > 0 {
-		return fmt.Errorf("grammar contains %d rules without immediately terminal alternatives: %v", 
+		return fmt.Errorf("grammar contains %d rules without immediately terminal alternatives: %v",
 			len(unterminatedRules), unterminatedRules)
 	}
-	
+
 	return nil
 }
 
@@ -150,14 +150,14 @@ func (g *DependencyGraph) canAlternativeTerminateImmediately(alt Alternative) bo
 	if len(alt.Elements) == 0 {
 		return true
 	}
-	
+
 	// Check each element in the alternative
 	for _, element := range alt.Elements {
 		if !g.canElementTerminateImmediately(element) {
 			return false
 		}
 	}
-	
+
 	return true
 }
 
@@ -167,7 +167,7 @@ func (g *DependencyGraph) canElementTerminateImmediately(element Element) bool {
 	if element.IsTerminal() {
 		return true
 	}
-	
+
 	// Handle quantified elements
 	if element.IsQuantified() {
 		// * and ? quantifiers can generate 0 occurrences, so they can terminate immediately
@@ -179,19 +179,19 @@ func (g *DependencyGraph) canElementTerminateImmediately(element Element) bool {
 			return g.canRuleReferenceTerminateImmediately(element)
 		}
 	}
-	
+
 	// For rule references, check if the referenced rule can terminate immediately
 	if element.IsRule() {
 		return g.canRuleReferenceTerminateImmediately(element)
 	}
-	
+
 	return false
 }
 
 // canRuleReferenceTerminateImmediately checks if a rule reference can terminate immediately
 func (g *DependencyGraph) canRuleReferenceTerminateImmediately(element Element) bool {
 	var referencedRuleName string
-	
+
 	// Extract rule name based on element value type
 	switch value := element.Value.(type) {
 	case ReferenceValue:
@@ -202,7 +202,7 @@ func (g *DependencyGraph) canRuleReferenceTerminateImmediately(element Element) 
 	default:
 		return false
 	}
-	
+
 	// Check if the referenced rule exists and can terminate immediately
 	referencedNode := g.GetNode(referencedRuleName)
 	if referencedNode == nil {
@@ -214,7 +214,7 @@ func (g *DependencyGraph) canRuleReferenceTerminateImmediately(element Element) 
 		// For now, we'll be conservative and assume it cannot terminate immediately
 		return false
 	}
-	
+
 	return referencedNode.HasImmediatelyTerminalAlternatives
 }
 
@@ -239,21 +239,20 @@ func (g *DependencyGraph) CanElementTerminateImmediately(element Element) bool {
 	return g.canElementTerminateImmediately(element)
 }
 
-
 // ValidateGrammar checks if all rules have at least one immediately terminal alternative
 func (g *DependencyGraph) ValidateGrammar() error {
 	var invalidRules []string
-	
+
 	for ruleName, node := range g.Nodes {
 		if !node.HasImmediatelyTerminalAlternatives {
 			invalidRules = append(invalidRules, ruleName)
 		}
 	}
-	
+
 	if len(invalidRules) > 0 {
 		return fmt.Errorf("grammar validation failed: the following rules have no immediately terminal alternatives: %v", invalidRules)
 	}
-	
+
 	return nil
 }
 
@@ -295,6 +294,6 @@ func isAntlrBuiltinToken(tokenName string) bool {
 		"EOF":   true, // End-of-file token
 		"<EOF>": true, // Alternative EOF notation
 	}
-	
+
 	return builtinTokens[tokenName]
 }
