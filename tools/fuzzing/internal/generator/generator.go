@@ -173,7 +173,7 @@ func (g *Generator) generateFromElement(element *grammar.Element, depth int) str
 }
 
 // generateConcreteToken generates concrete tokens by expanding lexer rules
-func (g *Generator) generateConcreteToken(ruleName string) string {
+func (g *Generator) generateConcreteToken(ruleName string, depth int) string {
 	// Get the lexer rule
 	rule := g.grammar.GetRule(ruleName)
 	if rule == nil || !rule.IsLexer {
@@ -182,11 +182,17 @@ func (g *Generator) generateConcreteToken(ruleName string) string {
 
 	// For lexer rules, we need to expand them but generate concrete characters
 	// at the terminal level (character sets, literals, etc.)
-	return g.generateFromLexerRule(rule, 0)
+	return g.generateFromLexerRule(rule, depth)
 }
 
 // generateFromLexerRule generates content from a lexer rule
 func (g *Generator) generateFromLexerRule(rule *grammar.Rule, currentDepth int) string {
+	// Check recursion depth for lexer rules too
+	node := g.dependencyGraph.GetNode(rule.Name)
+	if node != nil && node.IsRecursive && currentDepth >= g.config.MaxDepth {
+		return generateSimpleFallback(rule.Name)
+	}
+	
 	if len(rule.Alternatives) == 0 {
 		return ""
 	}
@@ -198,7 +204,7 @@ func (g *Generator) generateFromLexerRule(rule *grammar.Rule, currentDepth int) 
 	// Generate from all elements in the alternative
 	var result []string
 	for _, element := range alternative.Elements {
-		elementResult := g.generateFromLexerElement(&element, currentDepth)
+		elementResult := g.generateFromLexerElement(&element, currentDepth+1)
 		if elementResult != "" {
 			result = append(result, elementResult)
 		}
@@ -224,10 +230,10 @@ func (g *Generator) generateFromLexerElement(element *grammar.Element, currentDe
 		if refValue, ok := element.Value.(grammar.ReferenceValue); ok {
 			// Check if referenced rule is lexer or parser
 			if referencedRule := g.grammar.GetRule(refValue.Name); referencedRule != nil && referencedRule.IsLexer {
-				return g.generateFromLexerRule(referencedRule, currentDepth+1)
+				return g.generateFromLexerRule(referencedRule, currentDepth)
 			} else {
 				// Parser rule - shouldn't happen in lexer context, but handle it
-				return g.generateFromRule(refValue.Name, currentDepth+1)
+				return g.generateFromRule(refValue.Name, currentDepth)
 			}
 		} else if blockValue, ok := element.Value.(grammar.BlockValue); ok {
 			return g.generateFromLexerBlock(blockValue, currentDepth)
@@ -266,7 +272,7 @@ func (g *Generator) generateQuantifiedLexer(element *grammar.Element, currentDep
 		result := g.generateFromLexerElement(&grammar.Element{
 			Value:      element.Value,
 			Quantifier: grammar.NONE, // Remove quantifier for individual generation
-		}, currentDepth+1)
+		}, currentDepth)
 		if result != "" {
 			results = append(results, result)
 		}
@@ -474,7 +480,7 @@ func (g *Generator) generateFromBlock(blockValue grammar.BlockValue, depth int) 
 // generateFromRuleOrToken generates from a rule or token
 func (g *Generator) generateFromRuleOrToken(ruleName string, depth int) string {
 	if rule := g.grammar.GetRule(ruleName); rule != nil && rule.IsLexer {
-		return g.generateConcreteToken(ruleName)
+		return g.generateConcreteToken(ruleName, depth)
 	}
 	return g.generateFromRule(ruleName, depth)
 }

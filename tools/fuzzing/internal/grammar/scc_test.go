@@ -282,6 +282,9 @@ func TestSCCEdgeBuilding(t *testing.T) {
 	g.AddNode("term", termRule)
 	g.AddNode("expr", parserRule)
 	
+	// Build edges after adding all nodes
+	g.BuildEdges()
+	
 	// Verify edges
 	// expr should have edges to: expr (self), term
 	exprEdges := g.Edges["expr"]

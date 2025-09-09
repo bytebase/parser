@@ -46,8 +46,9 @@ func (g *DependencyGraph) AddNode(ruleName string, rule *Rule) {
 	}
 	g.Nodes[ruleName] = node
 	
-	// Build edges for this node
-	g.buildEdgesForNode(ruleName, rule)
+	// Don't build edges here because this rule may reference other rules that
+	// haven't been added yet (forward references). Edges will be built later
+	// after all nodes are added via BuildEdges()
 }
 
 // GetNode retrieves a node by rule name
@@ -293,7 +294,7 @@ func isAntlrBuiltinToken(tokenName string) bool {
 	return builtinTokens[tokenName]
 }
 
-// buildEdgesForNode builds the edge list for a given rule node
+// buildEdgesForNode builds the edge list for a given rule node (deprecated - use BuildEdges instead)
 func (g *DependencyGraph) buildEdgesForNode(ruleName string, rule *Rule) {
 	referencedRules := make(map[string]bool)
 	
@@ -301,8 +302,13 @@ func (g *DependencyGraph) buildEdgesForNode(ruleName string, rule *Rule) {
 		g.collectRuleReferences(alt, referencedRules)
 	}
 	
+	// Only add edges to parser rules (exclude lexer rules)
 	edges := []string{}
 	for ref := range referencedRules {
+		if refNode := g.GetNode(ref); refNode != nil && refNode.IsLexer {
+			continue // Skip lexer rules
+		}
+		// Add all other references (including forward references)
 		edges = append(edges, ref)
 	}
 	g.Edges[ruleName] = edges
@@ -329,8 +335,8 @@ func (g *DependencyGraph) collectElementReferences(element Element, refs map[str
 	}
 }
 
-// RebuildEdges rebuilds all edges after all nodes have been added
-func (g *DependencyGraph) RebuildEdges() {
+// BuildEdges builds all edges after all nodes have been added
+func (g *DependencyGraph) BuildEdges() {
 	g.Edges = make(map[string][]string)
 	
 	for ruleName, node := range g.Nodes {
@@ -340,11 +346,16 @@ func (g *DependencyGraph) RebuildEdges() {
 			g.collectRuleReferences(alt, referencedRules)
 		}
 		
+		// Only add edges to parser rules (exclude lexer rules)
+		// But include all referenced parser rules, even if they don't exist yet
 		edges := []string{}
 		for ref := range referencedRules {
-			if refNode := g.GetNode(ref); refNode != nil && !refNode.IsLexer {
-				edges = append(edges, ref)
+			// Check if the referenced rule is a lexer rule
+			if refNode := g.GetNode(ref); refNode != nil && refNode.IsLexer {
+				continue // Skip lexer rules
 			}
+			// Add all other references (including forward references)
+			edges = append(edges, ref)
 		}
 		g.Edges[ruleName] = edges
 	}
@@ -353,7 +364,7 @@ func (g *DependencyGraph) RebuildEdges() {
 // ComputeSCCs computes strongly connected components using Tarjan's algorithm
 func (g *DependencyGraph) ComputeSCCs() {
 	if len(g.Edges) == 0 {
-		g.RebuildEdges()
+		g.BuildEdges()
 	}
 	
 	index := 0

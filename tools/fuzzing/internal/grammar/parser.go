@@ -220,8 +220,8 @@ func (g *ParsedGrammar) IsGeneratedBlock(name string) bool {
 	return exists
 }
 
-// MergeGrammarWithoutRebuild merges another grammar into this one without rebuilding the dependency graph
-func (g *ParsedGrammar) MergeGrammarWithoutRebuild(other *ParsedGrammar) error {
+// MergeGrammar merges another grammar into this one
+func (g *ParsedGrammar) MergeGrammar(other *ParsedGrammar) error {
 	for name, rule := range other.LexerRules {
 		if _, exists := g.LexerRules[name]; exists {
 			return fmt.Errorf("duplicate lexer rule '%s' found in grammars '%s' and '%s'", name, g.FilePath, other.FilePath)
@@ -250,9 +250,9 @@ func (g *ParsedGrammar) MergeGrammarWithoutRebuild(other *ParsedGrammar) error {
 	return nil
 }
 
-// MergeGrammar merges another grammar into this one (legacy method, kept for compatibility)
-func (g *ParsedGrammar) MergeGrammar(other *ParsedGrammar) error {
-	if err := g.MergeGrammarWithoutRebuild(other); err != nil {
+// MergeGrammarAndRebuildGraph merges another grammar and rebuilds the dependency graph (for single file merging)
+func (g *ParsedGrammar) MergeGrammarAndRebuildGraph(other *ParsedGrammar) error {
+	if err := g.MergeGrammar(other); err != nil {
 		return err
 	}
 
@@ -281,7 +281,7 @@ func ParseAndMergeGrammarFiles(filePaths []string) (*ParsedGrammar, error) {
 
 	mergedGrammar := grammars[0]
 	for i := 1; i < len(grammars); i++ {
-		if err := mergedGrammar.MergeGrammarWithoutRebuild(grammars[i]); err != nil {
+		if err := mergedGrammar.MergeGrammar(grammars[i]); err != nil {
 			return nil, errors.Wrapf(err, "failed to merge grammar file %s", grammars[i].FilePath)
 		}
 	}
