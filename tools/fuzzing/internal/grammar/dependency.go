@@ -6,9 +6,10 @@ import (
 
 // DependencyGraph represents the dependency relationships between grammar rules
 type DependencyGraph struct {
-	Nodes map[string]*GraphNode
-	Edges map[string][]string // Adjacency list: rule -> referenced rules
-	SCCs  [][]string          // List of SCCs (each SCC is a list of rule names)
+	Nodes       map[string]*GraphNode
+	Edges       map[string][]string // Adjacency list: rule -> referenced rules
+	SCCs        [][]string          // List of SCCs (each SCC is a list of rule names)
+	SCCLookup   map[string]int      // Rule name -> SCC ID lookup map
 }
 
 // GraphNode represents a single rule in the dependency graph
@@ -24,9 +25,10 @@ type GraphNode struct {
 // NewDependencyGraph creates a new dependency graph
 func NewDependencyGraph() *DependencyGraph {
 	return &DependencyGraph{
-		Nodes: make(map[string]*GraphNode),
-		Edges: make(map[string][]string),
-		SCCs:  [][]string{},
+		Nodes:     make(map[string]*GraphNode),
+		Edges:     make(map[string][]string),
+		SCCs:      [][]string{},
+		SCCLookup: make(map[string]int),
 	}
 }
 
@@ -192,8 +194,9 @@ func (g *DependencyGraph) ComputeSCCs() {
 		}
 	}
 
-	// Clear existing SCCs
+	// Clear existing SCCs and lookup map
 	g.SCCs = [][]string{}
+	g.SCCLookup = make(map[string]int)
 
 	// Run algorithm for all unvisited nodes
 	for ruleName := range g.Nodes {
@@ -202,7 +205,7 @@ func (g *DependencyGraph) ComputeSCCs() {
 		}
 	}
 
-	// Update nodes with their SCC information
+	// Build SCC lookup map and update nodes with their SCC information
 	for sccID, scc := range g.SCCs {
 		sccSize := len(scc)
 		isRecursive := sccSize > 1
@@ -218,8 +221,12 @@ func (g *DependencyGraph) ComputeSCCs() {
 			}
 		}
 
-		// Update all nodes in this SCC
+		// Update lookup map and nodes in this SCC
 		for _, ruleName := range scc {
+			// Add to lookup map
+			g.SCCLookup[ruleName] = sccID
+			
+			// Update node information
 			if node := g.GetNode(ruleName); node != nil {
 				node.SCCID = sccID
 				node.SCCSize = sccSize
