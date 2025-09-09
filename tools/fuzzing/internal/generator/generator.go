@@ -84,42 +84,36 @@ func (g *Generator) getRule(ruleName string) *grammar.Rule {
 
 // generateQuery creates a single query using grammar rules
 func (g *Generator) generateQuery() string {
-	// Start generation with fresh active rules tracking
-	activeRules := make(map[string]bool)
-	result := g.generateFromRuleWithRecursionTracking(g.config.StartRule, activeRules, 0)
-	return result
+	return g.generateFromRule(g.config.StartRule, 0)
 }
 
-// generateFromRuleWithRecursionTracking generates text from a grammar rule with recursion tracking
-func (g *Generator) generateFromRuleWithRecursionTracking(ruleName string, activeRules map[string]bool, depth int) string {
-	// Check if we're in recursion or hit depth limit
-	if activeRules[ruleName] || depth >= g.config.MaxDepth {
-		return g.forceTerminalGeneration(ruleName)
-	}
-
-	// Mark rule as active
-	activeRules[ruleName] = true
-	defer delete(activeRules, ruleName)
-
-	// Get the rule
+// generateFromRule generates text from a grammar rule
+func (g *Generator) generateFromRule(ruleName string, depth int) string {
+	// Get the rule and its SCC info
 	rule := g.getRule(ruleName)
 	if rule == nil {
 		return fmt.Sprintf("<%s>", ruleName)
 	}
 
-	// Select a random alternative
+	node := g.dependencyGraph.GetNode(ruleName)
+	
+	// Check depth limit for recursive rules
+	if node != nil && node.IsRecursive && depth >= g.config.MaxDepth {
+		return g.generateTerminalFallback(ruleName)
+	}
+
 	if len(rule.Alternatives) == 0 {
-		// rule:; is valid but has no alternatives, return empty directly.
 		return ""
 	}
 
+	// Select a random alternative
 	altIndex := g.random.Intn(len(rule.Alternatives))
 	alternative := rule.Alternatives[altIndex]
 
 	// Generate from all elements in the alternative
 	var result []string
 	for _, element := range alternative.Elements {
-		elementResult := g.generateFromElementWithRecursionTracking(&element, activeRules, depth+1)
+		elementResult := g.generateFromElement(&element, depth+1)
 		if elementResult != "" {
 			result = append(result, elementResult)
 		}
@@ -136,41 +130,10 @@ func (g *Generator) generateFromRuleWithRecursionTracking(ruleName string, activ
 	}
 }
 
-// forceTerminalGeneration forces generation of terminal alternatives when recursion is detected
-func (g *Generator) forceTerminalGeneration(ruleName string) string {
-	// Get immediately terminal alternatives first (preferred)
-	immediateTerminalAlts := g.dependencyGraph.GetImmediatelyTerminalAlternatives(ruleName)
-	rule := g.getRule(ruleName)
-
-	// Check if we have immediately terminal alternatives
-	if len(immediateTerminalAlts) == 0 {
-		// Fallback for rules that don't have immediately terminal alternatives
-		// This can happen with forward references or missing rules
-		fmt.Printf("Warning: Rule %s has no immediately terminal alternatives, generating simple fallback\n", ruleName)
-		return generateSimpleFallback(ruleName)
-	}
-
-	randomIndex := g.random.Intn(len(immediateTerminalAlts))
-	selectedAltIndex := immediateTerminalAlts[randomIndex]
-
-	alternative := rule.Alternatives[selectedAltIndex]
-
-	// Generate using normal generation since this is an immediately terminal alternative
-	result := g.generateFromImmediatelyTerminalAlternative(&alternative)
-
-	switch g.config.OutputFormat {
-	case config.CompactOutput:
-		return result
-	case config.VerboseOutput:
-		return fmt.Sprintf("/* %s[terminal] */ %s", ruleName, result)
-	default:
-		return result
-	}
-}
-
-// ForceTerminalGenerationPublic exposes forceTerminalGeneration for testing
-func (g *Generator) ForceTerminalGenerationPublic(ruleName string) string {
-	return g.forceTerminalGeneration(ruleName)
+// generateTerminalFallback generates a simple fallback when recursion depth is exceeded
+func (g *Generator) generateTerminalFallback(ruleName string) string {
+	// For recursive rules that hit depth limit, generate simple fallback
+	return generateSimpleFallback(ruleName)
 }
 
 // SetGrammarForTesting sets the grammar for testing purposes
@@ -179,32 +142,26 @@ func (g *Generator) SetGrammarForTesting(grammar *grammar.ParsedGrammar) {
 	g.dependencyGraph = grammar.GetDependencyGraph()
 }
 
-// generateFromRule generates text from a grammar rule (legacy method, kept for compatibility)
-func (g *Generator) generateFromRule(ruleName string, currentDepth int) string {
-	activeRules := make(map[string]bool)
-	return g.generateFromRuleWithRecursionTracking(ruleName, activeRules, currentDepth)
-}
-
-// generateFromElementWithRecursionTracking generates text from a single grammar element with recursion tracking
-func (g *Generator) generateFromElementWithRecursionTracking(element *grammar.Element, activeRules map[string]bool, depth int) string {
+// generateFromElement generates text from a single grammar element
+func (g *Generator) generateFromElement(element *grammar.Element, depth int) string {
 	// Handle optional elements
 	if element.IsOptional() && g.random.Float64() > g.config.OptionalProb {
-		return "" // Skip optional element
+		return ""
 	}
 
 	// Handle quantified elements
 	if element.IsQuantified() {
-		return g.generateQuantifiedWithRecursionTracking(element, activeRules, depth)
+		return g.generateQuantified(element, depth)
 	}
 
 	// Generate single element
 	if element.IsRule() {
 		if refValue, ok := element.Value.(grammar.ReferenceValue); ok {
-			return g.generateFromRuleOrTokenWithRecursionTracking(refValue.Name, activeRules, depth)
+			return g.generateFromRuleOrToken(refValue.Name, depth)
 		} else if blockValue, ok := element.Value.(grammar.BlockValue); ok {
-			return g.generateFromBlockWithRecursionTracking(blockValue, activeRules, depth)
+			return g.generateFromBlock(blockValue, depth)
 		}
-		return g.generateFromRuleOrTokenWithRecursionTracking(element.Value.String(), activeRules, depth)
+		return g.generateFromRuleOrToken(element.Value.String(), depth)
 	} else if element.IsTerminal() {
 		if litValue, ok := element.Value.(grammar.LiteralValue); ok {
 			return cleanLiteral(litValue.Text)
@@ -452,19 +409,18 @@ func joinStrings(strs []string, sep string) string {
 	return result
 }
 
-// generateQuantifiedWithRecursionTracking handles quantified elements with recursion tracking
-func (g *Generator) generateQuantifiedWithRecursionTracking(element *grammar.Element, activeRules map[string]bool, depth int) string {
+// generateQuantified handles quantified elements
+func (g *Generator) generateQuantified(element *grammar.Element, depth int) string {
 	var count int
 
-	// Use fixed count if specified, otherwise use random count
 	if g.config.QuantifierCount > 0 {
 		count = g.config.QuantifierCount
 	} else {
 		switch element.Quantifier {
 		case grammar.ZERO_MORE: // *
-			count = g.random.Intn(g.config.MaxQuantifier + 1) // 0 to MaxQuantifier
+			count = g.random.Intn(g.config.MaxQuantifier + 1)
 		case grammar.ONE_MORE: // +
-			count = 1 + g.random.Intn(g.config.MaxQuantifier) // 1 to MaxQuantifier
+			count = 1 + g.random.Intn(g.config.MaxQuantifier)
 		default:
 			count = 1
 		}
@@ -474,13 +430,13 @@ func (g *Generator) generateQuantifiedWithRecursionTracking(element *grammar.Ele
 	for i := 0; i < count; i++ {
 		if element.IsRule() {
 			if refValue, ok := element.Value.(grammar.ReferenceValue); ok {
-				result := g.generateFromRuleOrTokenWithRecursionTracking(refValue.Name, activeRules, depth)
+				result := g.generateFromRuleOrToken(refValue.Name, depth)
 				results = append(results, result)
 			} else if blockValue, ok := element.Value.(grammar.BlockValue); ok {
-				result := g.generateFromBlockWithRecursionTracking(blockValue, activeRules, depth)
+				result := g.generateFromBlock(blockValue, depth)
 				results = append(results, result)
 			} else {
-				result := g.generateFromRuleOrTokenWithRecursionTracking(element.Value.String(), activeRules, depth)
+				result := g.generateFromRuleOrToken(element.Value.String(), depth)
 				results = append(results, result)
 			}
 		} else if element.IsTerminal() {
@@ -495,20 +451,18 @@ func (g *Generator) generateQuantifiedWithRecursionTracking(element *grammar.Ele
 	return joinWithSpaces(results)
 }
 
-// generateFromBlockWithRecursionTracking generates content from a block value with recursion tracking
-func (g *Generator) generateFromBlockWithRecursionTracking(blockValue grammar.BlockValue, activeRules map[string]bool, depth int) string {
+// generateFromBlock generates content from a block value
+func (g *Generator) generateFromBlock(blockValue grammar.BlockValue, depth int) string {
 	if len(blockValue.Alternatives) == 0 {
 		return ""
 	}
 
-	// Select a random alternative from the block
 	altIndex := g.random.Intn(len(blockValue.Alternatives))
 	alternative := blockValue.Alternatives[altIndex]
 
-	// Generate from all elements in the selected alternative
 	var result []string
 	for _, element := range alternative.Elements {
-		elementResult := g.generateFromElementWithRecursionTracking(&element, activeRules, depth)
+		elementResult := g.generateFromElement(&element, depth)
 		if elementResult != "" {
 			result = append(result, elementResult)
 		}
@@ -517,92 +471,14 @@ func (g *Generator) generateFromBlockWithRecursionTracking(blockValue grammar.Bl
 	return joinWithSpaces(result)
 }
 
-// generateFromRuleOrTokenWithRecursionTracking generates from a rule using recursion tracking
-func (g *Generator) generateFromRuleOrTokenWithRecursionTracking(ruleName string, activeRules map[string]bool, depth int) string {
-	// Check if this is a lexer rule and generate concrete token
+// generateFromRuleOrToken generates from a rule or token
+func (g *Generator) generateFromRuleOrToken(ruleName string, depth int) string {
 	if rule := g.grammar.GetRule(ruleName); rule != nil && rule.IsLexer {
 		return g.generateConcreteToken(ruleName)
 	}
-
-	// Otherwise expand as parser rule with recursion tracking
-	return g.generateFromRuleWithRecursionTracking(ruleName, activeRules, depth)
+	return g.generateFromRule(ruleName, depth)
 }
 
-// generateFromImmediatelyTerminalAlternative generates from an immediately terminal alternative using normal generation
-// Since the alternative is immediately terminal, we can safely generate without recursion tracking
-func (g *Generator) generateFromImmediatelyTerminalAlternative(alt *grammar.Alternative) string {
-	var result []string
-
-	for _, element := range alt.Elements {
-		elementResult := g.generateFromImmediatelyTerminalElement(&element)
-		if elementResult != "" {
-			result = append(result, elementResult)
-		}
-	}
-
-	return joinWithSpaces(result)
-}
-
-// generateFromImmediatelyTerminalElement generates from an element that's part of an immediately terminal alternative
-func (g *Generator) generateFromImmediatelyTerminalElement(element *grammar.Element) string {
-	// Handle quantified elements
-	if element.IsQuantified() {
-		switch element.Quantifier {
-		case grammar.ZERO_MORE, grammar.OPTIONAL_Q:
-			// Generate 0 or 1 occurrences for optional elements
-			if g.random.Float32() < float32(g.config.OptionalProb) {
-				nonQuantifiedElement := grammar.Element{
-					Value:      element.Value,
-					Quantifier: grammar.NONE,
-				}
-				return g.generateFromImmediatelyTerminalElement(&nonQuantifiedElement)
-			}
-			return ""
-		case grammar.ONE_MORE:
-			// Generate exactly 1 occurrence for ONE_MORE to stay minimal
-			nonQuantifiedElement := grammar.Element{
-				Value:      element.Value,
-				Quantifier: grammar.NONE,
-			}
-			return g.generateFromImmediatelyTerminalElement(&nonQuantifiedElement)
-		}
-	}
-
-	// Handle different element types
-	if element.IsTerminal() {
-		// Direct literal - use existing generation logic that handles character sets, literals, etc.
-		if literal, ok := element.Value.(grammar.LiteralValue); ok {
-			return g.generateFromLiteral(literal.Text)
-		}
-		return element.Value.String()
-	}
-
-	if element.IsRule() {
-		switch value := element.Value.(type) {
-		case grammar.ReferenceValue:
-			// For rule references in immediately terminal alternatives, use normal generation with empty recursion tracking
-			// Since we know this is immediately terminal, we can generate safely
-			return g.generateFromRuleWithRecursionTracking(value.Name, make(map[string]bool), 0)
-
-		case grammar.BlockValue:
-			// For blocks, randomly select an alternative that's immediately terminal
-			if len(value.Alternatives) > 0 {
-				// Find immediately terminal alternatives within the block
-				for _, alt := range value.Alternatives {
-					// Use dependency graph to check if this alternative is immediately terminal
-					if g.dependencyGraph.CanAlternativeTerminateImmediately(alt) {
-						return g.generateFromImmediatelyTerminalAlternative(&alt)
-					}
-				}
-				// Fallback to first alternative if none found (shouldn't happen)
-				return g.generateFromImmediatelyTerminalAlternative(&value.Alternatives[0])
-			}
-			return ""
-		}
-	}
-
-	return ""
-}
 
 // generateSimpleFallback generates a simple fallback value based on rule name patterns
 func generateSimpleFallback(ruleName string) string {
