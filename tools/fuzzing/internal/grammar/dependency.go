@@ -205,6 +205,11 @@ func (g *DependencyGraph) ComputeSCCs() {
 		}
 	}
 
+	// Perform sanity check: ensure no SCC is an isolated island
+	if err := g.checkForIsolatedSCCs(); err != nil {
+		return // Don't build lookup map if grammar is malformed
+	}
+
 	// Build SCC lookup map and update nodes with their SCC information
 	for sccID, scc := range g.SCCs {
 		sccSize := len(scc)
@@ -234,6 +239,173 @@ func (g *DependencyGraph) ComputeSCCs() {
 			}
 		}
 	}
+}
+
+// checkForIsolatedSCCs ensures no SCC is an isolated island with no exit paths
+func (g *DependencyGraph) checkForIsolatedSCCs() error {
+	// Create a temporary SCC membership map for this check
+	sccMembership := make(map[string]int)
+	for sccID, scc := range g.SCCs {
+		for _, ruleName := range scc {
+			sccMembership[ruleName] = sccID
+		}
+	}
+	
+	// Check each SCC for exit paths
+	isolatedSCCs := []int{}
+	for sccID, scc := range g.SCCs {
+		// Skip non-recursive SCCs (single nodes without self-loops)
+		if len(scc) == 1 {
+			ruleName := scc[0]
+			hasSelfLoop := false
+			for _, ref := range g.Edges[ruleName] {
+				if ref == ruleName {
+					hasSelfLoop = true
+					break
+				}
+			}
+			if !hasSelfLoop {
+				continue // Non-recursive single node, skip
+			}
+		}
+		
+		// Check if this SCC has any exit path
+		hasExit := g.sccHasExitPath(sccID, scc, sccMembership)
+		if !hasExit {
+			isolatedSCCs = append(isolatedSCCs, sccID)
+		}
+	}
+	
+	// Report error if any isolated SCCs found
+	if len(isolatedSCCs) > 0 {
+		fmt.Printf("\nERROR: Found %d isolated SCC(s) with no exit paths:\n", len(isolatedSCCs))
+		for _, sccID := range isolatedSCCs {
+			fmt.Printf("  SCC %d: %v\n", sccID, g.SCCs[sccID])
+		}
+		return fmt.Errorf("grammar contains %d isolated SCC(s) that cannot terminate", len(isolatedSCCs))
+	}
+	
+	return nil
+}
+
+// sccHasExitPath checks if an SCC has at least one path to rules outside of it
+func (g *DependencyGraph) sccHasExitPath(sccID int, scc []string, sccMembership map[string]int) bool {
+	// Use fixed-point iteration to find reachable rules from this SCC
+	visited := make(map[string]bool)
+	toVisit := []string{}
+	
+	// Start with all rules in the SCC
+	for _, ruleName := range scc {
+		toVisit = append(toVisit, ruleName)
+		visited[ruleName] = true
+	}
+	
+	// Perform reachability analysis
+	for len(toVisit) > 0 {
+		current := toVisit[0]
+		toVisit = toVisit[1:]
+		
+		// Check all references from current rule
+		for _, ref := range g.Edges[current] {
+			// Skip if already visited
+			if visited[ref] {
+				continue
+			}
+			
+			// Check if referenced rule is outside this SCC
+			refSCCID, exists := sccMembership[ref]
+			if !exists || refSCCID != sccID {
+				// Found an exit! Check if it can eventually reach terminals
+				if g.canReachTerminal(ref, make(map[string]bool)) {
+					return true
+				}
+			}
+			
+			// Mark as visited and continue searching
+			visited[ref] = true
+			toVisit = append(toVisit, ref)
+		}
+		
+		// Also check alternatives for direct terminal paths
+		if node := g.GetNode(current); node != nil {
+			for _, alt := range node.Alternatives {
+				if g.alternativeHasTerminalPath(alt) {
+					return true
+				}
+			}
+		}
+	}
+	
+	return false
+}
+
+// canReachTerminal checks if a rule can eventually reach terminal symbols
+func (g *DependencyGraph) canReachTerminal(ruleName string, visited map[string]bool) bool {
+	// Avoid infinite recursion
+	if visited[ruleName] {
+		return false
+	}
+	visited[ruleName] = true
+	
+	node := g.GetNode(ruleName)
+	if node == nil {
+		return false
+	}
+	
+	// Lexer rules are terminals
+	if node.IsLexer {
+		return true
+	}
+	
+	// Check each alternative
+	for _, alt := range node.Alternatives {
+		if g.alternativeCanReachTerminal(alt, visited) {
+			return true
+		}
+	}
+	
+	return false
+}
+
+// alternativeHasTerminalPath checks if an alternative has at least one terminal
+func (g *DependencyGraph) alternativeHasTerminalPath(alt Alternative) bool {
+	for _, element := range alt.Elements {
+		if element.IsTerminal() {
+			return true
+		}
+		// Check if it's an optional/quantified element (can be skipped)
+		if element.Quantifier == ZERO_MORE || element.Quantifier == OPTIONAL_Q {
+			return true
+		}
+	}
+	return false
+}
+
+// alternativeCanReachTerminal checks if an alternative can reach terminals
+func (g *DependencyGraph) alternativeCanReachTerminal(alt Alternative, visited map[string]bool) bool {
+	if len(alt.Elements) == 0 {
+		return true // Empty alternative is terminal
+	}
+	
+	for _, element := range alt.Elements {
+		if element.IsTerminal() {
+			return true
+		}
+		
+		// Optional elements can be skipped
+		if element.Quantifier == ZERO_MORE || element.Quantifier == OPTIONAL_Q {
+			continue
+		}
+		
+		// Check if referenced rule can reach terminal
+		if refValue, ok := element.Value.(ReferenceValue); ok {
+			if !g.canReachTerminal(refValue.Name, visited) {
+				return false
+			}
+		}
+	}
+	
+	return true
 }
 
 // PrintSCCAnalysis prints the SCC analysis results for debugging
