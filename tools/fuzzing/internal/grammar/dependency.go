@@ -62,17 +62,12 @@ func (g *DependencyGraph) AnalyzeTerminalReachability() error {
 
 // AnalyzeTerminalReachabilityWithValidation performs immediately terminal analysis with optional validation
 func (g *DependencyGraph) AnalyzeTerminalReachabilityWithValidation(validateUnterminated bool) error {
-	// Phase 1: Compute SCCs to identify recursive rule groups
 	g.ComputeSCCs()
-	g.PrintSCCAnalysis() // Debug output
+	g.PrintSCCAnalysis()
 	
-	// Phase 2: Mark lexer rules as immediately terminal
 	g.markLexerRulesAsImmediatelyTerminal()
-
-	// Phase 3: Analyze immediately terminal alternatives
 	g.analyzeImmediatelyTerminalAlternatives()
 
-	// Phase 4: Check for nodes without immediately terminal alternatives and report error (only if requested)
 	if validateUnterminated {
 		return g.validateImmediatelyTerminalReachability()
 	}
@@ -85,7 +80,6 @@ func (g *DependencyGraph) markLexerRulesAsImmediatelyTerminal() {
 	for _, node := range g.Nodes {
 		if node.IsLexer {
 			node.HasImmediatelyTerminalAlternatives = true
-			// All lexer alternatives are considered immediately terminal
 			for i := range node.Alternatives {
 				node.ImmediatelyTerminalAlternativeIndex = append(node.ImmediatelyTerminalAlternativeIndex, i)
 			}
@@ -106,12 +100,10 @@ func (g *DependencyGraph) analyzeImmediatelyTerminalAlternatives() {
 
 		for _, node := range g.Nodes {
 			if node.IsLexer {
-				continue // Already processed
+				continue
 			}
 
-			// Check each alternative to see if it's immediately terminal
 			for altIndex, alt := range node.Alternatives {
-				// Skip if this alternative is already marked as immediately terminal
 				if g.isAlternativeAlreadyMarkedImmediate(node, altIndex) {
 					continue
 				}
@@ -163,12 +155,10 @@ func (g *DependencyGraph) isAlternativeAlreadyMarkedImmediate(node *GraphNode, a
 
 // canAlternativeTerminateImmediately checks if an alternative can terminate immediately (no rule references required)
 func (g *DependencyGraph) canAlternativeTerminateImmediately(alt Alternative) bool {
-	// Empty alternative (ε-transition) can always terminate immediately
 	if len(alt.Elements) == 0 {
 		return true
 	}
 
-	// Check each element in the alternative
 	for _, element := range alt.Elements {
 		if !g.canElementTerminateImmediately(element) {
 			return false
@@ -180,24 +170,19 @@ func (g *DependencyGraph) canAlternativeTerminateImmediately(alt Alternative) bo
 
 // canElementTerminateImmediately checks if a single element can terminate immediately
 func (g *DependencyGraph) canElementTerminateImmediately(element Element) bool {
-	// Terminal elements (literals) can always terminate immediately
 	if element.IsTerminal() {
 		return true
 	}
 
-	// Handle quantified elements
 	if element.IsQuantified() {
-		// * and ? quantifiers can generate 0 occurrences, so they can terminate immediately
 		if element.Quantifier == ZERO_MORE || element.Quantifier == OPTIONAL_Q {
 			return true
 		}
-		// + quantifier requires at least one occurrence, so check the referenced rule
 		if element.Quantifier == ONE_MORE {
 			return g.canRuleReferenceTerminateImmediately(element)
 		}
 	}
 
-	// For rule references, check if the referenced rule can terminate immediately
 	if element.IsRule() {
 		return g.canRuleReferenceTerminateImmediately(element)
 	}
@@ -209,26 +194,20 @@ func (g *DependencyGraph) canElementTerminateImmediately(element Element) bool {
 func (g *DependencyGraph) canRuleReferenceTerminateImmediately(element Element) bool {
 	var referencedRuleName string
 
-	// Extract rule name based on element value type
 	switch value := element.Value.(type) {
 	case ReferenceValue:
 		referencedRuleName = value.Name
 	case BlockValue:
-		// For block values, we need to check if any alternative in the block can terminate immediately
 		return g.canBlockValueTerminateImmediately(value)
 	default:
 		return false
 	}
 
-	// Check if the referenced rule exists and can terminate immediately
 	referencedNode := g.GetNode(referencedRuleName)
 	if referencedNode == nil {
-		// Handle ANTLR built-in tokens that are always immediately terminal
 		if isAntlrBuiltinToken(referencedRuleName) {
 			return true
 		}
-		// Rule not found - could be a forward reference or external rule
-		// For now, we'll be conservative and assume it cannot terminate immediately
 		return false
 	}
 
@@ -237,7 +216,6 @@ func (g *DependencyGraph) canRuleReferenceTerminateImmediately(element Element) 
 
 // canBlockValueTerminateImmediately checks if a block value can terminate immediately
 func (g *DependencyGraph) canBlockValueTerminateImmediately(block BlockValue) bool {
-	// A block can terminate immediately if any of its alternatives can terminate immediately
 	for _, alt := range block.Alternatives {
 		if g.canAlternativeTerminateImmediately(alt) {
 			return true
@@ -319,12 +297,10 @@ func isAntlrBuiltinToken(tokenName string) bool {
 func (g *DependencyGraph) buildEdgesForNode(ruleName string, rule *Rule) {
 	referencedRules := make(map[string]bool)
 	
-	// Scan all alternatives for rule references
 	for _, alt := range rule.Alternatives {
 		g.collectRuleReferences(alt, referencedRules)
 	}
 	
-	// Convert map to slice and store as edges
 	edges := []string{}
 	for ref := range referencedRules {
 		edges = append(edges, ref)
@@ -344,11 +320,8 @@ func (g *DependencyGraph) collectElementReferences(element Element, refs map[str
 	if element.IsRule() {
 		switch value := element.Value.(type) {
 		case ReferenceValue:
-			// Add all rule references (we'll filter lexer rules later if needed)
-			// Don't check if node exists yet - it might not be added yet
 			refs[value.Name] = true
 		case BlockValue:
-			// Collect references from block alternatives
 			for _, alt := range value.Alternatives {
 				g.collectRuleReferences(alt, refs)
 			}
@@ -363,12 +336,10 @@ func (g *DependencyGraph) RebuildEdges() {
 	for ruleName, node := range g.Nodes {
 		referencedRules := make(map[string]bool)
 		
-		// Scan all alternatives for rule references
 		for _, alt := range node.Alternatives {
 			g.collectRuleReferences(alt, referencedRules)
 		}
 		
-		// Filter out lexer rules and non-existent rules
 		edges := []string{}
 		for ref := range referencedRules {
 			if refNode := g.GetNode(ref); refNode != nil && !refNode.IsLexer {
@@ -381,11 +352,10 @@ func (g *DependencyGraph) RebuildEdges() {
 
 // ComputeSCCs computes strongly connected components using Tarjan's algorithm
 func (g *DependencyGraph) ComputeSCCs() {
-	// Only rebuild edges if they're empty (allows manual edge setup for testing)
 	if len(g.Edges) == 0 {
 		g.RebuildEdges()
 	}
-	// Initialize for Tarjan's algorithm
+	
 	index := 0
 	stack := []string{}
 	indices := make(map[string]int)

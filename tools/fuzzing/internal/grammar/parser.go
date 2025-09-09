@@ -98,9 +98,8 @@ const (
 	ONE_MORE              // +
 )
 
-// ParseGrammarFile parses a .g4 file and extracts rules for fuzzing
-func ParseGrammarFile(filePath string) (*ParsedGrammar, error) {
-	// Read file content
+// parseGrammarFileWithoutDependencyGraph parses a .g4 file without building dependency graph
+func parseGrammarFileWithoutDependencyGraph(filePath string) (*ParsedGrammar, error) {
 	content, err := os.ReadFile(filePath)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to read grammar file")
@@ -110,31 +109,20 @@ func ParseGrammarFile(filePath string) (*ParsedGrammar, error) {
 		return nil, errors.New("grammar file is empty")
 	}
 
-	// Create input stream
 	input := antlr.NewInputStream(string(content))
-
-	// Create lexer
 	lexer := grammar.NewANTLRv4Lexer(input)
 
-	// Add error listener
 	errorListener := &GrammarErrorListener{}
 	lexer.RemoveErrorListeners()
 	lexer.AddErrorListener(errorListener)
 
-	// Create token stream
 	stream := antlr.NewCommonTokenStream(lexer, 0)
-
-	// Create parser
 	parser := grammar.NewANTLRv4Parser(stream)
-
-	// Add error listener to parser
 	parser.RemoveErrorListeners()
 	parser.AddErrorListener(errorListener)
 
-	// Parse the grammar
 	tree := parser.GrammarSpec()
 
-	// Check for parsing errors
 	if errorListener.HasErrors() {
 		return nil, errors.Errorf("failed to parse grammar: %v", errorListener.GetErrors())
 	}
@@ -143,7 +131,6 @@ func ParseGrammarFile(filePath string) (*ParsedGrammar, error) {
 		return nil, errors.New("parser returned nil tree")
 	}
 
-	// Extract rules from parse tree
 	visitor := NewGrammarExtractorVisitor()
 	visitor.VisitGrammarSpec(tree)
 
@@ -152,10 +139,20 @@ func ParseGrammarFile(filePath string) (*ParsedGrammar, error) {
 		ParserRules:     visitor.parserRules,
 		FilePath:        filePath,
 		BlockAltMap:     visitor.blockAltMap,
-		DependencyGraph: NewDependencyGraph(),
+		DependencyGraph: nil,
 	}
 
-	// Build dependency graph
+	return parsedGrammar, nil
+}
+
+// ParseGrammarFile parses a .g4 file and extracts rules for fuzzing (legacy method)
+func ParseGrammarFile(filePath string) (*ParsedGrammar, error) {
+	parsedGrammar, err := parseGrammarFileWithoutDependencyGraph(filePath)
+	if err != nil {
+		return nil, err
+	}
+
+	parsedGrammar.DependencyGraph = NewDependencyGraph()
 	if err := buildDependencyGraph(parsedGrammar); err != nil {
 		return nil, fmt.Errorf("failed to build dependency graph: %w", err)
 	}
@@ -223,9 +220,8 @@ func (g *ParsedGrammar) IsGeneratedBlock(name string) bool {
 	return exists
 }
 
-// MergeGrammar merges another grammar into this one
-func (g *ParsedGrammar) MergeGrammar(other *ParsedGrammar) error {
-	// Merge lexer rules
+// MergeGrammarWithoutRebuild merges another grammar into this one without rebuilding the dependency graph
+func (g *ParsedGrammar) MergeGrammarWithoutRebuild(other *ParsedGrammar) error {
 	for name, rule := range other.LexerRules {
 		if _, exists := g.LexerRules[name]; exists {
 			return fmt.Errorf("duplicate lexer rule '%s' found in grammars '%s' and '%s'", name, g.FilePath, other.FilePath)
@@ -233,7 +229,6 @@ func (g *ParsedGrammar) MergeGrammar(other *ParsedGrammar) error {
 		g.LexerRules[name] = rule
 	}
 
-	// Merge parser rules
 	for name, rule := range other.ParserRules {
 		if _, exists := g.ParserRules[name]; exists {
 			return fmt.Errorf("duplicate parser rule '%s' found in grammars '%s' and '%s'", name, g.FilePath, other.FilePath)
@@ -241,7 +236,6 @@ func (g *ParsedGrammar) MergeGrammar(other *ParsedGrammar) error {
 		g.ParserRules[name] = rule
 	}
 
-	// Merge block alternatives map
 	for blockID, alternatives := range other.BlockAltMap {
 		if _, exists := g.BlockAltMap[blockID]; exists {
 			return fmt.Errorf("duplicate block ID '%s' found in grammars '%s' and '%s'", blockID, g.FilePath, other.FilePath)
@@ -249,12 +243,19 @@ func (g *ParsedGrammar) MergeGrammar(other *ParsedGrammar) error {
 		g.BlockAltMap[blockID] = alternatives
 	}
 
-	// Update file path to indicate it's a merged grammar
 	if g.FilePath != other.FilePath {
 		g.FilePath = fmt.Sprintf("%s + %s", g.FilePath, other.FilePath)
 	}
 
-	// Rebuild dependency graph with merged rules and validate
+	return nil
+}
+
+// MergeGrammar merges another grammar into this one (legacy method, kept for compatibility)
+func (g *ParsedGrammar) MergeGrammar(other *ParsedGrammar) error {
+	if err := g.MergeGrammarWithoutRebuild(other); err != nil {
+		return err
+	}
+
 	g.DependencyGraph = NewDependencyGraph()
 	if err := buildDependencyGraphWithValidation(g, true); err != nil {
 		return fmt.Errorf("failed to rebuild dependency graph after merge: %w", err)
@@ -269,23 +270,25 @@ func ParseAndMergeGrammarFiles(filePaths []string) (*ParsedGrammar, error) {
 		return nil, errors.New("no grammar files provided")
 	}
 
-	// Parse the first grammar file
-	mergedGrammar, err := ParseGrammarFile(filePaths[0])
-	if err != nil {
-		return nil, errors.Wrapf(err, "failed to parse first grammar file %s", filePaths[0])
-	}
-
-	// Merge additional grammar files
-	for i := 1; i < len(filePaths); i++ {
-		filePath := filePaths[i]
-		grammar, err := ParseGrammarFile(filePath)
+	grammars := make([]*ParsedGrammar, 0, len(filePaths))
+	for _, filePath := range filePaths {
+		grammar, err := parseGrammarFileWithoutDependencyGraph(filePath)
 		if err != nil {
 			return nil, errors.Wrapf(err, "failed to parse grammar file %s", filePath)
 		}
+		grammars = append(grammars, grammar)
+	}
 
-		if err := mergedGrammar.MergeGrammar(grammar); err != nil {
-			return nil, errors.Wrapf(err, "failed to merge grammar file %s", filePath)
+	mergedGrammar := grammars[0]
+	for i := 1; i < len(grammars); i++ {
+		if err := mergedGrammar.MergeGrammarWithoutRebuild(grammars[i]); err != nil {
+			return nil, errors.Wrapf(err, "failed to merge grammar file %s", grammars[i].FilePath)
 		}
+	}
+
+	mergedGrammar.DependencyGraph = NewDependencyGraph()
+	if err := buildDependencyGraphWithValidation(mergedGrammar, true); err != nil {
+		return nil, fmt.Errorf("failed to build dependency graph after merging all files: %w", err)
 	}
 
 	return mergedGrammar, nil
