@@ -79,11 +79,18 @@ func (g *Generator) getRule(ruleName string) *grammar.Rule {
 
 // generateQuery creates a single query using grammar rules
 func (g *Generator) generateQuery() string {
-	return g.generateFromRule(g.config.StartRule, 0)
+	// Start with no SCC context and 0 recursion depth
+	return g.generateFromRuleWithSCC(g.config.StartRule, grammar.NoSCC, 0)
 }
 
-// generateFromRule generates text from a grammar rule
+// generateFromRule is a wrapper for backward compatibility
 func (g *Generator) generateFromRule(ruleName string, depth int) string {
+	// For backward compatibility, treat depth as recursion depth
+	return g.generateFromRuleWithSCC(ruleName, grammar.NoSCC, depth)
+}
+
+// generateFromRuleWithSCC generates text from a grammar rule tracking SCC-based recursion
+func (g *Generator) generateFromRuleWithSCC(ruleName string, currentSCCID int, recursionDepth int) string {
 	// Get the rule and its SCC info
 	rule := g.getRule(ruleName)
 	if rule == nil {
@@ -91,10 +98,30 @@ func (g *Generator) generateFromRule(ruleName string, depth int) string {
 	}
 
 	node := g.dependencyGraph.GetNode(ruleName)
+	if node == nil {
+		return fmt.Sprintf("<%s>", ruleName)
+	}
 
-	// Check depth limit for recursive rules
-	if node != nil && node.IsRecursive && depth >= g.config.MaxDepth {
-		return g.generateTerminalFallback(ruleName)
+	// Determine the new recursion depth
+	// Only increment if we're moving within the same SCC (actual recursion)
+	newRecursionDepth := recursionDepth
+	if currentSCCID != grammar.NoSCC && node.SCCID == currentSCCID && node.IsRecursive {
+		// We're recursing within the same SCC
+		newRecursionDepth = recursionDepth + 1
+
+		// Check recursion depth limit
+		if newRecursionDepth >= g.config.MaxDepth {
+			return g.generateTerminalFallback(ruleName)
+		}
+	} else if node.IsRecursive {
+		// Entering a new recursive SCC, reset recursion depth to 0
+		newRecursionDepth = 0
+	}
+
+	// Update current SCC context for recursive rules
+	newSCCID := currentSCCID
+	if node.IsRecursive {
+		newSCCID = node.SCCID
 	}
 
 	if len(rule.Alternatives) == 0 {
@@ -108,7 +135,7 @@ func (g *Generator) generateFromRule(ruleName string, depth int) string {
 	// Generate from all elements in the alternative
 	var result []string
 	for _, element := range alternative.Elements {
-		elementResult := g.generateFromElement(&element, depth+1)
+		elementResult := g.generateFromElementWithSCC(&element, newSCCID, newRecursionDepth)
 		if elementResult != "" {
 			result = append(result, elementResult)
 		}
@@ -137,8 +164,13 @@ func (g *Generator) SetGrammarForTesting(grammar *grammar.ParsedGrammar) {
 	g.dependencyGraph = grammar.GetDependencyGraph()
 }
 
-// generateFromElement generates text from a single grammar element
+// generateFromElement is a wrapper for backward compatibility
 func (g *Generator) generateFromElement(element *grammar.Element, depth int) string {
+	return g.generateFromElementWithSCC(element, grammar.NoSCC, depth)
+}
+
+// generateFromElementWithSCC generates text from a single grammar element with SCC tracking
+func (g *Generator) generateFromElementWithSCC(element *grammar.Element, currentSCCID int, recursionDepth int) string {
 	// Handle optional elements
 	if element.IsOptional() && g.random.Float64() > g.config.OptionalProb {
 		return ""
@@ -146,17 +178,17 @@ func (g *Generator) generateFromElement(element *grammar.Element, depth int) str
 
 	// Handle quantified elements
 	if element.IsQuantified() {
-		return g.generateQuantified(element, depth)
+		return g.generateQuantifiedWithSCC(element, currentSCCID, recursionDepth)
 	}
 
 	// Generate single element
 	if element.IsRule() {
 		if refValue, ok := element.Value.(grammar.ReferenceValue); ok {
-			return g.generateFromRuleOrToken(refValue.Name, depth)
+			return g.generateFromRuleOrTokenWithSCC(refValue.Name, currentSCCID, recursionDepth)
 		} else if blockValue, ok := element.Value.(grammar.BlockValue); ok {
-			return g.generateFromBlock(blockValue, depth)
+			return g.generateFromBlockWithSCC(blockValue, currentSCCID, recursionDepth)
 		}
-		return g.generateFromRuleOrToken(element.Value.String(), depth)
+		return g.generateFromRuleOrTokenWithSCC(element.Value.String(), currentSCCID, recursionDepth)
 	} else if element.IsTerminal() {
 		if litValue, ok := element.Value.(grammar.LiteralValue); ok {
 			return cleanLiteral(litValue.Text)
@@ -410,8 +442,8 @@ func joinStrings(strs []string, sep string) string {
 	return result
 }
 
-// generateQuantified handles quantified elements
-func (g *Generator) generateQuantified(element *grammar.Element, depth int) string {
+// generateQuantifiedWithSCC handles quantified elements with SCC tracking
+func (g *Generator) generateQuantifiedWithSCC(element *grammar.Element, currentSCCID int, recursionDepth int) string {
 	var count int
 
 	if g.config.QuantifierCount > 0 {
@@ -431,13 +463,13 @@ func (g *Generator) generateQuantified(element *grammar.Element, depth int) stri
 	for i := 0; i < count; i++ {
 		if element.IsRule() {
 			if refValue, ok := element.Value.(grammar.ReferenceValue); ok {
-				result := g.generateFromRuleOrToken(refValue.Name, depth)
+				result := g.generateFromRuleOrTokenWithSCC(refValue.Name, currentSCCID, recursionDepth)
 				results = append(results, result)
 			} else if blockValue, ok := element.Value.(grammar.BlockValue); ok {
-				result := g.generateFromBlock(blockValue, depth)
+				result := g.generateFromBlockWithSCC(blockValue, currentSCCID, recursionDepth)
 				results = append(results, result)
 			} else {
-				result := g.generateFromRuleOrToken(element.Value.String(), depth)
+				result := g.generateFromRuleOrTokenWithSCC(element.Value.String(), currentSCCID, recursionDepth)
 				results = append(results, result)
 			}
 		} else if element.IsTerminal() {
@@ -452,8 +484,13 @@ func (g *Generator) generateQuantified(element *grammar.Element, depth int) stri
 	return joinWithSpaces(results)
 }
 
-// generateFromBlock generates content from a block value
+// generateFromBlock is a wrapper for backward compatibility
 func (g *Generator) generateFromBlock(blockValue grammar.BlockValue, depth int) string {
+	return g.generateFromBlockWithSCC(blockValue, grammar.NoSCC, depth)
+}
+
+// generateFromBlockWithSCC generates content from a block value with SCC tracking
+func (g *Generator) generateFromBlockWithSCC(blockValue grammar.BlockValue, currentSCCID int, recursionDepth int) string {
 	if len(blockValue.Alternatives) == 0 {
 		return ""
 	}
@@ -463,7 +500,7 @@ func (g *Generator) generateFromBlock(blockValue grammar.BlockValue, depth int) 
 
 	var result []string
 	for _, element := range alternative.Elements {
-		elementResult := g.generateFromElement(&element, depth)
+		elementResult := g.generateFromElementWithSCC(&element, currentSCCID, recursionDepth)
 		if elementResult != "" {
 			result = append(result, elementResult)
 		}
@@ -472,12 +509,13 @@ func (g *Generator) generateFromBlock(blockValue grammar.BlockValue, depth int) 
 	return joinWithSpaces(result)
 }
 
-// generateFromRuleOrToken generates from a rule or token
-func (g *Generator) generateFromRuleOrToken(ruleName string, depth int) string {
+// generateFromRuleOrTokenWithSCC generates from a rule or token with SCC tracking
+func (g *Generator) generateFromRuleOrTokenWithSCC(ruleName string, currentSCCID int, recursionDepth int) string {
 	if rule := g.grammar.GetRule(ruleName); rule != nil && rule.IsLexer {
-		return g.generateConcreteToken(ruleName, depth)
+		// Lexer rules don't participate in SCC recursion tracking
+		return g.generateConcreteToken(ruleName, 0)
 	}
-	return g.generateFromRule(ruleName, depth)
+	return g.generateFromRuleWithSCC(ruleName, currentSCCID, recursionDepth)
 }
 
 // generateSimpleFallback generates a simple fallback value based on rule name patterns

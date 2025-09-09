@@ -169,7 +169,7 @@ func TestSCCDetection(t *testing.T) {
 					RuleName:     ruleName,
 					Alternatives: rule.Alternatives,
 					IsLexer:      false,
-					SCCID:        -1,
+					SCCID:        NoSCC,
 					SCCSize:      0,
 					IsRecursive:  false,
 				}
