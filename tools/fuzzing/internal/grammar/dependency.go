@@ -7,6 +7,8 @@ import (
 // DependencyGraph represents the dependency relationships between grammar rules
 type DependencyGraph struct {
 	Nodes map[string]*GraphNode
+	Edges map[string][]string // Adjacency list: rule -> referenced rules
+	SCCs  [][]string          // List of SCCs (each SCC is a list of rule names)
 }
 
 // GraphNode represents a single rule in the dependency graph
@@ -16,12 +18,17 @@ type GraphNode struct {
 	HasImmediatelyTerminalAlternatives  bool          // Has at least one immediately terminal alternative
 	ImmediatelyTerminalAlternativeIndex []int         // Indices of alternatives that are immediately terminal
 	IsLexer                             bool          // Whether this is a lexer rule
+	SCCID                               int           // Which SCC this node belongs to (-1 if not computed)
+	SCCSize                             int           // Size of the SCC this node belongs to
+	IsRecursive                         bool          // True if part of a recursive SCC (size > 1 or self-loop)
 }
 
 // NewDependencyGraph creates a new dependency graph
 func NewDependencyGraph() *DependencyGraph {
 	return &DependencyGraph{
 		Nodes: make(map[string]*GraphNode),
+		Edges: make(map[string][]string),
+		SCCs:  [][]string{},
 	}
 }
 
@@ -33,8 +40,14 @@ func (g *DependencyGraph) AddNode(ruleName string, rule *Rule) {
 		HasImmediatelyTerminalAlternatives:  false,
 		ImmediatelyTerminalAlternativeIndex: []int{},
 		IsLexer:                             rule.IsLexer,
+		SCCID:                               -1,
+		SCCSize:                             0,
+		IsRecursive:                         false,
 	}
 	g.Nodes[ruleName] = node
+	
+	// Build edges for this node
+	g.buildEdgesForNode(ruleName, rule)
 }
 
 // GetNode retrieves a node by rule name
@@ -49,13 +62,17 @@ func (g *DependencyGraph) AnalyzeTerminalReachability() error {
 
 // AnalyzeTerminalReachabilityWithValidation performs immediately terminal analysis with optional validation
 func (g *DependencyGraph) AnalyzeTerminalReachabilityWithValidation(validateUnterminated bool) error {
-	// Phase 1: Mark lexer rules as immediately terminal
+	// Phase 1: Compute SCCs to identify recursive rule groups
+	g.ComputeSCCs()
+	g.PrintSCCAnalysis() // Debug output
+	
+	// Phase 2: Mark lexer rules as immediately terminal
 	g.markLexerRulesAsImmediatelyTerminal()
 
-	// Phase 2: Analyze immediately terminal alternatives
+	// Phase 3: Analyze immediately terminal alternatives
 	g.analyzeImmediatelyTerminalAlternatives()
 
-	// Phase 3: Check for nodes without immediately terminal alternatives and report error (only if requested)
+	// Phase 4: Check for nodes without immediately terminal alternatives and report error (only if requested)
 	if validateUnterminated {
 		return g.validateImmediatelyTerminalReachability()
 	}
@@ -296,4 +313,227 @@ func isAntlrBuiltinToken(tokenName string) bool {
 	}
 
 	return builtinTokens[tokenName]
+}
+
+// buildEdgesForNode builds the edge list for a given rule node
+func (g *DependencyGraph) buildEdgesForNode(ruleName string, rule *Rule) {
+	referencedRules := make(map[string]bool)
+	
+	// Scan all alternatives for rule references
+	for _, alt := range rule.Alternatives {
+		g.collectRuleReferences(alt, referencedRules)
+	}
+	
+	// Convert map to slice and store as edges
+	edges := []string{}
+	for ref := range referencedRules {
+		edges = append(edges, ref)
+	}
+	g.Edges[ruleName] = edges
+}
+
+// collectRuleReferences collects all rule references in an alternative
+func (g *DependencyGraph) collectRuleReferences(alt Alternative, refs map[string]bool) {
+	for _, element := range alt.Elements {
+		g.collectElementReferences(element, refs)
+	}
+}
+
+// collectElementReferences collects rule references from a single element
+func (g *DependencyGraph) collectElementReferences(element Element, refs map[string]bool) {
+	if element.IsRule() {
+		switch value := element.Value.(type) {
+		case ReferenceValue:
+			// Add all rule references (we'll filter lexer rules later if needed)
+			// Don't check if node exists yet - it might not be added yet
+			refs[value.Name] = true
+		case BlockValue:
+			// Collect references from block alternatives
+			for _, alt := range value.Alternatives {
+				g.collectRuleReferences(alt, refs)
+			}
+		}
+	}
+}
+
+// RebuildEdges rebuilds all edges after all nodes have been added
+func (g *DependencyGraph) RebuildEdges() {
+	g.Edges = make(map[string][]string)
+	
+	for ruleName, node := range g.Nodes {
+		referencedRules := make(map[string]bool)
+		
+		// Scan all alternatives for rule references
+		for _, alt := range node.Alternatives {
+			g.collectRuleReferences(alt, referencedRules)
+		}
+		
+		// Filter out lexer rules and non-existent rules
+		edges := []string{}
+		for ref := range referencedRules {
+			if refNode := g.GetNode(ref); refNode != nil && !refNode.IsLexer {
+				edges = append(edges, ref)
+			}
+		}
+		g.Edges[ruleName] = edges
+	}
+}
+
+// ComputeSCCs computes strongly connected components using Tarjan's algorithm
+func (g *DependencyGraph) ComputeSCCs() {
+	// Only rebuild edges if they're empty (allows manual edge setup for testing)
+	if len(g.Edges) == 0 {
+		g.RebuildEdges()
+	}
+	// Initialize for Tarjan's algorithm
+	index := 0
+	stack := []string{}
+	indices := make(map[string]int)
+	lowlinks := make(map[string]int)
+	onStack := make(map[string]bool)
+	
+	// Helper function for Tarjan's strongconnect
+	var strongconnect func(v string)
+	strongconnect = func(v string) {
+		// Set the depth index for v to the smallest unused index
+		indices[v] = index
+		lowlinks[v] = index
+		index++
+		stack = append(stack, v)
+		onStack[v] = true
+		
+		// Consider successors of v
+		for _, w := range g.Edges[v] {
+			if _, ok := indices[w]; !ok {
+				// Successor w has not yet been visited; recurse on it
+				strongconnect(w)
+				if lowlinks[w] < lowlinks[v] {
+					lowlinks[v] = lowlinks[w]
+				}
+			} else if onStack[w] {
+				// Successor w is in stack S and hence in the current SCC
+				if indices[w] < lowlinks[v] {
+					lowlinks[v] = indices[w]
+				}
+			}
+		}
+		
+		// If v is a root node, pop the stack and print an SCC
+		if lowlinks[v] == indices[v] {
+			scc := []string{}
+			for {
+				w := stack[len(stack)-1]
+				stack = stack[:len(stack)-1]
+				onStack[w] = false
+				scc = append(scc, w)
+				if w == v {
+					break
+				}
+			}
+			g.SCCs = append(g.SCCs, scc)
+		}
+	}
+	
+	// Clear existing SCCs
+	g.SCCs = [][]string{}
+	
+	// Run algorithm for all unvisited nodes
+	for ruleName := range g.Nodes {
+		if _, ok := indices[ruleName]; !ok {
+			strongconnect(ruleName)
+		}
+	}
+	
+	// Update nodes with their SCC information
+	for sccID, scc := range g.SCCs {
+		sccSize := len(scc)
+		isRecursive := sccSize > 1
+		
+		// Check for self-loops if single node SCC
+		if sccSize == 1 {
+			ruleName := scc[0]
+			for _, ref := range g.Edges[ruleName] {
+				if ref == ruleName {
+					isRecursive = true
+					break
+				}
+			}
+		}
+		
+		// Update all nodes in this SCC
+		for _, ruleName := range scc {
+			if node := g.GetNode(ruleName); node != nil {
+				node.SCCID = sccID
+				node.SCCSize = sccSize
+				node.IsRecursive = isRecursive
+			}
+		}
+	}
+}
+
+// PrintSCCAnalysis prints the SCC analysis results for debugging
+func (g *DependencyGraph) PrintSCCAnalysis() {
+	fmt.Println("\n=== SCC Analysis Results ===")
+	fmt.Printf("Total SCCs: %d\n", len(g.SCCs))
+	
+	recursiveSCCs := 0
+	selfLoopSCCs := 0
+	largestSCC := 0
+	for i, scc := range g.SCCs {
+		if len(scc) > 1 {
+			recursiveSCCs++
+			if len(scc) > largestSCC {
+				largestSCC = len(scc)
+			}
+			// Print first 5 multi-node SCCs with more detail
+			if recursiveSCCs <= 5 {
+				fmt.Printf("\nSCC %d (RECURSIVE - mutual, size=%d):\n", i, len(scc))
+				// Print first 20 nodes of the SCC for better visibility
+				fmt.Printf("  Members: ")
+				for j, node := range scc {
+					if j < 20 {
+						fmt.Printf("%s ", node)
+						if j == 19 && len(scc) > 20 {
+							fmt.Printf("\n           ... and %d more", len(scc)-20)
+						}
+					}
+				}
+				fmt.Println()
+			}
+		} else if len(scc) == 1 {
+			// Check for self-loop
+			ruleName := scc[0]
+			hasSelfLoop := false
+			for _, ref := range g.Edges[ruleName] {
+				if ref == ruleName {
+					hasSelfLoop = true
+					break
+				}
+			}
+			if hasSelfLoop {
+				selfLoopSCCs++
+				if selfLoopSCCs <= 10 { // Print first 10
+					fmt.Printf("SCC %d (RECURSIVE - self-loop): %s\n", i, ruleName)
+				}
+			}
+		}
+	}
+	
+	fmt.Printf("\nMutually recursive SCCs (size > 1): %d\n", recursiveSCCs)
+	if recursiveSCCs > 0 {
+		fmt.Printf("Largest SCC size: %d\n", largestSCC)
+	}
+	fmt.Printf("Self-loop SCCs (size = 1 with self-ref): %d\n", selfLoopSCCs)
+	fmt.Printf("Non-recursive SCCs: %d\n", len(g.SCCs)-recursiveSCCs-selfLoopSCCs)
+	
+	// Print sample of recursive rules
+	fmt.Println("\nSample recursive rules:")
+	count := 0
+	for ruleName, node := range g.Nodes {
+		if node.IsRecursive && count < 10 {
+			fmt.Printf("  %s (SCC %d, size %d)\n", ruleName, node.SCCID, node.SCCSize)
+			count++
+		}
+	}
+	fmt.Println("=============================")
 }

@@ -622,4 +622,3 @@ func generateSimpleFallback(ruleName string) string {
 		return "1"
 	}
 }
-
