@@ -61,11 +61,6 @@ func (g *Generator) Generate() error {
 		return errors.Errorf("start rule '%s' not found in merged grammar", g.config.StartRule)
 	}
 
-	// Check if start rule has immediately terminal alternatives
-	if !g.dependencyGraph.HasImmediatelyTerminalAlternatives(g.config.StartRule) {
-		fmt.Printf("Warning: start rule '%s' has no immediately terminal alternatives\n", g.config.StartRule)
-	}
-
 	fmt.Printf("Generating %d queries from rule '%s'...\n", g.config.Count, g.config.StartRule)
 
 	// Generate queries
@@ -96,7 +91,7 @@ func (g *Generator) generateFromRule(ruleName string, depth int) string {
 	}
 
 	node := g.dependencyGraph.GetNode(ruleName)
-	
+
 	// Check depth limit for recursive rules
 	if node != nil && node.IsRecursive && depth >= g.config.MaxDepth {
 		return g.generateTerminalFallback(ruleName)
@@ -192,7 +187,7 @@ func (g *Generator) generateFromLexerRule(rule *grammar.Rule, currentDepth int) 
 	if node != nil && node.IsRecursive && currentDepth >= g.config.MaxDepth {
 		return generateSimpleFallback(rule.Name)
 	}
-	
+
 	if len(rule.Alternatives) == 0 {
 		return ""
 	}
@@ -484,7 +479,6 @@ func (g *Generator) generateFromRuleOrToken(ruleName string, depth int) string {
 	}
 	return g.generateFromRule(ruleName, depth)
 }
-
 
 // generateSimpleFallback generates a simple fallback value based on rule name patterns
 func generateSimpleFallback(ruleName string) string {

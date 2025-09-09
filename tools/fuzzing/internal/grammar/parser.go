@@ -177,10 +177,9 @@ func buildDependencyGraphWithValidation(parsedGrammar *ParsedGrammar, validateUn
 		parsedGrammar.DependencyGraph.AddNode(ruleName, rule)
 	}
 
-	// Perform terminal reachability analysis with optional validation
-	if err := parsedGrammar.DependencyGraph.AnalyzeTerminalReachabilityWithValidation(validateUnterminated); err != nil {
-		return fmt.Errorf("terminal reachability analysis failed: %w", err)
-	}
+	// Perform SCC computing.
+	parsedGrammar.DependencyGraph.ComputeSCCs()
+	parsedGrammar.DependencyGraph.PrintSCCAnalysis()
 
 	return nil
 }

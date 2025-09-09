@@ -166,14 +166,12 @@ func TestSCCDetection(t *testing.T) {
 				}
 				// We need to add the node without building edges automatically
 				node := &GraphNode{
-					RuleName:                            ruleName,
-					Alternatives:                        rule.Alternatives,
-					HasImmediatelyTerminalAlternatives:  false,
-					ImmediatelyTerminalAlternativeIndex: []int{},
-					IsLexer:                             false,
-					SCCID:                               -1,
-					SCCSize:                             0,
-					IsRecursive:                         false,
+					RuleName:     ruleName,
+					Alternatives: rule.Alternatives,
+					IsLexer:      false,
+					SCCID:        -1,
+					SCCSize:      0,
+					IsRecursive:  false,
 				}
 				g.Nodes[ruleName] = node
 			}
