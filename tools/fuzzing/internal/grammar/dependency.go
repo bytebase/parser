@@ -11,10 +11,10 @@ const (
 
 // DependencyGraph represents the dependency relationships between grammar rules
 type DependencyGraph struct {
-	Nodes       map[string]*GraphNode
-	Edges       map[string][]string // Adjacency list: rule -> referenced rules
-	SCCs        [][]string          // List of SCCs (each SCC is a list of rule names)
-	SCCLookup   map[string]int      // Rule name -> SCC ID lookup map
+	Nodes     map[string]*GraphNode
+	Edges     map[string][]string // Adjacency list: rule -> referenced rules
+	SCCs      [][]string          // List of SCCs (each SCC is a list of rule names)
+	SCCLookup map[string]int      // Rule name -> SCC ID lookup map
 }
 
 // GraphNode represents a single rule in the dependency graph
@@ -76,26 +76,6 @@ func (g *DependencyGraph) PrintAnalysisResults() {
 		fmt.Printf("  Total alternatives: %d\n", len(node.Alternatives))
 		fmt.Println()
 	}
-}
-
-// buildEdgesForNode builds the edge list for a given rule node (deprecated - use BuildEdges instead)
-func (g *DependencyGraph) buildEdgesForNode(ruleName string, rule *Rule) {
-	referencedRules := make(map[string]bool)
-
-	for _, alt := range rule.Alternatives {
-		g.collectRuleReferences(alt, referencedRules)
-	}
-
-	// Only add edges to parser rules (exclude lexer rules)
-	edges := []string{}
-	for ref := range referencedRules {
-		if refNode := g.GetNode(ref); refNode != nil && refNode.IsLexer {
-			continue // Skip lexer rules
-		}
-		// Add all other references (including forward references)
-		edges = append(edges, ref)
-	}
-	g.Edges[ruleName] = edges
 }
 
 // collectRuleReferences collects all rule references in an alternative
@@ -237,7 +217,7 @@ func (g *DependencyGraph) ComputeSCCs() {
 		for _, ruleName := range scc {
 			// Add to lookup map
 			g.SCCLookup[ruleName] = sccID
-			
+
 			// Update node information
 			if node := g.GetNode(ruleName); node != nil {
 				node.SCCID = sccID
@@ -257,7 +237,7 @@ func (g *DependencyGraph) checkForIsolatedSCCs() error {
 			sccMembership[ruleName] = sccID
 		}
 	}
-	
+
 	// Check each SCC for exit paths
 	isolatedSCCs := []int{}
 	for sccID, scc := range g.SCCs {
@@ -275,14 +255,14 @@ func (g *DependencyGraph) checkForIsolatedSCCs() error {
 				continue // Non-recursive single node, skip
 			}
 		}
-		
+
 		// Check if this SCC has any exit path
 		hasExit := g.sccHasExitPath(sccID, scc, sccMembership)
 		if !hasExit {
 			isolatedSCCs = append(isolatedSCCs, sccID)
 		}
 	}
-	
+
 	// Report error if any isolated SCCs found
 	if len(isolatedSCCs) > 0 {
 		fmt.Printf("\nERROR: Found %d isolated SCC(s) with no exit paths:\n", len(isolatedSCCs))
@@ -291,7 +271,7 @@ func (g *DependencyGraph) checkForIsolatedSCCs() error {
 		}
 		return fmt.Errorf("grammar contains %d isolated SCC(s) that cannot terminate", len(isolatedSCCs))
 	}
-	
+
 	return nil
 }
 
@@ -300,25 +280,25 @@ func (g *DependencyGraph) sccHasExitPath(sccID int, scc []string, sccMembership 
 	// Use fixed-point iteration to find reachable rules from this SCC
 	visited := make(map[string]bool)
 	toVisit := []string{}
-	
+
 	// Start with all rules in the SCC
 	for _, ruleName := range scc {
 		toVisit = append(toVisit, ruleName)
 		visited[ruleName] = true
 	}
-	
+
 	// Perform reachability analysis
 	for len(toVisit) > 0 {
 		current := toVisit[0]
 		toVisit = toVisit[1:]
-		
+
 		// Check all references from current rule
 		for _, ref := range g.Edges[current] {
 			// Skip if already visited
 			if visited[ref] {
 				continue
 			}
-			
+
 			// Check if referenced rule is outside this SCC
 			refSCCID, exists := sccMembership[ref]
 			if !exists || refSCCID != sccID {
@@ -327,12 +307,12 @@ func (g *DependencyGraph) sccHasExitPath(sccID int, scc []string, sccMembership 
 					return true
 				}
 			}
-			
+
 			// Mark as visited and continue searching
 			visited[ref] = true
 			toVisit = append(toVisit, ref)
 		}
-		
+
 		// Also check alternatives for direct terminal paths
 		if node := g.GetNode(current); node != nil {
 			for _, alt := range node.Alternatives {
@@ -342,7 +322,7 @@ func (g *DependencyGraph) sccHasExitPath(sccID int, scc []string, sccMembership 
 			}
 		}
 	}
-	
+
 	return false
 }
 
@@ -353,24 +333,24 @@ func (g *DependencyGraph) canReachTerminal(ruleName string, visited map[string]b
 		return false
 	}
 	visited[ruleName] = true
-	
+
 	node := g.GetNode(ruleName)
 	if node == nil {
 		return false
 	}
-	
+
 	// Lexer rules are terminals
 	if node.IsLexer {
 		return true
 	}
-	
+
 	// Check each alternative
 	for _, alt := range node.Alternatives {
 		if g.alternativeCanReachTerminal(alt, visited) {
 			return true
 		}
 	}
-	
+
 	return false
 }
 
@@ -393,17 +373,17 @@ func (g *DependencyGraph) alternativeCanReachTerminal(alt Alternative, visited m
 	if len(alt.Elements) == 0 {
 		return true // Empty alternative is terminal
 	}
-	
+
 	for _, element := range alt.Elements {
 		if element.IsTerminal() {
 			return true
 		}
-		
+
 		// Optional elements can be skipped
 		if element.Quantifier == ZERO_MORE || element.Quantifier == OPTIONAL_Q {
 			continue
 		}
-		
+
 		// Check if referenced rule can reach terminal
 		if refValue, ok := element.Value.(ReferenceValue); ok {
 			if !g.canReachTerminal(refValue.Name, visited) {
@@ -411,7 +391,7 @@ func (g *DependencyGraph) alternativeCanReachTerminal(alt Alternative, visited m
 			}
 		}
 	}
-	
+
 	return true
 }
 

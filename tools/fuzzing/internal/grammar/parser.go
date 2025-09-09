@@ -162,11 +162,11 @@ func ParseGrammarFile(filePath string) (*ParsedGrammar, error) {
 
 // buildDependencyGraph constructs the dependency graph for the parsed grammar
 func buildDependencyGraph(parsedGrammar *ParsedGrammar) error {
-	return buildDependencyGraphWithValidation(parsedGrammar, false)
+	return buildDependencyGraphWithValidation(parsedGrammar)
 }
 
 // buildDependencyGraphWithValidation constructs the dependency graph with optional validation
-func buildDependencyGraphWithValidation(parsedGrammar *ParsedGrammar, validateUnterminated bool) error {
+func buildDependencyGraphWithValidation(parsedGrammar *ParsedGrammar) error {
 	// Add all lexer rules to the graph
 	for ruleName, rule := range parsedGrammar.LexerRules {
 		parsedGrammar.DependencyGraph.AddNode(ruleName, rule)
@@ -256,7 +256,7 @@ func (g *ParsedGrammar) MergeGrammarAndRebuildGraph(other *ParsedGrammar) error 
 	}
 
 	g.DependencyGraph = NewDependencyGraph()
-	if err := buildDependencyGraphWithValidation(g, true); err != nil {
+	if err := buildDependencyGraphWithValidation(g); err != nil {
 		return fmt.Errorf("failed to rebuild dependency graph after merge: %w", err)
 	}
 
@@ -286,7 +286,7 @@ func ParseAndMergeGrammarFiles(filePaths []string) (*ParsedGrammar, error) {
 	}
 
 	mergedGrammar.DependencyGraph = NewDependencyGraph()
-	if err := buildDependencyGraphWithValidation(mergedGrammar, true); err != nil {
+	if err := buildDependencyGraphWithValidation(mergedGrammar); err != nil {
 		return nil, fmt.Errorf("failed to build dependency graph after merging all files: %w", err)
 	}
 

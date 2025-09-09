@@ -164,11 +164,6 @@ func (g *Generator) SetGrammarForTesting(grammar *grammar.ParsedGrammar) {
 	g.dependencyGraph = grammar.GetDependencyGraph()
 }
 
-// generateFromElement is a wrapper for backward compatibility
-func (g *Generator) generateFromElement(element *grammar.Element, depth int) string {
-	return g.generateFromElementWithSCC(element, grammar.NoSCC, depth)
-}
-
 // generateFromElementWithSCC generates text from a single grammar element with SCC tracking
 func (g *Generator) generateFromElementWithSCC(element *grammar.Element, currentSCCID int, recursionDepth int) string {
 	// Handle optional elements
@@ -482,11 +477,6 @@ func (g *Generator) generateQuantifiedWithSCC(element *grammar.Element, currentS
 	}
 
 	return joinWithSpaces(results)
-}
-
-// generateFromBlock is a wrapper for backward compatibility
-func (g *Generator) generateFromBlock(blockValue grammar.BlockValue, depth int) string {
-	return g.generateFromBlockWithSCC(blockValue, grammar.NoSCC, depth)
 }
 
 // generateFromBlockWithSCC generates content from a block value with SCC tracking
