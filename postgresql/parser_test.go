@@ -3,7 +3,7 @@ package postgresql_test
 import (
 	"fmt"
 	"os"
-	"path"
+	"path/filepath"
 	"testing"
 	"time"
 
@@ -37,59 +37,74 @@ func (l *CustomErrorListener) ReportContextSensitivity(recognizer antlr.Parser, 
 	antlr.ConsoleErrorListenerINSTANCE.ReportContextSensitivity(recognizer, dfa, startIndex, stopIndex, prediction, configs)
 }
 
-func TestPostgreSQLParser(t *testing.T) {
-	examples, err := os.ReadDir("examples")
+func testSQLFile(t *testing.T, filePath string) {
+	t.Run(filePath, func(t *testing.T) {
+		t.Parallel()
+		// read all the bytes from the file
+		data, err := os.ReadFile(filePath)
+		require.NoError(t, err)
+
+		input := antlr.NewInputStream(string(data))
+
+		lexer := pgparser.NewPostgreSQLLexer(input)
+
+		stream := antlr.NewCommonTokenStream(lexer, 0)
+		p := pgparser.NewPostgreSQLParser(stream)
+
+		lexerErrors := &CustomErrorListener{}
+		lexer.RemoveErrorListeners()
+		lexer.AddErrorListener(lexerErrors)
+
+		parserErrors := &CustomErrorListener{}
+		p.RemoveErrorListeners()
+		p.AddErrorListener(parserErrors)
+
+		p.BuildParseTrees = true
+
+		tree := p.Root()
+
+		require.Equal(t, 0, lexerErrors.errors)
+		require.Equal(t, 0, parserErrors.errors)
+
+		start := 0
+		stop := stream.Size() - 1
+		for i := 0; i < stream.Size(); i++ {
+			if stream.Get(i).GetChannel() == antlr.TokenDefaultChannel {
+				start = i
+				break
+			}
+		}
+		for i := stream.Size() - 1; i >= 0; i-- {
+			if stream.Get(i).GetChannel() == antlr.TokenDefaultChannel && stream.Get(i).GetTokenType() != antlr.TokenEOF {
+				stop = i
+				break
+			}
+		}
+		require.Equal(t, start, tree.GetStart().GetTokenIndex())
+		require.Equal(t, stop, tree.GetStop().GetTokenIndex())
+		// require.Equal(t, string(data), stream.GetTextFromTokens(stream.Get(0), stream.Get(stream.Size()-1)))
+	})
+}
+
+func processDirectory(t *testing.T, dirPath string) {
+	entries, err := os.ReadDir(dirPath)
 	require.NoError(t, err)
 
-	for _, file := range examples {
-		filePath := path.Join("examples", file.Name())
-		t.Run(filePath, func(t *testing.T) {
-			t.Parallel()
-			// read all the bytes from the file
-			data, err := os.ReadFile(filePath)
-			require.NoError(t, err)
+	for _, entry := range entries {
+		entryPath := filepath.Join(dirPath, entry.Name())
 
-			input := antlr.NewInputStream(string(data))
-
-			lexer := pgparser.NewPostgreSQLLexer(input)
-
-			stream := antlr.NewCommonTokenStream(lexer, 0)
-			p := pgparser.NewPostgreSQLParser(stream)
-
-			lexerErrors := &CustomErrorListener{}
-			lexer.RemoveErrorListeners()
-			lexer.AddErrorListener(lexerErrors)
-
-			parserErrors := &CustomErrorListener{}
-			p.RemoveErrorListeners()
-			p.AddErrorListener(parserErrors)
-
-			p.BuildParseTrees = true
-
-			tree := p.Root()
-
-			require.Equal(t, 0, lexerErrors.errors)
-			require.Equal(t, 0, parserErrors.errors)
-
-			start := 0
-			stop := stream.Size() - 1
-			for i := 0; i < stream.Size(); i++ {
-				if stream.Get(i).GetChannel() == antlr.TokenDefaultChannel {
-					start = i
-					break
-				}
-			}
-			for i := stream.Size() - 1; i >= 0; i-- {
-				if stream.Get(i).GetChannel() == antlr.TokenDefaultChannel && stream.Get(i).GetTokenType() != antlr.TokenEOF {
-					stop = i
-					break
-				}
-			}
-			require.Equal(t, start, tree.GetStart().GetTokenIndex())
-			require.Equal(t, stop, tree.GetStop().GetTokenIndex())
-			// require.Equal(t, string(data), stream.GetTextFromTokens(stream.Get(0), stream.Get(stream.Size()-1)))
-		})
+		if entry.IsDir() {
+			// Recursively process subdirectory
+			processDirectory(t, entryPath)
+		} else if filepath.Ext(entry.Name()) == ".sql" {
+			// Process SQL file
+			testSQLFile(t, entryPath)
+		}
 	}
+}
+
+func TestPostgreSQLParser(t *testing.T) {
+	processDirectory(t, "examples")
 }
 
 type ParseService struct {
@@ -138,23 +153,52 @@ func (s *ParseService) Parse(script string, buildTree bool) antlr.RuleContext {
 	return tree
 }
 
+func collectSQLFiles(dirPath string, maxFiles int) ([]string, error) {
+	var files []string
+	var fileCount int
+
+	var walkDir func(string) error
+	walkDir = func(path string) error {
+		if fileCount >= maxFiles {
+			return nil
+		}
+
+		entries, err := os.ReadDir(path)
+		if err != nil {
+			return err
+		}
+
+		for _, entry := range entries {
+			if fileCount >= maxFiles {
+				break
+			}
+
+			entryPath := filepath.Join(path, entry.Name())
+			if entry.IsDir() {
+				if err := walkDir(entryPath); err != nil {
+					return err
+				}
+			} else if filepath.Ext(entry.Name()) == ".sql" {
+				data, err := os.ReadFile(entryPath)
+				if err != nil {
+					return err
+				}
+				files = append(files, string(data))
+				fileCount++
+			}
+		}
+		return nil
+	}
+
+	err := walkDir(dirPath)
+	return files, err
+}
+
 func TestBenchmarkParser(t *testing.T) {
 	s := NewParseService()
-	examples, err := os.ReadDir("examples")
+
+	files, err := collectSQLFiles("examples", 20)
 	require.NoError(t, err)
-
-	var files []string
-
-	for i, file := range examples {
-		if i > 20 {
-			break
-		}
-		filePath := path.Join("examples", file.Name())
-		data, err := os.ReadFile(filePath)
-		require.NoError(t, err)
-
-		files = append(files, string(data))
-	}
 
 	fmt.Printf("Total files: %d\n", len(files))
 

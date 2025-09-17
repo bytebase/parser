@@ -3558,7 +3558,7 @@ func_application
 
 func_expr
    : func_application within_group_clause? filter_clause? over_clause?
-   | json_aggregate_func filter_clause over_clause
+   | json_aggregate_func filter_clause? over_clause?
    | func_expr_common_subexpr
    ;
 
@@ -3569,7 +3569,7 @@ func_expr_windowless
    ;
 
 json_aggregate_func
-   : JSON_OBJECTAGG OPEN_PAREN json_name_and_value json_object_constructor_null_clause? json_key_uniqueness_constraint json_output_clause? CLOSE_PAREN
+   : JSON_OBJECTAGG OPEN_PAREN json_name_and_value json_object_constructor_null_clause? json_key_uniqueness_constraint? json_output_clause? CLOSE_PAREN
    | JSON_ARRAYAGG OPEN_PAREN json_value_expr json_array_aggregate_order_by_clause? json_array_constructor_null_clause? json_output_clause? CLOSE_PAREN
    ;
 
@@ -4445,6 +4445,7 @@ unreserved_keyword
    | STORAGE
    | STORED
    | STRICT_P
+   | STRING
    | STRIP_P
    | SUBSCRIPTION
    | SUPPORT
