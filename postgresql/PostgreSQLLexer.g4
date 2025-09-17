@@ -2788,6 +2788,14 @@ CASE_INSENSITIVE
    : 'CASE_INSENSITIVE'
    ;
 
+JSON_ARRAYAGG
+   : 'JSON_ARRAYAGG'
+   ;
+
+JSON_OBJECTAGG
+   : 'JSON_OBJECTAGG'
+   ;
+
 Identifier
    : IdentifierStartChar IdentifierChar*
    ;

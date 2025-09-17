@@ -2463,6 +2463,18 @@ func (v *BasePostgreSQLParserVisitor) VisitFunc_expr_windowless(ctx *Func_expr_w
 	return v.VisitChildren(ctx)
 }
 
+func (v *BasePostgreSQLParserVisitor) VisitJson_aggregate_func(ctx *Json_aggregate_funcContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_output_clause(ctx *Json_output_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_array_aggregate_order_by_clause(ctx *Json_array_aggregate_order_by_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BasePostgreSQLParserVisitor) VisitFunc_expr_common_subexpr(ctx *Func_expr_common_subexprContext) interface{} {
 	return v.VisitChildren(ctx)
 }

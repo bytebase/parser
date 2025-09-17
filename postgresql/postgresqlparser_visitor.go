@@ -1849,6 +1849,15 @@ type PostgreSQLParserVisitor interface {
 	// Visit a parse tree produced by PostgreSQLParser#func_expr_windowless.
 	VisitFunc_expr_windowless(ctx *Func_expr_windowlessContext) interface{}
 
+	// Visit a parse tree produced by PostgreSQLParser#json_aggregate_func.
+	VisitJson_aggregate_func(ctx *Json_aggregate_funcContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_output_clause.
+	VisitJson_output_clause(ctx *Json_output_clauseContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_array_aggregate_order_by_clause.
+	VisitJson_array_aggregate_order_by_clause(ctx *Json_array_aggregate_order_by_clauseContext) interface{}
+
 	// Visit a parse tree produced by PostgreSQLParser#func_expr_common_subexpr.
 	VisitFunc_expr_common_subexpr(ctx *Func_expr_common_subexprContext) interface{}
 

@@ -1849,6 +1849,15 @@ type PostgreSQLParserListener interface {
 	// EnterFunc_expr_windowless is called when entering the func_expr_windowless production.
 	EnterFunc_expr_windowless(c *Func_expr_windowlessContext)
 
+	// EnterJson_aggregate_func is called when entering the json_aggregate_func production.
+	EnterJson_aggregate_func(c *Json_aggregate_funcContext)
+
+	// EnterJson_output_clause is called when entering the json_output_clause production.
+	EnterJson_output_clause(c *Json_output_clauseContext)
+
+	// EnterJson_array_aggregate_order_by_clause is called when entering the json_array_aggregate_order_by_clause production.
+	EnterJson_array_aggregate_order_by_clause(c *Json_array_aggregate_order_by_clauseContext)
+
 	// EnterFunc_expr_common_subexpr is called when entering the func_expr_common_subexpr production.
 	EnterFunc_expr_common_subexpr(c *Func_expr_common_subexprContext)
 
@@ -4368,6 +4377,15 @@ type PostgreSQLParserListener interface {
 
 	// ExitFunc_expr_windowless is called when exiting the func_expr_windowless production.
 	ExitFunc_expr_windowless(c *Func_expr_windowlessContext)
+
+	// ExitJson_aggregate_func is called when exiting the json_aggregate_func production.
+	ExitJson_aggregate_func(c *Json_aggregate_funcContext)
+
+	// ExitJson_output_clause is called when exiting the json_output_clause production.
+	ExitJson_output_clause(c *Json_output_clauseContext)
+
+	// ExitJson_array_aggregate_order_by_clause is called when exiting the json_array_aggregate_order_by_clause production.
+	ExitJson_array_aggregate_order_by_clause(c *Json_array_aggregate_order_by_clauseContext)
 
 	// ExitFunc_expr_common_subexpr is called when exiting the func_expr_common_subexpr production.
 	ExitFunc_expr_common_subexpr(c *Func_expr_common_subexprContext)

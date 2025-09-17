@@ -3872,6 +3872,26 @@ func (s *BasePostgreSQLParserListener) EnterFunc_expr_windowless(ctx *Func_expr_
 // ExitFunc_expr_windowless is called when production func_expr_windowless is exited.
 func (s *BasePostgreSQLParserListener) ExitFunc_expr_windowless(ctx *Func_expr_windowlessContext) {}
 
+// EnterJson_aggregate_func is called when production json_aggregate_func is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_aggregate_func(ctx *Json_aggregate_funcContext) {}
+
+// ExitJson_aggregate_func is called when production json_aggregate_func is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_aggregate_func(ctx *Json_aggregate_funcContext) {}
+
+// EnterJson_output_clause is called when production json_output_clause is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_output_clause(ctx *Json_output_clauseContext) {}
+
+// ExitJson_output_clause is called when production json_output_clause is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_output_clause(ctx *Json_output_clauseContext) {}
+
+// EnterJson_array_aggregate_order_by_clause is called when production json_array_aggregate_order_by_clause is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_array_aggregate_order_by_clause(ctx *Json_array_aggregate_order_by_clauseContext) {
+}
+
+// ExitJson_array_aggregate_order_by_clause is called when production json_array_aggregate_order_by_clause is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_array_aggregate_order_by_clause(ctx *Json_array_aggregate_order_by_clauseContext) {
+}
+
 // EnterFunc_expr_common_subexpr is called when production func_expr_common_subexpr is entered.
 func (s *BasePostgreSQLParserListener) EnterFunc_expr_common_subexpr(ctx *Func_expr_common_subexprContext) {
 }

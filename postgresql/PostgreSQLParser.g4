@@ -3558,12 +3558,27 @@ func_application
 
 func_expr
    : func_application within_group_clause? filter_clause? over_clause?
+   | json_aggregate_func filter_clause over_clause
    | func_expr_common_subexpr
    ;
 
 func_expr_windowless
    : func_application
    | func_expr_common_subexpr
+   | json_aggregate_func
+   ;
+
+json_aggregate_func
+   : JSON_OBJECTAGG OPEN_PAREN json_name_and_value json_object_constructor_null_clause? json_key_uniqueness_constraint json_output_clause? CLOSE_PAREN
+   | JSON_ARRAYAGG OPEN_PAREN json_value_expr json_array_aggregate_order_by_clause? json_array_constructor_null_clause? json_output_clause? CLOSE_PAREN
+   ;
+
+json_output_clause
+   : RETURNING typename json_format_clause?
+   ;
+
+json_array_aggregate_order_by_clause
+   : ORDER BY sortby_list
    ;
 
 func_expr_common_subexpr
@@ -4175,6 +4190,7 @@ plsqlidentifier
 
 unreserved_keyword
    : ABORT_P
+   | ABSENT
    | ABSOLUTE_P
    | ACCESS
    | ACTION
@@ -4266,6 +4282,7 @@ unreserved_keyword
    | FIRST_P
    | FOLLOWING
    | FORCE
+   | FORMAT
    | FORWARD
    | FUNCTION
    | FUNCTIONS
@@ -4297,7 +4314,9 @@ unreserved_keyword
    | INSTEAD
    | INVOKER
    | ISOLATION
+   | JSON
    | KEY
+   | KEYS
    | LABEL
    | LANGUAGE
    | LARGE_P
@@ -4495,6 +4514,10 @@ col_name_keyword
    | INT_P
    | INTEGER
    | INTERVAL
+   | JSON_ARRAY
+   | JSON_ARRAYAGG
+   | JSON_OBJECT
+   | JSON_OBJECTAGG
    | LEAST
    | NATIONAL
    | NCHAR
