@@ -1852,6 +1852,63 @@ type PostgreSQLParserVisitor interface {
 	// Visit a parse tree produced by PostgreSQLParser#func_expr_common_subexpr.
 	VisitFunc_expr_common_subexpr(ctx *Func_expr_common_subexprContext) interface{}
 
+	// Visit a parse tree produced by PostgreSQLParser#json_on_error_clause.
+	VisitJson_on_error_clause(ctx *Json_on_error_clauseContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_behavior_clause.
+	VisitJson_behavior_clause(ctx *Json_behavior_clauseContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_behavior.
+	VisitJson_behavior(ctx *Json_behaviorContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_behavior_type.
+	VisitJson_behavior_type(ctx *Json_behavior_typeContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_quotes_clause.
+	VisitJson_quotes_clause(ctx *Json_quotes_clauseContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_wrapper_behavior.
+	VisitJson_wrapper_behavior(ctx *Json_wrapper_behaviorContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_passing_clause.
+	VisitJson_passing_clause(ctx *Json_passing_clauseContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_arguments.
+	VisitJson_arguments(ctx *Json_argumentsContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_argument.
+	VisitJson_argument(ctx *Json_argumentContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_format_clause_opt.
+	VisitJson_format_clause_opt(ctx *Json_format_clause_optContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_value_expr_list.
+	VisitJson_value_expr_list(ctx *Json_value_expr_listContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_returning_clause.
+	VisitJson_returning_clause(ctx *Json_returning_clauseContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_key_uniqueness_constraint.
+	VisitJson_key_uniqueness_constraint(ctx *Json_key_uniqueness_constraintContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_array_constructor_null_clause.
+	VisitJson_array_constructor_null_clause(ctx *Json_array_constructor_null_clauseContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_object_constructor_null_clause.
+	VisitJson_object_constructor_null_clause(ctx *Json_object_constructor_null_clauseContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_name_and_value_list.
+	VisitJson_name_and_value_list(ctx *Json_name_and_value_listContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_name_and_value.
+	VisitJson_name_and_value(ctx *Json_name_and_valueContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_value_expr.
+	VisitJson_value_expr(ctx *Json_value_exprContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#json_format_clause.
+	VisitJson_format_clause(ctx *Json_format_clauseContext) interface{}
+
 	// Visit a parse tree produced by PostgreSQLParser#xml_root_version.
 	VisitXml_root_version(ctx *Xml_root_versionContext) interface{}
 

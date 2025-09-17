@@ -1852,6 +1852,63 @@ type PostgreSQLParserListener interface {
 	// EnterFunc_expr_common_subexpr is called when entering the func_expr_common_subexpr production.
 	EnterFunc_expr_common_subexpr(c *Func_expr_common_subexprContext)
 
+	// EnterJson_on_error_clause is called when entering the json_on_error_clause production.
+	EnterJson_on_error_clause(c *Json_on_error_clauseContext)
+
+	// EnterJson_behavior_clause is called when entering the json_behavior_clause production.
+	EnterJson_behavior_clause(c *Json_behavior_clauseContext)
+
+	// EnterJson_behavior is called when entering the json_behavior production.
+	EnterJson_behavior(c *Json_behaviorContext)
+
+	// EnterJson_behavior_type is called when entering the json_behavior_type production.
+	EnterJson_behavior_type(c *Json_behavior_typeContext)
+
+	// EnterJson_quotes_clause is called when entering the json_quotes_clause production.
+	EnterJson_quotes_clause(c *Json_quotes_clauseContext)
+
+	// EnterJson_wrapper_behavior is called when entering the json_wrapper_behavior production.
+	EnterJson_wrapper_behavior(c *Json_wrapper_behaviorContext)
+
+	// EnterJson_passing_clause is called when entering the json_passing_clause production.
+	EnterJson_passing_clause(c *Json_passing_clauseContext)
+
+	// EnterJson_arguments is called when entering the json_arguments production.
+	EnterJson_arguments(c *Json_argumentsContext)
+
+	// EnterJson_argument is called when entering the json_argument production.
+	EnterJson_argument(c *Json_argumentContext)
+
+	// EnterJson_format_clause_opt is called when entering the json_format_clause_opt production.
+	EnterJson_format_clause_opt(c *Json_format_clause_optContext)
+
+	// EnterJson_value_expr_list is called when entering the json_value_expr_list production.
+	EnterJson_value_expr_list(c *Json_value_expr_listContext)
+
+	// EnterJson_returning_clause is called when entering the json_returning_clause production.
+	EnterJson_returning_clause(c *Json_returning_clauseContext)
+
+	// EnterJson_key_uniqueness_constraint is called when entering the json_key_uniqueness_constraint production.
+	EnterJson_key_uniqueness_constraint(c *Json_key_uniqueness_constraintContext)
+
+	// EnterJson_array_constructor_null_clause is called when entering the json_array_constructor_null_clause production.
+	EnterJson_array_constructor_null_clause(c *Json_array_constructor_null_clauseContext)
+
+	// EnterJson_object_constructor_null_clause is called when entering the json_object_constructor_null_clause production.
+	EnterJson_object_constructor_null_clause(c *Json_object_constructor_null_clauseContext)
+
+	// EnterJson_name_and_value_list is called when entering the json_name_and_value_list production.
+	EnterJson_name_and_value_list(c *Json_name_and_value_listContext)
+
+	// EnterJson_name_and_value is called when entering the json_name_and_value production.
+	EnterJson_name_and_value(c *Json_name_and_valueContext)
+
+	// EnterJson_value_expr is called when entering the json_value_expr production.
+	EnterJson_value_expr(c *Json_value_exprContext)
+
+	// EnterJson_format_clause is called when entering the json_format_clause production.
+	EnterJson_format_clause(c *Json_format_clauseContext)
+
 	// EnterXml_root_version is called when entering the xml_root_version production.
 	EnterXml_root_version(c *Xml_root_versionContext)
 
@@ -4314,6 +4371,63 @@ type PostgreSQLParserListener interface {
 
 	// ExitFunc_expr_common_subexpr is called when exiting the func_expr_common_subexpr production.
 	ExitFunc_expr_common_subexpr(c *Func_expr_common_subexprContext)
+
+	// ExitJson_on_error_clause is called when exiting the json_on_error_clause production.
+	ExitJson_on_error_clause(c *Json_on_error_clauseContext)
+
+	// ExitJson_behavior_clause is called when exiting the json_behavior_clause production.
+	ExitJson_behavior_clause(c *Json_behavior_clauseContext)
+
+	// ExitJson_behavior is called when exiting the json_behavior production.
+	ExitJson_behavior(c *Json_behaviorContext)
+
+	// ExitJson_behavior_type is called when exiting the json_behavior_type production.
+	ExitJson_behavior_type(c *Json_behavior_typeContext)
+
+	// ExitJson_quotes_clause is called when exiting the json_quotes_clause production.
+	ExitJson_quotes_clause(c *Json_quotes_clauseContext)
+
+	// ExitJson_wrapper_behavior is called when exiting the json_wrapper_behavior production.
+	ExitJson_wrapper_behavior(c *Json_wrapper_behaviorContext)
+
+	// ExitJson_passing_clause is called when exiting the json_passing_clause production.
+	ExitJson_passing_clause(c *Json_passing_clauseContext)
+
+	// ExitJson_arguments is called when exiting the json_arguments production.
+	ExitJson_arguments(c *Json_argumentsContext)
+
+	// ExitJson_argument is called when exiting the json_argument production.
+	ExitJson_argument(c *Json_argumentContext)
+
+	// ExitJson_format_clause_opt is called when exiting the json_format_clause_opt production.
+	ExitJson_format_clause_opt(c *Json_format_clause_optContext)
+
+	// ExitJson_value_expr_list is called when exiting the json_value_expr_list production.
+	ExitJson_value_expr_list(c *Json_value_expr_listContext)
+
+	// ExitJson_returning_clause is called when exiting the json_returning_clause production.
+	ExitJson_returning_clause(c *Json_returning_clauseContext)
+
+	// ExitJson_key_uniqueness_constraint is called when exiting the json_key_uniqueness_constraint production.
+	ExitJson_key_uniqueness_constraint(c *Json_key_uniqueness_constraintContext)
+
+	// ExitJson_array_constructor_null_clause is called when exiting the json_array_constructor_null_clause production.
+	ExitJson_array_constructor_null_clause(c *Json_array_constructor_null_clauseContext)
+
+	// ExitJson_object_constructor_null_clause is called when exiting the json_object_constructor_null_clause production.
+	ExitJson_object_constructor_null_clause(c *Json_object_constructor_null_clauseContext)
+
+	// ExitJson_name_and_value_list is called when exiting the json_name_and_value_list production.
+	ExitJson_name_and_value_list(c *Json_name_and_value_listContext)
+
+	// ExitJson_name_and_value is called when exiting the json_name_and_value production.
+	ExitJson_name_and_value(c *Json_name_and_valueContext)
+
+	// ExitJson_value_expr is called when exiting the json_value_expr production.
+	ExitJson_value_expr(c *Json_value_exprContext)
+
+	// ExitJson_format_clause is called when exiting the json_format_clause production.
+	ExitJson_format_clause(c *Json_format_clauseContext)
 
 	// ExitXml_root_version is called when exiting the xml_root_version production.
 	ExitXml_root_version(c *Xml_root_versionContext)

@@ -539,6 +539,81 @@ WITH
    : 'WITH'
    ;
 
+JSON_OBJECT
+   : 'JSON_OBJECT'
+   ;
+
+JSON_ARRAY
+   : 'JSON_ARRAY'
+   ;
+
+JSON
+   : 'JSON'
+   ;
+
+JSON_SCALAR
+   : 'JSON_SCALAR'
+   ;
+
+JSON_SERIALIZE
+   : 'JSON_SERIALIZE'
+   ;
+
+MERGE_ACTION
+   : 'MERGE_ACTION'
+   ;
+
+JSON_QUERY
+   : 'JSON_QUERY'
+   ;
+
+JSON_EXISTS
+   : 'JSON_EXISTS'
+   ;
+
+JSON_VALUE
+   : 'JSON_VALUE'
+   ;
+
+EMPTY
+   : 'EMPTY'
+   ;
+
+KEEP
+   : 'KEEP'
+   ;
+
+OMIT
+   : 'OMIT'
+   ;
+
+SCALAR
+   : 'SCALAR'
+   ;
+
+STRING
+   : 'STRING'
+   ;
+
+CONDITIONAL
+   : 'CONDITIONAL'
+   ;
+
+UNCONDITIONAL
+   : 'UNCONDITIONAL'
+   ;
+
+KEYS
+   : 'KEYS'
+   ;
+
+ABSENT
+   : 'ABSENT'
+   ;
+
+QUOTES
+   : 'QUOTES'
+   ;
    //
 
    // reserved keywords (can be function or type)

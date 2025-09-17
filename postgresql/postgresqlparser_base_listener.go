@@ -3880,6 +3880,132 @@ func (s *BasePostgreSQLParserListener) EnterFunc_expr_common_subexpr(ctx *Func_e
 func (s *BasePostgreSQLParserListener) ExitFunc_expr_common_subexpr(ctx *Func_expr_common_subexprContext) {
 }
 
+// EnterJson_on_error_clause is called when production json_on_error_clause is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_on_error_clause(ctx *Json_on_error_clauseContext) {}
+
+// ExitJson_on_error_clause is called when production json_on_error_clause is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_on_error_clause(ctx *Json_on_error_clauseContext) {}
+
+// EnterJson_behavior_clause is called when production json_behavior_clause is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_behavior_clause(ctx *Json_behavior_clauseContext) {}
+
+// ExitJson_behavior_clause is called when production json_behavior_clause is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_behavior_clause(ctx *Json_behavior_clauseContext) {}
+
+// EnterJson_behavior is called when production json_behavior is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_behavior(ctx *Json_behaviorContext) {}
+
+// ExitJson_behavior is called when production json_behavior is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_behavior(ctx *Json_behaviorContext) {}
+
+// EnterJson_behavior_type is called when production json_behavior_type is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_behavior_type(ctx *Json_behavior_typeContext) {}
+
+// ExitJson_behavior_type is called when production json_behavior_type is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_behavior_type(ctx *Json_behavior_typeContext) {}
+
+// EnterJson_quotes_clause is called when production json_quotes_clause is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_quotes_clause(ctx *Json_quotes_clauseContext) {}
+
+// ExitJson_quotes_clause is called when production json_quotes_clause is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_quotes_clause(ctx *Json_quotes_clauseContext) {}
+
+// EnterJson_wrapper_behavior is called when production json_wrapper_behavior is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_wrapper_behavior(ctx *Json_wrapper_behaviorContext) {
+}
+
+// ExitJson_wrapper_behavior is called when production json_wrapper_behavior is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_wrapper_behavior(ctx *Json_wrapper_behaviorContext) {}
+
+// EnterJson_passing_clause is called when production json_passing_clause is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_passing_clause(ctx *Json_passing_clauseContext) {}
+
+// ExitJson_passing_clause is called when production json_passing_clause is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_passing_clause(ctx *Json_passing_clauseContext) {}
+
+// EnterJson_arguments is called when production json_arguments is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_arguments(ctx *Json_argumentsContext) {}
+
+// ExitJson_arguments is called when production json_arguments is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_arguments(ctx *Json_argumentsContext) {}
+
+// EnterJson_argument is called when production json_argument is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_argument(ctx *Json_argumentContext) {}
+
+// ExitJson_argument is called when production json_argument is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_argument(ctx *Json_argumentContext) {}
+
+// EnterJson_format_clause_opt is called when production json_format_clause_opt is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_format_clause_opt(ctx *Json_format_clause_optContext) {
+}
+
+// ExitJson_format_clause_opt is called when production json_format_clause_opt is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_format_clause_opt(ctx *Json_format_clause_optContext) {
+}
+
+// EnterJson_value_expr_list is called when production json_value_expr_list is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_value_expr_list(ctx *Json_value_expr_listContext) {}
+
+// ExitJson_value_expr_list is called when production json_value_expr_list is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_value_expr_list(ctx *Json_value_expr_listContext) {}
+
+// EnterJson_returning_clause is called when production json_returning_clause is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_returning_clause(ctx *Json_returning_clauseContext) {
+}
+
+// ExitJson_returning_clause is called when production json_returning_clause is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_returning_clause(ctx *Json_returning_clauseContext) {}
+
+// EnterJson_key_uniqueness_constraint is called when production json_key_uniqueness_constraint is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_key_uniqueness_constraint(ctx *Json_key_uniqueness_constraintContext) {
+}
+
+// ExitJson_key_uniqueness_constraint is called when production json_key_uniqueness_constraint is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_key_uniqueness_constraint(ctx *Json_key_uniqueness_constraintContext) {
+}
+
+// EnterJson_array_constructor_null_clause is called when production json_array_constructor_null_clause is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_array_constructor_null_clause(ctx *Json_array_constructor_null_clauseContext) {
+}
+
+// ExitJson_array_constructor_null_clause is called when production json_array_constructor_null_clause is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_array_constructor_null_clause(ctx *Json_array_constructor_null_clauseContext) {
+}
+
+// EnterJson_object_constructor_null_clause is called when production json_object_constructor_null_clause is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_object_constructor_null_clause(ctx *Json_object_constructor_null_clauseContext) {
+}
+
+// ExitJson_object_constructor_null_clause is called when production json_object_constructor_null_clause is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_object_constructor_null_clause(ctx *Json_object_constructor_null_clauseContext) {
+}
+
+// EnterJson_name_and_value_list is called when production json_name_and_value_list is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_name_and_value_list(ctx *Json_name_and_value_listContext) {
+}
+
+// ExitJson_name_and_value_list is called when production json_name_and_value_list is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_name_and_value_list(ctx *Json_name_and_value_listContext) {
+}
+
+// EnterJson_name_and_value is called when production json_name_and_value is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_name_and_value(ctx *Json_name_and_valueContext) {}
+
+// ExitJson_name_and_value is called when production json_name_and_value is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_name_and_value(ctx *Json_name_and_valueContext) {}
+
+// EnterJson_value_expr is called when production json_value_expr is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_value_expr(ctx *Json_value_exprContext) {}
+
+// ExitJson_value_expr is called when production json_value_expr is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_value_expr(ctx *Json_value_exprContext) {}
+
+// EnterJson_format_clause is called when production json_format_clause is entered.
+func (s *BasePostgreSQLParserListener) EnterJson_format_clause(ctx *Json_format_clauseContext) {}
+
+// ExitJson_format_clause is called when production json_format_clause is exited.
+func (s *BasePostgreSQLParserListener) ExitJson_format_clause(ctx *Json_format_clauseContext) {}
+
 // EnterXml_root_version is called when production xml_root_version is entered.
 func (s *BasePostgreSQLParserListener) EnterXml_root_version(ctx *Xml_root_versionContext) {}
 

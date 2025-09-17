@@ -2467,6 +2467,82 @@ func (v *BasePostgreSQLParserVisitor) VisitFunc_expr_common_subexpr(ctx *Func_ex
 	return v.VisitChildren(ctx)
 }
 
+func (v *BasePostgreSQLParserVisitor) VisitJson_on_error_clause(ctx *Json_on_error_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_behavior_clause(ctx *Json_behavior_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_behavior(ctx *Json_behaviorContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_behavior_type(ctx *Json_behavior_typeContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_quotes_clause(ctx *Json_quotes_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_wrapper_behavior(ctx *Json_wrapper_behaviorContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_passing_clause(ctx *Json_passing_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_arguments(ctx *Json_argumentsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_argument(ctx *Json_argumentContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_format_clause_opt(ctx *Json_format_clause_optContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_value_expr_list(ctx *Json_value_expr_listContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_returning_clause(ctx *Json_returning_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_key_uniqueness_constraint(ctx *Json_key_uniqueness_constraintContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_array_constructor_null_clause(ctx *Json_array_constructor_null_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_object_constructor_null_clause(ctx *Json_object_constructor_null_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_name_and_value_list(ctx *Json_name_and_value_listContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_name_and_value(ctx *Json_name_and_valueContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_value_expr(ctx *Json_value_exprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitJson_format_clause(ctx *Json_format_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BasePostgreSQLParserVisitor) VisitXml_root_version(ctx *Xml_root_versionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
