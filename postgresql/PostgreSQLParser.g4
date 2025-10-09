@@ -3038,29 +3038,27 @@ from_list
    ;
 
 table_ref
-   : (relation_expr opt_alias_clause? tablesample_clause?
-      | func_table func_alias_clause?
-      | xmltable opt_alias_clause?
-      | select_with_parens opt_alias_clause?
-      | LATERAL_P (
-                    xmltable opt_alias_clause?
-                    | func_table func_alias_clause?
-                    | select_with_parens opt_alias_clause?
-                  )
-      | OPEN_PAREN table_ref (
-                                CROSS JOIN table_ref
-                                | NATURAL join_type? JOIN table_ref
-                                | join_type? JOIN table_ref join_qual
-                             )? CLOSE_PAREN opt_alias_clause?
-     )
-      joined_table*
-   ;
-   
-joined_table
-   : join_type? JOIN table_ref join_qual
-   | CROSS JOIN table_ref
-   | NATURAL join_type? JOIN table_ref
-   ;
+    : (
+        relation_expr opt_alias_clause? tablesample_clause?
+        | func_table func_alias_clause?
+        | xmltable opt_alias_clause?
+        | select_with_parens opt_alias_clause?
+        | LATERAL_P (
+            xmltable opt_alias_clause?
+            | func_table func_alias_clause?
+            | select_with_parens opt_alias_clause?
+        )
+        | OPEN_PAREN table_ref (
+            CROSS JOIN table_ref
+            | NATURAL join_type? JOIN table_ref
+            | join_type? JOIN table_ref join_qual
+        )? CLOSE_PAREN opt_alias_clause?
+    ) (
+        CROSS JOIN table_ref
+        | NATURAL join_type? JOIN table_ref
+        | join_type? JOIN table_ref join_qual
+    )*
+    ;
 
 alias_clause
    : AS? colid (OPEN_PAREN name_list CLOSE_PAREN)?
