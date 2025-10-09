@@ -1609,9 +1609,6 @@ type PostgreSQLParserListener interface {
 	// EnterTable_ref is called when entering the table_ref production.
 	EnterTable_ref(c *Table_refContext)
 
-	// EnterJoined_table is called when entering the joined_table production.
-	EnterJoined_table(c *Joined_tableContext)
-
 	// EnterAlias_clause is called when entering the alias_clause production.
 	EnterAlias_clause(c *Alias_clauseContext)
 
@@ -4137,9 +4134,6 @@ type PostgreSQLParserListener interface {
 
 	// ExitTable_ref is called when exiting the table_ref production.
 	ExitTable_ref(c *Table_refContext)
-
-	// ExitJoined_table is called when exiting the joined_table production.
-	ExitJoined_table(c *Joined_tableContext)
 
 	// ExitAlias_clause is called when exiting the alias_clause production.
 	ExitAlias_clause(c *Alias_clauseContext)
