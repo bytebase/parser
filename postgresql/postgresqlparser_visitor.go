@@ -1609,6 +1609,9 @@ type PostgreSQLParserVisitor interface {
 	// Visit a parse tree produced by PostgreSQLParser#table_ref.
 	VisitTable_ref(ctx *Table_refContext) interface{}
 
+	// Visit a parse tree produced by PostgreSQLParser#joined_table.
+	VisitJoined_table(ctx *Joined_tableContext) interface{}
+
 	// Visit a parse tree produced by PostgreSQLParser#alias_clause.
 	VisitAlias_clause(ctx *Alias_clauseContext) interface{}
 

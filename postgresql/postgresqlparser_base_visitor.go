@@ -2143,6 +2143,10 @@ func (v *BasePostgreSQLParserVisitor) VisitTable_ref(ctx *Table_refContext) inte
 	return v.VisitChildren(ctx)
 }
 
+func (v *BasePostgreSQLParserVisitor) VisitJoined_table(ctx *Joined_tableContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BasePostgreSQLParserVisitor) VisitAlias_clause(ctx *Alias_clauseContext) interface{} {
 	return v.VisitChildren(ctx)
 }

@@ -3048,16 +3048,14 @@ table_ref
             | func_table func_alias_clause?
             | select_with_parens opt_alias_clause?
         )
-        | OPEN_PAREN table_ref (
-            CROSS JOIN table_ref
-            | NATURAL join_type? JOIN table_ref
-            | join_type? JOIN table_ref join_qual
-        )? CLOSE_PAREN opt_alias_clause?
-    ) (
-        CROSS JOIN table_ref
-        | NATURAL join_type? JOIN table_ref
-        | join_type? JOIN table_ref join_qual
-    )*
+        | OPEN_PAREN table_ref joined_table? CLOSE_PAREN opt_alias_clause?
+    ) joined_table*
+    ;
+
+joined_table
+    : CROSS JOIN table_ref
+    | NATURAL join_type? JOIN table_ref
+    | join_type? JOIN table_ref join_qual
     ;
 
 alias_clause
