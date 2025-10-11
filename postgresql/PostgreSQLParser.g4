@@ -2821,8 +2821,7 @@ select_with_parens
    ;
 
 select_no_parens
-   : select_clause opt_sort_clause? (for_locking_clause opt_select_limit? | select_limit opt_for_locking_clause?)?
-   | with_clause select_clause opt_sort_clause? (for_locking_clause opt_select_limit? | select_limit opt_for_locking_clause?)?
+   : with_clause? select_clause opt_sort_clause? (for_locking_clause opt_select_limit? | select_limit opt_for_locking_clause?)?
    ;
 
 select_clause
@@ -3549,7 +3548,13 @@ plsqlvariablename
    ;
 
 func_application
-   : func_name OPEN_PAREN (func_arg_list (COMMA VARIADIC func_arg_expr)? opt_sort_clause? | VARIADIC func_arg_expr opt_sort_clause? | (ALL | DISTINCT) func_arg_list opt_sort_clause? | STAR |) CLOSE_PAREN
+   : func_name OPEN_PAREN (
+        func_arg_list (COMMA VARIADIC func_arg_expr)? opt_sort_clause?
+        | VARIADIC func_arg_expr opt_sort_clause?
+        | (ALL | DISTINCT) func_arg_list opt_sort_clause?
+        | STAR
+        |
+     ) CLOSE_PAREN
    ;
 
 func_expr
