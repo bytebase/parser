@@ -4030,7 +4030,7 @@ target_list
    ;
 
 target_el
-   : columnref # target_columnref  // Add by Bytebase to handling table.* easily.
+   : columnref # target_columnref  // NOTE(parser): Add by Bytebase to handling table.* easily.
    | a_expr target_alias? # target_label
    | STAR # target_star
    ;
