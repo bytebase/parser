@@ -2787,6 +2787,10 @@ func (v *BasePostgreSQLParserVisitor) VisitTarget_list(ctx *Target_listContext) 
 	return v.VisitChildren(ctx)
 }
 
+func (v *BasePostgreSQLParserVisitor) VisitTarget_columnref(ctx *Target_columnrefContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BasePostgreSQLParserVisitor) VisitTarget_label(ctx *Target_labelContext) interface{} {
 	return v.VisitChildren(ctx)
 }

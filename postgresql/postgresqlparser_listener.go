@@ -2092,6 +2092,9 @@ type PostgreSQLParserListener interface {
 	// EnterTarget_list is called when entering the target_list production.
 	EnterTarget_list(c *Target_listContext)
 
+	// EnterTarget_columnref is called when entering the target_columnref production.
+	EnterTarget_columnref(c *Target_columnrefContext)
+
 	// EnterTarget_label is called when entering the target_label production.
 	EnterTarget_label(c *Target_labelContext)
 
@@ -4620,6 +4623,9 @@ type PostgreSQLParserListener interface {
 
 	// ExitTarget_list is called when exiting the target_list production.
 	ExitTarget_list(c *Target_listContext)
+
+	// ExitTarget_columnref is called when exiting the target_columnref production.
+	ExitTarget_columnref(c *Target_columnrefContext)
 
 	// ExitTarget_label is called when exiting the target_label production.
 	ExitTarget_label(c *Target_labelContext)

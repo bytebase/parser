@@ -4383,6 +4383,12 @@ func (s *BasePostgreSQLParserListener) EnterTarget_list(ctx *Target_listContext)
 // ExitTarget_list is called when production target_list is exited.
 func (s *BasePostgreSQLParserListener) ExitTarget_list(ctx *Target_listContext) {}
 
+// EnterTarget_columnref is called when production target_columnref is entered.
+func (s *BasePostgreSQLParserListener) EnterTarget_columnref(ctx *Target_columnrefContext) {}
+
+// ExitTarget_columnref is called when production target_columnref is exited.
+func (s *BasePostgreSQLParserListener) ExitTarget_columnref(ctx *Target_columnrefContext) {}
+
 // EnterTarget_label is called when production target_label is entered.
 func (s *BasePostgreSQLParserListener) EnterTarget_label(ctx *Target_labelContext) {}
 

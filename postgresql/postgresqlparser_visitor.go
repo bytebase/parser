@@ -2092,6 +2092,9 @@ type PostgreSQLParserVisitor interface {
 	// Visit a parse tree produced by PostgreSQLParser#target_list.
 	VisitTarget_list(ctx *Target_listContext) interface{}
 
+	// Visit a parse tree produced by PostgreSQLParser#target_columnref.
+	VisitTarget_columnref(ctx *Target_columnrefContext) interface{}
+
 	// Visit a parse tree produced by PostgreSQLParser#target_label.
 	VisitTarget_label(ctx *Target_labelContext) interface{}
 
