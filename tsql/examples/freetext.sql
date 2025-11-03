@@ -1,0 +1,1 @@
+SELECT * FROM Articles WHERE FREETEXT(Content, 'It is SQL Server');
