@@ -1,0 +1,12 @@
+;
+#begin
+CREATE TABLE employee(
+    id BIGINT AUTO_RANDOM(10, 64) PRIMARY KEY
+);
+CREATE TABLE employee(
+    id BIGINT AUTO_RANDOM(10) PRIMARY KEY
+);
+CREATE TABLE employee(
+    id BIGINT AUTO_RANDOM PRIMARY KEY
+);
+#end
