@@ -34,7 +34,7 @@ jobs:
         id: set-matrix
         run: |
           # List of all available parsers
-          ALL_PARSERS="redshift postgresql cql"
+          ALL_PARSERS="redshift postgresql cql snowflake"
           # Add more parsers here as they are added to the repository
           # ALL_PARSERS="redshift mysql postgresql"
 
