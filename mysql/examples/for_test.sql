@@ -1,0 +1,1 @@
+select del1.e123 as c from del1;
