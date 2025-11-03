@@ -1,0 +1,660 @@
+// Copyright 2021-present StarRocks, Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+
+lexer grammar DorisSQLLex;
+tokens {
+    CONCAT
+}
+
+fragment A:[aA];
+fragment B:[bB];
+fragment C:[cC];
+fragment D:[dD];
+fragment E:[eE];
+fragment F:[fF];
+fragment G:[gG];
+fragment H:[hH];
+fragment I:[iI];
+fragment J:[jJ];
+fragment K:[kK];
+fragment L:[lL];
+fragment M:[mM];
+fragment N:[nN];
+fragment O:[oO];
+fragment P:[pP];
+fragment Q:[qQ];
+fragment R:[rR];
+fragment S:[sS];
+fragment T:[tT];
+fragment U:[uU];
+fragment V:[vV];
+fragment W:[wW];
+fragment X:[xX];
+fragment Y:[yY];
+fragment Z:[zZ];
+
+ACCESS: A C C E S S;
+ACTIVE: A C T I V E;
+ADD: A D D;
+ADMIN: A D M I N;
+ADVISOR: A D V I S O R;
+AFTER: A F T E R;
+AGGREGATE: A G G R E G A T E;
+ALL: A L L;
+ALTER: A L T E R;
+ANALYZE: A N A L Y Z E;
+AND: A N D;
+ANTI: A N T I;
+APPLY: A P P L Y;
+ARRAY: A R R A Y;
+ARRAY_AGG: A R R A Y '_' A G G;
+ARRAY_AGG_DISTINCT: A R R A Y '_' A G G '_' D I S T I N C T;
+AS: A S;
+ASC: A S C;
+ASYNC: A S Y N C;
+AUTHORS: A U T H O R S;
+AUTHENTICATION: A U T H E N T I C A T I O N;
+AUTOMATED: A U T O M A T E D;
+AUTO_INCREMENT: A U T O '_' I N C R E M E N T;
+AVG: A V G;
+BACKEND: B A C K E N D;
+BACKENDS: B A C K E N D S;
+BACKUP: B A C K U P;
+BASE: B A S E;
+BASELINE: B A S E L I N E;
+BEGIN: B E G I N;
+BETWEEN: B E T W E E N;
+BIGINT: B I G I N T;
+BINARY: B I N A R Y;
+BITMAP: B I T M A P;
+BITMAP_UNION: B I T M A P '_' U N I O N;
+BLACKHOLE: B L A C K H O L E;
+BLACKLIST: B L A C K L I S T;
+BODY: B O D Y;
+BOOLEAN: B O O L E A N;
+BOTH: B O T H;
+BRANCH: B R A N C H;
+BROKER: B R O K E R;
+BUCKETS: B U C K E T S;
+BUILTIN: B U I L T I N;
+BY: B Y;
+CACHE: C A C H E;
+CANCEL: C A N C E L;
+CASE: C A S E;
+CAST: C A S T;
+CATALOG: C A T A L O G;
+CATALOGS: C A T A L O G S;
+CEIL: C E I L;
+CHAIN: C H A I N;
+CHAR: C H A R;
+CHARACTER: C H A R A C T E R;
+CHARSET: C H A R S E T;
+CHECK: C H E C K;
+CLEAN: C L E A N;
+CLEAR: C L E A R;
+CLUSTER : C L U S T E R;
+CLUSTERS : C L U S T E R S;
+CNGROUP : C N G R O U P;
+CNGROUPS : C N G R O U P S;
+COLLATE: C O L L A T E;
+COLLATION: C O L L A T I O N;
+COLUMN: C O L U M N;
+COLUMNS: C O L U M N S;
+COMMENT: C O M M E N T;
+COMMIT: C O M M I T;
+COMMITTED: C O M M I T T E D;
+COMPACT: C O M P A C T;
+COMPACTION: C O M P A C T I O N;
+COMPUTE: C O M P U T E;
+CONFIG: C O N F I G;
+CONNECTION: C O N N E C T I O N;
+CONSISTENT: C O N S I S T E N T;
+CONVERT: C O N V E R T;
+COSTS: C O S T S;
+COUNT: C O U N T;
+CREATE: C R E A T E;
+CROSS: C R O S S;
+CUBE: C U B E;
+CUME_DIST: C U M E '_' D I S T;
+CUMULATIVE: C U M U L A T I V E;
+CURRENT: C U R R E N T;
+CURRENT_DATE: C U R R E N T '_' D A T E;
+CURRENT_GROUP: C U R R E N T '_' G R O U P;
+CURRENT_ROLE: C U R R E N T '_' R O L E;
+CURRENT_TIME: C U R R E N T '_' T I M E;
+CURRENT_TIMESTAMP: C U R R E N T '_' T I M E S T A M P;
+CURRENT_USER: C U R R E N T '_' U S E R;
+DATA: D A T A;
+DATACACHE: D A T A C A C H E;
+DATABASE: D A T A B A S E;
+DATABASES: D A T A B A S E S;
+DATE: D A T E;
+DATETIME: D A T E T I M E;
+DAY: D A Y;
+DAYS: D A Y S;
+DEALLOCATE : D E A L L O C A T E;
+DECIMAL: D E C I M A L;
+DECIMALV2: D E C I M A L V '2';
+DECIMAL32: D E C I M A L '3' '2';
+DECIMAL64: D E C I M A L '6' '4';
+DECIMAL128: D E C I M A L '1' '2' '8';
+DECOMMISSION: D E C O M M I S S I O N;
+DEFAULT: D E F A U L T;
+DELETE: D E L E T E;
+DENSE_RANK: D E N S E '_' R A N K;
+DEFERRED: D E F E R R E D;
+DIALECT: D I A L E C T;
+DICTIONARY: D I C T I O N A R Y;
+DICTIONARY_GET: D I C T I O N A R Y '_' G E T;
+NTILE: N T I L E;
+DESC: D E S C;
+DESCRIBE: D E S C R I B E;
+DISABLE: D I S A B L E;
+DISTINCT: D I S T I N C T;
+DISTRIBUTED: D I S T R I B U T E D;
+DISTRIBUTION: D I S T R I B U T I O N;
+DOUBLE: D O U B L E;
+DROP: D R O P;
+DUAL: D U A L;
+DUPLICATE: D U P L I C A T E;
+DYNAMIC: D Y N A M I C;
+ELSE: E L S E;
+ENABLE: E N A B L E;
+ENCLOSE: E N C L O S E;
+END: E N D;
+ENGINE: E N G I N E;
+ENGINES: E N G I N E S;
+ERRORS: E R R O R S;
+ESCAPE: E S C A P E;
+EVENTS: E V E N T S;
+EXCEPT: E X C E P T;
+EXCLUDE: E X C L U D E;
+EXECUTE: E X E C U T E;
+EXISTS: E X I S T S;
+EXPLAIN: E X P L A I N;
+EXPLODE: E X P L O D E;
+EXPLODE_SPLIT: E X P L O D E '_' S P L I T;
+EXPORT: E X P O R T;
+EXTERNAL: E X T E R N A L;
+EXTRACT: E X T R A C T;
+EVERY: E V E R Y;
+FAILPOINT: F A I L P O I N T;
+FAILPOINTS: F A I L P O I N T S;
+FALSE: F A L S E;
+FIELDS: F I E L D S;
+FILE: F I L E;
+FILES: F I L E S;
+FILTER: F I L T E R;
+FIRST: F I R S T;
+FIRST_VALUE: F I R S T '_' V A L U E;
+FLOAT: F L O A T;
+FLOOR: F L O O R;
+FN: F N;
+FOLLOWING: F O L L O W I N G;
+FOLLOWER: F O L L O W E R;
+FOR: F O R;
+FORCE: F O R C E;
+FORMAT: F O R M A T;
+FREE: F R E E;
+FROM: F R O M;
+FRONTEND: F R O N T E N D;
+FRONTENDS: F R O N T E N D S;
+FULL: F U L L;
+FUNCTION: F U N C T I O N;
+FUNCTIONS: F U N C T I O N S;
+GLOBAL: G L O B A L;
+GRANT: G R A N T;
+GRANTS: G R A N T S;
+GROUP: G R O U P;
+GROUPS: G R O U P S;
+GROUPING: G R O U P I N G;
+GROUPING_ID: G R O U P I N G '_' I D;
+GROUP_CONCAT: G R O U P '_' C O N C A T;
+HASH: H A S H;
+HAVING: H A V I N G;
+HELP: H E L P;
+HISTOGRAM: H I S T O G R A M;
+HLL: H L L;
+HLL_UNION: H L L '_' U N I O N;
+HOST: H O S T;
+HOUR: H O U R;
+HOURS: H O U R S;
+HUB: H U B;
+IDENTIFIED: I D E N T I F I E D;
+IF: I F;
+IMPERSONATE: I M P E R S O N A T E;
+IMMEDIATE: I M M E D I A T E;
+IGNORE: I G N O R E;
+IMAGE: I M A G E;
+IN: I N;
+INACTIVE: I N A C T I V E;
+INCREMENTAL: I N C R E M E N T A L;
+INDEX: I N D E X;
+INDEXES: I N D E X E S;
+INFILE: I N F I L E;
+INNER: I N N E R;
+INSTALL: I N S T A L L;
+INSERT: I N S E R T;
+INT: I N T;
+INTEGER: I N T E G E R;
+INTEGRATION: I N T E G R A T I O N;
+INTEGRATIONS: I N T E G R A T I O N S;
+INTERMEDIATE: I N T E R M E D I A T E;
+INTERSECT: I N T E R S E C T;
+INTERVAL: I N T E R V A L;
+INTO: I N T O;
+INVOKER: I N V O K E R;
+GIN: G I N;
+OVERWRITE: O V E R W R I T E;
+IS: I S;
+ISOLATION: I S O L A T I O N;
+JOB: J O B;
+JOIN: J O I N;
+JSON: J S O N;
+KEY: K E Y;
+KEYS: K E Y S;
+KILL: K I L L;
+LABEL: L A B E L;
+LAG: L A G;
+LARGEINT: L A R G E I N T;
+LAST: L A S T;
+LAST_VALUE: L A S T '_' V A L U E;
+LATERAL: L A T E R A L;
+LEAD: L E A D;
+LEFT: L E F T;
+LESS: L E S S;
+LEVEL: L E V E L;
+LIKE: L I K E;
+LIMIT: L I M I T;
+LIST: L I S T;
+LOAD: L O A D;
+LOCAL: L O C A L;
+LOCALTIME: L O C A L T I M E;
+LOCALTIMESTAMP: L O C A L T I M E S T A M P;
+LOCATION: L O C A T I O N;
+LOCATIONS: L O C A T I O N S;
+LOGS: L O G S;
+LOGICAL: L O G I C A L;
+MANUAL: M A N U A L;
+MAP: M A P;
+MAPPING: M A P P I N G;
+MAPPINGS: M A P P I N G S;
+MASKING: M A S K I N G;
+MATCH: M A T C H;
+MATERIALIZED: M A T E R I A L I Z E D;
+MAX: M A X;
+MAXVALUE: M A X V A L U E;
+MERGE: M E R G E;
+MICROSECOND: M I C R O S E C O N D;
+MILLISECOND: M I L L I S E C O N D;
+MIN: M I N;
+MINUTE: M I N U T E;
+MINUTES: M I N U T E S;
+MINUS: M I N U S;
+META: M E T A;
+MOD: M O D;
+MODE: M O D E;
+MODIFY: M O D I F Y;
+MONTH: M O N T H;
+MULTIPLE: M U L T I P L E;
+NAME: N A M E;
+NAMES: N A M E S;
+NEGATIVE: N E G A T I V E;
+NGRAMBF: N G R A M B F;
+NO: N O;
+NODE: N O D E;
+NODES: N O D E S;
+NONE: N O N E;
+NOT: N O T;
+NULL: N U L L;
+NULLS: N U L L S;
+NUMBER: N U M B E R;
+NUMERIC: N U M E R I C;
+OBSERVER: O B S E R V E R;
+OF: O F;
+OFF: O F F;
+OFFSET: O F F S E T;
+ON: O N;
+ONLY: O N L Y;
+OPEN: O P E N;
+OPERATE: O P E R A T E;
+OPTIMIZE: O P T I M I Z E;
+OPTIMIZER: O P T I M I Z E R;
+OPTION: O P T I O N;
+OR: O R;
+ORDER: O R D E R;
+OUTER: O U T E R;
+OUTFILE: O U T F I L E;
+OVER: O V E R;
+PARAMETER: '?';
+PARTITION: P A R T I T I O N;
+PARTITIONS: P A R T I T I O N S;
+PASSWORD: P A S S W O R D;
+PATH: P A T H;
+PAUSE: P A U S E;
+PENDING: P E N D I N G;
+PERCENT_RANK: P E R C E N T '_' R A N K;
+PERCENTILE: P E R C E N T I L E;
+PERCENTILE_UNION: P E R C E N T I L E '_' U N I O N;
+PLAN: P L A N;
+PLUGIN: P L U G I N;
+PLUGINS: P L U G I N S;
+PIPE: P I P E;
+PIPES: P I P E S;
+PIVOT: P I V O T;
+POLICY: P O L I C Y;
+POLICIES: P O L I C I E S;
+PRECEDING: P R E C E D I N G;
+PREDICATE: P R E D I C A T E;
+PREPARE: P R E P A R E;
+PRIMARY: P R I M A R Y;
+PRIORITY: P R I O R I T Y;
+PRIVILEGES: P R I V I L E G E S;
+PROBABILITY: P R O B A B I L I T Y;
+PROC: P R O C;
+PROCEDURE: P R O C E D U R E;
+PROCESSLIST: P R O C E S S L I S T;
+PROFILE: P R O F I L E;
+PROFILELIST: P R O F I L E L I S T;
+PROPERTIES: P R O P E R T I E S;
+PROPERTY: P R O P E R T Y;
+PROVIDER: P R O V I D E R;
+PROVIDERS: P R O V I D E R S;
+QUALIFY: Q U A L I F Y;
+QUARTER: Q U A R T E R;
+QUERY: Q U E R Y;
+QUERIES: Q U E R I E S;
+QUEUE: Q U E U E;
+QUOTA: Q U O T A;
+RANDOM: R A N D O M;
+RANGE: R A N G E;
+RANK: R A N K;
+READ: R E A D;
+REASON: R E A S O N;
+RECOVER: R E C O V E R;
+REFRESH: R E F R E S H;
+REWRITE: R E W R I T E;
+REGEXP: R E G E X P;
+RELEASE: R E L E A S E;
+REMOVE: R E M O V E;
+RENAME: R E N A M E;
+REPAIR: R E P A I R;
+REPEATABLE: R E P E A T A B L E;
+REPLACE: R E P L A C E;
+REPLACE_IF_NOT_NULL: R E P L A C E '_' I F '_' N O T '_' N U L L;
+REPLICA: R E P L I C A;
+REPOSITORY: R E P O S I T O R Y;
+REPOSITORIES: R E P O S I T O R I E S;
+RESOURCE: R E S O U R C E;
+RESOURCES: R E S O U R C E S;
+RESTORE: R E S T O R E;
+RESUME: R E S U M E;
+RETAIN: R E T A I N;
+RETENTION: R E T E N T I O N;
+RETURNS: R E T U R N S;
+RETRY: R E T R Y;
+REVOKE: R E V O K E;
+REVERT: R E V E R T;
+RIGHT: R I G H T;
+RLIKE: R L I K E;
+ROLE: R O L E;
+ROLES: R O L E S;
+ROLLBACK: R O L L B A C K;
+ROLLUP: R O L L U P;
+ROUTINE: R O U T I N E;
+ROW: R O W;
+ROWS: R O W S;
+ROW_NUMBER: R O W '_' N U M B E R;
+RULE: R U L E;
+RULES: R U L E S;
+RUNNING: R U N N I N G;
+SAMPLE: S A M P L E;
+SCHEDULE: S C H E D U L E;
+SCHEDULER: S C H E D U L E R;
+SCHEMA: S C H E M A;
+SCHEMAS: S C H E M A S;
+SECOND: S E C O N D;
+SECURITY: S E C U R I T Y;
+SELECT: S E L E C T;
+SEMI: S E M I;
+SEPARATOR: S E P A R A T O R;
+SERIALIZABLE: S E R I A L I Z A B L E;
+SESSION: S E S S I O N;
+SET: S E T;
+SETS: S E T S;
+SET_VAR: S E T '_' V A R;
+SIGNED: S I G N E D;
+SKIP_HEADER: S K I P '_' H E A D E R;
+SHOW: S H O W;
+SMALLINT: S M A L L I N T;
+SNAPSHOT: S N A P S H O T;
+SNAPSHOTS: S N A P S H O T S;
+SQLBLACKLIST: S Q L B L A C K L I S T;
+START: S T A R T;
+STATS: S T A T S;
+STATUS: S T A T U S;
+STOP: S T O P;
+STORAGE: S T O R A G E;
+STREAM: S T R E A M;
+STRING: S T R I N G;
+TEXT: T E X T;
+SUBMIT: S U B M I T;
+SUM: S U M;
+SUSPEND: S U S P E N D;
+SYNC: S Y N C;
+SYSTEM: S Y S T E M;
+SYSTEM_TIME: S Y S T E M '_' T I M E;
+SWAP: S W A P;
+STRUCT: S T R U C T;
+TABLE: T A B L E;
+TABLES: T A B L E S;
+TABLET: T A B L E T;
+TABLETS: T A B L E T S;
+TAG: T A G;
+TASK: T A S K;
+TEMPORARY: T E M P O R A R Y;
+TERMINATED: T E R M I N A T E D;
+THAN: T H A N;
+THEN: T H E N;
+TIME: T I M E;
+TIMES: T I M E S;
+TIMESTAMP: T I M E S T A M P;
+TIMESTAMPADD: T I M E S T A M P A D D;
+TIMESTAMPDIFF: T I M E S T A M P D I F F;
+TINYINT: T I N Y I N T;
+TRANSACTION: T R A N S A C T I O N;
+TRANSLATE: T R A N S L A T E;
+TO: T O;
+TRACE: T R A C E;
+TRIGGERS: T R I G G E R S;
+TRIM_SPACE: T R I M '_' S P A C E;
+TRUE: T R U E;
+TRUNCATE: T R U N C A T E;
+TYPE: T Y P E;
+TYPES: T Y P E S;
+UNBOUNDED: U N B O U N D E D;
+UNCOMMITTED: U N C O M M I T T E D;
+UNION: U N I O N;
+UNIQUE: U N I Q U E;
+UNINSTALL: U N I N S T A L L;
+UNSET: U N S E T;
+UNSIGNED: U N S I G N E D;
+UPDATE: U P D A T E;
+USAGE: U S A G E;
+USE: U S E;
+USER: U S E R;
+USERS: U S E R S;
+USING: U S I N G;
+VALUE: V A L U E;
+VALUES: V A L U E S;
+VARBINARY: V A R B I N A R Y;
+VARCHAR: V A R C H A R;
+VARIABLES: V A R I A B L E S;
+VECTOR: V E C T O R;
+VERBOSE: V E R B O S E;
+VERSION: V E R S I O N;
+VIEW: V I E W;
+VIEWS: V I E W S;
+VOLUME: V O L U M E;
+VOLUMES: V O L U M E S;
+WAREHOUSE: W A R E H O U S E;
+WAREHOUSES: W A R E H O U S E S;
+WARNINGS: W A R N I N G S;
+WEEK: W E E K;
+WHEN: W H E N;
+WHERE: W H E R E;
+WHITELIST: W H I T E L I S T;
+WITH: W I T H;
+WORK: W O R K;
+WRITE: W R I T E;
+YEAR: Y E A R;
+LOCK: L O C K;
+UNLOCK: U N L O C K;
+LOW_PRIORITY: L O W '_' P R I O R I T Y;
+DISK: D I S K;
+DISKS: D I S K S;
+BEFORE: B E F O R E;
+DOUBLE_DOLLAR: '$' '$';
+FIELD: F I E L D;
+PERSISTENT: P E R S I S T E N T;
+SKEW: S K E W;
+ENCRYPT: E N C R Y P T;
+CACHED: C A C H E D;
+LIGHT: L I G H T;
+RECYCLE: R E C Y C L E;
+BIN: B I N;
+TRASH: T R A S H;
+WORKLOAD: W O R K L O A D;
+SQL: S Q L;
+BLOCK: B L O C K;
+TASKS: T A S K S;
+CHANGE: C H A N G E;
+PROCESS: P R O C E S S;
+MIGRATIONS: M I G R A T I O N S;
+
+EQ  : '=';
+NEQ : '<>' | '!=';
+LT  : '<';
+LTE : '<=';
+GT  : '>';
+GTE : '>=';
+EQ_FOR_NULL: '<=>';
+ARRAY_ELEMENT: '[*]';
+
+PLUS_SYMBOL: '+';
+MINUS_SYMBOL: '-';
+ASTERISK_SYMBOL: '*';
+SLASH_SYMBOL: '/';
+PERCENT_SYMBOL: '%';
+
+LOGICAL_OR: '||';
+LOGICAL_AND: '&&';
+LOGICAL_NOT: '!';
+
+INT_DIV: 'DIV';
+BITAND: '&';
+BITOR: '|';
+BITXOR: '^';
+BITNOT: '~';
+BIT_SHIFT_LEFT: B I T S H I F T L E F T;
+BIT_SHIFT_RIGHT: B I T S H I F T R I G H T;
+BIT_SHIFT_RIGHT_LOGICAL: B I T S H I F T R I G H T L O G I C A L;
+
+ARROW: '->';
+AT: '@';
+
+INTEGER_VALUE
+    : DIGIT+
+    ;
+
+DECIMAL_VALUE
+    : DIGIT+ '.' DIGIT*
+    | '.' DIGIT+
+    ;
+
+DOUBLE_VALUE
+    : DIGIT+ ('.' DIGIT*)? EXPONENT
+    | '.' DIGIT+ EXPONENT
+    ;
+
+SINGLE_QUOTED_TEXT
+    : '\'' ('\\'. | '\'\'' | ~('\'' | '\\'))* '\''
+    ;
+
+DOUBLE_QUOTED_TEXT
+    : '"' ('\\'. | '""' | ~('"'| '\\'))* '"'
+    ;
+
+BINARY_SINGLE_QUOTED_TEXT
+    : X '\'' (~('\'' | '\\'))* '\''
+    ;
+
+BINARY_DOUBLE_QUOTED_TEXT
+    : X '"' (~('"'| '\\'))* '"'
+    ;
+
+LETTER_IDENTIFIER
+    : (LETTER | '_') (LETTER | DIGIT | '_')*
+    ;
+
+DIGIT_IDENTIFIER
+    : DIGIT (LETTER | DIGIT | '_')+
+    ;
+
+BACKQUOTED_IDENTIFIER
+    : '`' ( ~'`' | '``' )* '`'
+    ;
+
+// Prevent recognize string:         .123somelatin AS ((.123), DECIMAL_LITERAL), ((somelatin), IDENTIFIER)
+// it must recoginze:                .123somelatin AS ((.), DOT), (123somelatin, IDENTIFIER)
+DOT_IDENTIFIER
+    : '.' DIGIT_IDENTIFIER
+    ;
+
+fragment EXPONENT
+    : E [+-]? DIGIT+
+    ;
+
+fragment DIGIT
+    : [0-9]
+    ;
+
+fragment LETTER
+    : [a-zA-Z_$\u0080-\uffff]
+    ;
+
+SIMPLE_COMMENT
+    : '--' ~[\r\n]* '\r'? '\n'? -> channel(HIDDEN)
+    ;
+
+BRACKETED_COMMENT
+    : '/*'([ \r\n\t\u3000]* | ~'+' .*?) '*/' -> channel(HIDDEN)
+    ;
+
+OPTIMIZER_HINT
+    : '/*+' .*? '*/' -> channel(2)
+    ;
+
+SEMICOLON: ';';
+
+DOTDOTDOT: '...';
+
+WS
+    : [ \r\n\t\u3000]+ -> channel(HIDDEN)
+    ;
+
+ATTACHMENT
+    : DOUBLE_DOLLAR .*? DOUBLE_DOLLAR
+    ;

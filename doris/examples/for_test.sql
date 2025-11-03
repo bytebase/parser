@@ -1,0 +1,2 @@
+SELECT * FROM person
+LATERAL VIEW EXPLODE(ARRAY(30, 60)) tableName AS c_age;
