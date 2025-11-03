@@ -1,0 +1,2 @@
+CREATE INDEX index3 ON t3 (c1 ASC) GLOBAL;
+CREATE INDEX index3 ON t3 (c1 ASC) local;
