@@ -1,4 +1,4 @@
-// Code generated from PlSqlParser.g4 by ANTLR 4.13.2. DO NOT EDIT.
+// Code generated from PlSqlParser.g4 by ANTLR 4.13.1. DO NOT EDIT.
 
 package plsql // PlSqlParser
 import "github.com/antlr4-go/antlr/v4"
@@ -3675,7 +3675,11 @@ func (v *BasePlSqlParserVisitor) VisitReturn_statement(ctx *Return_statementCont
 	return v.VisitChildren(ctx)
 }
 
-func (v *BasePlSqlParserVisitor) VisitCall_statement(ctx *Call_statementContext) interface{} {
+func (v *BasePlSqlParserVisitor) VisitSql_call_statement(ctx *Sql_call_statementContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitPlsql_call_statement(ctx *Plsql_call_statementContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

@@ -1,4 +1,4 @@
-// Code generated from PlSqlParser.g4 by ANTLR 4.13.2. DO NOT EDIT.
+// Code generated from PlSqlParser.g4 by ANTLR 4.13.1. DO NOT EDIT.
 
 package plsql // PlSqlParser
 import "github.com/antlr4-go/antlr/v4"
@@ -2758,8 +2758,11 @@ type PlSqlParserVisitor interface {
 	// Visit a parse tree produced by PlSqlParser#return_statement.
 	VisitReturn_statement(ctx *Return_statementContext) interface{}
 
-	// Visit a parse tree produced by PlSqlParser#call_statement.
-	VisitCall_statement(ctx *Call_statementContext) interface{}
+	// Visit a parse tree produced by PlSqlParser#sql_call_statement.
+	VisitSql_call_statement(ctx *Sql_call_statementContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#plsql_call_statement.
+	VisitPlsql_call_statement(ctx *Plsql_call_statementContext) interface{}
 
 	// Visit a parse tree produced by PlSqlParser#pipe_row_statement.
 	VisitPipe_row_statement(ctx *Pipe_row_statementContext) interface{}
