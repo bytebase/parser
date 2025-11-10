@@ -178,7 +178,7 @@ unit_statement
     | truncate_cluster
     | truncate_table
     | unified_auditing
-    | call_statement // put call statement after all statements.
+    | sql_call_statement // put call statement after all statements. BYT-8268: SQL level requires CALL keyword
     ;
 
 // https://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/ALTER-DISKGROUP.html
@@ -1335,11 +1335,16 @@ object_action
     | RENAME
     ;
 
+// BYT-8268: Added support for multi-word system actions
+// Note: Complete list varies by Oracle version, query AUDITABLE_SYSTEM_ACTIONS view for full list
 system_action
-    : id_expression // SELECT name FROM AUDITABLE_SYSTEM_ACTIONS WHERE component = 'Standard';
+    : ADMINISTER KEY MANAGEMENT  // TDE operations
     | (CREATE | ALTER | DROP) JAVA
     | LOCK TABLE
     | (READ | WRITE | EXECUTE) DIRECTORY
+    | id_expression id_expression id_expression  // 3-word actions (ALTER AUDIT POLICY, etc.)
+    | id_expression id_expression  // 2-word actions (ALTER ASSEMBLY, CREATE TABLE, etc.)
+    | id_expression  // Single-word actions
     ;
 
 component_actions
@@ -5607,7 +5612,7 @@ statement
     | case_statement
     | sql_statement
     | pipe_row_statement
-    | call_statement // put call statement after others.
+    | plsql_call_statement // put call statement after others. BYT-8268: PL/SQL level allows optional CALL
     ;
 
 swallow_to_semi
@@ -5687,8 +5692,16 @@ return_statement
     : RETURN expression?
     ;
 
-call_statement
-    : CALL? routine_name function_argument? (INTO bind_variable)?
+// BYT-8268: Split into two rules for different contexts
+// SQL level: CALL keyword is MANDATORY to prevent misidentifying keywords like CASCADE as procedure calls
+sql_call_statement
+    : CALL routine_name function_argument? ('.' id_expression function_argument?)* (INTO bind_variable)?
+    ;
+
+// PL/SQL block level: CALL keyword is OPTIONAL (standard PL/SQL allows direct procedure calls)
+// Support method chaining: obj_constructor(...).method(...) or CALL obj_constructor(...).method(...)
+plsql_call_statement
+    : CALL? routine_name function_argument? ('.' id_expression function_argument?)* (INTO bind_variable)?
     ;
 
 pipe_row_statement
@@ -5790,10 +5803,11 @@ set_constraint_command
 
 // https://docs.oracle.com/cd/E18283_01/server.112/e17118/statements_4010.htm#SQLRF01110
 // https://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/COMMIT.html
+// BYT-8268: Fixed to allow WRITE clause independently, not just after COMMENT
+// Correct Oracle syntax: COMMIT [WORK] [COMMENT 'text'] [WRITE [WAIT|NOWAIT] [IMMEDIATE|BATCH]] [FORCE...]
 commit_statement
-    : COMMIT WORK?
-      ( COMMENT CHAR_STRING write_clause?
-      | FORCE ( CHAR_STRING (',' numeric)?
+    : COMMIT WORK? (COMMENT CHAR_STRING)? write_clause?
+      ( FORCE ( CHAR_STRING (',' numeric)?
               | CORRUPT_XID CHAR_STRING
               | CORRUPT_XID_ALL
               )
@@ -6952,8 +6966,9 @@ collection_name
     : identifier ('.' id_expression)?
     ;
 
+// BYT-8268: Database link names can include domain qualifiers (e.g., linkname.domain)
 link_name
-    : identifier
+    : identifier ('.' id_expression)*
     ;
 
 column_name

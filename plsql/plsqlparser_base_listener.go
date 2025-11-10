@@ -1,4 +1,4 @@
-// Code generated from PlSqlParser.g4 by ANTLR 4.13.2. DO NOT EDIT.
+// Code generated from PlSqlParser.g4 by ANTLR 4.13.1. DO NOT EDIT.
 
 package plsql // PlSqlParser
 import "github.com/antlr4-go/antlr/v4"
@@ -5850,11 +5850,17 @@ func (s *BasePlSqlParserListener) EnterReturn_statement(ctx *Return_statementCon
 // ExitReturn_statement is called when production return_statement is exited.
 func (s *BasePlSqlParserListener) ExitReturn_statement(ctx *Return_statementContext) {}
 
-// EnterCall_statement is called when production call_statement is entered.
-func (s *BasePlSqlParserListener) EnterCall_statement(ctx *Call_statementContext) {}
+// EnterSql_call_statement is called when production sql_call_statement is entered.
+func (s *BasePlSqlParserListener) EnterSql_call_statement(ctx *Sql_call_statementContext) {}
 
-// ExitCall_statement is called when production call_statement is exited.
-func (s *BasePlSqlParserListener) ExitCall_statement(ctx *Call_statementContext) {}
+// ExitSql_call_statement is called when production sql_call_statement is exited.
+func (s *BasePlSqlParserListener) ExitSql_call_statement(ctx *Sql_call_statementContext) {}
+
+// EnterPlsql_call_statement is called when production plsql_call_statement is entered.
+func (s *BasePlSqlParserListener) EnterPlsql_call_statement(ctx *Plsql_call_statementContext) {}
+
+// ExitPlsql_call_statement is called when production plsql_call_statement is exited.
+func (s *BasePlSqlParserListener) ExitPlsql_call_statement(ctx *Plsql_call_statementContext) {}
 
 // EnterPipe_row_statement is called when production pipe_row_statement is entered.
 func (s *BasePlSqlParserListener) EnterPipe_row_statement(ctx *Pipe_row_statementContext) {}

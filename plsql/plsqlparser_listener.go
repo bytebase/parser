@@ -1,4 +1,4 @@
-// Code generated from PlSqlParser.g4 by ANTLR 4.13.2. DO NOT EDIT.
+// Code generated from PlSqlParser.g4 by ANTLR 4.13.1. DO NOT EDIT.
 
 package plsql // PlSqlParser
 import "github.com/antlr4-go/antlr/v4"
@@ -2758,8 +2758,11 @@ type PlSqlParserListener interface {
 	// EnterReturn_statement is called when entering the return_statement production.
 	EnterReturn_statement(c *Return_statementContext)
 
-	// EnterCall_statement is called when entering the call_statement production.
-	EnterCall_statement(c *Call_statementContext)
+	// EnterSql_call_statement is called when entering the sql_call_statement production.
+	EnterSql_call_statement(c *Sql_call_statementContext)
+
+	// EnterPlsql_call_statement is called when entering the plsql_call_statement production.
+	EnterPlsql_call_statement(c *Plsql_call_statementContext)
 
 	// EnterPipe_row_statement is called when entering the pipe_row_statement production.
 	EnterPipe_row_statement(c *Pipe_row_statementContext)
@@ -6352,8 +6355,11 @@ type PlSqlParserListener interface {
 	// ExitReturn_statement is called when exiting the return_statement production.
 	ExitReturn_statement(c *Return_statementContext)
 
-	// ExitCall_statement is called when exiting the call_statement production.
-	ExitCall_statement(c *Call_statementContext)
+	// ExitSql_call_statement is called when exiting the sql_call_statement production.
+	ExitSql_call_statement(c *Sql_call_statementContext)
+
+	// ExitPlsql_call_statement is called when exiting the plsql_call_statement production.
+	ExitPlsql_call_statement(c *Plsql_call_statementContext)
 
 	// ExitPipe_row_statement is called when exiting the pipe_row_statement production.
 	ExitPipe_row_statement(c *Pipe_row_statementContext)
