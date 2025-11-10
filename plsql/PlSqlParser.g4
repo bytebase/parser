@@ -5687,8 +5687,9 @@ return_statement
     : RETURN expression?
     ;
 
+// BYT-8268: Made CALL keyword mandatory to prevent misidentifying keywords like CASCADE as procedure calls
 call_statement
-    : CALL? routine_name function_argument? (INTO bind_variable)?
+    : CALL routine_name function_argument? (INTO bind_variable)?
     ;
 
 pipe_row_statement
