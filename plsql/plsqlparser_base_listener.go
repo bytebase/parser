@@ -1,4 +1,4 @@
-// Code generated from PlSqlParser.g4 by ANTLR 4.13.1. DO NOT EDIT.
+// Code generated from PlSqlParser.g4 by ANTLR 4.13.2. DO NOT EDIT.
 
 package plsql // PlSqlParser
 import "github.com/antlr4-go/antlr/v4"
@@ -191,18 +191,6 @@ func (s *BasePlSqlParserListener) EnterDiskgroup_attributes(ctx *Diskgroup_attri
 
 // ExitDiskgroup_attributes is called when production diskgroup_attributes is exited.
 func (s *BasePlSqlParserListener) ExitDiskgroup_attributes(ctx *Diskgroup_attributesContext) {}
-
-// EnterModify_diskgroup_file is called when production modify_diskgroup_file is entered.
-func (s *BasePlSqlParserListener) EnterModify_diskgroup_file(ctx *Modify_diskgroup_fileContext) {}
-
-// ExitModify_diskgroup_file is called when production modify_diskgroup_file is exited.
-func (s *BasePlSqlParserListener) ExitModify_diskgroup_file(ctx *Modify_diskgroup_fileContext) {}
-
-// EnterDisk_region_clause is called when production disk_region_clause is entered.
-func (s *BasePlSqlParserListener) EnterDisk_region_clause(ctx *Disk_region_clauseContext) {}
-
-// ExitDisk_region_clause is called when production disk_region_clause is exited.
-func (s *BasePlSqlParserListener) ExitDisk_region_clause(ctx *Disk_region_clauseContext) {}
 
 // EnterDrop_diskgroup_file_clause is called when production drop_diskgroup_file_clause is entered.
 func (s *BasePlSqlParserListener) EnterDrop_diskgroup_file_clause(ctx *Drop_diskgroup_file_clauseContext) {
@@ -684,24 +672,6 @@ func (s *BasePlSqlParserListener) EnterTrigger_body(ctx *Trigger_bodyContext) {}
 // ExitTrigger_body is called when production trigger_body is exited.
 func (s *BasePlSqlParserListener) ExitTrigger_body(ctx *Trigger_bodyContext) {}
 
-// EnterRoutine_clause is called when production routine_clause is entered.
-func (s *BasePlSqlParserListener) EnterRoutine_clause(ctx *Routine_clauseContext) {}
-
-// ExitRoutine_clause is called when production routine_clause is exited.
-func (s *BasePlSqlParserListener) ExitRoutine_clause(ctx *Routine_clauseContext) {}
-
-// EnterCompound_trigger_block is called when production compound_trigger_block is entered.
-func (s *BasePlSqlParserListener) EnterCompound_trigger_block(ctx *Compound_trigger_blockContext) {}
-
-// ExitCompound_trigger_block is called when production compound_trigger_block is exited.
-func (s *BasePlSqlParserListener) ExitCompound_trigger_block(ctx *Compound_trigger_blockContext) {}
-
-// EnterTiming_point_section is called when production timing_point_section is entered.
-func (s *BasePlSqlParserListener) EnterTiming_point_section(ctx *Timing_point_sectionContext) {}
-
-// ExitTiming_point_section is called when production timing_point_section is exited.
-func (s *BasePlSqlParserListener) ExitTiming_point_section(ctx *Timing_point_sectionContext) {}
-
 // EnterNon_dml_event is called when production non_dml_event is entered.
 func (s *BasePlSqlParserListener) EnterNon_dml_event(ctx *Non_dml_eventContext) {}
 
@@ -773,20 +743,6 @@ func (s *BasePlSqlParserListener) EnterAlter_method_element(ctx *Alter_method_el
 
 // ExitAlter_method_element is called when production alter_method_element is exited.
 func (s *BasePlSqlParserListener) ExitAlter_method_element(ctx *Alter_method_elementContext) {}
-
-// EnterAlter_attribute_definition is called when production alter_attribute_definition is entered.
-func (s *BasePlSqlParserListener) EnterAlter_attribute_definition(ctx *Alter_attribute_definitionContext) {
-}
-
-// ExitAlter_attribute_definition is called when production alter_attribute_definition is exited.
-func (s *BasePlSqlParserListener) ExitAlter_attribute_definition(ctx *Alter_attribute_definitionContext) {
-}
-
-// EnterAttribute_definition is called when production attribute_definition is entered.
-func (s *BasePlSqlParserListener) EnterAttribute_definition(ctx *Attribute_definitionContext) {}
-
-// ExitAttribute_definition is called when production attribute_definition is exited.
-func (s *BasePlSqlParserListener) ExitAttribute_definition(ctx *Attribute_definitionContext) {}
 
 // EnterAlter_collection_clauses is called when production alter_collection_clauses is entered.
 func (s *BasePlSqlParserListener) EnterAlter_collection_clauses(ctx *Alter_collection_clausesContext) {
@@ -3014,26 +2970,6 @@ func (s *BasePlSqlParserListener) EnterDatetime_expr(ctx *Datetime_exprContext) 
 // ExitDatetime_expr is called when production datetime_expr is exited.
 func (s *BasePlSqlParserListener) ExitDatetime_expr(ctx *Datetime_exprContext) {}
 
-// EnterInterval_expr is called when production interval_expr is entered.
-func (s *BasePlSqlParserListener) EnterInterval_expr(ctx *Interval_exprContext) {}
-
-// ExitInterval_expr is called when production interval_expr is exited.
-func (s *BasePlSqlParserListener) ExitInterval_expr(ctx *Interval_exprContext) {}
-
-// EnterSynchronous_or_asynchronous is called when production synchronous_or_asynchronous is entered.
-func (s *BasePlSqlParserListener) EnterSynchronous_or_asynchronous(ctx *Synchronous_or_asynchronousContext) {
-}
-
-// ExitSynchronous_or_asynchronous is called when production synchronous_or_asynchronous is exited.
-func (s *BasePlSqlParserListener) ExitSynchronous_or_asynchronous(ctx *Synchronous_or_asynchronousContext) {
-}
-
-// EnterIncluding_or_excluding is called when production including_or_excluding is entered.
-func (s *BasePlSqlParserListener) EnterIncluding_or_excluding(ctx *Including_or_excludingContext) {}
-
-// ExitIncluding_or_excluding is called when production including_or_excluding is exited.
-func (s *BasePlSqlParserListener) ExitIncluding_or_excluding(ctx *Including_or_excludingContext) {}
-
 // EnterCreate_materialized_view_log is called when production create_materialized_view_log is entered.
 func (s *BasePlSqlParserListener) EnterCreate_materialized_view_log(ctx *Create_materialized_view_logContext) {
 }
@@ -3735,12 +3671,6 @@ func (s *BasePlSqlParserListener) EnterLob_partitioning_storage(ctx *Lob_partiti
 // ExitLob_partitioning_storage is called when production lob_partitioning_storage is exited.
 func (s *BasePlSqlParserListener) ExitLob_partitioning_storage(ctx *Lob_partitioning_storageContext) {
 }
-
-// EnterDatatype_null_enable is called when production datatype_null_enable is entered.
-func (s *BasePlSqlParserListener) EnterDatatype_null_enable(ctx *Datatype_null_enableContext) {}
-
-// ExitDatatype_null_enable is called when production datatype_null_enable is exited.
-func (s *BasePlSqlParserListener) ExitDatatype_null_enable(ctx *Datatype_null_enableContext) {}
 
 // EnterSize_clause is called when production size_clause is entered.
 func (s *BasePlSqlParserListener) EnterSize_clause(ctx *Size_clauseContext) {}
@@ -5238,14 +5168,6 @@ func (s *BasePlSqlParserListener) EnterAdd_column_clause(ctx *Add_column_clauseC
 // ExitAdd_column_clause is called when production add_column_clause is exited.
 func (s *BasePlSqlParserListener) ExitAdd_column_clause(ctx *Add_column_clauseContext) {}
 
-// EnterAlter_varray_col_properties is called when production alter_varray_col_properties is entered.
-func (s *BasePlSqlParserListener) EnterAlter_varray_col_properties(ctx *Alter_varray_col_propertiesContext) {
-}
-
-// ExitAlter_varray_col_properties is called when production alter_varray_col_properties is exited.
-func (s *BasePlSqlParserListener) ExitAlter_varray_col_properties(ctx *Alter_varray_col_propertiesContext) {
-}
-
 // EnterVarray_col_properties is called when production varray_col_properties is entered.
 func (s *BasePlSqlParserListener) EnterVarray_col_properties(ctx *Varray_col_propertiesContext) {}
 
@@ -5424,14 +5346,6 @@ func (s *BasePlSqlParserListener) EnterEvaluation_edition_clause(ctx *Evaluation
 func (s *BasePlSqlParserListener) ExitEvaluation_edition_clause(ctx *Evaluation_edition_clauseContext) {
 }
 
-// EnterOut_of_line_part_storage is called when production out_of_line_part_storage is entered.
-func (s *BasePlSqlParserListener) EnterOut_of_line_part_storage(ctx *Out_of_line_part_storageContext) {
-}
-
-// ExitOut_of_line_part_storage is called when production out_of_line_part_storage is exited.
-func (s *BasePlSqlParserListener) ExitOut_of_line_part_storage(ctx *Out_of_line_part_storageContext) {
-}
-
 // EnterNested_table_col_properties is called when production nested_table_col_properties is entered.
 func (s *BasePlSqlParserListener) EnterNested_table_col_properties(ctx *Nested_table_col_propertiesContext) {
 }
@@ -5467,12 +5381,6 @@ func (s *BasePlSqlParserListener) EnterSupplemental_logging_props(ctx *Supplemen
 // ExitSupplemental_logging_props is called when production supplemental_logging_props is exited.
 func (s *BasePlSqlParserListener) ExitSupplemental_logging_props(ctx *Supplemental_logging_propsContext) {
 }
-
-// EnterColumn_or_attribute is called when production column_or_attribute is entered.
-func (s *BasePlSqlParserListener) EnterColumn_or_attribute(ctx *Column_or_attributeContext) {}
-
-// ExitColumn_or_attribute is called when production column_or_attribute is exited.
-func (s *BasePlSqlParserListener) ExitColumn_or_attribute(ctx *Column_or_attributeContext) {}
 
 // EnterObject_type_col_properties is called when production object_type_col_properties is entered.
 func (s *BasePlSqlParserListener) EnterObject_type_col_properties(ctx *Object_type_col_propertiesContext) {
@@ -5514,41 +5422,11 @@ func (s *BasePlSqlParserListener) EnterDrop_primary_key_or_unique_or_generic_cla
 func (s *BasePlSqlParserListener) ExitDrop_primary_key_or_unique_or_generic_clause(ctx *Drop_primary_key_or_unique_or_generic_clauseContext) {
 }
 
-// EnterAdd_constraint is called when production add_constraint is entered.
-func (s *BasePlSqlParserListener) EnterAdd_constraint(ctx *Add_constraintContext) {}
-
-// ExitAdd_constraint is called when production add_constraint is exited.
-func (s *BasePlSqlParserListener) ExitAdd_constraint(ctx *Add_constraintContext) {}
-
-// EnterAdd_constraint_clause is called when production add_constraint_clause is entered.
-func (s *BasePlSqlParserListener) EnterAdd_constraint_clause(ctx *Add_constraint_clauseContext) {}
-
-// ExitAdd_constraint_clause is called when production add_constraint_clause is exited.
-func (s *BasePlSqlParserListener) ExitAdd_constraint_clause(ctx *Add_constraint_clauseContext) {}
-
 // EnterCheck_constraint is called when production check_constraint is entered.
 func (s *BasePlSqlParserListener) EnterCheck_constraint(ctx *Check_constraintContext) {}
 
 // ExitCheck_constraint is called when production check_constraint is exited.
 func (s *BasePlSqlParserListener) ExitCheck_constraint(ctx *Check_constraintContext) {}
-
-// EnterDrop_constraint is called when production drop_constraint is entered.
-func (s *BasePlSqlParserListener) EnterDrop_constraint(ctx *Drop_constraintContext) {}
-
-// ExitDrop_constraint is called when production drop_constraint is exited.
-func (s *BasePlSqlParserListener) ExitDrop_constraint(ctx *Drop_constraintContext) {}
-
-// EnterEnable_constraint is called when production enable_constraint is entered.
-func (s *BasePlSqlParserListener) EnterEnable_constraint(ctx *Enable_constraintContext) {}
-
-// ExitEnable_constraint is called when production enable_constraint is exited.
-func (s *BasePlSqlParserListener) ExitEnable_constraint(ctx *Enable_constraintContext) {}
-
-// EnterDisable_constraint is called when production disable_constraint is entered.
-func (s *BasePlSqlParserListener) EnterDisable_constraint(ctx *Disable_constraintContext) {}
-
-// ExitDisable_constraint is called when production disable_constraint is exited.
-func (s *BasePlSqlParserListener) ExitDisable_constraint(ctx *Disable_constraintContext) {}
 
 // EnterForeign_key_clause is called when production foreign_key_clause is entered.
 func (s *BasePlSqlParserListener) EnterForeign_key_clause(ctx *Foreign_key_clauseContext) {}
@@ -5567,18 +5445,6 @@ func (s *BasePlSqlParserListener) EnterOn_delete_clause(ctx *On_delete_clauseCon
 
 // ExitOn_delete_clause is called when production on_delete_clause is exited.
 func (s *BasePlSqlParserListener) ExitOn_delete_clause(ctx *On_delete_clauseContext) {}
-
-// EnterUnique_key_clause is called when production unique_key_clause is entered.
-func (s *BasePlSqlParserListener) EnterUnique_key_clause(ctx *Unique_key_clauseContext) {}
-
-// ExitUnique_key_clause is called when production unique_key_clause is exited.
-func (s *BasePlSqlParserListener) ExitUnique_key_clause(ctx *Unique_key_clauseContext) {}
-
-// EnterPrimary_key_clause is called when production primary_key_clause is entered.
-func (s *BasePlSqlParserListener) EnterPrimary_key_clause(ctx *Primary_key_clauseContext) {}
-
-// ExitPrimary_key_clause is called when production primary_key_clause is exited.
-func (s *BasePlSqlParserListener) ExitPrimary_key_clause(ctx *Primary_key_clauseContext) {}
 
 // EnterAnonymous_block is called when production anonymous_block is entered.
 func (s *BasePlSqlParserListener) EnterAnonymous_block(ctx *Anonymous_blockContext) {}
@@ -5741,12 +5607,6 @@ func (s *BasePlSqlParserListener) EnterStatement(ctx *StatementContext) {}
 
 // ExitStatement is called when production statement is exited.
 func (s *BasePlSqlParserListener) ExitStatement(ctx *StatementContext) {}
-
-// EnterSwallow_to_semi is called when production swallow_to_semi is entered.
-func (s *BasePlSqlParserListener) EnterSwallow_to_semi(ctx *Swallow_to_semiContext) {}
-
-// ExitSwallow_to_semi is called when production swallow_to_semi is exited.
-func (s *BasePlSqlParserListener) ExitSwallow_to_semi(ctx *Swallow_to_semiContext) {}
 
 // EnterAssignment_statement is called when production assignment_statement is entered.
 func (s *BasePlSqlParserListener) EnterAssignment_statement(ctx *Assignment_statementContext) {}
@@ -7212,12 +7072,6 @@ func (s *BasePlSqlParserListener) EnterRollback_segment_name(ctx *Rollback_segme
 // ExitRollback_segment_name is called when production rollback_segment_name is exited.
 func (s *BasePlSqlParserListener) ExitRollback_segment_name(ctx *Rollback_segment_nameContext) {}
 
-// EnterTable_var_name is called when production table_var_name is entered.
-func (s *BasePlSqlParserListener) EnterTable_var_name(ctx *Table_var_nameContext) {}
-
-// ExitTable_var_name is called when production table_var_name is exited.
-func (s *BasePlSqlParserListener) ExitTable_var_name(ctx *Table_var_nameContext) {}
-
 // EnterSchema_name is called when production schema_name is entered.
 func (s *BasePlSqlParserListener) EnterSchema_name(ctx *Schema_nameContext) {}
 
@@ -7621,15 +7475,3 @@ func (s *BasePlSqlParserListener) EnterNon_reserved_keywords_pre12c(ctx *Non_res
 // ExitNon_reserved_keywords_pre12c is called when production non_reserved_keywords_pre12c is exited.
 func (s *BasePlSqlParserListener) ExitNon_reserved_keywords_pre12c(ctx *Non_reserved_keywords_pre12cContext) {
 }
-
-// EnterString_function_name is called when production string_function_name is entered.
-func (s *BasePlSqlParserListener) EnterString_function_name(ctx *String_function_nameContext) {}
-
-// ExitString_function_name is called when production string_function_name is exited.
-func (s *BasePlSqlParserListener) ExitString_function_name(ctx *String_function_nameContext) {}
-
-// EnterNumeric_function_name is called when production numeric_function_name is entered.
-func (s *BasePlSqlParserListener) EnterNumeric_function_name(ctx *Numeric_function_nameContext) {}
-
-// ExitNumeric_function_name is called when production numeric_function_name is exited.
-func (s *BasePlSqlParserListener) ExitNumeric_function_name(ctx *Numeric_function_nameContext) {}

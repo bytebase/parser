@@ -1,4 +1,4 @@
-// Code generated from PlSqlParser.g4 by ANTLR 4.13.1. DO NOT EDIT.
+// Code generated from PlSqlParser.g4 by ANTLR 4.13.2. DO NOT EDIT.
 
 package plsql // PlSqlParser
 import "github.com/antlr4-go/antlr/v4"
@@ -112,14 +112,6 @@ func (v *BasePlSqlParserVisitor) VisitModify_volume_clause(ctx *Modify_volume_cl
 }
 
 func (v *BasePlSqlParserVisitor) VisitDiskgroup_attributes(ctx *Diskgroup_attributesContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitModify_diskgroup_file(ctx *Modify_diskgroup_fileContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitDisk_region_clause(ctx *Disk_region_clauseContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -439,18 +431,6 @@ func (v *BasePlSqlParserVisitor) VisitTrigger_body(ctx *Trigger_bodyContext) int
 	return v.VisitChildren(ctx)
 }
 
-func (v *BasePlSqlParserVisitor) VisitRoutine_clause(ctx *Routine_clauseContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitCompound_trigger_block(ctx *Compound_trigger_blockContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitTiming_point_section(ctx *Timing_point_sectionContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BasePlSqlParserVisitor) VisitNon_dml_event(ctx *Non_dml_eventContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -496,14 +476,6 @@ func (v *BasePlSqlParserVisitor) VisitAlter_method_spec(ctx *Alter_method_specCo
 }
 
 func (v *BasePlSqlParserVisitor) VisitAlter_method_element(ctx *Alter_method_elementContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitAlter_attribute_definition(ctx *Alter_attribute_definitionContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitAttribute_definition(ctx *Attribute_definitionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1903,18 +1875,6 @@ func (v *BasePlSqlParserVisitor) VisitDatetime_expr(ctx *Datetime_exprContext) i
 	return v.VisitChildren(ctx)
 }
 
-func (v *BasePlSqlParserVisitor) VisitInterval_expr(ctx *Interval_exprContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitSynchronous_or_asynchronous(ctx *Synchronous_or_asynchronousContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitIncluding_or_excluding(ctx *Including_or_excludingContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BasePlSqlParserVisitor) VisitCreate_materialized_view_log(ctx *Create_materialized_view_logContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -2340,10 +2300,6 @@ func (v *BasePlSqlParserVisitor) VisitPartitioning_storage_clause(ctx *Partition
 }
 
 func (v *BasePlSqlParserVisitor) VisitLob_partitioning_storage(ctx *Lob_partitioning_storageContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitDatatype_null_enable(ctx *Datatype_null_enableContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -3283,10 +3239,6 @@ func (v *BasePlSqlParserVisitor) VisitAdd_column_clause(ctx *Add_column_clauseCo
 	return v.VisitChildren(ctx)
 }
 
-func (v *BasePlSqlParserVisitor) VisitAlter_varray_col_properties(ctx *Alter_varray_col_propertiesContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BasePlSqlParserVisitor) VisitVarray_col_properties(ctx *Varray_col_propertiesContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -3399,10 +3351,6 @@ func (v *BasePlSqlParserVisitor) VisitEvaluation_edition_clause(ctx *Evaluation_
 	return v.VisitChildren(ctx)
 }
 
-func (v *BasePlSqlParserVisitor) VisitOut_of_line_part_storage(ctx *Out_of_line_part_storageContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BasePlSqlParserVisitor) VisitNested_table_col_properties(ctx *Nested_table_col_propertiesContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -3420,10 +3368,6 @@ func (v *BasePlSqlParserVisitor) VisitPartition_name(ctx *Partition_nameContext)
 }
 
 func (v *BasePlSqlParserVisitor) VisitSupplemental_logging_props(ctx *Supplemental_logging_propsContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitColumn_or_attribute(ctx *Column_or_attributeContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -3451,27 +3395,7 @@ func (v *BasePlSqlParserVisitor) VisitDrop_primary_key_or_unique_or_generic_clau
 	return v.VisitChildren(ctx)
 }
 
-func (v *BasePlSqlParserVisitor) VisitAdd_constraint(ctx *Add_constraintContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitAdd_constraint_clause(ctx *Add_constraint_clauseContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BasePlSqlParserVisitor) VisitCheck_constraint(ctx *Check_constraintContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitDrop_constraint(ctx *Drop_constraintContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitEnable_constraint(ctx *Enable_constraintContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitDisable_constraint(ctx *Disable_constraintContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -3484,14 +3408,6 @@ func (v *BasePlSqlParserVisitor) VisitReferences_clause(ctx *References_clauseCo
 }
 
 func (v *BasePlSqlParserVisitor) VisitOn_delete_clause(ctx *On_delete_clauseContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitUnique_key_clause(ctx *Unique_key_clauseContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitPrimary_key_clause(ctx *Primary_key_clauseContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -3600,10 +3516,6 @@ func (v *BasePlSqlParserVisitor) VisitLabel_declaration(ctx *Label_declarationCo
 }
 
 func (v *BasePlSqlParserVisitor) VisitStatement(ctx *StatementContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitSwallow_to_semi(ctx *Swallow_to_semiContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -4531,10 +4443,6 @@ func (v *BasePlSqlParserVisitor) VisitRollback_segment_name(ctx *Rollback_segmen
 	return v.VisitChildren(ctx)
 }
 
-func (v *BasePlSqlParserVisitor) VisitTable_var_name(ctx *Table_var_nameContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BasePlSqlParserVisitor) VisitSchema_name(ctx *Schema_nameContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -4792,13 +4700,5 @@ func (v *BasePlSqlParserVisitor) VisitNon_reserved_keywords_in_12c(ctx *Non_rese
 }
 
 func (v *BasePlSqlParserVisitor) VisitNon_reserved_keywords_pre12c(ctx *Non_reserved_keywords_pre12cContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitString_function_name(ctx *String_function_nameContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePlSqlParserVisitor) VisitNumeric_function_name(ctx *Numeric_function_nameContext) interface{} {
 	return v.VisitChildren(ctx)
 }
