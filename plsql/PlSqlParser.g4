@@ -338,14 +338,6 @@ diskgroup_attributes
     : SET ATTRIBUTE CHAR_STRING EQUALS_OP CHAR_STRING
     ;
 
-modify_diskgroup_file
-    : MODIFY FILE CHAR_STRING ATTRIBUTE LEFT_PAREN disk_region_clause RIGHT_PAREN (COMMA CHAR_STRING ATTRIBUTE LEFT_PAREN disk_region_clause RIGHT_PAREN)*
-    ;
-
-disk_region_clause
-    :
-    ;
-
 drop_diskgroup_file_clause
     : DROP FILE filename (COMMA filename)*
     ;
@@ -786,21 +778,6 @@ trigger_body
     | trigger_block
     ;
 
-routine_clause
-    : routine_name function_argument?
-    ;
-
-compound_trigger_block
-    : COMPOUND TRIGGER seq_of_declare_specs? timing_point_section+ END trigger_name
-    ;
-
-timing_point_section
-    : bk=BEFORE STATEMENT IS trigger_block BEFORE STATEMENT SEMICOLON
-    | bk=BEFORE EACH ROW IS trigger_block BEFORE EACH ROW SEMICOLON
-    | ak=AFTER STATEMENT IS trigger_block AFTER STATEMENT SEMICOLON
-    | ak=AFTER EACH ROW IS trigger_block AFTER EACH ROW SEMICOLON
-    ;
-
 non_dml_event
     : ALTER
     | ANALYZE
@@ -882,14 +859,6 @@ alter_method_spec
 
 alter_method_element
     : (ADD | DROP) (map_order_function_spec | subprogram_spec)
-    ;
-
-alter_attribute_definition
-    : (ADD | MODIFY | DROP) ATTRIBUTE (attribute_definition | LEFT_PAREN attribute_definition (COMMA attribute_definition)* RIGHT_PAREN)
-    ;
-
-attribute_definition
-    : attribute_name type_spec?
     ;
 
 alter_collection_clauses
@@ -3041,22 +3010,6 @@ datetime_expr
     : expression
     ;
 
-// Should bound this to just interval expr
-interval_expr
-    : expression
-    ;
-
-synchronous_or_asynchronous
-    : SYNCHRONOUS
-    | ASYNCHRONOUS
-    ;
-
-including_or_excluding
-    : INCLUDING
-    | EXCLUDING
-    ;
-
-
 create_materialized_view_log
     : CREATE MATERIALIZED VIEW LOG ON tableview_name
         ( ( physical_attributes_clause
@@ -3718,12 +3671,6 @@ lob_partitioning_storage
                | LEFT_PAREN TABLESPACE tablespace RIGHT_PAREN
                )
     ;
-
-datatype_null_enable
-   : column_name datatype
-         SORT?  (DEFAULT expression)? (ENCRYPT ( USING  CHAR_STRING )? (IDENTIFIED BY REGULAR_ID)? CHAR_STRING? ( NO? SALT )? )?
-         (NOT NULL_)? (ENABLE | DISABLE)?
-   ;
 
 // https://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/size_clause.html
 // Technically, this should only allow 'K' | 'M' | 'G' | 'T' | 'P' | 'E'
@@ -5163,10 +5110,6 @@ add_column_clause
 //TODO       (COMMA? out_of_line_part_storage )
     ;
 
-alter_varray_col_properties
-    : MODIFY VARRAY varray_item LEFT_PAREN modify_lob_parameters RIGHT_PAREN
-    ;
-
 varray_col_properties
     : VARRAY varray_item ( substitutable_column_clause? varray_storage_clause
                          | substitutable_column_clause
@@ -5349,10 +5292,6 @@ evaluation_edition_clause
     : EVALUATE USING ((CURRENT | NULL_) EDITION | EDITION edition_name)
     ;
 
-out_of_line_part_storage
-    : PARTITION partition_name
-    ;
-
 nested_table_col_properties
     : NESTED TABLE  (nested_item | COLUMN_VALUE) substitutable_column_clause? (LOCAL | GLOBAL)?
        STORE AS tableview_name ( LEFT_PAREN ( LEFT_PAREN object_properties RIGHT_PAREN
@@ -5380,10 +5319,6 @@ partition_name
 
 supplemental_logging_props
     : SUPPLEMENTAL LOG (supplemental_log_grp_clause | supplemental_id_key_clause)
-    ;
-
-column_or_attribute
-    : regular_id
     ;
 
 object_type_col_properties
@@ -5415,31 +5350,8 @@ drop_primary_key_or_unique_or_generic_clause
     | CONSTRAINT constraint_name CASCADE?
     ;
 
-add_constraint
-    : ADD (CONSTRAINT constraint_name)? add_constraint_clause (COMMA (CONSTRAINT constraint_name)? add_constraint_clause)+
-    ;
-
-add_constraint_clause
-    : primary_key_clause
-     | foreign_key_clause
-     | unique_key_clause
-     | check_constraint
-     ;
-
 check_constraint
     : CHECK LEFT_PAREN condition RIGHT_PAREN DISABLE?
-    ;
-
-drop_constraint
-    : DROP CONSTRAINT constraint_name
-    ;
-
-enable_constraint
-    : ENABLE CONSTRAINT constraint_name
-    ;
-
-disable_constraint
-    : DISABLE CONSTRAINT constraint_name
     ;
 
 foreign_key_clause
@@ -5452,14 +5364,6 @@ references_clause
 
 on_delete_clause
     : ON DELETE (CASCADE | SET NULL_)
-    ;
-
-unique_key_clause
-    : UNIQUE paren_column_list using_index_clause?
-    ;
-
-primary_key_clause
-    : PRIMARY KEY paren_column_list using_index_clause?
     ;
 
 // Anonymous PL/SQL code block
@@ -5613,10 +5517,6 @@ statement
     | sql_statement
     | pipe_row_statement
     | plsql_call_statement // put call statement after others. BYT-8268: PL/SQL level allows optional CALL
-    ;
-
-swallow_to_semi
-    : ~SEMICOLON+
     ;
 
 assignment_statement
@@ -6854,10 +6754,6 @@ savepoint_name
     ;
 
 rollback_segment_name
-    : identifier
-    ;
-
-table_var_name
     : identifier
     ;
 
@@ -9641,20 +9537,4 @@ non_reserved_keywords_pre12c
     | YEAR
     | YES
     | ZONE
-    ;
-
-string_function_name
-    : CHR
-    | DECODE
-    | SUBSTR
-    | TO_CHAR
-    | TRIM
-    ;
-
-numeric_function_name
-    : AVG
-    | COUNT
-    | NVL
-    | ROUND
-    | SUM
     ;
