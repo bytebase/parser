@@ -1,4 +1,4 @@
-// Code generated from PlSqlParser.g4 by ANTLR 4.13.1. DO NOT EDIT.
+// Code generated from PlSqlParser.g4 by ANTLR 4.13.2. DO NOT EDIT.
 
 package plsql // PlSqlParser
 import "github.com/antlr4-go/antlr/v4"
@@ -87,12 +87,6 @@ type PlSqlParserVisitor interface {
 
 	// Visit a parse tree produced by PlSqlParser#diskgroup_attributes.
 	VisitDiskgroup_attributes(ctx *Diskgroup_attributesContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#modify_diskgroup_file.
-	VisitModify_diskgroup_file(ctx *Modify_diskgroup_fileContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#disk_region_clause.
-	VisitDisk_region_clause(ctx *Disk_region_clauseContext) interface{}
 
 	// Visit a parse tree produced by PlSqlParser#drop_diskgroup_file_clause.
 	VisitDrop_diskgroup_file_clause(ctx *Drop_diskgroup_file_clauseContext) interface{}
@@ -331,15 +325,6 @@ type PlSqlParserVisitor interface {
 	// Visit a parse tree produced by PlSqlParser#trigger_body.
 	VisitTrigger_body(ctx *Trigger_bodyContext) interface{}
 
-	// Visit a parse tree produced by PlSqlParser#routine_clause.
-	VisitRoutine_clause(ctx *Routine_clauseContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#compound_trigger_block.
-	VisitCompound_trigger_block(ctx *Compound_trigger_blockContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#timing_point_section.
-	VisitTiming_point_section(ctx *Timing_point_sectionContext) interface{}
-
 	// Visit a parse tree produced by PlSqlParser#non_dml_event.
 	VisitNon_dml_event(ctx *Non_dml_eventContext) interface{}
 
@@ -375,12 +360,6 @@ type PlSqlParserVisitor interface {
 
 	// Visit a parse tree produced by PlSqlParser#alter_method_element.
 	VisitAlter_method_element(ctx *Alter_method_elementContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#alter_attribute_definition.
-	VisitAlter_attribute_definition(ctx *Alter_attribute_definitionContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#attribute_definition.
-	VisitAttribute_definition(ctx *Attribute_definitionContext) interface{}
 
 	// Visit a parse tree produced by PlSqlParser#alter_collection_clauses.
 	VisitAlter_collection_clauses(ctx *Alter_collection_clausesContext) interface{}
@@ -1429,15 +1408,6 @@ type PlSqlParserVisitor interface {
 	// Visit a parse tree produced by PlSqlParser#datetime_expr.
 	VisitDatetime_expr(ctx *Datetime_exprContext) interface{}
 
-	// Visit a parse tree produced by PlSqlParser#interval_expr.
-	VisitInterval_expr(ctx *Interval_exprContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#synchronous_or_asynchronous.
-	VisitSynchronous_or_asynchronous(ctx *Synchronous_or_asynchronousContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#including_or_excluding.
-	VisitIncluding_or_excluding(ctx *Including_or_excludingContext) interface{}
-
 	// Visit a parse tree produced by PlSqlParser#create_materialized_view_log.
 	VisitCreate_materialized_view_log(ctx *Create_materialized_view_logContext) interface{}
 
@@ -1758,9 +1728,6 @@ type PlSqlParserVisitor interface {
 
 	// Visit a parse tree produced by PlSqlParser#lob_partitioning_storage.
 	VisitLob_partitioning_storage(ctx *Lob_partitioning_storageContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#datatype_null_enable.
-	VisitDatatype_null_enable(ctx *Datatype_null_enableContext) interface{}
 
 	// Visit a parse tree produced by PlSqlParser#size_clause.
 	VisitSize_clause(ctx *Size_clauseContext) interface{}
@@ -2464,9 +2431,6 @@ type PlSqlParserVisitor interface {
 	// Visit a parse tree produced by PlSqlParser#add_column_clause.
 	VisitAdd_column_clause(ctx *Add_column_clauseContext) interface{}
 
-	// Visit a parse tree produced by PlSqlParser#alter_varray_col_properties.
-	VisitAlter_varray_col_properties(ctx *Alter_varray_col_propertiesContext) interface{}
-
 	// Visit a parse tree produced by PlSqlParser#varray_col_properties.
 	VisitVarray_col_properties(ctx *Varray_col_propertiesContext) interface{}
 
@@ -2551,9 +2515,6 @@ type PlSqlParserVisitor interface {
 	// Visit a parse tree produced by PlSqlParser#evaluation_edition_clause.
 	VisitEvaluation_edition_clause(ctx *Evaluation_edition_clauseContext) interface{}
 
-	// Visit a parse tree produced by PlSqlParser#out_of_line_part_storage.
-	VisitOut_of_line_part_storage(ctx *Out_of_line_part_storageContext) interface{}
-
 	// Visit a parse tree produced by PlSqlParser#nested_table_col_properties.
 	VisitNested_table_col_properties(ctx *Nested_table_col_propertiesContext) interface{}
 
@@ -2568,9 +2529,6 @@ type PlSqlParserVisitor interface {
 
 	// Visit a parse tree produced by PlSqlParser#supplemental_logging_props.
 	VisitSupplemental_logging_props(ctx *Supplemental_logging_propsContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#column_or_attribute.
-	VisitColumn_or_attribute(ctx *Column_or_attributeContext) interface{}
 
 	// Visit a parse tree produced by PlSqlParser#object_type_col_properties.
 	VisitObject_type_col_properties(ctx *Object_type_col_propertiesContext) interface{}
@@ -2590,23 +2548,8 @@ type PlSqlParserVisitor interface {
 	// Visit a parse tree produced by PlSqlParser#drop_primary_key_or_unique_or_generic_clause.
 	VisitDrop_primary_key_or_unique_or_generic_clause(ctx *Drop_primary_key_or_unique_or_generic_clauseContext) interface{}
 
-	// Visit a parse tree produced by PlSqlParser#add_constraint.
-	VisitAdd_constraint(ctx *Add_constraintContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#add_constraint_clause.
-	VisitAdd_constraint_clause(ctx *Add_constraint_clauseContext) interface{}
-
 	// Visit a parse tree produced by PlSqlParser#check_constraint.
 	VisitCheck_constraint(ctx *Check_constraintContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#drop_constraint.
-	VisitDrop_constraint(ctx *Drop_constraintContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#enable_constraint.
-	VisitEnable_constraint(ctx *Enable_constraintContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#disable_constraint.
-	VisitDisable_constraint(ctx *Disable_constraintContext) interface{}
 
 	// Visit a parse tree produced by PlSqlParser#foreign_key_clause.
 	VisitForeign_key_clause(ctx *Foreign_key_clauseContext) interface{}
@@ -2616,12 +2559,6 @@ type PlSqlParserVisitor interface {
 
 	// Visit a parse tree produced by PlSqlParser#on_delete_clause.
 	VisitOn_delete_clause(ctx *On_delete_clauseContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#unique_key_clause.
-	VisitUnique_key_clause(ctx *Unique_key_clauseContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#primary_key_clause.
-	VisitPrimary_key_clause(ctx *Primary_key_clauseContext) interface{}
 
 	// Visit a parse tree produced by PlSqlParser#anonymous_block.
 	VisitAnonymous_block(ctx *Anonymous_blockContext) interface{}
@@ -2703,9 +2640,6 @@ type PlSqlParserVisitor interface {
 
 	// Visit a parse tree produced by PlSqlParser#statement.
 	VisitStatement(ctx *StatementContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#swallow_to_semi.
-	VisitSwallow_to_semi(ctx *Swallow_to_semiContext) interface{}
 
 	// Visit a parse tree produced by PlSqlParser#assignment_statement.
 	VisitAssignment_statement(ctx *Assignment_statementContext) interface{}
@@ -3400,9 +3334,6 @@ type PlSqlParserVisitor interface {
 	// Visit a parse tree produced by PlSqlParser#rollback_segment_name.
 	VisitRollback_segment_name(ctx *Rollback_segment_nameContext) interface{}
 
-	// Visit a parse tree produced by PlSqlParser#table_var_name.
-	VisitTable_var_name(ctx *Table_var_nameContext) interface{}
-
 	// Visit a parse tree produced by PlSqlParser#schema_name.
 	VisitSchema_name(ctx *Schema_nameContext) interface{}
 
@@ -3597,10 +3528,4 @@ type PlSqlParserVisitor interface {
 
 	// Visit a parse tree produced by PlSqlParser#non_reserved_keywords_pre12c.
 	VisitNon_reserved_keywords_pre12c(ctx *Non_reserved_keywords_pre12cContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#string_function_name.
-	VisitString_function_name(ctx *String_function_nameContext) interface{}
-
-	// Visit a parse tree produced by PlSqlParser#numeric_function_name.
-	VisitNumeric_function_name(ctx *Numeric_function_nameContext) interface{}
 }
