@@ -46,6 +46,2006 @@ options {
 /* This field stores the tags which are used to detect the end of a dollar-quoted string literal.
  */
 }
+
+// ============================================================================
+// BEGIN AUTO-GENERATED KEYWORDS
+//
+// Source: PostgreSQL REL_18_STABLE kwlist.h
+// URL: https://raw.githubusercontent.com/postgres/postgres/REL_18_STABLE/src/include/parser/kwlist.h
+// Generated: 2025-11-13T17:32:00+08:00
+// Total Keywords: 494
+//
+// NOTE: These keyword rules must appear BEFORE the Identifier rule
+// to ensure keywords are matched with higher priority than identifiers.
+//
+
+ABORT_P
+   : 'ABORT'
+   ;
+
+ABSENT
+   : 'ABSENT'
+   ;
+
+ABSOLUTE_P
+   : 'ABSOLUTE'
+   ;
+
+ACCESS
+   : 'ACCESS'
+   ;
+
+ACTION
+   : 'ACTION'
+   ;
+
+ADD_P
+   : 'ADD'
+   ;
+
+ADMIN
+   : 'ADMIN'
+   ;
+
+AFTER
+   : 'AFTER'
+   ;
+
+AGGREGATE
+   : 'AGGREGATE'
+   ;
+
+ALL
+   : 'ALL'
+   ;
+
+ALSO
+   : 'ALSO'
+   ;
+
+ALTER
+   : 'ALTER'
+   ;
+
+ALWAYS
+   : 'ALWAYS'
+   ;
+
+ANALYSE
+   : 'ANALYSE'
+   ;
+
+ANALYZE
+   : 'ANALYZE'
+   ;
+
+AND
+   : 'AND'
+   ;
+
+ANY
+   : 'ANY'
+   ;
+
+ARRAY
+   : 'ARRAY'
+   ;
+
+AS
+   : 'AS'
+   ;
+
+ASC
+   : 'ASC'
+   ;
+
+ASENSITIVE
+   : 'ASENSITIVE'
+   ;
+
+ASSERTION
+   : 'ASSERTION'
+   ;
+
+ASSIGNMENT
+   : 'ASSIGNMENT'
+   ;
+
+ASYMMETRIC
+   : 'ASYMMETRIC'
+   ;
+
+AT
+   : 'AT'
+   ;
+
+ATOMIC
+   : 'ATOMIC'
+   ;
+
+ATTACH
+   : 'ATTACH'
+   ;
+
+ATTRIBUTE
+   : 'ATTRIBUTE'
+   ;
+
+AUTHORIZATION
+   : 'AUTHORIZATION'
+   ;
+
+BACKWARD
+   : 'BACKWARD'
+   ;
+
+BEFORE
+   : 'BEFORE'
+   ;
+
+BEGIN_P
+   : 'BEGIN'
+   ;
+
+BETWEEN
+   : 'BETWEEN'
+   ;
+
+BIGINT
+   : 'BIGINT'
+   ;
+
+BINARY
+   : 'BINARY'
+   ;
+
+BIT
+   : 'BIT'
+   ;
+
+BOOLEAN_P
+   : 'BOOLEAN'
+   ;
+
+BOTH
+   : 'BOTH'
+   ;
+
+BREADTH
+   : 'BREADTH'
+   ;
+
+BY
+   : 'BY'
+   ;
+
+CACHE
+   : 'CACHE'
+   ;
+
+CALL
+   : 'CALL'
+   ;
+
+CALLED
+   : 'CALLED'
+   ;
+
+CASCADE
+   : 'CASCADE'
+   ;
+
+CASCADED
+   : 'CASCADED'
+   ;
+
+CASE
+   : 'CASE'
+   ;
+
+CAST
+   : 'CAST'
+   ;
+
+CATALOG_P
+   : 'CATALOG'
+   ;
+
+CHAIN
+   : 'CHAIN'
+   ;
+
+CHAR_P
+   : 'CHAR'
+   ;
+
+CHARACTER
+   : 'CHARACTER'
+   ;
+
+CHARACTERISTICS
+   : 'CHARACTERISTICS'
+   ;
+
+CHECK
+   : 'CHECK'
+   ;
+
+CHECKPOINT
+   : 'CHECKPOINT'
+   ;
+
+CLASS
+   : 'CLASS'
+   ;
+
+CLOSE
+   : 'CLOSE'
+   ;
+
+CLUSTER
+   : 'CLUSTER'
+   ;
+
+COALESCE
+   : 'COALESCE'
+   ;
+
+COLLATE
+   : 'COLLATE'
+   ;
+
+COLLATION
+   : 'COLLATION'
+   ;
+
+COLUMN
+   : 'COLUMN'
+   ;
+
+COLUMNS
+   : 'COLUMNS'
+   ;
+
+COMMENT
+   : 'COMMENT'
+   ;
+
+COMMENTS
+   : 'COMMENTS'
+   ;
+
+COMMIT
+   : 'COMMIT'
+   ;
+
+COMMITTED
+   : 'COMMITTED'
+   ;
+
+COMPRESSION
+   : 'COMPRESSION'
+   ;
+
+CONCURRENTLY
+   : 'CONCURRENTLY'
+   ;
+
+CONDITIONAL
+   : 'CONDITIONAL'
+   ;
+
+CONFIGURATION
+   : 'CONFIGURATION'
+   ;
+
+CONFLICT
+   : 'CONFLICT'
+   ;
+
+CONNECTION
+   : 'CONNECTION'
+   ;
+
+CONSTRAINT
+   : 'CONSTRAINT'
+   ;
+
+CONSTRAINTS
+   : 'CONSTRAINTS'
+   ;
+
+CONTENT_P
+   : 'CONTENT'
+   ;
+
+CONTINUE_P
+   : 'CONTINUE'
+   ;
+
+CONVERSION_P
+   : 'CONVERSION'
+   ;
+
+COPY
+   : 'COPY'
+   ;
+
+COST
+   : 'COST'
+   ;
+
+CREATE
+   : 'CREATE'
+   ;
+
+CROSS
+   : 'CROSS'
+   ;
+
+CSV
+   : 'CSV'
+   ;
+
+CUBE
+   : 'CUBE'
+   ;
+
+CURRENT_P
+   : 'CURRENT'
+   ;
+
+CURRENT_CATALOG
+   : 'CURRENT_CATALOG'
+   ;
+
+CURRENT_DATE
+   : 'CURRENT_DATE'
+   ;
+
+CURRENT_ROLE
+   : 'CURRENT_ROLE'
+   ;
+
+CURRENT_SCHEMA
+   : 'CURRENT_SCHEMA'
+   ;
+
+CURRENT_TIME
+   : 'CURRENT_TIME'
+   ;
+
+CURRENT_TIMESTAMP
+   : 'CURRENT_TIMESTAMP'
+   ;
+
+CURRENT_USER
+   : 'CURRENT_USER'
+   ;
+
+CURSOR
+   : 'CURSOR'
+   ;
+
+CYCLE
+   : 'CYCLE'
+   ;
+
+DATA_P
+   : 'DATA'
+   ;
+
+DATABASE
+   : 'DATABASE'
+   ;
+
+DAY_P
+   : 'DAY'
+   ;
+
+DEALLOCATE
+   : 'DEALLOCATE'
+   ;
+
+DEC
+   : 'DEC'
+   ;
+
+DECIMAL_P
+   : 'DECIMAL'
+   ;
+
+DECLARE
+   : 'DECLARE'
+   ;
+
+DEFAULT
+   : 'DEFAULT'
+   ;
+
+DEFAULTS
+   : 'DEFAULTS'
+   ;
+
+DEFERRABLE
+   : 'DEFERRABLE'
+   ;
+
+DEFERRED
+   : 'DEFERRED'
+   ;
+
+DEFINER
+   : 'DEFINER'
+   ;
+
+DELETE_P
+   : 'DELETE'
+   ;
+
+DELIMITER
+   : 'DELIMITER'
+   ;
+
+DELIMITERS
+   : 'DELIMITERS'
+   ;
+
+DEPENDS
+   : 'DEPENDS'
+   ;
+
+DEPTH
+   : 'DEPTH'
+   ;
+
+DESC
+   : 'DESC'
+   ;
+
+DETACH
+   : 'DETACH'
+   ;
+
+DICTIONARY
+   : 'DICTIONARY'
+   ;
+
+DISABLE_P
+   : 'DISABLE'
+   ;
+
+DISCARD
+   : 'DISCARD'
+   ;
+
+DISTINCT
+   : 'DISTINCT'
+   ;
+
+DO
+   : 'DO'
+   ;
+
+DOCUMENT_P
+   : 'DOCUMENT'
+   ;
+
+DOMAIN_P
+   : 'DOMAIN'
+   ;
+
+DOUBLE_P
+   : 'DOUBLE'
+   ;
+
+DROP
+   : 'DROP'
+   ;
+
+EACH
+   : 'EACH'
+   ;
+
+ELSE
+   : 'ELSE'
+   ;
+
+EMPTY_P
+   : 'EMPTY'
+   ;
+
+ENABLE_P
+   : 'ENABLE'
+   ;
+
+ENCODING
+   : 'ENCODING'
+   ;
+
+ENCRYPTED
+   : 'ENCRYPTED'
+   ;
+
+END_P
+   : 'END'
+   ;
+
+ENFORCED
+   : 'ENFORCED'
+   ;
+
+ENUM_P
+   : 'ENUM'
+   ;
+
+ERROR_P
+   : 'ERROR'
+   ;
+
+ESCAPE
+   : 'ESCAPE'
+   ;
+
+EVENT
+   : 'EVENT'
+   ;
+
+EXCEPT
+   : 'EXCEPT'
+   ;
+
+EXCLUDE
+   : 'EXCLUDE'
+   ;
+
+EXCLUDING
+   : 'EXCLUDING'
+   ;
+
+EXCLUSIVE
+   : 'EXCLUSIVE'
+   ;
+
+EXECUTE
+   : 'EXECUTE'
+   ;
+
+EXISTS
+   : 'EXISTS'
+   ;
+
+EXPLAIN
+   : 'EXPLAIN'
+   ;
+
+EXPRESSION
+   : 'EXPRESSION'
+   ;
+
+EXTENSION
+   : 'EXTENSION'
+   ;
+
+EXTERNAL
+   : 'EXTERNAL'
+   ;
+
+EXTRACT
+   : 'EXTRACT'
+   ;
+
+FALSE_P
+   : 'FALSE'
+   ;
+
+FAMILY
+   : 'FAMILY'
+   ;
+
+FETCH
+   : 'FETCH'
+   ;
+
+FILTER
+   : 'FILTER'
+   ;
+
+FINALIZE
+   : 'FINALIZE'
+   ;
+
+FIRST_P
+   : 'FIRST'
+   ;
+
+FLOAT_P
+   : 'FLOAT'
+   ;
+
+FOLLOWING
+   : 'FOLLOWING'
+   ;
+
+FOR
+   : 'FOR'
+   ;
+
+FORCE
+   : 'FORCE'
+   ;
+
+FOREIGN
+   : 'FOREIGN'
+   ;
+
+FORMAT
+   : 'FORMAT'
+   ;
+
+FORWARD
+   : 'FORWARD'
+   ;
+
+FREEZE
+   : 'FREEZE'
+   ;
+
+FROM
+   : 'FROM'
+   ;
+
+FULL
+   : 'FULL'
+   ;
+
+FUNCTION
+   : 'FUNCTION'
+   ;
+
+FUNCTIONS
+   : 'FUNCTIONS'
+   ;
+
+GENERATED
+   : 'GENERATED'
+   ;
+
+GLOBAL
+   : 'GLOBAL'
+   ;
+
+GRANT
+   : 'GRANT'
+   ;
+
+GRANTED
+   : 'GRANTED'
+   ;
+
+GREATEST
+   : 'GREATEST'
+   ;
+
+GROUP_P
+   : 'GROUP'
+   ;
+
+GROUPING
+   : 'GROUPING'
+   ;
+
+GROUPS
+   : 'GROUPS'
+   ;
+
+HANDLER
+   : 'HANDLER'
+   ;
+
+HAVING
+   : 'HAVING'
+   ;
+
+HEADER_P
+   : 'HEADER'
+   ;
+
+HOLD
+   : 'HOLD'
+   ;
+
+HOUR_P
+   : 'HOUR'
+   ;
+
+IDENTITY_P
+   : 'IDENTITY'
+   ;
+
+IF_P
+   : 'IF'
+   ;
+
+ILIKE
+   : 'ILIKE'
+   ;
+
+IMMEDIATE
+   : 'IMMEDIATE'
+   ;
+
+IMMUTABLE
+   : 'IMMUTABLE'
+   ;
+
+IMPLICIT_P
+   : 'IMPLICIT'
+   ;
+
+IMPORT_P
+   : 'IMPORT'
+   ;
+
+IN_P
+   : 'IN'
+   ;
+
+INCLUDE
+   : 'INCLUDE'
+   ;
+
+INCLUDING
+   : 'INCLUDING'
+   ;
+
+INCREMENT
+   : 'INCREMENT'
+   ;
+
+INDENT
+   : 'INDENT'
+   ;
+
+INDEX
+   : 'INDEX'
+   ;
+
+INDEXES
+   : 'INDEXES'
+   ;
+
+INHERIT
+   : 'INHERIT'
+   ;
+
+INHERITS
+   : 'INHERITS'
+   ;
+
+INITIALLY
+   : 'INITIALLY'
+   ;
+
+INLINE_P
+   : 'INLINE'
+   ;
+
+INNER_P
+   : 'INNER'
+   ;
+
+INOUT
+   : 'INOUT'
+   ;
+
+INPUT_P
+   : 'INPUT'
+   ;
+
+INSENSITIVE
+   : 'INSENSITIVE'
+   ;
+
+INSERT
+   : 'INSERT'
+   ;
+
+INSTEAD
+   : 'INSTEAD'
+   ;
+
+INT_P
+   : 'INT'
+   ;
+
+INTEGER
+   : 'INTEGER'
+   ;
+
+INTERSECT
+   : 'INTERSECT'
+   ;
+
+INTERVAL
+   : 'INTERVAL'
+   ;
+
+INTO
+   : 'INTO'
+   ;
+
+INVOKER
+   : 'INVOKER'
+   ;
+
+IS
+   : 'IS'
+   ;
+
+ISNULL
+   : 'ISNULL'
+   ;
+
+ISOLATION
+   : 'ISOLATION'
+   ;
+
+JOIN
+   : 'JOIN'
+   ;
+
+JSON
+   : 'JSON'
+   ;
+
+JSON_ARRAY
+   : 'JSON_ARRAY'
+   ;
+
+JSON_ARRAYAGG
+   : 'JSON_ARRAYAGG'
+   ;
+
+JSON_EXISTS
+   : 'JSON_EXISTS'
+   ;
+
+JSON_OBJECT
+   : 'JSON_OBJECT'
+   ;
+
+JSON_OBJECTAGG
+   : 'JSON_OBJECTAGG'
+   ;
+
+JSON_QUERY
+   : 'JSON_QUERY'
+   ;
+
+JSON_SCALAR
+   : 'JSON_SCALAR'
+   ;
+
+JSON_SERIALIZE
+   : 'JSON_SERIALIZE'
+   ;
+
+JSON_TABLE
+   : 'JSON_TABLE'
+   ;
+
+JSON_VALUE
+   : 'JSON_VALUE'
+   ;
+
+KEEP
+   : 'KEEP'
+   ;
+
+KEY
+   : 'KEY'
+   ;
+
+KEYS
+   : 'KEYS'
+   ;
+
+LABEL
+   : 'LABEL'
+   ;
+
+LANGUAGE
+   : 'LANGUAGE'
+   ;
+
+LARGE_P
+   : 'LARGE'
+   ;
+
+LAST_P
+   : 'LAST'
+   ;
+
+LATERAL_P
+   : 'LATERAL'
+   ;
+
+LEADING
+   : 'LEADING'
+   ;
+
+LEAKPROOF
+   : 'LEAKPROOF'
+   ;
+
+LEAST
+   : 'LEAST'
+   ;
+
+LEFT
+   : 'LEFT'
+   ;
+
+LEVEL
+   : 'LEVEL'
+   ;
+
+LIKE
+   : 'LIKE'
+   ;
+
+LIMIT
+   : 'LIMIT'
+   ;
+
+LISTEN
+   : 'LISTEN'
+   ;
+
+LOAD
+   : 'LOAD'
+   ;
+
+LOCAL
+   : 'LOCAL'
+   ;
+
+LOCALTIME
+   : 'LOCALTIME'
+   ;
+
+LOCALTIMESTAMP
+   : 'LOCALTIMESTAMP'
+   ;
+
+LOCATION
+   : 'LOCATION'
+   ;
+
+LOCK_P
+   : 'LOCK'
+   ;
+
+LOCKED
+   : 'LOCKED'
+   ;
+
+LOGGED
+   : 'LOGGED'
+   ;
+
+MAPPING
+   : 'MAPPING'
+   ;
+
+MATCH
+   : 'MATCH'
+   ;
+
+MATCHED
+   : 'MATCHED'
+   ;
+
+MATERIALIZED
+   : 'MATERIALIZED'
+   ;
+
+MAXVALUE
+   : 'MAXVALUE'
+   ;
+
+MERGE
+   : 'MERGE'
+   ;
+
+MERGE_ACTION
+   : 'MERGE_ACTION'
+   ;
+
+METHOD
+   : 'METHOD'
+   ;
+
+MINUTE_P
+   : 'MINUTE'
+   ;
+
+MINVALUE
+   : 'MINVALUE'
+   ;
+
+MODE
+   : 'MODE'
+   ;
+
+MONTH_P
+   : 'MONTH'
+   ;
+
+MOVE
+   : 'MOVE'
+   ;
+
+NAME_P
+   : 'NAME'
+   ;
+
+NAMES
+   : 'NAMES'
+   ;
+
+NATIONAL
+   : 'NATIONAL'
+   ;
+
+NATURAL
+   : 'NATURAL'
+   ;
+
+NCHAR
+   : 'NCHAR'
+   ;
+
+NESTED
+   : 'NESTED'
+   ;
+
+NEW
+   : 'NEW'
+   ;
+
+NEXT
+   : 'NEXT'
+   ;
+
+NFC
+   : 'NFC'
+   ;
+
+NFD
+   : 'NFD'
+   ;
+
+NFKC
+   : 'NFKC'
+   ;
+
+NFKD
+   : 'NFKD'
+   ;
+
+NO
+   : 'NO'
+   ;
+
+NONE
+   : 'NONE'
+   ;
+
+NORMALIZE
+   : 'NORMALIZE'
+   ;
+
+NORMALIZED
+   : 'NORMALIZED'
+   ;
+
+NOT
+   : 'NOT'
+   ;
+
+NOTHING
+   : 'NOTHING'
+   ;
+
+NOTIFY
+   : 'NOTIFY'
+   ;
+
+NOTNULL
+   : 'NOTNULL'
+   ;
+
+NOWAIT
+   : 'NOWAIT'
+   ;
+
+NULL_P
+   : 'NULL'
+   ;
+
+NULLIF
+   : 'NULLIF'
+   ;
+
+NULLS_P
+   : 'NULLS'
+   ;
+
+NUMERIC
+   : 'NUMERIC'
+   ;
+
+OBJECT_P
+   : 'OBJECT'
+   ;
+
+OBJECTS_P
+   : 'OBJECTS'
+   ;
+
+OF
+   : 'OF'
+   ;
+
+OFF
+   : 'OFF'
+   ;
+
+OFFSET
+   : 'OFFSET'
+   ;
+
+OIDS
+   : 'OIDS'
+   ;
+
+OLD
+   : 'OLD'
+   ;
+
+OMIT
+   : 'OMIT'
+   ;
+
+ON
+   : 'ON'
+   ;
+
+ONLY
+   : 'ONLY'
+   ;
+
+OPERATOR
+   : 'OPERATOR'
+   ;
+
+OPTION
+   : 'OPTION'
+   ;
+
+OPTIONS
+   : 'OPTIONS'
+   ;
+
+OR
+   : 'OR'
+   ;
+
+ORDER
+   : 'ORDER'
+   ;
+
+ORDINALITY
+   : 'ORDINALITY'
+   ;
+
+OTHERS
+   : 'OTHERS'
+   ;
+
+OUT_P
+   : 'OUT'
+   ;
+
+OUTER_P
+   : 'OUTER'
+   ;
+
+OVER
+   : 'OVER'
+   ;
+
+OVERLAPS
+   : 'OVERLAPS'
+   ;
+
+OVERLAY
+   : 'OVERLAY'
+   ;
+
+OVERRIDING
+   : 'OVERRIDING'
+   ;
+
+OWNED
+   : 'OWNED'
+   ;
+
+OWNER
+   : 'OWNER'
+   ;
+
+PARALLEL
+   : 'PARALLEL'
+   ;
+
+PARAMETER
+   : 'PARAMETER'
+   ;
+
+PARSER
+   : 'PARSER'
+   ;
+
+PARTIAL
+   : 'PARTIAL'
+   ;
+
+PARTITION
+   : 'PARTITION'
+   ;
+
+PASSING
+   : 'PASSING'
+   ;
+
+PASSWORD
+   : 'PASSWORD'
+   ;
+
+PATH
+   : 'PATH'
+   ;
+
+PERIOD
+   : 'PERIOD'
+   ;
+
+PLACING
+   : 'PLACING'
+   ;
+
+PLAN
+   : 'PLAN'
+   ;
+
+PLANS
+   : 'PLANS'
+   ;
+
+POLICY
+   : 'POLICY'
+   ;
+
+POSITION
+   : 'POSITION'
+   ;
+
+PRECEDING
+   : 'PRECEDING'
+   ;
+
+PRECISION
+   : 'PRECISION'
+   ;
+
+PREPARE
+   : 'PREPARE'
+   ;
+
+PREPARED
+   : 'PREPARED'
+   ;
+
+PRESERVE
+   : 'PRESERVE'
+   ;
+
+PRIMARY
+   : 'PRIMARY'
+   ;
+
+PRIOR
+   : 'PRIOR'
+   ;
+
+PRIVILEGES
+   : 'PRIVILEGES'
+   ;
+
+PROCEDURAL
+   : 'PROCEDURAL'
+   ;
+
+PROCEDURE
+   : 'PROCEDURE'
+   ;
+
+PROCEDURES
+   : 'PROCEDURES'
+   ;
+
+PROGRAM
+   : 'PROGRAM'
+   ;
+
+PUBLICATION
+   : 'PUBLICATION'
+   ;
+
+QUOTE
+   : 'QUOTE'
+   ;
+
+QUOTES
+   : 'QUOTES'
+   ;
+
+RANGE
+   : 'RANGE'
+   ;
+
+READ
+   : 'READ'
+   ;
+
+REAL
+   : 'REAL'
+   ;
+
+REASSIGN
+   : 'REASSIGN'
+   ;
+
+RECURSIVE
+   : 'RECURSIVE'
+   ;
+
+REF_P
+   : 'REF'
+   ;
+
+REFERENCES
+   : 'REFERENCES'
+   ;
+
+REFERENCING
+   : 'REFERENCING'
+   ;
+
+REFRESH
+   : 'REFRESH'
+   ;
+
+REINDEX
+   : 'REINDEX'
+   ;
+
+RELATIVE_P
+   : 'RELATIVE'
+   ;
+
+RELEASE
+   : 'RELEASE'
+   ;
+
+RENAME
+   : 'RENAME'
+   ;
+
+REPEATABLE
+   : 'REPEATABLE'
+   ;
+
+REPLACE
+   : 'REPLACE'
+   ;
+
+REPLICA
+   : 'REPLICA'
+   ;
+
+RESET
+   : 'RESET'
+   ;
+
+RESTART
+   : 'RESTART'
+   ;
+
+RESTRICT
+   : 'RESTRICT'
+   ;
+
+RETURN
+   : 'RETURN'
+   ;
+
+RETURNING
+   : 'RETURNING'
+   ;
+
+RETURNS
+   : 'RETURNS'
+   ;
+
+REVOKE
+   : 'REVOKE'
+   ;
+
+RIGHT
+   : 'RIGHT'
+   ;
+
+ROLE
+   : 'ROLE'
+   ;
+
+ROLLBACK
+   : 'ROLLBACK'
+   ;
+
+ROLLUP
+   : 'ROLLUP'
+   ;
+
+ROUTINE
+   : 'ROUTINE'
+   ;
+
+ROUTINES
+   : 'ROUTINES'
+   ;
+
+ROW
+   : 'ROW'
+   ;
+
+ROWS
+   : 'ROWS'
+   ;
+
+RULE
+   : 'RULE'
+   ;
+
+SAVEPOINT
+   : 'SAVEPOINT'
+   ;
+
+SCALAR
+   : 'SCALAR'
+   ;
+
+SCHEMA
+   : 'SCHEMA'
+   ;
+
+SCHEMAS
+   : 'SCHEMAS'
+   ;
+
+SCROLL
+   : 'SCROLL'
+   ;
+
+SEARCH
+   : 'SEARCH'
+   ;
+
+SECOND_P
+   : 'SECOND'
+   ;
+
+SECURITY
+   : 'SECURITY'
+   ;
+
+SELECT
+   : 'SELECT'
+   ;
+
+SEQUENCE
+   : 'SEQUENCE'
+   ;
+
+SEQUENCES
+   : 'SEQUENCES'
+   ;
+
+SERIALIZABLE
+   : 'SERIALIZABLE'
+   ;
+
+SERVER
+   : 'SERVER'
+   ;
+
+SESSION
+   : 'SESSION'
+   ;
+
+SESSION_USER
+   : 'SESSION_USER'
+   ;
+
+SET
+   : 'SET'
+   ;
+
+SETOF
+   : 'SETOF'
+   ;
+
+SETS
+   : 'SETS'
+   ;
+
+SHARE
+   : 'SHARE'
+   ;
+
+SHOW
+   : 'SHOW'
+   ;
+
+SIMILAR
+   : 'SIMILAR'
+   ;
+
+SIMPLE
+   : 'SIMPLE'
+   ;
+
+SKIP_P
+   : 'SKIP'
+   ;
+
+SMALLINT
+   : 'SMALLINT'
+   ;
+
+SNAPSHOT
+   : 'SNAPSHOT'
+   ;
+
+SOME
+   : 'SOME'
+   ;
+
+SOURCE
+   : 'SOURCE'
+   ;
+
+SQL_P
+   : 'SQL'
+   ;
+
+STABLE
+   : 'STABLE'
+   ;
+
+STANDALONE_P
+   : 'STANDALONE'
+   ;
+
+START
+   : 'START'
+   ;
+
+STATEMENT
+   : 'STATEMENT'
+   ;
+
+STATISTICS
+   : 'STATISTICS'
+   ;
+
+STDIN
+   : 'STDIN'
+   ;
+
+STDOUT
+   : 'STDOUT'
+   ;
+
+STORAGE
+   : 'STORAGE'
+   ;
+
+STORED
+   : 'STORED'
+   ;
+
+STRICT_P
+   : 'STRICT'
+   ;
+
+STRING_P
+   : 'STRING'
+   ;
+
+STRIP_P
+   : 'STRIP'
+   ;
+
+SUBSCRIPTION
+   : 'SUBSCRIPTION'
+   ;
+
+SUBSTRING
+   : 'SUBSTRING'
+   ;
+
+SUPPORT
+   : 'SUPPORT'
+   ;
+
+SYMMETRIC
+   : 'SYMMETRIC'
+   ;
+
+SYSID
+   : 'SYSID'
+   ;
+
+SYSTEM_P
+   : 'SYSTEM'
+   ;
+
+SYSTEM_USER
+   : 'SYSTEM_USER'
+   ;
+
+TABLE
+   : 'TABLE'
+   ;
+
+TABLES
+   : 'TABLES'
+   ;
+
+TABLESAMPLE
+   : 'TABLESAMPLE'
+   ;
+
+TABLESPACE
+   : 'TABLESPACE'
+   ;
+
+TARGET
+   : 'TARGET'
+   ;
+
+TEMP
+   : 'TEMP'
+   ;
+
+TEMPLATE
+   : 'TEMPLATE'
+   ;
+
+TEMPORARY
+   : 'TEMPORARY'
+   ;
+
+TEXT_P
+   : 'TEXT'
+   ;
+
+THEN
+   : 'THEN'
+   ;
+
+TIES
+   : 'TIES'
+   ;
+
+TIME
+   : 'TIME'
+   ;
+
+TIMESTAMP
+   : 'TIMESTAMP'
+   ;
+
+TO
+   : 'TO'
+   ;
+
+TRAILING
+   : 'TRAILING'
+   ;
+
+TRANSACTION
+   : 'TRANSACTION'
+   ;
+
+TRANSFORM
+   : 'TRANSFORM'
+   ;
+
+TREAT
+   : 'TREAT'
+   ;
+
+TRIGGER
+   : 'TRIGGER'
+   ;
+
+TRIM
+   : 'TRIM'
+   ;
+
+TRUE_P
+   : 'TRUE'
+   ;
+
+TRUNCATE
+   : 'TRUNCATE'
+   ;
+
+TRUSTED
+   : 'TRUSTED'
+   ;
+
+TYPE_P
+   : 'TYPE'
+   ;
+
+TYPES_P
+   : 'TYPES'
+   ;
+
+UESCAPE
+   : 'UESCAPE'
+   ;
+
+UNBOUNDED
+   : 'UNBOUNDED'
+   ;
+
+UNCOMMITTED
+   : 'UNCOMMITTED'
+   ;
+
+UNCONDITIONAL
+   : 'UNCONDITIONAL'
+   ;
+
+UNENCRYPTED
+   : 'UNENCRYPTED'
+   ;
+
+UNION
+   : 'UNION'
+   ;
+
+UNIQUE
+   : 'UNIQUE'
+   ;
+
+UNKNOWN
+   : 'UNKNOWN'
+   ;
+
+UNLISTEN
+   : 'UNLISTEN'
+   ;
+
+UNLOGGED
+   : 'UNLOGGED'
+   ;
+
+UNTIL
+   : 'UNTIL'
+   ;
+
+UPDATE
+   : 'UPDATE'
+   ;
+
+USER
+   : 'USER'
+   ;
+
+USING
+   : 'USING'
+   ;
+
+VACUUM
+   : 'VACUUM'
+   ;
+
+VALID
+   : 'VALID'
+   ;
+
+VALIDATE
+   : 'VALIDATE'
+   ;
+
+VALIDATOR
+   : 'VALIDATOR'
+   ;
+
+VALUE_P
+   : 'VALUE'
+   ;
+
+VALUES
+   : 'VALUES'
+   ;
+
+VARCHAR
+   : 'VARCHAR'
+   ;
+
+VARIADIC
+   : 'VARIADIC'
+   ;
+
+VARYING
+   : 'VARYING'
+   ;
+
+VERBOSE
+   : 'VERBOSE'
+   ;
+
+VERSION_P
+   : 'VERSION'
+   ;
+
+VIEW
+   : 'VIEW'
+   ;
+
+VIEWS
+   : 'VIEWS'
+   ;
+
+VIRTUAL
+   : 'VIRTUAL'
+   ;
+
+VOLATILE
+   : 'VOLATILE'
+   ;
+
+WHEN
+   : 'WHEN'
+   ;
+
+WHERE
+   : 'WHERE'
+   ;
+
+WHITESPACE_P
+   : 'WHITESPACE'
+   ;
+
+WINDOW
+   : 'WINDOW'
+   ;
+
+WITH
+   : 'WITH'
+   ;
+
+WITHIN
+   : 'WITHIN'
+   ;
+
+WITHOUT
+   : 'WITHOUT'
+   ;
+
+WORK
+   : 'WORK'
+   ;
+
+WRAPPER
+   : 'WRAPPER'
+   ;
+
+WRITE
+   : 'WRITE'
+   ;
+
+XML_P
+   : 'XML'
+   ;
+
+XMLATTRIBUTES
+   : 'XMLATTRIBUTES'
+   ;
+
+XMLCONCAT
+   : 'XMLCONCAT'
+   ;
+
+XMLELEMENT
+   : 'XMLELEMENT'
+   ;
+
+XMLEXISTS
+   : 'XMLEXISTS'
+   ;
+
+XMLFOREST
+   : 'XMLFOREST'
+   ;
+
+XMLNAMESPACES
+   : 'XMLNAMESPACES'
+   ;
+
+XMLPARSE
+   : 'XMLPARSE'
+   ;
+
+XMLPI
+   : 'XMLPI'
+   ;
+
+XMLROOT
+   : 'XMLROOT'
+   ;
+
+XMLSERIALIZE
+   : 'XMLSERIALIZE'
+   ;
+
+XMLTABLE
+   : 'XMLTABLE'
+   ;
+
+YEAR_P
+   : 'YEAR'
+   ;
+
+YES_P
+   : 'YES'
+   ;
+
+ZONE
+   : 'ZONE'
+   ;
+
+// ============================================================================
+// Automatically Renamed Tokens (ANTLR Compatibility)
+// ============================================================================
+// The following tokens were renamed to avoid ANTLR reserved name conflicts:
+//
+//   SKIP → SKIP_P (keyword: 'skip')
+// ============================================================================
+
+// END AUTO-GENERATED KEYWORDS
+// ============================================================================
+
 //
 
 // SPECIAL CHARACTERS (4.1.4)
@@ -235,1661 +2235,35 @@ fragment OperatorCharacterAllowPlusMinusAtEnd
 
    //
 
-ALL
-   : 'ALL'
-   ;
-
-ANALYSE
-   : 'ANALYSE'
-   ;
-
-ANALYZE
-   : 'ANALYZE'
-   ;
-
-AND
-   : 'AND'
-   ;
-
-ANY
-   : 'ANY'
-   ;
-
-ARRAY
-   : 'ARRAY'
-   ;
-
-AS
-   : 'AS'
-   ;
-
-ASC
-   : 'ASC'
-   ;
-
-ASYMMETRIC
-   : 'ASYMMETRIC'
-   ;
-
-BOTH
-   : 'BOTH'
-   ;
-
-CASE
-   : 'CASE'
-   ;
-
-CAST
-   : 'CAST'
-   ;
-
-CHECK
-   : 'CHECK'
-   ;
-
-COLLATE
-   : 'COLLATE'
-   ;
-
-COLUMN
-   : 'COLUMN'
-   ;
-
-CONSTRAINT
-   : 'CONSTRAINT'
-   ;
-
-CREATE
-   : 'CREATE'
-   ;
-
-CURRENT_CATALOG
-   : 'CURRENT_CATALOG'
-   ;
-
-CURRENT_DATE
-   : 'CURRENT_DATE'
-   ;
-
-CURRENT_ROLE
-   : 'CURRENT_ROLE'
-   ;
-
-CURRENT_TIME
-   : 'CURRENT_TIME'
-   ;
-
-CURRENT_TIMESTAMP
-   : 'CURRENT_TIMESTAMP'
-   ;
-
-CURRENT_USER
-   : 'CURRENT_USER'
-   ;
-
-DEFAULT
-   : 'DEFAULT'
-   ;
-
-DEFERRABLE
-   : 'DEFERRABLE'
-   ;
-
-DESC
-   : 'DESC'
-   ;
-
-DISTINCT
-   : 'DISTINCT'
-   ;
-
-DO
-   : 'DO'
-   ;
-
-ELSE
-   : 'ELSE'
-   ;
-
-EXCEPT
-   : 'EXCEPT'
-   ;
-
-FALSE_P
-   : 'FALSE'
-   ;
-
-FETCH
-   : 'FETCH'
-   ;
-
-FOR
-   : 'FOR'
-   ;
-
-FOREIGN
-   : 'FOREIGN'
-   ;
-
-FROM
-   : 'FROM'
-   ;
-
-GRANT
-   : 'GRANT'
-   ;
-
-GROUP_P
-   : 'GROUP'
-   ;
-
-HAVING
-   : 'HAVING'
-   ;
-
-IN_P
-   : 'IN'
-   ;
-
-INITIALLY
-   : 'INITIALLY'
-   ;
-
-INTERSECT
-   : 'INTERSECT'
-   ;
-
-INTO
-   : 'INTO'
-   ;
-
-LATERAL_P
-   : 'LATERAL'
-   ;
-
-LEADING
-   : 'LEADING'
-   ;
-
-LIMIT
-   : 'LIMIT'
-   ;
-
-LOCALTIME
-   : 'LOCALTIME'
-   ;
-
-LOCALTIMESTAMP
-   : 'LOCALTIMESTAMP'
-   ;
-
-NOT
-   : 'NOT'
-   ;
-
-NULL_P
-   : 'NULL'
-   ;
-
-OFFSET
-   : 'OFFSET'
-   ;
-
-ON
-   : 'ON'
-   ;
-
-ONLY
-   : 'ONLY'
-   ;
-
-OR
-   : 'OR'
-   ;
-
-ORDER
-   : 'ORDER'
-   ;
-
-PLACING
-   : 'PLACING'
-   ;
-
-PRIMARY
-   : 'PRIMARY'
-   ;
-
-REFERENCES
-   : 'REFERENCES'
-   ;
-
-RETURNING
-   : 'RETURNING'
-   ;
-
-SELECT
-   : 'SELECT'
-   ;
-
-SESSION_USER
-   : 'SESSION_USER'
-   ;
-
-SOME
-   : 'SOME'
-   ;
-
-SYMMETRIC
-   : 'SYMMETRIC'
-   ;
-
-TABLE
-   : 'TABLE'
-   ;
-
-THEN
-   : 'THEN'
-   ;
-
-TO
-   : 'TO'
-   ;
-
-TRAILING
-   : 'TRAILING'
-   ;
-
-TRUE_P
-   : 'TRUE'
-   ;
-
-UNION
-   : 'UNION'
-   ;
-
-UNIQUE
-   : 'UNIQUE'
-   ;
-
-USER
-   : 'USER'
-   ;
-
-USING
-   : 'USING'
-   ;
-
-VARIADIC
-   : 'VARIADIC'
-   ;
-
-WHEN
-   : 'WHEN'
-   ;
-
-WHERE
-   : 'WHERE'
-   ;
-
-WINDOW
-   : 'WINDOW'
-   ;
-
-WITH
-   : 'WITH'
-   ;
-
-JSON_OBJECT
-   : 'JSON_OBJECT'
-   ;
-
-JSON_ARRAY
-   : 'JSON_ARRAY'
-   ;
-
-JSON
-   : 'JSON'
-   ;
-
-JSON_SCALAR
-   : 'JSON_SCALAR'
-   ;
-
-JSON_SERIALIZE
-   : 'JSON_SERIALIZE'
-   ;
-
-MERGE_ACTION
-   : 'MERGE_ACTION'
-   ;
-
-JSON_QUERY
-   : 'JSON_QUERY'
-   ;
-
-JSON_EXISTS
-   : 'JSON_EXISTS'
-   ;
-
-JSON_VALUE
-   : 'JSON_VALUE'
-   ;
-
-EMPTY
-   : 'EMPTY'
-   ;
-
-KEEP
-   : 'KEEP'
-   ;
-
-OMIT
-   : 'OMIT'
-   ;
-
-SCALAR
-   : 'SCALAR'
-   ;
-
-STRING
-   : 'STRING'
-   ;
-
-CONDITIONAL
-   : 'CONDITIONAL'
-   ;
-
-UNCONDITIONAL
-   : 'UNCONDITIONAL'
-   ;
-
-KEYS
-   : 'KEYS'
-   ;
-
-ABSENT
-   : 'ABSENT'
-   ;
-
-QUOTES
-   : 'QUOTES'
-   ;
    //
 
    // reserved keywords (can be function or type)
 
    //
 
-AUTHORIZATION
-   : 'AUTHORIZATION'
-   ;
-
-BINARY
-   : 'BINARY'
-   ;
-
-COLLATION
-   : 'COLLATION'
-   ;
-
-CONCURRENTLY
-   : 'CONCURRENTLY'
-   ;
-
-CROSS
-   : 'CROSS'
-   ;
-
-CURRENT_SCHEMA
-   : 'CURRENT_SCHEMA'
-   ;
-
-FREEZE
-   : 'FREEZE'
-   ;
-
-FULL
-   : 'FULL'
-   ;
-
-ILIKE
-   : 'ILIKE'
-   ;
-
-INNER_P
-   : 'INNER'
-   ;
-
-IS
-   : 'IS'
-   ;
-
-ISNULL
-   : 'ISNULL'
-   ;
-
-JOIN
-   : 'JOIN'
-   ;
-
-LEFT
-   : 'LEFT'
-   ;
-
-LIKE
-   : 'LIKE'
-   ;
-
-NATURAL
-   : 'NATURAL'
-   ;
-
-NOTNULL
-   : 'NOTNULL'
-   ;
-
-OUTER_P
-   : 'OUTER'
-   ;
-
-OVER
-   : 'OVER'
-   ;
-
-OVERLAPS
-   : 'OVERLAPS'
-   ;
-
-RIGHT
-   : 'RIGHT'
-   ;
-
-SIMILAR
-   : 'SIMILAR'
-   ;
-
-VERBOSE
-   : 'VERBOSE'
-   ;
    //
 
    // non-reserved keywords
 
    //
 
-ABORT_P
-   : 'ABORT'
-   ;
-
-ABSOLUTE_P
-   : 'ABSOLUTE'
-   ;
-
-ACCESS
-   : 'ACCESS'
-   ;
-
-ACTION
-   : 'ACTION'
-   ;
-
-ADD_P
-   : 'ADD'
-   ;
-
-ADMIN
-   : 'ADMIN'
-   ;
-
-AFTER
-   : 'AFTER'
-   ;
-
-AGGREGATE
-   : 'AGGREGATE'
-   ;
-
-ALSO
-   : 'ALSO'
-   ;
-
-ALTER
-   : 'ALTER'
-   ;
-
-ALWAYS
-   : 'ALWAYS'
-   ;
-
-ASSERTION
-   : 'ASSERTION'
-   ;
-
-ASSIGNMENT
-   : 'ASSIGNMENT'
-   ;
-
-AT
-   : 'AT'
-   ;
-
-ATTRIBUTE
-   : 'ATTRIBUTE'
-   ;
-
-BACKWARD
-   : 'BACKWARD'
-   ;
-
-BEFORE
-   : 'BEFORE'
-   ;
-
-BEGIN_P
-   : 'BEGIN'
-   ;
-
-BY
-   : 'BY'
-   ;
-
-CACHE
-   : 'CACHE'
-   ;
-
-CALLED
-   : 'CALLED'
-   ;
-
-CASCADE
-   : 'CASCADE'
-   ;
-
-CASCADED
-   : 'CASCADED'
-   ;
-
-CATALOG
-   : 'CATALOG'
-   ;
-
-CHAIN
-   : 'CHAIN'
-   ;
-
-CHARACTERISTICS
-   : 'CHARACTERISTICS'
-   ;
-
-CHECKPOINT
-   : 'CHECKPOINT'
-   ;
-
-CLASS
-   : 'CLASS'
-   ;
-
-CLOSE
-   : 'CLOSE'
-   ;
-
-CLUSTER
-   : 'CLUSTER'
-   ;
-
-COMMENT
-   : 'COMMENT'
-   ;
-
-COMMENTS
-   : 'COMMENTS'
-   ;
-
-COMMIT
-   : 'COMMIT'
-   ;
-
-COMMITTED
-   : 'COMMITTED'
-   ;
-
-CONFIGURATION
-   : 'CONFIGURATION'
-   ;
-
-CONNECTION
-   : 'CONNECTION'
-   ;
-
-CONSTRAINTS
-   : 'CONSTRAINTS'
-   ;
-
-CONTENT_P
-   : 'CONTENT'
-   ;
-
-CONTINUE_P
-   : 'CONTINUE'
-   ;
-
-CONVERSION_P
-   : 'CONVERSION'
-   ;
-
-COPY
-   : 'COPY'
-   ;
-
-COST
-   : 'COST'
-   ;
-
-CSV
-   : 'CSV'
-   ;
-
-CURSOR
-   : 'CURSOR'
-   ;
-
-CYCLE
-   : 'CYCLE'
-   ;
-
-DATA_P
-   : 'DATA'
-   ;
-
-DATABASE
-   : 'DATABASE'
-   ;
-
-DAY_P
-   : 'DAY'
-   ;
-
-DEALLOCATE
-   : 'DEALLOCATE'
-   ;
-
-DECLARE
-   : 'DECLARE'
-   ;
-
-DEFAULTS
-   : 'DEFAULTS'
-   ;
-
-DEFERRED
-   : 'DEFERRED'
-   ;
-
-DEFINER
-   : 'DEFINER'
-   ;
-
-DELETE_P
-   : 'DELETE'
-   ;
-
-DELIMITER
-   : 'DELIMITER'
-   ;
-
-DELIMITERS
-   : 'DELIMITERS'
-   ;
-
-DICTIONARY
-   : 'DICTIONARY'
-   ;
-
-DISABLE_P
-   : 'DISABLE'
-   ;
-
-DISCARD
-   : 'DISCARD'
-   ;
-
-DOCUMENT_P
-   : 'DOCUMENT'
-   ;
-
-DOMAIN_P
-   : 'DOMAIN'
-   ;
-
-DOUBLE_P
-   : 'DOUBLE'
-   ;
-
-DROP
-   : 'DROP'
-   ;
-
-EACH
-   : 'EACH'
-   ;
-
-ENABLE_P
-   : 'ENABLE'
-   ;
-
-ENCODING
-   : 'ENCODING'
-   ;
-
-ENCRYPTED
-   : 'ENCRYPTED'
-   ;
-
-ENUM_P
-   : 'ENUM'
-   ;
-
-ESCAPE
-   : 'ESCAPE'
-   ;
-
-EVENT
-   : 'EVENT'
-   ;
-
-EXCLUDE
-   : 'EXCLUDE'
-   ;
-
-EXCLUDING
-   : 'EXCLUDING'
-   ;
-
-EXCLUSIVE
-   : 'EXCLUSIVE'
-   ;
-
-EXECUTE
-   : 'EXECUTE'
-   ;
-
-EXPLAIN
-   : 'EXPLAIN'
-   ;
-
-EXTENSION
-   : 'EXTENSION'
-   ;
-
-EXTERNAL
-   : 'EXTERNAL'
-   ;
-
-FAMILY
-   : 'FAMILY'
-   ;
-
-FIRST_P
-   : 'FIRST'
-   ;
-
-FOLLOWING
-   : 'FOLLOWING'
-   ;
-
-FORCE
-   : 'FORCE'
-   ;
-
-FORWARD
-   : 'FORWARD'
-   ;
-
-FUNCTION
-   : 'FUNCTION'
-   ;
-
-FUNCTIONS
-   : 'FUNCTIONS'
-   ;
-
-GLOBAL
-   : 'GLOBAL'
-   ;
-
-GRANTED
-   : 'GRANTED'
-   ;
-
-HANDLER
-   : 'HANDLER'
-   ;
-
-HEADER_P
-   : 'HEADER'
-   ;
-
-HOLD
-   : 'HOLD'
-   ;
-
-HOUR_P
-   : 'HOUR'
-   ;
-
-IDENTITY_P
-   : 'IDENTITY'
-   ;
-
-IF_P
-   : 'IF'
-   ;
-
-IMMEDIATE
-   : 'IMMEDIATE'
-   ;
-
-IMMUTABLE
-   : 'IMMUTABLE'
-   ;
-
-IMPLICIT_P
-   : 'IMPLICIT'
-   ;
-
-INCLUDING
-   : 'INCLUDING'
-   ;
-
-INCREMENT
-   : 'INCREMENT'
-   ;
-
-INDEX
-   : 'INDEX'
-   ;
-
-INDEXES
-   : 'INDEXES'
-   ;
-
-INHERIT
-   : 'INHERIT'
-   ;
-
-INHERITS
-   : 'INHERITS'
-   ;
-
-INLINE_P
-   : 'INLINE'
-   ;
-
-INSENSITIVE
-   : 'INSENSITIVE'
-   ;
-
-INSERT
-   : 'INSERT'
-   ;
-
-INSTEAD
-   : 'INSTEAD'
-   ;
-
-INVOKER
-   : 'INVOKER'
-   ;
-
-ISOLATION
-   : 'ISOLATION'
-   ;
-
-KEY
-   : 'KEY'
-   ;
-
-LABEL
-   : 'LABEL'
-   ;
-
-LANGUAGE
-   : 'LANGUAGE'
-   ;
-
-LARGE_P
-   : 'LARGE'
-   ;
-
-LAST_P
-   : 'LAST'
-   ;
    //LC_COLLATE			: 'LC'_'COLLATE;
 
    //LC_CTYPE			: 'LC'_'CTYPE;
-
-LEAKPROOF
-   : 'LEAKPROOF'
-   ;
-
-LEVEL
-   : 'LEVEL'
-   ;
-
-LISTEN
-   : 'LISTEN'
-   ;
-
-LOAD
-   : 'LOAD'
-   ;
-
-LOCAL
-   : 'LOCAL'
-   ;
-
-LOCATION
-   : 'LOCATION'
-   ;
-
-LOCK_P
-   : 'LOCK'
-   ;
-
-MAPPING
-   : 'MAPPING'
-   ;
-
-MATCH
-   : 'MATCH'
-   ;
-
-MATCHED
-   : 'MATCHED'
-   ;
-
-MATERIALIZED
-   : 'MATERIALIZED'
-   ;
-
-MAXVALUE
-   : 'MAXVALUE'
-   ;
-
-MERGE
-   : 'MERGE'
-   ;
-
-MINUTE_P
-   : 'MINUTE'
-   ;
-
-MINVALUE
-   : 'MINVALUE'
-   ;
-
-MODE
-   : 'MODE'
-   ;
-
-MONTH_P
-   : 'MONTH'
-   ;
-
-MOVE
-   : 'MOVE'
-   ;
-
-NAME_P
-   : 'NAME'
-   ;
-
-NAMES
-   : 'NAMES'
-   ;
-
-NEXT
-   : 'NEXT'
-   ;
-
-NO
-   : 'NO'
-   ;
-
-NOTHING
-   : 'NOTHING'
-   ;
-
-NOTIFY
-   : 'NOTIFY'
-   ;
-
-NOWAIT
-   : 'NOWAIT'
-   ;
-
-NULLS_P
-   : 'NULLS'
-   ;
-
-OBJECT_P
-   : 'OBJECT'
-   ;
-
-OF
-   : 'OF'
-   ;
-
-OFF
-   : 'OFF'
-   ;
-
-OIDS
-   : 'OIDS'
-   ;
-
-OPERATOR
-   : 'OPERATOR'
-   ;
-
-OPTION
-   : 'OPTION'
-   ;
-
-OPTIONS
-   : 'OPTIONS'
-   ;
-
-OWNED
-   : 'OWNED'
-   ;
-
-OWNER
-   : 'OWNER'
-   ;
-
-PARSER
-   : 'PARSER'
-   ;
-
-PARTIAL
-   : 'PARTIAL'
-   ;
-
-PARTITION
-   : 'PARTITION'
-   ;
-
-PASSING
-   : 'PASSING'
-   ;
-
-PASSWORD
-   : 'PASSWORD'
-   ;
-
-PLANS
-   : 'PLANS'
-   ;
-
-PRECEDING
-   : 'PRECEDING'
-   ;
-
-PREPARE
-   : 'PREPARE'
-   ;
-
-PREPARED
-   : 'PREPARED'
-   ;
-
-PRESERVE
-   : 'PRESERVE'
-   ;
-
-PRIOR
-   : 'PRIOR'
-   ;
-
-PRIVILEGES
-   : 'PRIVILEGES'
-   ;
-
-PROCEDURAL
-   : 'PROCEDURAL'
-   ;
-
-PROCEDURE
-   : 'PROCEDURE'
-   ;
-
-PROGRAM
-   : 'PROGRAM'
-   ;
-
-QUOTE
-   : 'QUOTE'
-   ;
-
-RANGE
-   : 'RANGE'
-   ;
-
-READ
-   : 'READ'
-   ;
-
-REASSIGN
-   : 'REASSIGN'
-   ;
 
 RECHECK
    : 'RECHECK'
    ;
 
-RECURSIVE
-   : 'RECURSIVE'
-   ;
-
-REF
-   : 'REF'
-   ;
-
-REFRESH
-   : 'REFRESH'
-   ;
-
-REINDEX
-   : 'REINDEX'
-   ;
-
-RELATIVE_P
-   : 'RELATIVE'
-   ;
-
-RELEASE
-   : 'RELEASE'
-   ;
-
-RENAME
-   : 'RENAME'
-   ;
-
-REPEATABLE
-   : 'REPEATABLE'
-   ;
-
-REPLACE
-   : 'REPLACE'
-   ;
-
-REPLICA
-   : 'REPLICA'
-   ;
-
-RESET
-   : 'RESET'
-   ;
-
-RESTART
-   : 'RESTART'
-   ;
-
-RESTRICT
-   : 'RESTRICT'
-   ;
-
-RETURNS
-   : 'RETURNS'
-   ;
-
-REVOKE
-   : 'REVOKE'
-   ;
-
-ROLE
-   : 'ROLE'
-   ;
-
-ROLLBACK
-   : 'ROLLBACK'
-   ;
-
-ROWS
-   : 'ROWS'
-   ;
-
-RULE
-   : 'RULE'
-   ;
-
-SAVEPOINT
-   : 'SAVEPOINT'
-   ;
-
-SCHEMA
-   : 'SCHEMA'
-   ;
-
-SCROLL
-   : 'SCROLL'
-   ;
-
-SEARCH
-   : 'SEARCH'
-   ;
-
-SECOND_P
-   : 'SECOND'
-   ;
-
-SECURITY
-   : 'SECURITY'
-   ;
-
-SEQUENCE
-   : 'SEQUENCE'
-   ;
-
-SEQUENCES
-   : 'SEQUENCES'
-   ;
-
-SERIALIZABLE
-   : 'SERIALIZABLE'
-   ;
-
-SERVER
-   : 'SERVER'
-   ;
-
-SESSION
-   : 'SESSION'
-   ;
-
-SET
-   : 'SET'
-   ;
-
-SHARE
-   : 'SHARE'
-   ;
-
-SHOW
-   : 'SHOW'
-   ;
-
-SIMPLE
-   : 'SIMPLE'
-   ;
-
-SNAPSHOT
-   : 'SNAPSHOT'
-   ;
-
-STABLE
-   : 'STABLE'
-   ;
-
-STANDALONE_P
-   : 'STANDALONE'
-   ;
-
-START
-   : 'START'
-   ;
-
-STATEMENT
-   : 'STATEMENT'
-   ;
-
-STATISTICS
-   : 'STATISTICS'
-   ;
-
-STDIN
-   : 'STDIN'
-   ;
-
-STDOUT
-   : 'STDOUT'
-   ;
-
-STORAGE
-   : 'STORAGE'
-   ;
-
-STRICT_P
-   : 'STRICT'
-   ;
-
-STRIP_P
-   : 'STRIP'
-   ;
-
-SYSID
-   : 'SYSID'
-   ;
-
-SYSTEM_P
-   : 'SYSTEM'
-   ;
-
-TABLES
-   : 'TABLES'
-   ;
-
-TABLESPACE
-   : 'TABLESPACE'
-   ;
-
-TEMP
-   : 'TEMP'
-   ;
-
-TEMPLATE
-   : 'TEMPLATE'
-   ;
-
-TEMPORARY
-   : 'TEMPORARY'
-   ;
-
-TEXT_P
-   : 'TEXT'
-   ;
-
-TRANSACTION
-   : 'TRANSACTION'
-   ;
-
-TRIGGER
-   : 'TRIGGER'
-   ;
-
-TRUNCATE
-   : 'TRUNCATE'
-   ;
-
-TRUSTED
-   : 'TRUSTED'
-   ;
-
-TYPE_P
-   : 'TYPE'
-   ;
-
-TYPES_P
-   : 'TYPES'
-   ;
-
-UNBOUNDED
-   : 'UNBOUNDED'
-   ;
-
-UNCOMMITTED
-   : 'UNCOMMITTED'
-   ;
-
-UNENCRYPTED
-   : 'UNENCRYPTED'
-   ;
-
-UNKNOWN
-   : 'UNKNOWN'
-   ;
-
-UNLISTEN
-   : 'UNLISTEN'
-   ;
-
-UNLOGGED
-   : 'UNLOGGED'
-   ;
-
-UNTIL
-   : 'UNTIL'
-   ;
-
-UPDATE
-   : 'UPDATE'
-   ;
-
-VACUUM
-   : 'VACUUM'
-   ;
-
-VALID
-   : 'VALID'
-   ;
-
-VALIDATE
-   : 'VALIDATE'
-   ;
-
-VALIDATOR
-   : 'VALIDATOR'
-   ;
    //VALUE				: 'VALUE;
 
-VARYING
-   : 'VARYING'
-   ;
-
-VERSION_P
-   : 'VERSION'
-   ;
-
-VIEW
-   : 'VIEW'
-   ;
-
-VOLATILE
-   : 'VOLATILE'
-   ;
-
-WHITESPACE_P
-   : 'WHITESPACE'
-   ;
-
-WITHOUT
-   : 'WITHOUT'
-   ;
-
-WORK
-   : 'WORK'
-   ;
-
-WRAPPER
-   : 'WRAPPER'
-   ;
-
-WRITE
-   : 'WRITE'
-   ;
-
-XML_P
-   : 'XML'
-   ;
-
-YEAR_P
-   : 'YEAR'
-   ;
-
-YES_P
-   : 'YES'
-   ;
-
-ZONE
-   : 'ZONE'
-   ;
    //
 
    // non-reserved keywords (can not be function or type)
 
    //
    
-ATOMIC_P
-   : 'ATOMIC'
-   ;
-
-BETWEEN
-   : 'BETWEEN'
-   ;
-
-BIGINT
-   : 'BIGINT'
-   ;
-
-BIT
-   : 'BIT'
-   ;
-
-BOOLEAN_P
-   : 'BOOLEAN'
-   ;
-
-CHAR_P
-   : 'CHAR'
-   ;
-
-CHARACTER
-   : 'CHARACTER'
-   ;
-
-COALESCE
-   : 'COALESCE'
-   ;
-
-DEC
-   : 'DEC'
-   ;
-
-DECIMAL_P
-   : 'DECIMAL'
-   ;
-
-EXISTS
-   : 'EXISTS'
-   ;
-
-EXTRACT
-   : 'EXTRACT'
-   ;
-
-FLOAT_P
-   : 'FLOAT'
-   ;
-
-GREATEST
-   : 'GREATEST'
-   ;
-
-INOUT
-   : 'INOUT'
-   ;
-
-INT_P
-   : 'INT'
-   ;
-
-INTEGER
-   : 'INTEGER'
-   ;
-
-INTERVAL
-   : 'INTERVAL'
-   ;
-
-LEAST
-   : 'LEAST'
-   ;
-
-NATIONAL
-   : 'NATIONAL'
-   ;
-
-NCHAR
-   : 'NCHAR'
-   ;
-
-NONE
-   : 'NONE'
-   ;
-
-NULLIF
-   : 'NULLIF'
-   ;
-
-NUMERIC
-   : 'NUMERIC'
-   ;
-
-OVERLAY
-   : 'OVERLAY'
-   ;
    
-PARAMETER
-   : 'PARAMETER'
-   ;
-
-POSITION
-   : 'POSITION'
-   ;
-
-PRECISION
-   : 'PRECISION'
-   ;
-
-REAL
-   : 'REAL'
-   ;
-
-ROW
-   : 'ROW'
-   ;
-
-SETOF
-   : 'SETOF'
-   ;
-
-SMALLINT
-   : 'SMALLINT'
-   ;
-
-SUBSTRING
-   : 'SUBSTRING'
-   ;
-
-TIME
-   : 'TIME'
-   ;
-
-TIMESTAMP
-   : 'TIMESTAMP'
-   ;
-
-TREAT
-   : 'TREAT'
-   ;
-
-TRIM
-   : 'TRIM'
-   ;
-
-VALUES
-   : 'VALUES'
-   ;
-
-VARCHAR
-   : 'VARCHAR'
-   ;
-
-XMLATTRIBUTES
-   : 'XMLATTRIBUTES'
-   ;
-
 XMLCOMMENT
    : 'XMLCOMMENT'
    ;
@@ -1918,265 +2292,10 @@ XPATH_EXISTS
    : 'XPATH_EXISTS'
    ;
 
-XMLCONCAT
-   : 'XMLCONCAT'
-   ;
-
-XMLELEMENT
-   : 'XMLELEMENT'
-   ;
-
-XMLEXISTS
-   : 'XMLEXISTS'
-   ;
-
-XMLFOREST
-   : 'XMLFOREST'
-   ;
-
-XMLPARSE
-   : 'XMLPARSE'
-   ;
-
-XMLPI
-   : 'XMLPI'
-   ;
-
-XMLROOT
-   : 'XMLROOT'
-   ;
-
-XMLSERIALIZE
-   : 'XMLSERIALIZE'
-   ;
    //MISSED
-
-CALL
-   : 'CALL'
-   ;
-
-CURRENT_P
-   : 'CURRENT'
-   ;
-
-ATTACH
-   : 'ATTACH'
-   ;
-
-DETACH
-   : 'DETACH'
-   ;
-
-EXPRESSION
-   : 'EXPRESSION'
-   ;
-
-GENERATED
-   : 'GENERATED'
-   ;
-
-LOGGED
-   : 'LOGGED'
-   ;
-
-STORED
-   : 'STORED'
-   ;
-
-INCLUDE
-   : 'INCLUDE'
-   ;
-
-ROUTINE
-   : 'ROUTINE'
-   ;
-
-TRANSFORM
-   : 'TRANSFORM'
-   ;
-
-IMPORT_P
-   : 'IMPORT'
-   ;
-
-POLICY
-   : 'POLICY'
-   ;
-
-METHOD
-   : 'METHOD'
-   ;
-
-REFERENCING
-   : 'REFERENCING'
-   ;
-
-NEW
-   : 'NEW'
-   ;
-
-OLD
-   : 'OLD'
-   ;
-
-VALUE_P
-   : 'VALUE'
-   ;
-
-SUBSCRIPTION
-   : 'SUBSCRIPTION'
-   ;
-
-PUBLICATION
-   : 'PUBLICATION'
-   ;
-
-OUT_P
-   : 'OUT'
-   ;
-
-END_P
-   : 'END'
-   ;
-
-ROUTINES
-   : 'ROUTINES'
-   ;
-
-SCHEMAS
-   : 'SCHEMAS'
-   ;
-
-PROCEDURES
-   : 'PROCEDURES'
-   ;
-
-INPUT_P
-   : 'INPUT'
-   ;
-
-SUPPORT
-   : 'SUPPORT'
-   ;
-
-PARALLEL
-   : 'PARALLEL'
-   ;
-
-SQL_P
-   : 'SQL'
-   ;
-
-DEPENDS
-   : 'DEPENDS'
-   ;
-
-OVERRIDING
-   : 'OVERRIDING'
-   ;
-
-CONFLICT
-   : 'CONFLICT'
-   ;
-
-SKIP_P
-   : 'SKIP'
-   ;
-
-LOCKED
-   : 'LOCKED'
-   ;
-
-TIES
-   : 'TIES'
-   ;
-
-ROLLUP
-   : 'ROLLUP'
-   ;
-
-CUBE
-   : 'CUBE'
-   ;
-
-GROUPING
-   : 'GROUPING'
-   ;
-
-SETS
-   : 'SETS'
-   ;
-
-TABLESAMPLE
-   : 'TABLESAMPLE'
-   ;
-
-ORDINALITY
-   : 'ORDINALITY'
-   ;
-
-XMLTABLE
-   : 'XMLTABLE'
-   ;
-
-COLUMNS
-   : 'COLUMNS'
-   ;
-
-XMLNAMESPACES
-   : 'XMLNAMESPACES'
-   ;
 
 ROWTYPE
    : 'ROWTYPE'
-   ;
-
-NORMALIZED
-   : 'NORMALIZED'
-   ;
-
-WITHIN
-   : 'WITHIN'
-   ;
-
-FILTER
-   : 'FILTER'
-   ;
-
-GROUPS
-   : 'GROUPS'
-   ;
-
-OTHERS
-   : 'OTHERS'
-   ;
-
-NFC
-   : 'NFC'
-   ;
-
-NFD
-   : 'NFD'
-   ;
-
-NFKC
-   : 'NFKC'
-   ;
-
-NFKD
-   : 'NFKD'
-   ;
-
-UESCAPE
-   : 'UESCAPE'
-   ;
-
-VIEWS
-   : 'VIEWS'
-   ;
-
-NORMALIZE
-   : 'NORMALIZE'
    ;
 
 DUMP
@@ -2189,10 +2308,6 @@ PRINT_STRICT_PARAMS
 
 VARIABLE_CONFLICT
    : 'VARIABLE_CONFLICT'
-   ;
-
-ERROR
-   : 'ERROR'
    ;
 
 USE_VARIABLE
@@ -2251,10 +2366,6 @@ EXIT
    : 'EXIT'
    ;
 
-RETURN
-   : 'RETURN'
-   ;
-
 QUERY
    : 'QUERY'
    ;
@@ -2301,499 +2412,6 @@ LOOP
 
 OPEN
    : 'OPEN'
-   ;
-   //
-
-   // IDENTIFIERS (4.1.1)
-
-   //
-
-ABS
-   : 'ABS'
-   ;
-
-CBRT
-   : 'CBRT'
-   ;
-
-CEIL
-   : 'CEIL'
-   ;
-
-CEILING
-   : 'CEILING'
-   ;
-
-DEGREES
-   : 'DEGREES'
-   ;
-
-DIV
-   : 'DIV'
-   ;
-
-EXP
-   : 'EXP'
-   ;
-
-FACTORIAL
-   : 'FACTORIAL'
-   ;
-
-FLOOR
-   : 'FLOOR'
-   ;
-
-GCD
-   : 'GCD'
-   ;
-
-LCM
-   : 'LCM'
-   ;
-
-LN
-   : 'LN'
-   ;
-
-LOG10
-   : 'LOG10'
-   ;
-
-MIN_SCALE
-   : 'MIN_SCALE'
-   ;
-
-MOD
-   : 'MOD'
-   ;
-
-PI
-   : 'PI'
-   ;
-
-POWER
-   : 'POWER'
-   ;
-
-RADIANS
-   : 'RADIANS'
-   ;
-
-ROUND
-   : 'ROUND'
-   ;
-
-SCALE
-   : 'SCALE'
-   ;
-
-SIGN
-   : 'SIGN'
-   ;
-
-SQRT
-   : 'SQRT'
-   ;
-
-TRIM_SCALE
-   : 'TRIM_SCALE'
-   ;
-
-TRUNC
-   : 'TRUNC'
-   ;
-
-WIDTH_BUCKET
-   : 'WIDTH_BUCKET'
-   ;
-
-RANDOM
-   : 'RANDOM'
-   ;
-
-SETSEED
-   : 'SETSEED'
-   ;
-
-ACOS
-   : 'ACOS'
-   ;
-
-ACOSD
-   : 'ACOSD'
-   ;
-
-ASIN
-   : 'ASIN'
-   ;
-
-ASIND
-   : 'ASIND'
-   ;
-
-ATAN
-   : 'ATAN'
-   ;
-
-ATAND
-   : 'ATAND'
-   ;
-
-ATAN2
-   : 'ATAN2'
-   ;
-
-ATAN2D
-   : 'ATAN2D'
-   ;
-
-COS
-   : 'COS'
-   ;
-
-COSD
-   : 'COSD'
-   ;
-
-COT
-   : 'COT'
-   ;
-
-COTD
-   : 'COTD'
-   ;
-
-SIN
-   : 'SIN'
-   ;
-
-SIND
-   : 'SIND'
-   ;
-
-TAN
-   : 'TAN'
-   ;
-
-TAND
-   : 'TAND'
-   ;
-
-SINH
-   : 'SINH'
-   ;
-
-COSH
-   : 'COSH'
-   ;
-
-TANH
-   : 'TANH'
-   ;
-
-ASINH
-   : 'ASINH'
-   ;
-
-ACOSH
-   : 'ACOSH'
-   ;
-
-ATANH
-   : 'ATANH'
-   ;
-
-BIT_LENGTH
-   : 'BIT_LENGTH'
-   ;
-
-CHAR_LENGTH
-   : 'CHAR_LENGTH'
-   ;
-
-CHARACTER_LENGTH
-   : 'CHARACTER_LENGTH'
-   ;
-
-LOWER
-   : 'LOWER'
-   ;
-
-OCTET_LENGTH
-   : 'OCTET_LENGTH'
-   ;
-
-UPPER
-   : 'UPPER'
-   ;
-
-ASCII
-   : 'ASCII'
-   ;
-
-BTRIM
-   : 'BTRIM'
-   ;
-
-CHR
-   : 'CHR'
-   ;
-
-CONCAT
-   : 'CONCAT'
-   ;
-
-CONCAT_WS
-   : 'CONCAT_WS'
-   ;
-
-FORMAT
-   : 'FORMAT'
-   ;
-
-INITCAP
-   : 'INITCAP'
-   ;
-
-LENGTH
-   : 'LENGTH'
-   ;
-
-LPAD
-   : 'LPAD'
-   ;
-
-LTRIM
-   : 'LTRIM'
-   ;
-
-MD5
-   : 'MD5'
-   ;
-
-PARSE_IDENT
-   : 'PARSE_IDENT'
-   ;
-
-PG_CLIENT_ENCODING
-   : 'PG_CLIENT_ENCODING'
-   ;
-
-QUOTE_IDENT
-   : 'QUOTE_IDENT'
-   ;
-
-QUOTE_LITERAL
-   : 'QUOTE_LITERAL'
-   ;
-
-QUOTE_NULLABLE
-   : 'QUOTE_NULLABLE'
-   ;
-
-REGEXP_COUNT
-   : 'REGEXP_COUNT'
-   ;
-
-REGEXP_INSTR
-   : 'REGEXP_INSTR'
-   ;
-
-REGEXP_LIKE
-   : 'REGEXP_LIKE'
-   ;
-
-REGEXP_MATCH
-   : 'REGEXP_MATCH'
-   ;
-
-REGEXP_MATCHES
-   : 'REGEXP_MATCHES'
-   ;
-
-REGEXP_REPLACE
-   : 'REGEXP_REPLACE'
-   ;
-
-REGEXP_SPLIT_TO_ARRAY
-   : 'REGEXP_SPLIT_TO_ARRAY'
-   ;
-
-REGEXP_SPLIT_TO_TABLE
-   : 'REGEXP_SPLIT_TO_TABLE'
-   ;
-
-REGEXP_SUBSTR
-   : 'REGEXP_SUBSTR'
-   ;
-
-REPEAT
-   : 'REPEAT'
-   ;
-
-RPAD
-   : 'RPAD'
-   ;
-
-RTRIM
-   : 'RTRIM'
-   ;
-
-SPLIT_PART
-   : 'SPLIT_PART'
-   ;
-
-STARTS_WITH
-   : 'STARTS_WITH'
-   ;
-
-STRING_TO_ARRAY
-   : 'STRING_TO_ARRAY'
-   ;
-
-STRING_TO_TABLE
-   : 'STRING_TO_TABLE'
-   ;
-
-STRPOS
-   : 'STRPOS'
-   ;
-
-SUBSTR
-   : 'SUBSTR'
-   ;
-
-TO_ASCII
-   : 'TO_ASCII'
-   ;
-
-TO_HEX
-   : 'TO_HEX'
-   ;
-
-TRANSLATE
-   : 'TRANSLATE'
-   ;
-
-UNISTR
-   : 'UNISTR'
-   ;
-
-AGE
-   : 'AGE'
-   ;
-
-CLOCK_TIMESTAMP
-   : 'CLOCK_TIMESTAMP'
-   ;
-
-DATE_BIN
-   : 'DATE_BIN'
-   ;
-
-DATE_PART
-   : 'DATE_PART'
-   ;
-
-DATE_TRUNC
-   : 'DATE_TRUNC'
-   ;
-
-ISFINITE
-   : 'ISFINITE'
-   ;
-
-JUSTIFY_DAYS
-   : 'JUSTIFY_DAYS'
-   ;
-
-JUSTIFY_HOURS
-   : 'JUSTIFY_HOURS'
-   ;
-
-JUSTIFY_INTERVAL
-   : 'JUSTIFY_INTERVAL'
-   ;
-
-MAKE_DATE
-   : 'MAKE_DATE'
-   ;
-
-MAKE_INTERVAL
-   : 'MAKE_INTERVAL'
-   ;
-
-MAKE_TIME
-   : 'MAKE_TIME'
-   ;
-
-MAKE_TIMESTAMP
-   : 'MAKE_TIMESTAMP'
-   ;
-
-MAKE_TIMESTAMPTZ
-   : 'MAKE_TIMESTAMPTZ'
-   ;
-
-NOW
-   : 'NOW'
-   ;
-
-STATEMENT_TIMESTAMP
-   : 'STATEMENT_TIMESTAMP'
-   ;
-
-TIMEOFDAY
-   : 'TIMEOFDAY'
-   ;
-
-TRANSACTION_TIMESTAMP
-   : 'TRANSACTION_TIMESTAMP'
-   ;
-
-TO_TIMESTAMP
-   : 'TO_TIMESTAMP'
-   ;
-
-TO_CHAR
-   : 'TO_CHAR'
-   ;
-
-TO_DATE
-   : 'TO_DATE'
-   ;
-
-TO_NUMBER
-   : 'TO_NUMBER'
-   ;
-
-ENCODE
-   : 'ENCODE'
-   ;
-
-DISTKEY
-   : 'DISTKEY'
-   ;
-
-SORTKEY
-   : 'SORTKEY'
-   ;
-
-CASE_SENSITIVE
-   : 'CASE_SENSITIVE'
-   ;
-
-CASE_INSENSITIVE
-   : 'CASE_INSENSITIVE'
-   ;
-
-JSON_ARRAYAGG
-   : 'JSON_ARRAYAGG'
-   ;
-
-JSON_OBJECTAGG
-   : 'JSON_OBJECTAGG'
    ;
 
 Identifier

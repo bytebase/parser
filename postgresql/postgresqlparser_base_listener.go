@@ -3596,6 +3596,12 @@ func (s *BasePostgreSQLParserListener) EnterGenerictype(ctx *GenerictypeContext)
 // ExitGenerictype is called when production generictype is exited.
 func (s *BasePostgreSQLParserListener) ExitGenerictype(ctx *GenerictypeContext) {}
 
+// EnterJsontype is called when production jsontype is entered.
+func (s *BasePostgreSQLParserListener) EnterJsontype(ctx *JsontypeContext) {}
+
+// ExitJsontype is called when production jsontype is exited.
+func (s *BasePostgreSQLParserListener) ExitJsontype(ctx *JsontypeContext) {}
+
 // EnterOpt_type_modifiers is called when production opt_type_modifiers is entered.
 func (s *BasePostgreSQLParserListener) EnterOpt_type_modifiers(ctx *Opt_type_modifiersContext) {}
 
@@ -4563,39 +4569,6 @@ func (s *BasePostgreSQLParserListener) EnterPlsqlidentifier(ctx *Plsqlidentifier
 // ExitPlsqlidentifier is called when production plsqlidentifier is exited.
 func (s *BasePostgreSQLParserListener) ExitPlsqlidentifier(ctx *PlsqlidentifierContext) {}
 
-// EnterUnreserved_keyword is called when production unreserved_keyword is entered.
-func (s *BasePostgreSQLParserListener) EnterUnreserved_keyword(ctx *Unreserved_keywordContext) {}
-
-// ExitUnreserved_keyword is called when production unreserved_keyword is exited.
-func (s *BasePostgreSQLParserListener) ExitUnreserved_keyword(ctx *Unreserved_keywordContext) {}
-
-// EnterCol_name_keyword is called when production col_name_keyword is entered.
-func (s *BasePostgreSQLParserListener) EnterCol_name_keyword(ctx *Col_name_keywordContext) {}
-
-// ExitCol_name_keyword is called when production col_name_keyword is exited.
-func (s *BasePostgreSQLParserListener) ExitCol_name_keyword(ctx *Col_name_keywordContext) {}
-
-// EnterType_func_name_keyword is called when production type_func_name_keyword is entered.
-func (s *BasePostgreSQLParserListener) EnterType_func_name_keyword(ctx *Type_func_name_keywordContext) {
-}
-
-// ExitType_func_name_keyword is called when production type_func_name_keyword is exited.
-func (s *BasePostgreSQLParserListener) ExitType_func_name_keyword(ctx *Type_func_name_keywordContext) {
-}
-
-// EnterReserved_keyword is called when production reserved_keyword is entered.
-func (s *BasePostgreSQLParserListener) EnterReserved_keyword(ctx *Reserved_keywordContext) {}
-
-// ExitReserved_keyword is called when production reserved_keyword is exited.
-func (s *BasePostgreSQLParserListener) ExitReserved_keyword(ctx *Reserved_keywordContext) {}
-
-// EnterBuiltin_function_name is called when production builtin_function_name is entered.
-func (s *BasePostgreSQLParserListener) EnterBuiltin_function_name(ctx *Builtin_function_nameContext) {
-}
-
-// ExitBuiltin_function_name is called when production builtin_function_name is exited.
-func (s *BasePostgreSQLParserListener) ExitBuiltin_function_name(ctx *Builtin_function_nameContext) {}
-
 // EnterPl_function is called when production pl_function is entered.
 func (s *BasePostgreSQLParserListener) EnterPl_function(ctx *Pl_functionContext) {}
 
@@ -5297,4 +5270,30 @@ func (s *BasePostgreSQLParserListener) EnterOpt_returning_clause_into(ctx *Opt_r
 
 // ExitOpt_returning_clause_into is called when production opt_returning_clause_into is exited.
 func (s *BasePostgreSQLParserListener) ExitOpt_returning_clause_into(ctx *Opt_returning_clause_intoContext) {
+}
+
+// EnterReserved_keyword is called when production reserved_keyword is entered.
+func (s *BasePostgreSQLParserListener) EnterReserved_keyword(ctx *Reserved_keywordContext) {}
+
+// ExitReserved_keyword is called when production reserved_keyword is exited.
+func (s *BasePostgreSQLParserListener) ExitReserved_keyword(ctx *Reserved_keywordContext) {}
+
+// EnterUnreserved_keyword is called when production unreserved_keyword is entered.
+func (s *BasePostgreSQLParserListener) EnterUnreserved_keyword(ctx *Unreserved_keywordContext) {}
+
+// ExitUnreserved_keyword is called when production unreserved_keyword is exited.
+func (s *BasePostgreSQLParserListener) ExitUnreserved_keyword(ctx *Unreserved_keywordContext) {}
+
+// EnterCol_name_keyword is called when production col_name_keyword is entered.
+func (s *BasePostgreSQLParserListener) EnterCol_name_keyword(ctx *Col_name_keywordContext) {}
+
+// ExitCol_name_keyword is called when production col_name_keyword is exited.
+func (s *BasePostgreSQLParserListener) ExitCol_name_keyword(ctx *Col_name_keywordContext) {}
+
+// EnterType_func_name_keyword is called when production type_func_name_keyword is entered.
+func (s *BasePostgreSQLParserListener) EnterType_func_name_keyword(ctx *Type_func_name_keywordContext) {
+}
+
+// ExitType_func_name_keyword is called when production type_func_name_keyword is exited.
+func (s *BasePostgreSQLParserListener) ExitType_func_name_keyword(ctx *Type_func_name_keywordContext) {
 }

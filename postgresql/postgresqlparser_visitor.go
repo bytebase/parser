@@ -1711,6 +1711,9 @@ type PostgreSQLParserVisitor interface {
 	// Visit a parse tree produced by PostgreSQLParser#generictype.
 	VisitGenerictype(ctx *GenerictypeContext) interface{}
 
+	// Visit a parse tree produced by PostgreSQLParser#jsontype.
+	VisitJsontype(ctx *JsontypeContext) interface{}
+
 	// Visit a parse tree produced by PostgreSQLParser#opt_type_modifiers.
 	VisitOpt_type_modifiers(ctx *Opt_type_modifiersContext) interface{}
 
@@ -2182,21 +2185,6 @@ type PostgreSQLParserVisitor interface {
 	// Visit a parse tree produced by PostgreSQLParser#plsqlidentifier.
 	VisitPlsqlidentifier(ctx *PlsqlidentifierContext) interface{}
 
-	// Visit a parse tree produced by PostgreSQLParser#unreserved_keyword.
-	VisitUnreserved_keyword(ctx *Unreserved_keywordContext) interface{}
-
-	// Visit a parse tree produced by PostgreSQLParser#col_name_keyword.
-	VisitCol_name_keyword(ctx *Col_name_keywordContext) interface{}
-
-	// Visit a parse tree produced by PostgreSQLParser#type_func_name_keyword.
-	VisitType_func_name_keyword(ctx *Type_func_name_keywordContext) interface{}
-
-	// Visit a parse tree produced by PostgreSQLParser#reserved_keyword.
-	VisitReserved_keyword(ctx *Reserved_keywordContext) interface{}
-
-	// Visit a parse tree produced by PostgreSQLParser#builtin_function_name.
-	VisitBuiltin_function_name(ctx *Builtin_function_nameContext) interface{}
-
 	// Visit a parse tree produced by PostgreSQLParser#pl_function.
 	VisitPl_function(ctx *Pl_functionContext) interface{}
 
@@ -2538,4 +2526,16 @@ type PostgreSQLParserVisitor interface {
 
 	// Visit a parse tree produced by PostgreSQLParser#opt_returning_clause_into.
 	VisitOpt_returning_clause_into(ctx *Opt_returning_clause_intoContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#reserved_keyword.
+	VisitReserved_keyword(ctx *Reserved_keywordContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#unreserved_keyword.
+	VisitUnreserved_keyword(ctx *Unreserved_keywordContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#col_name_keyword.
+	VisitCol_name_keyword(ctx *Col_name_keywordContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#type_func_name_keyword.
+	VisitType_func_name_keyword(ctx *Type_func_name_keywordContext) interface{}
 }

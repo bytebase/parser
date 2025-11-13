@@ -1711,6 +1711,9 @@ type PostgreSQLParserListener interface {
 	// EnterGenerictype is called when entering the generictype production.
 	EnterGenerictype(c *GenerictypeContext)
 
+	// EnterJsontype is called when entering the jsontype production.
+	EnterJsontype(c *JsontypeContext)
+
 	// EnterOpt_type_modifiers is called when entering the opt_type_modifiers production.
 	EnterOpt_type_modifiers(c *Opt_type_modifiersContext)
 
@@ -2182,21 +2185,6 @@ type PostgreSQLParserListener interface {
 	// EnterPlsqlidentifier is called when entering the plsqlidentifier production.
 	EnterPlsqlidentifier(c *PlsqlidentifierContext)
 
-	// EnterUnreserved_keyword is called when entering the unreserved_keyword production.
-	EnterUnreserved_keyword(c *Unreserved_keywordContext)
-
-	// EnterCol_name_keyword is called when entering the col_name_keyword production.
-	EnterCol_name_keyword(c *Col_name_keywordContext)
-
-	// EnterType_func_name_keyword is called when entering the type_func_name_keyword production.
-	EnterType_func_name_keyword(c *Type_func_name_keywordContext)
-
-	// EnterReserved_keyword is called when entering the reserved_keyword production.
-	EnterReserved_keyword(c *Reserved_keywordContext)
-
-	// EnterBuiltin_function_name is called when entering the builtin_function_name production.
-	EnterBuiltin_function_name(c *Builtin_function_nameContext)
-
 	// EnterPl_function is called when entering the pl_function production.
 	EnterPl_function(c *Pl_functionContext)
 
@@ -2538,6 +2526,18 @@ type PostgreSQLParserListener interface {
 
 	// EnterOpt_returning_clause_into is called when entering the opt_returning_clause_into production.
 	EnterOpt_returning_clause_into(c *Opt_returning_clause_intoContext)
+
+	// EnterReserved_keyword is called when entering the reserved_keyword production.
+	EnterReserved_keyword(c *Reserved_keywordContext)
+
+	// EnterUnreserved_keyword is called when entering the unreserved_keyword production.
+	EnterUnreserved_keyword(c *Unreserved_keywordContext)
+
+	// EnterCol_name_keyword is called when entering the col_name_keyword production.
+	EnterCol_name_keyword(c *Col_name_keywordContext)
+
+	// EnterType_func_name_keyword is called when entering the type_func_name_keyword production.
+	EnterType_func_name_keyword(c *Type_func_name_keywordContext)
 
 	// ExitRoot is called when exiting the root production.
 	ExitRoot(c *RootContext)
@@ -4243,6 +4243,9 @@ type PostgreSQLParserListener interface {
 	// ExitGenerictype is called when exiting the generictype production.
 	ExitGenerictype(c *GenerictypeContext)
 
+	// ExitJsontype is called when exiting the jsontype production.
+	ExitJsontype(c *JsontypeContext)
+
 	// ExitOpt_type_modifiers is called when exiting the opt_type_modifiers production.
 	ExitOpt_type_modifiers(c *Opt_type_modifiersContext)
 
@@ -4714,21 +4717,6 @@ type PostgreSQLParserListener interface {
 	// ExitPlsqlidentifier is called when exiting the plsqlidentifier production.
 	ExitPlsqlidentifier(c *PlsqlidentifierContext)
 
-	// ExitUnreserved_keyword is called when exiting the unreserved_keyword production.
-	ExitUnreserved_keyword(c *Unreserved_keywordContext)
-
-	// ExitCol_name_keyword is called when exiting the col_name_keyword production.
-	ExitCol_name_keyword(c *Col_name_keywordContext)
-
-	// ExitType_func_name_keyword is called when exiting the type_func_name_keyword production.
-	ExitType_func_name_keyword(c *Type_func_name_keywordContext)
-
-	// ExitReserved_keyword is called when exiting the reserved_keyword production.
-	ExitReserved_keyword(c *Reserved_keywordContext)
-
-	// ExitBuiltin_function_name is called when exiting the builtin_function_name production.
-	ExitBuiltin_function_name(c *Builtin_function_nameContext)
-
 	// ExitPl_function is called when exiting the pl_function production.
 	ExitPl_function(c *Pl_functionContext)
 
@@ -5070,4 +5058,16 @@ type PostgreSQLParserListener interface {
 
 	// ExitOpt_returning_clause_into is called when exiting the opt_returning_clause_into production.
 	ExitOpt_returning_clause_into(c *Opt_returning_clause_intoContext)
+
+	// ExitReserved_keyword is called when exiting the reserved_keyword production.
+	ExitReserved_keyword(c *Reserved_keywordContext)
+
+	// ExitUnreserved_keyword is called when exiting the unreserved_keyword production.
+	ExitUnreserved_keyword(c *Unreserved_keywordContext)
+
+	// ExitCol_name_keyword is called when exiting the col_name_keyword production.
+	ExitCol_name_keyword(c *Col_name_keywordContext)
+
+	// ExitType_func_name_keyword is called when exiting the type_func_name_keyword production.
+	ExitType_func_name_keyword(c *Type_func_name_keywordContext)
 }

@@ -48,3 +48,4 @@ go.work.sum
 
 # No binary files
 **/bin/**
+.vscode/

@@ -1,5 +1,6 @@
 parser grammar PostgreSQLParser;
 
+import PostgreSQLKeywords;
 
 options { tokenVocab = PostgreSQLLexer;
 superClass = PostgreSQLParserBase;
@@ -271,7 +272,7 @@ set_rest_more
    : generic_set
    | var_name FROM CURRENT_P
    | TIME ZONE zone_value
-   | CATALOG sconst
+   | CATALOG_P sconst
    | SCHEMA sconst
    | NAMES opt_encoding?
    | ROLE nonreservedword_or_sconst
@@ -1862,7 +1863,6 @@ arg_class
 
 param_name
    : type_function_name
-   | builtin_function_name
    | LEFT
    | RIGHT
    ;
@@ -1873,7 +1873,7 @@ func_return
 
 func_type
    : typename
-   | SETOF? (builtin_function_name | type_function_name | LEFT | RIGHT) attrs PERCENT TYPE_P
+   | SETOF? (type_function_name | LEFT | RIGHT) attrs PERCENT TYPE_P
    ;
 
 func_arg_with_default
@@ -1931,7 +1931,7 @@ common_func_opt_item
 
 createfunc_opt_item
    : AS func_as
-   | BEGIN_P ATOMIC_P stmtmulti END_P
+   | BEGIN_P ATOMIC stmtmulti END_P
    | LANGUAGE nonreservedword_or_sconst
    | TRANSFORM transform_type_list
    | WINDOW
@@ -3194,6 +3194,7 @@ simpletypename
    | character
    | constdatetime
    | constinterval (opt_interval? | OPEN_PAREN iconst CLOSE_PAREN)
+   | jsontype
    ;
 
 consttypename
@@ -3201,10 +3202,15 @@ consttypename
    | constbit
    | constcharacter
    | constdatetime
+   | jsontype
    ;
 
 generictype
-   : (builtin_function_name | type_function_name | LEFT | RIGHT) attrs? opt_type_modifiers?
+   : (type_function_name | LEFT | RIGHT) attrs? opt_type_modifiers?
+   ;
+
+jsontype
+   : JSON
    ;
 
 opt_type_modifiers
@@ -3644,13 +3650,13 @@ func_expr_common_subexpr
    ;
 
 json_on_error_clause
-   : json_behavior ON ERROR
+   : json_behavior ON ERROR_P
    ;
 
 json_behavior_clause
-   : json_behavior ON EMPTY
-   | json_behavior ON ERROR
-   | json_behavior ON EMPTY json_behavior ON ERROR
+   : json_behavior ON EMPTY_P
+   | json_behavior ON ERROR_P
+   | json_behavior ON EMPTY_P json_behavior ON ERROR_P
    ;
 
 json_behavior
@@ -3659,18 +3665,18 @@ json_behavior
    ;
 
 json_behavior_type
-   : ERROR
+   : ERROR_P
    | NULL_P
    | TRUE_P
    | FALSE_P
    | UNKNOWN
-   | EMPTY ARRAY
-   | EMPTY OBJECT_P
-   | EMPTY
+   | EMPTY_P ARRAY
+   | EMPTY_P OBJECT_P
+   | EMPTY_P
    ;
 
 json_quotes_clause
-   : (KEEP | OMIT) QUOTES (ON SCALAR STRING)
+   : (KEEP | OMIT) QUOTES (ON SCALAR STRING_P)
    ;
 
 json_wrapper_behavior
@@ -3777,7 +3783,7 @@ xmlexists_argument
    ;
 
 xml_passing_mech
-   : BY (REF | VALUE_P)
+   : BY (REF_P | VALUE_P)
    ;
 
 within_group_clause
@@ -4065,8 +4071,7 @@ file_name
    ;
 
 func_name
-   : builtin_function_name
-   | type_function_name
+   : type_function_name
    | colid indirection
    | LEFT
    | RIGHT
@@ -4190,615 +4195,14 @@ plsqlidentifier
    : PLSQLIDENTIFIER
    ;
 
-unreserved_keyword
-   : ABORT_P
-   | ABSENT
-   | ABSOLUTE_P
-   | ACCESS
-   | ACTION
-   | ADD_P
-   | ADMIN
-   | AFTER
-   | AGGREGATE
-   | ALSO
-   | ALTER
-   | ALWAYS
-   | ASSERTION
-   | ASSIGNMENT
-   | AT
-   | ATOMIC_P
-   | ATTACH
-   | ATTRIBUTE
-   | BACKWARD
-   | BEFORE
-   | BEGIN_P
-   | BY
-   | CACHE
-   | CALL
-   | CALLED
-   | CASCADE
-   | CASCADED
-   | CATALOG
-   | CHAIN
-   | CHARACTERISTICS
-   | CHECKPOINT
-   | CLASS
-   | CLOSE
-   | CLUSTER
-   | COLUMNS
-   | COMMENT
-   | COMMENTS
-   | COMMIT
-   | COMMITTED
-   | CONFIGURATION
-   | CONFLICT
-   | CONNECTION
-   | CONSTRAINTS
-   | CONTENT_P
-   | CONTINUE_P
-   | CONVERSION_P
-   | COPY
-   | COST
-   | CSV
-   | CUBE
-   | CURRENT_P
-   | CURSOR
-   | CYCLE
-   | DATA_P
-   | DATABASE
-   | DAY_P
-   | DEALLOCATE
-   | DECLARE
-   | DEFAULTS
-   | DEFERRED
-   | DEFINER
-   | DELETE_P
-   | DELIMITER
-   | DELIMITERS
-   | DEPENDS
-   | DETACH
-   | DICTIONARY
-   | DISABLE_P
-   | DISCARD
-   | DOCUMENT_P
-   | DOMAIN_P
-   | DOUBLE_P
-   | DROP
-   | EACH
-   | ENABLE_P
-   | ENCODING
-   | ENCRYPTED
-   | ENUM_P
-   | ESCAPE
-   | EVENT
-   | EXCLUDE
-   | EXCLUDING
-   | EXCLUSIVE
-   | EXECUTE
-   | EXPLAIN
-   | EXPRESSION
-   | EXTENSION
-   | EXTERNAL
-   | FAMILY
-   | FILTER
-   | FIRST_P
-   | FOLLOWING
-   | FORCE
-   | FORMAT
-   | FORWARD
-   | FUNCTION
-   | FUNCTIONS
-   | GENERATED
-   | GLOBAL
-   | GRANTED
-   | GROUPS
-   | HANDLER
-   | HEADER_P
-   | HOLD
-   | HOUR_P
-   | IDENTITY_P
-   | IF_P
-   | IMMEDIATE
-   | IMMUTABLE
-   | IMPLICIT_P
-   | IMPORT_P
-   | INCLUDE
-   | INCLUDING
-   | INCREMENT
-   | INDEX
-   | INDEXES
-   | INHERIT
-   | INHERITS
-   | INLINE_P
-   | INPUT_P
-   | INSENSITIVE
-   | INSERT
-   | INSTEAD
-   | INVOKER
-   | ISOLATION
-   | JSON
-   | KEY
-   | KEYS
-   | LABEL
-   | LANGUAGE
-   | LARGE_P
-   | LAST_P
-   | LEAKPROOF
-   | LEVEL
-   | LISTEN
-   | LOAD
-   | LOCAL
-   | LOCATION
-   | LOCK_P
-   | LOCKED
-   | LOGGED
-   | MAPPING
-   | MATCH
-   | MATERIALIZED
-   | MAXVALUE
-   | METHOD
-   | MINUTE_P
-   | MINVALUE
-   | MODE
-   | MONTH_P
-   | MOVE
-   | NAME_P
-   | NAMES
-   | NEW
-   | NEXT
-   | NFC
-   | NFD
-   | NFKC
-   | NFKD
-   | NO
-   | NORMALIZED
-   | NOTHING
-   | NOTIFY
-   | NOWAIT
-   | NULLS_P
-   | OBJECT_P
-   | OF
-   | OFF
-   | OIDS
-   | OLD
-   | OPERATOR
-   | OPTION
-   | OPTIONS
-   | ORDINALITY
-   | OTHERS
-   | OVER
-   | OVERRIDING
-   | OWNED
-   | OWNER
-   | PARALLEL
-   | PARAMETER
-   | PARSER
-   | PARTIAL
-   | PARTITION
-   | PASSING
-   | PASSWORD
-   | PLANS
-   | POLICY
-   | PRECEDING
-   | PREPARE
-   | PREPARED
-   | PRESERVE
-   | PRIOR
-   | PRIVILEGES
-   | PROCEDURAL
-   | PROCEDURE
-   | PROCEDURES
-   | PROGRAM
-   | PUBLICATION
-   | QUOTE
-   | RANGE
-   | READ
-   | REASSIGN
-   | RECHECK
-   | RECURSIVE
-   | REF
-   | REFERENCING
-   | REFRESH
-   | REINDEX
-   | RELATIVE_P
-   | RELEASE
-   | RENAME
-   | REPEATABLE
-   | REPLICA
-   | RESET
-   | RESTART
-   | RESTRICT
-   | RETURNS
-   | REVOKE
-   | ROLE
-   | ROLLBACK
-   | ROLLUP
-   | ROUTINE
-   | ROUTINES
-   | ROWS
-   | RULE
-   | SAVEPOINT
-   | SCHEMA
-   | SCHEMAS
-   | SCROLL
-   | SEARCH
-   | SECOND_P
-   | SECURITY
-   | SEQUENCE
-   | SEQUENCES
-   | SERIALIZABLE
-   | SERVER
-   | SESSION
-   | SET
-   | SETS
-   | SHARE
-   | SHOW
-   | SIMPLE
-   | SKIP_P
-   | SNAPSHOT
-   | SQL_P
-   | STABLE
-   | STANDALONE_P
-   | START
-   | STATEMENT
-   | STATISTICS
-   | STDIN
-   | STDOUT
-   | STORAGE
-   | STORED
-   | STRICT_P
-   | STRING
-   | STRIP_P
-   | SUBSCRIPTION
-   | SUPPORT
-   | SYSID
-   | SYSTEM_P
-   | TABLES
-   | TABLESPACE
-   | TEMP
-   | TEMPLATE
-   | TEMPORARY
-   | TEXT_P
-   | TIES
-   | TRANSACTION
-   | TRANSFORM
-   | TRIGGER
-   | TRUNCATE
-   | TRUSTED
-   | TYPE_P
-   | TYPES_P
-   | UESCAPE
-   | UNBOUNDED
-   | UNCOMMITTED
-   | UNENCRYPTED
-   | UNKNOWN
-   | UNLISTEN
-   | UNLOGGED
-   | UNTIL
-   | UPDATE
-   | VACUUM
-   | VALID
-   | VALIDATE
-   | VALIDATOR
-   | VALUE_P
-   | VARYING
-   | VERSION_P
-   | VIEW
-   | VIEWS
-   | VOLATILE
-   | WHITESPACE_P
-   | WITHIN
-   | WITHOUT
-   | WORK
-   | WRAPPER
-   | WRITE
-   | XML_P
-   | YEAR_P
-   | YES_P
-   | ZONE
-   ;
-
-col_name_keyword
-   : BETWEEN
-   | BIGINT
-   | bit
-   | BOOLEAN_P
-   | CHAR_P
-   | character
-   | COALESCE
-   | DEC
-   | DECIMAL_P
-   | EXISTS
-   | EXTRACT
-   | FLOAT_P
-   | GREATEST
-   | GROUPING
-   | INOUT
-   | INT_P
-   | INTEGER
-   | INTERVAL
-   | JSON_ARRAY
-   | JSON_ARRAYAGG
-   | JSON_OBJECT
-   | JSON_OBJECTAGG
-   | LEAST
-   | NATIONAL
-   | NCHAR
-   | NONE
-   | NORMALIZE
-   | NULLIF
-   | numeric
-   | OUT_P
-   | OVERLAY
-   | POSITION
-   | PRECISION
-   | REAL
-   | ROW
-   | SETOF
-   | SMALLINT
-   | SUBSTRING
-   | TIME
-   | TIMESTAMP
-   | TREAT
-   | TRIM
-   | VALUES
-   | VARCHAR
-   | XMLATTRIBUTES
-   | XMLCONCAT
-   | XMLELEMENT
-   | XMLEXISTS
-   | XMLFOREST
-   | XMLNAMESPACES
-   | XMLPARSE
-   | XMLPI
-   | XMLROOT
-   | XMLSERIALIZE
-   | XMLTABLE
-   | builtin_function_name
-   ;
-
-type_func_name_keyword
-   : AUTHORIZATION
-   | BINARY
-   | COLLATION
-   | CONCURRENTLY
-   | CROSS
-   | CURRENT_SCHEMA
-   | FREEZE
-   | FULL
-   | ILIKE
-   | INNER_P
-   | IS
-   | ISNULL
-   | JOIN
-   | LIKE
-   | NATURAL
-   | NOTNULL
-   | OUTER_P
-   | OVERLAPS
-   | SIMILAR
-   | TABLESAMPLE
-   | VERBOSE
-   ;
-
-reserved_keyword
-   : ALL
-   | ANALYSE
-   | ANALYZE
-   | AND
-   | ANY
-   | ARRAY
-   | AS
-   | ASC
-   | ASYMMETRIC
-   | BOTH
-   | CASE
-   | CAST
-   | CHECK
-   | COLLATE
-   | COLUMN
-   | CONSTRAINT
-   | CREATE
-   | CURRENT_CATALOG
-   | CURRENT_DATE
-   | CURRENT_ROLE
-   | CURRENT_TIME
-   | CURRENT_TIMESTAMP
-   | CURRENT_USER
-   //                 | DEFAULT
-   | DEFERRABLE
-   | DESC
-   | DISTINCT
-   | DO
-   | ELSE
-   | END_P
-   | EXCEPT
-   | FALSE_P
-   | FETCH
-   | FOR
-   | FOREIGN
-   | FROM
-   | GRANT
-   | GROUP_P
-   | HAVING
-   | IN_P
-   | INITIALLY
-   | INTERSECT
-/*
-from pl_gram.y, line ~2982
-	 * Fortunately, INTO is a fully reserved word in the main grammar, so
-	 * at least we need not worry about it appearing as an identifier.
-*/
-
-
-   //                 | INTO
-   | LATERAL_P
-   | LEADING
-   | LIMIT
-   | LOCALTIME
-   | LOCALTIMESTAMP
-   | NOT
-   | NULL_P
-   | OFFSET
-   | ON
-   | ONLY
-   | OR
-   | ORDER
-   | PLACING
-   | PRIMARY
-   | REFERENCES
-   | RETURNING
-   | SELECT
-   | SESSION_USER
-   | SOME
-   | SYMMETRIC
-   | TABLE
-   | THEN
-   | TO
-   | TRAILING
-   | TRUE_P
-   | UNION
-   | UNIQUE
-   | USER
-   | USING
-   | VARIADIC
-   | WHEN
-   | WHERE
-   | WINDOW
-   | WITH
-   ;
-
-builtin_function_name
-   : XMLCOMMENT
-   | XML_IS_WELL_FORMED
-   | XML_IS_WELL_FORMED_DOCUMENT
-   | XML_IS_WELL_FORMED_CONTENT
-   | XMLAGG
-   | XPATH
-   | XPATH_EXISTS
-   | ABS
-   | CBRT
-   | CEIL
-   | CEILING
-   | DEGREES
-   | DIV
-   | EXP
-   | ENCODE
-   | FACTORIAL
-   | FLOOR
-   | GCD
-   | LCM
-   | LN
-   | LOG
-   | LOG10
-   | MIN_SCALE
-   | MOD
-   | PI
-   | POWER
-   | RADIANS
-   | ROUND
-   | SCALE
-   | SIGN
-   | SQRT
-   | TRIM_SCALE
-   | TRUNC
-   | WIDTH_BUCKET
-   | RANDOM
-   | SETSEED
-   | ACOS
-   | ACOSD
-   | ACOSH
-   | ASIN
-   | ASIND
-   | ASINH
-   | ATAN
-   | ATAND
-   | ATANH
-   | ATAN2
-   | ATAN2D
-   | COS
-   | COSD
-   | COSH
-   | COT
-   | COTD
-   | SIN
-   | SIND
-   | SINH
-   | TAN
-   | TAND
-   | TANH
-   | BIT_LENGTH
-   | CHAR_LENGTH
-   | CHARACTER_LENGTH
-   | LOWER
-   | OCTET_LENGTH
-   | OCTET_LENGTH
-   | UPPER
-   | ASCII
-   | BTRIM
-   | CHR
-   | CONCAT
-   | CONCAT_WS
-   | FORMAT
-   | INITCAP
-   | LENGTH
-   | LPAD
-   | LTRIM
-   | MD5
-   | PARSE_IDENT
-   | PG_CLIENT_ENCODING
-   | QUOTE_IDENT
-   | QUOTE_LITERAL
-   | QUOTE_NULLABLE
-   | REGEXP_COUNT
-   | REGEXP_INSTR
-   | REGEXP_LIKE
-   | REGEXP_MATCH
-   | REGEXP_MATCHES
-   | REGEXP_REPLACE
-   | REGEXP_SPLIT_TO_ARRAY
-   | REGEXP_SPLIT_TO_TABLE
-   | REGEXP_SUBSTR
-   | REPEAT
-   | REPLACE
-   | REVERSE
-   | RPAD
-   | RTRIM
-   | SPLIT_PART
-   | STARTS_WITH
-   | STRING_TO_ARRAY
-   | STRING_TO_TABLE
-   | STRPOS
-   | SUBSTR
-   | TO_ASCII
-   | TO_HEX
-   | TRANSLATE
-   | UNISTR
-   | AGE
-   | DATE_BIN
-   | DATE_PART
-   | DATE_TRUNC
-   | ISFINITE
-   | JUSTIFY_DAYS
-   | JUSTIFY_HOURS
-   | JUSTIFY_INTERVAL
-   | MAKE_DATE
-   | MAKE_INTERVAL
-   | MAKE_TIME
-   | MAKE_TIMESTAMP
-   | MAKE_TIMESTAMPTZ
-   | CLOCK_TIMESTAMP
-   | NOW
-   | STATEMENT_TIMESTAMP
-   | TIMEOFDAY
-   | TRANSACTION_TIMESTAMP
-   | TO_TIMESTAMP
-   | JUSTIFY_INTERVAL
-   | JUSTIFY_INTERVAL
-   | TO_CHAR
-   | TO_DATE
-   | TO_NUMBER
-   ;
+// ============================================================================
+// NOTE: The keyword rules (reserved_keyword, unreserved_keyword,
+// col_name_keyword, type_func_name_keyword) are now imported from
+// PostgreSQLKeywords.g4, which is auto-generated from PostgreSQL's official
+// kwlist.h file.
+//
+// To regenerate: make generate-keywords
+// ============================================================================
 
 /************************************************************************************************************************************************************/
 /*PL/SQL GRAMMAR */
@@ -4817,7 +4221,7 @@ comp_options
 comp_option
    : sharp OPTION DUMP
    | sharp PRINT_STRICT_PARAMS option_value
-   | sharp VARIABLE_CONFLICT ERROR
+   | sharp VARIABLE_CONFLICT ERROR_P
    | sharp VARIABLE_CONFLICT USE_VARIABLE
    | sharp VARIABLE_CONFLICT USE_COLUMN
    ;
@@ -5396,7 +4800,7 @@ plsql_unreserved_keyword
    | DUMP
    | ELSIF
    //| ERRCODE
-   | ERROR
+   | ERROR_P
    | EXCEPTION
    | EXIT
    | FETCH
@@ -5410,6 +4814,7 @@ plsql_unreserved_keyword
    | INSERT
    | IS
    | LAST_P
+   | LOG
    //| MESSAGE
 
    //| MESSAGE_TEXT
@@ -5436,6 +4841,7 @@ plsql_unreserved_keyword
    | RELATIVE_P
    | RESET
    | RETURN
+   | REVERSE
    //| RETURNED_SQLSTATE
    | ROLLBACK
    //| ROW_COUNT
