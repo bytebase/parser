@@ -2907,22 +2907,6 @@ func (v *BasePostgreSQLParserVisitor) VisitPlsqlidentifier(ctx *PlsqlidentifierC
 	return v.VisitChildren(ctx)
 }
 
-func (v *BasePostgreSQLParserVisitor) VisitUnreserved_keyword(ctx *Unreserved_keywordContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePostgreSQLParserVisitor) VisitCol_name_keyword(ctx *Col_name_keywordContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePostgreSQLParserVisitor) VisitType_func_name_keyword(ctx *Type_func_name_keywordContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BasePostgreSQLParserVisitor) VisitReserved_keyword(ctx *Reserved_keywordContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BasePostgreSQLParserVisitor) VisitBuiltin_function_name(ctx *Builtin_function_nameContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -3380,5 +3364,21 @@ func (v *BasePostgreSQLParserVisitor) VisitMake_execsql_stmt(ctx *Make_execsql_s
 }
 
 func (v *BasePostgreSQLParserVisitor) VisitOpt_returning_clause_into(ctx *Opt_returning_clause_intoContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitReserved_keyword(ctx *Reserved_keywordContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitUnreserved_keyword(ctx *Unreserved_keywordContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitCol_name_keyword(ctx *Col_name_keywordContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitType_func_name_keyword(ctx *Type_func_name_keywordContext) interface{} {
 	return v.VisitChildren(ctx)
 }
