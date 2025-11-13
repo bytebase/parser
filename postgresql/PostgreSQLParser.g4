@@ -3194,6 +3194,7 @@ simpletypename
    | character
    | constdatetime
    | constinterval (opt_interval? | OPEN_PAREN iconst CLOSE_PAREN)
+   | jsontype
    ;
 
 consttypename
@@ -3201,10 +3202,15 @@ consttypename
    | constbit
    | constcharacter
    | constdatetime
+   | jsontype
    ;
 
 generictype
    : (type_function_name | LEFT | RIGHT) attrs? opt_type_modifiers?
+   ;
+
+jsontype
+   : JSON
    ;
 
 opt_type_modifiers
@@ -4835,6 +4841,7 @@ plsql_unreserved_keyword
    | RELATIVE_P
    | RESET
    | RETURN
+   | REVERSE
    //| RETURNED_SQLSTATE
    | ROLLBACK
    //| ROW_COUNT

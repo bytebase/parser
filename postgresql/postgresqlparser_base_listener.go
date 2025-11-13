@@ -3596,6 +3596,12 @@ func (s *BasePostgreSQLParserListener) EnterGenerictype(ctx *GenerictypeContext)
 // ExitGenerictype is called when production generictype is exited.
 func (s *BasePostgreSQLParserListener) ExitGenerictype(ctx *GenerictypeContext) {}
 
+// EnterJsontype is called when production jsontype is entered.
+func (s *BasePostgreSQLParserListener) EnterJsontype(ctx *JsontypeContext) {}
+
+// ExitJsontype is called when production jsontype is exited.
+func (s *BasePostgreSQLParserListener) ExitJsontype(ctx *JsontypeContext) {}
+
 // EnterOpt_type_modifiers is called when production opt_type_modifiers is entered.
 func (s *BasePostgreSQLParserListener) EnterOpt_type_modifiers(ctx *Opt_type_modifiersContext) {}
 

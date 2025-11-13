@@ -1711,6 +1711,9 @@ type PostgreSQLParserVisitor interface {
 	// Visit a parse tree produced by PostgreSQLParser#generictype.
 	VisitGenerictype(ctx *GenerictypeContext) interface{}
 
+	// Visit a parse tree produced by PostgreSQLParser#jsontype.
+	VisitJsontype(ctx *JsontypeContext) interface{}
+
 	// Visit a parse tree produced by PostgreSQLParser#opt_type_modifiers.
 	VisitOpt_type_modifiers(ctx *Opt_type_modifiersContext) interface{}
 

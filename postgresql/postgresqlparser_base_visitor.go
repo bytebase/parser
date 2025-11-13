@@ -2279,6 +2279,10 @@ func (v *BasePostgreSQLParserVisitor) VisitGenerictype(ctx *GenerictypeContext) 
 	return v.VisitChildren(ctx)
 }
 
+func (v *BasePostgreSQLParserVisitor) VisitJsontype(ctx *JsontypeContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BasePostgreSQLParserVisitor) VisitOpt_type_modifiers(ctx *Opt_type_modifiersContext) interface{} {
 	return v.VisitChildren(ctx)
 }

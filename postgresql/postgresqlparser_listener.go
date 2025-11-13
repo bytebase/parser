@@ -1711,6 +1711,9 @@ type PostgreSQLParserListener interface {
 	// EnterGenerictype is called when entering the generictype production.
 	EnterGenerictype(c *GenerictypeContext)
 
+	// EnterJsontype is called when entering the jsontype production.
+	EnterJsontype(c *JsontypeContext)
+
 	// EnterOpt_type_modifiers is called when entering the opt_type_modifiers production.
 	EnterOpt_type_modifiers(c *Opt_type_modifiersContext)
 
@@ -4239,6 +4242,9 @@ type PostgreSQLParserListener interface {
 
 	// ExitGenerictype is called when exiting the generictype production.
 	ExitGenerictype(c *GenerictypeContext)
+
+	// ExitJsontype is called when exiting the jsontype production.
+	ExitJsontype(c *JsontypeContext)
 
 	// ExitOpt_type_modifiers is called when exiting the opt_type_modifiers production.
 	ExitOpt_type_modifiers(c *Opt_type_modifiersContext)
