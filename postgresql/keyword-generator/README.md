@@ -6,9 +6,9 @@ Automatically generates PostgreSQL keyword definitions from the official Postgre
 
 This tool fetches keyword definitions from PostgreSQL's `kwlist.h` and generates:
 - **PostgreSQLKeywords.g4**: Parser rules for keyword categories (reserved, unreserved, etc.)
-- **PostgreSQLKeywordsLexer.g4**: Lexer token definitions for all 494 keywords
+- **PostgreSQLLexer.g4**: Updates the auto-generated keyword section with all 494 keyword tokens
 
-## Automated Workflow
+## Usage
 
 ```bash
 # In postgresql directory
@@ -18,38 +18,7 @@ make generate-keywords
 This will:
 1. Fetch keywords from PostgreSQL REL_18_STABLE branch
 2. Generate PostgreSQLKeywords.g4 (parser rules)
-3. Generate PostgreSQLKeywordsLexer.g4 (lexer tokens)
-
-## One-Time Setup
-
-### Step 1: Clean Up Duplicates (First Time Only)
-
-Remove duplicate keyword definitions from PostgreSQLLexer.g4:
-
-```bash
-cd keyword-generator
-./cleanup_duplicates.sh
-```
-
-This creates a backup (`PostgreSQLLexer.g4.before_cleanup`) and removes all keyword token definitions that are now in PostgreSQLKeywordsLexer.g4.
-
-### Step 2: Add Import Statement
-
-Add this line to PostgreSQLLexer.g4 after the `lexer grammar` declaration:
-
-```antlr
-lexer grammar PostgreSQLLexer;
-
-import PostgreSQLKeywordsLexer;
-```
-
-### Step 3: Verify Build
-
-```bash
-cd ..
-make build
-make test
-```
+3. Update PostgreSQLLexer.g4 (keyword section between markers)
 
 ## ANTLR Reserved Names
 
@@ -85,11 +54,9 @@ To update to a new PostgreSQL version:
 postgresql/
 ├── keyword-generator/
 │   ├── main.go                    # Keyword generator tool
-│   ├── cleanup_duplicates.sh     # One-time cleanup script
 │   └── README.md                  # This file
 ├── PostgreSQLKeywords.g4          # Generated parser rules
-├── PostgreSQLKeywordsLexer.g4     # Generated lexer tokens
-├── PostgreSQLLexer.g4             # Main lexer (imports keywords)
+├── PostgreSQLLexer.g4             # Main lexer (with auto-generated keyword section)
 └── PostgreSQLParser.g4            # Main parser (imports keywords)
 ```
 
@@ -99,4 +66,4 @@ postgresql/
 ✓ **Set operations** - Complete file regeneration, no patching
 ✓ **Version tracking** - Clear source and version in generated files
 ✓ **ANTLR compatibility** - Automatic handling of reserved names
-✓ **Single source of truth** - All keywords defined once in PostgreSQLKeywordsLexer.g4
+✓ **Single source of truth** - All keywords defined in auto-generated sections
