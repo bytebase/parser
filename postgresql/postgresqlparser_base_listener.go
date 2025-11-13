@@ -4563,13 +4563,6 @@ func (s *BasePostgreSQLParserListener) EnterPlsqlidentifier(ctx *Plsqlidentifier
 // ExitPlsqlidentifier is called when production plsqlidentifier is exited.
 func (s *BasePostgreSQLParserListener) ExitPlsqlidentifier(ctx *PlsqlidentifierContext) {}
 
-// EnterBuiltin_function_name is called when production builtin_function_name is entered.
-func (s *BasePostgreSQLParserListener) EnterBuiltin_function_name(ctx *Builtin_function_nameContext) {
-}
-
-// ExitBuiltin_function_name is called when production builtin_function_name is exited.
-func (s *BasePostgreSQLParserListener) ExitBuiltin_function_name(ctx *Builtin_function_nameContext) {}
-
 // EnterPl_function is called when production pl_function is entered.
 func (s *BasePostgreSQLParserListener) EnterPl_function(ctx *Pl_functionContext) {}
 

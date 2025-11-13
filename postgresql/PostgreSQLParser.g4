@@ -1863,7 +1863,6 @@ arg_class
 
 param_name
    : type_function_name
-   | builtin_function_name
    | LEFT
    | RIGHT
    ;
@@ -1874,7 +1873,7 @@ func_return
 
 func_type
    : typename
-   | SETOF? (builtin_function_name | type_function_name | LEFT | RIGHT) attrs PERCENT TYPE_P
+   | SETOF? (type_function_name | LEFT | RIGHT) attrs PERCENT TYPE_P
    ;
 
 func_arg_with_default
@@ -3205,7 +3204,7 @@ consttypename
    ;
 
 generictype
-   : (builtin_function_name | type_function_name | LEFT | RIGHT) attrs? opt_type_modifiers?
+   : (type_function_name | LEFT | RIGHT) attrs? opt_type_modifiers?
    ;
 
 opt_type_modifiers
@@ -4066,8 +4065,7 @@ file_name
    ;
 
 func_name
-   : builtin_function_name
-   | type_function_name
+   : type_function_name
    | colid indirection
    | LEFT
    | RIGHT
@@ -4199,138 +4197,6 @@ plsqlidentifier
 //
 // To regenerate: make generate-keywords
 // ============================================================================
-
-builtin_function_name
-   : XMLCOMMENT
-   | XML_IS_WELL_FORMED
-   | XML_IS_WELL_FORMED_DOCUMENT
-   | XML_IS_WELL_FORMED_CONTENT
-   | XMLAGG
-   | XPATH
-   | XPATH_EXISTS
-   | ABS
-   | CBRT
-   | CEIL
-   | CEILING
-   | DEGREES
-   | DIV
-   | EXP
-   | ENCODE
-   | FACTORIAL
-   | FLOOR
-   | GCD
-   | LCM
-   | LN
-   | LOG
-   | LOG10
-   | MIN_SCALE
-   | MOD
-   | PI
-   | POWER
-   | RADIANS
-   | ROUND
-   | SCALE
-   | SIGN
-   | SQRT
-   | TRIM_SCALE
-   | TRUNC
-   | WIDTH_BUCKET
-   | RANDOM
-   | SETSEED
-   | ACOS
-   | ACOSD
-   | ACOSH
-   | ASIN
-   | ASIND
-   | ASINH
-   | ATAN
-   | ATAND
-   | ATANH
-   | ATAN2
-   | ATAN2D
-   | COS
-   | COSD
-   | COSH
-   | COT
-   | COTD
-   | SIN
-   | SIND
-   | SINH
-   | TAN
-   | TAND
-   | TANH
-   | BIT_LENGTH
-   | CHAR_LENGTH
-   | CHARACTER_LENGTH
-   | LOWER
-   | OCTET_LENGTH
-   | OCTET_LENGTH
-   | UPPER
-   | ASCII
-   | BTRIM
-   | CHR
-   | CONCAT
-   | CONCAT_WS
-   | FORMAT
-   | INITCAP
-   | LENGTH
-   | LPAD
-   | LTRIM
-   | MD5
-   | PARSE_IDENT
-   | PG_CLIENT_ENCODING
-   | QUOTE_IDENT
-   | QUOTE_LITERAL
-   | QUOTE_NULLABLE
-   | REGEXP_COUNT
-   | REGEXP_INSTR
-   | REGEXP_LIKE
-   | REGEXP_MATCH
-   | REGEXP_MATCHES
-   | REGEXP_REPLACE
-   | REGEXP_SPLIT_TO_ARRAY
-   | REGEXP_SPLIT_TO_TABLE
-   | REGEXP_SUBSTR
-   | REPEAT
-   | REPLACE
-   | REVERSE
-   | RPAD
-   | RTRIM
-   | SPLIT_PART
-   | STARTS_WITH
-   | STRING_TO_ARRAY
-   | STRING_TO_TABLE
-   | STRPOS
-   | SUBSTR
-   | TO_ASCII
-   | TO_HEX
-   | TRANSLATE
-   | UNISTR
-   | AGE
-   | DATE_BIN
-   | DATE_PART
-   | DATE_TRUNC
-   | ISFINITE
-   | JUSTIFY_DAYS
-   | JUSTIFY_HOURS
-   | JUSTIFY_INTERVAL
-   | MAKE_DATE
-   | MAKE_INTERVAL
-   | MAKE_TIME
-   | MAKE_TIMESTAMP
-   | MAKE_TIMESTAMPTZ
-   | CLOCK_TIMESTAMP
-   | NOW
-   | STATEMENT_TIMESTAMP
-   | TIMEOFDAY
-   | TRANSACTION_TIMESTAMP
-   | TO_TIMESTAMP
-   | JUSTIFY_INTERVAL
-   | JUSTIFY_INTERVAL
-   | TO_CHAR
-   | TO_DATE
-   | TO_NUMBER
-   ;
 
 /************************************************************************************************************************************************************/
 /*PL/SQL GRAMMAR */
@@ -4942,6 +4808,7 @@ plsql_unreserved_keyword
    | INSERT
    | IS
    | LAST_P
+   | LOG
    //| MESSAGE
 
    //| MESSAGE_TEXT

@@ -2907,10 +2907,6 @@ func (v *BasePostgreSQLParserVisitor) VisitPlsqlidentifier(ctx *PlsqlidentifierC
 	return v.VisitChildren(ctx)
 }
 
-func (v *BasePostgreSQLParserVisitor) VisitBuiltin_function_name(ctx *Builtin_function_nameContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BasePostgreSQLParserVisitor) VisitPl_function(ctx *Pl_functionContext) interface{} {
 	return v.VisitChildren(ctx)
 }

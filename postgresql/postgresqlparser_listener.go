@@ -2182,9 +2182,6 @@ type PostgreSQLParserListener interface {
 	// EnterPlsqlidentifier is called when entering the plsqlidentifier production.
 	EnterPlsqlidentifier(c *PlsqlidentifierContext)
 
-	// EnterBuiltin_function_name is called when entering the builtin_function_name production.
-	EnterBuiltin_function_name(c *Builtin_function_nameContext)
-
 	// EnterPl_function is called when entering the pl_function production.
 	EnterPl_function(c *Pl_functionContext)
 
@@ -4713,9 +4710,6 @@ type PostgreSQLParserListener interface {
 
 	// ExitPlsqlidentifier is called when exiting the plsqlidentifier production.
 	ExitPlsqlidentifier(c *PlsqlidentifierContext)
-
-	// ExitBuiltin_function_name is called when exiting the builtin_function_name production.
-	ExitBuiltin_function_name(c *Builtin_function_nameContext)
 
 	// ExitPl_function is called when exiting the pl_function production.
 	ExitPl_function(c *Pl_functionContext)

@@ -2182,9 +2182,6 @@ type PostgreSQLParserVisitor interface {
 	// Visit a parse tree produced by PostgreSQLParser#plsqlidentifier.
 	VisitPlsqlidentifier(ctx *PlsqlidentifierContext) interface{}
 
-	// Visit a parse tree produced by PostgreSQLParser#builtin_function_name.
-	VisitBuiltin_function_name(ctx *Builtin_function_nameContext) interface{}
-
 	// Visit a parse tree produced by PostgreSQLParser#pl_function.
 	VisitPl_function(ctx *Pl_functionContext) interface{}
 
