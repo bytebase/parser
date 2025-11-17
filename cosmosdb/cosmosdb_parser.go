@@ -36,7 +36,8 @@ func cosmosdbparserParserInit() {
 		"'NULL'", "'FALSE'", "'TRUE'", "'NOT'", "'UDF'", "'WHERE'", "'AND'",
 		"'OR'", "'@'", "'{'", "'}'", "'['", "']'", "'('", "')'", "'''", "'\"'",
 		"','", "'.'", "'?'", "':'", "'+'", "'-'", "'~'", "'/'", "'%'", "'&'",
-		"'|'", "'||'", "'^'", "'='",
+		"'|'", "'||'", "'^'", "'='", "'<'", "'<='", "'>'", "'>='", "'<<'", "'>>'",
+		"'>>>'",
 	}
 	staticData.SymbolicNames = []string{
 		"", "MULTIPLY_OPERATOR", "AS_SYMBOL", "SELECT_SYMBOL", "FROM_SYMBOL",
@@ -48,8 +49,10 @@ func cosmosdbparserParserInit() {
 		"QUESTION_MARK_SYMBOL", "COLON_SYMBOL", "PLUS_SYMBOL", "MINUS_SYMBOL",
 		"BIT_NOT_SYMBOL", "DIVIDE_SYMBOL", "MODULO_SYMBOL", "BIT_AND_SYMBOL",
 		"BIT_OR_SYMBOL", "DOUBLE_BAR_SYMBOL", "BIT_XOR_SYMBOL", "EQUAL_SYMBOL",
-		"IDENTIFIER", "WHITESPACE", "DECIMAL", "REAL", "FLOAT", "HEXADECIMAL",
-		"SINGLE_QUOTE_STRING_LITERAL", "DOUBLE_QUOTE_STRING_LITERAL",
+		"LESS_THAN_OPERATOR", "LESS_THAN_EQUAL_OPERATOR", "GREATER_THAN_OPERATOR",
+		"GREATER_THAN_EQUAL_OPERATOR", "LEFT_SHIFT_OPERATOR", "RIGHT_SHIFT_OPERATOR",
+		"ZERO_FILL_RIGHT_SHIFT_OPERATOR", "IDENTIFIER", "WHITESPACE", "DECIMAL",
+		"REAL", "FLOAT", "HEXADECIMAL", "SINGLE_QUOTE_STRING_LITERAL", "DOUBLE_QUOTE_STRING_LITERAL",
 	}
 	staticData.RuleNames = []string{
 		"root", "select", "select_clause", "select_specification", "from_clause",
@@ -65,7 +68,7 @@ func cosmosdbparserParserInit() {
 	}
 	staticData.PredictionContextCache = antlr.NewPredictionContextCache()
 	staticData.serializedATN = []int32{
-		4, 1, 45, 308, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
+		4, 1, 52, 308, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
 		4, 2, 5, 7, 5, 2, 6, 7, 6, 2, 7, 7, 7, 2, 8, 7, 8, 2, 9, 7, 9, 2, 10, 7,
 		10, 2, 11, 7, 11, 2, 12, 7, 12, 2, 13, 7, 13, 2, 14, 7, 14, 2, 15, 7, 15,
 		2, 16, 7, 16, 2, 17, 7, 17, 2, 18, 7, 18, 2, 19, 7, 19, 2, 20, 7, 20, 2,
@@ -99,7 +102,7 @@ func cosmosdbparserParserInit() {
 		36, 1, 37, 1, 37, 1, 37, 0, 2, 26, 28, 38, 0, 2, 4, 6, 8, 10, 12, 14, 16,
 		18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52,
 		54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 0, 5, 3, 0, 1, 1, 28, 29, 31,
-		37, 1, 0, 28, 30, 1, 0, 8, 9, 1, 0, 44, 45, 1, 0, 40, 42, 309, 0, 76, 1,
+		44, 1, 0, 28, 30, 1, 0, 8, 9, 1, 0, 51, 52, 1, 0, 47, 49, 309, 0, 76, 1,
 		0, 0, 0, 2, 79, 1, 0, 0, 0, 4, 84, 1, 0, 0, 0, 6, 92, 1, 0, 0, 0, 8, 94,
 		1, 0, 0, 0, 10, 97, 1, 0, 0, 0, 12, 100, 1, 0, 0, 0, 14, 102, 1, 0, 0,
 		0, 16, 104, 1, 0, 0, 0, 18, 111, 1, 0, 0, 0, 20, 113, 1, 0, 0, 0, 22, 121,
@@ -121,19 +124,19 @@ func cosmosdbparserParserInit() {
 		0, 0, 0, 100, 101, 3, 14, 7, 0, 101, 13, 1, 0, 0, 0, 102, 103, 3, 16, 8,
 		0, 103, 15, 1, 0, 0, 0, 104, 109, 3, 18, 9, 0, 105, 107, 5, 2, 0, 0, 106,
 		105, 1, 0, 0, 0, 106, 107, 1, 0, 0, 0, 107, 108, 1, 0, 0, 0, 108, 110,
-		5, 38, 0, 0, 109, 106, 1, 0, 0, 0, 109, 110, 1, 0, 0, 0, 110, 17, 1, 0,
-		0, 0, 111, 112, 5, 38, 0, 0, 112, 19, 1, 0, 0, 0, 113, 118, 3, 22, 11,
+		5, 45, 0, 0, 109, 106, 1, 0, 0, 0, 109, 110, 1, 0, 0, 0, 110, 17, 1, 0,
+		0, 0, 111, 112, 5, 45, 0, 0, 112, 19, 1, 0, 0, 0, 113, 118, 3, 22, 11,
 		0, 114, 115, 5, 24, 0, 0, 115, 117, 3, 22, 11, 0, 116, 114, 1, 0, 0, 0,
 		117, 120, 1, 0, 0, 0, 118, 116, 1, 0, 0, 0, 118, 119, 1, 0, 0, 0, 119,
 		21, 1, 0, 0, 0, 120, 118, 1, 0, 0, 0, 121, 126, 3, 26, 13, 0, 122, 124,
 		5, 2, 0, 0, 123, 122, 1, 0, 0, 0, 123, 124, 1, 0, 0, 0, 124, 125, 1, 0,
 		0, 0, 125, 127, 3, 24, 12, 0, 126, 123, 1, 0, 0, 0, 126, 127, 1, 0, 0,
-		0, 127, 23, 1, 0, 0, 0, 128, 129, 5, 38, 0, 0, 129, 25, 1, 0, 0, 0, 130,
+		0, 127, 23, 1, 0, 0, 0, 128, 129, 5, 45, 0, 0, 129, 25, 1, 0, 0, 0, 130,
 		131, 6, 13, -1, 0, 131, 136, 3, 74, 37, 0, 132, 133, 3, 42, 21, 0, 133,
 		134, 3, 26, 13, 1, 134, 136, 1, 0, 0, 0, 135, 130, 1, 0, 0, 0, 135, 132,
 		1, 0, 0, 0, 136, 149, 1, 0, 0, 0, 137, 138, 10, 3, 0, 0, 138, 139, 5, 25,
 		0, 0, 139, 148, 3, 70, 35, 0, 140, 141, 10, 2, 0, 0, 141, 144, 5, 18, 0,
-		0, 142, 145, 5, 45, 0, 0, 143, 145, 3, 72, 36, 0, 144, 142, 1, 0, 0, 0,
+		0, 142, 145, 5, 52, 0, 0, 143, 145, 3, 72, 36, 0, 144, 142, 1, 0, 0, 0,
 		144, 143, 1, 0, 0, 0, 145, 146, 1, 0, 0, 0, 146, 148, 5, 19, 0, 0, 147,
 		137, 1, 0, 0, 0, 147, 140, 1, 0, 0, 0, 148, 151, 1, 0, 0, 0, 149, 147,
 		1, 0, 0, 0, 149, 150, 1, 0, 0, 0, 150, 27, 1, 0, 0, 0, 151, 149, 1, 0,
@@ -151,7 +154,7 @@ func cosmosdbparserParserInit() {
 		179, 180, 5, 26, 0, 0, 180, 181, 3, 28, 14, 0, 181, 182, 5, 27, 0, 0, 182,
 		183, 3, 28, 14, 6, 183, 195, 1, 0, 0, 0, 184, 185, 10, 9, 0, 0, 185, 186,
 		5, 25, 0, 0, 186, 195, 3, 70, 35, 0, 187, 188, 10, 8, 0, 0, 188, 191, 5,
-		18, 0, 0, 189, 192, 5, 45, 0, 0, 190, 192, 3, 72, 36, 0, 191, 189, 1, 0,
+		18, 0, 0, 189, 192, 5, 52, 0, 0, 190, 192, 3, 72, 36, 0, 191, 189, 1, 0,
 		0, 0, 191, 190, 1, 0, 0, 0, 192, 193, 1, 0, 0, 0, 193, 195, 5, 19, 0, 0,
 		194, 168, 1, 0, 0, 0, 194, 171, 1, 0, 0, 0, 194, 174, 1, 0, 0, 0, 194,
 		178, 1, 0, 0, 0, 194, 184, 1, 0, 0, 0, 194, 187, 1, 0, 0, 0, 195, 198,
@@ -160,16 +163,16 @@ func cosmosdbparserParserInit() {
 		201, 202, 3, 48, 24, 0, 202, 33, 1, 0, 0, 0, 203, 206, 3, 36, 18, 0, 204,
 		206, 3, 38, 19, 0, 205, 203, 1, 0, 0, 0, 205, 204, 1, 0, 0, 0, 206, 35,
 		1, 0, 0, 0, 207, 208, 5, 11, 0, 0, 208, 209, 5, 25, 0, 0, 209, 210, 5,
-		38, 0, 0, 210, 211, 5, 20, 0, 0, 211, 216, 3, 28, 14, 0, 212, 213, 5, 24,
+		45, 0, 0, 210, 211, 5, 20, 0, 0, 211, 216, 3, 28, 14, 0, 212, 213, 5, 24,
 		0, 0, 213, 215, 3, 28, 14, 0, 214, 212, 1, 0, 0, 0, 215, 218, 1, 0, 0,
 		0, 216, 214, 1, 0, 0, 0, 216, 217, 1, 0, 0, 0, 217, 219, 1, 0, 0, 0, 218,
 		216, 1, 0, 0, 0, 219, 220, 5, 21, 0, 0, 220, 37, 1, 0, 0, 0, 221, 222,
-		5, 38, 0, 0, 222, 223, 5, 20, 0, 0, 223, 228, 3, 28, 14, 0, 224, 225, 5,
+		5, 45, 0, 0, 222, 223, 5, 20, 0, 0, 223, 228, 3, 28, 14, 0, 224, 225, 5,
 		24, 0, 0, 225, 227, 3, 28, 14, 0, 226, 224, 1, 0, 0, 0, 227, 230, 1, 0,
 		0, 0, 228, 226, 1, 0, 0, 0, 228, 229, 1, 0, 0, 0, 229, 231, 1, 0, 0, 0,
 		230, 228, 1, 0, 0, 0, 231, 232, 5, 21, 0, 0, 232, 39, 1, 0, 0, 0, 233,
 		234, 7, 0, 0, 0, 234, 41, 1, 0, 0, 0, 235, 236, 7, 1, 0, 0, 236, 43, 1,
-		0, 0, 0, 237, 238, 5, 15, 0, 0, 238, 239, 5, 38, 0, 0, 239, 45, 1, 0, 0,
+		0, 0, 0, 237, 238, 5, 15, 0, 0, 238, 239, 5, 45, 0, 0, 239, 45, 1, 0, 0,
 		0, 240, 248, 3, 56, 28, 0, 241, 248, 3, 58, 29, 0, 242, 248, 3, 60, 30,
 		0, 243, 248, 3, 62, 31, 0, 244, 248, 3, 54, 27, 0, 245, 248, 3, 52, 26,
 		0, 246, 248, 3, 48, 24, 0, 247, 240, 1, 0, 0, 0, 247, 241, 1, 0, 0, 0,
@@ -191,9 +194,9 @@ func cosmosdbparserParserInit() {
 		7, 0, 0, 288, 59, 1, 0, 0, 0, 289, 290, 7, 2, 0, 0, 290, 61, 1, 0, 0, 0,
 		291, 294, 3, 66, 33, 0, 292, 294, 3, 68, 34, 0, 293, 291, 1, 0, 0, 0, 293,
 		292, 1, 0, 0, 0, 294, 63, 1, 0, 0, 0, 295, 296, 7, 3, 0, 0, 296, 65, 1,
-		0, 0, 0, 297, 298, 7, 4, 0, 0, 298, 67, 1, 0, 0, 0, 299, 300, 5, 43, 0,
-		0, 300, 69, 1, 0, 0, 0, 301, 302, 5, 38, 0, 0, 302, 71, 1, 0, 0, 0, 303,
-		304, 5, 40, 0, 0, 304, 73, 1, 0, 0, 0, 305, 306, 5, 38, 0, 0, 306, 75,
+		0, 0, 0, 297, 298, 7, 4, 0, 0, 298, 67, 1, 0, 0, 0, 299, 300, 5, 50, 0,
+		0, 300, 69, 1, 0, 0, 0, 301, 302, 5, 45, 0, 0, 302, 71, 1, 0, 0, 0, 303,
+		304, 5, 47, 0, 0, 304, 73, 1, 0, 0, 0, 305, 306, 5, 45, 0, 0, 306, 75,
 		1, 0, 0, 0, 25, 82, 89, 92, 106, 109, 118, 123, 126, 135, 144, 147, 149,
 		166, 191, 194, 196, 205, 216, 228, 247, 255, 265, 276, 279, 293,
 	}
@@ -233,52 +236,59 @@ func NewCosmosDBParser(input antlr.TokenStream) *CosmosDBParser {
 
 // CosmosDBParser tokens.
 const (
-	CosmosDBParserEOF                         = antlr.TokenEOF
-	CosmosDBParserMULTIPLY_OPERATOR           = 1
-	CosmosDBParserAS_SYMBOL                   = 2
-	CosmosDBParserSELECT_SYMBOL               = 3
-	CosmosDBParserFROM_SYMBOL                 = 4
-	CosmosDBParserDISTINCT_SYMBOL             = 5
-	CosmosDBParserUNDEFINED_SYMBOL            = 6
-	CosmosDBParserNULL_SYMBOL                 = 7
-	CosmosDBParserFALSE_SYMBOL                = 8
-	CosmosDBParserTRUE_SYMBOL                 = 9
-	CosmosDBParserNOT_SYMBOL                  = 10
-	CosmosDBParserUDF_SYMBOL                  = 11
-	CosmosDBParserWHERE_SYMBOL                = 12
-	CosmosDBParserAND_SYMBOL                  = 13
-	CosmosDBParserOR_SYMBOL                   = 14
-	CosmosDBParserAT_SYMBOL                   = 15
-	CosmosDBParserLC_BRACKET_SYMBOL           = 16
-	CosmosDBParserRC_BRACKET_SYMBOL           = 17
-	CosmosDBParserLS_BRACKET_SYMBOL           = 18
-	CosmosDBParserRS_BRACKET_SYMBOL           = 19
-	CosmosDBParserLR_BRACKET_SYMBOL           = 20
-	CosmosDBParserRR_BRACKET_SYMBOL           = 21
-	CosmosDBParserSINGLE_QUOTE_SYMBOL         = 22
-	CosmosDBParserDOUBLE_QUOTE_SYMBOL         = 23
-	CosmosDBParserCOMMA_SYMBOL                = 24
-	CosmosDBParserDOT_SYMBOL                  = 25
-	CosmosDBParserQUESTION_MARK_SYMBOL        = 26
-	CosmosDBParserCOLON_SYMBOL                = 27
-	CosmosDBParserPLUS_SYMBOL                 = 28
-	CosmosDBParserMINUS_SYMBOL                = 29
-	CosmosDBParserBIT_NOT_SYMBOL              = 30
-	CosmosDBParserDIVIDE_SYMBOL               = 31
-	CosmosDBParserMODULO_SYMBOL               = 32
-	CosmosDBParserBIT_AND_SYMBOL              = 33
-	CosmosDBParserBIT_OR_SYMBOL               = 34
-	CosmosDBParserDOUBLE_BAR_SYMBOL           = 35
-	CosmosDBParserBIT_XOR_SYMBOL              = 36
-	CosmosDBParserEQUAL_SYMBOL                = 37
-	CosmosDBParserIDENTIFIER                  = 38
-	CosmosDBParserWHITESPACE                  = 39
-	CosmosDBParserDECIMAL                     = 40
-	CosmosDBParserREAL                        = 41
-	CosmosDBParserFLOAT                       = 42
-	CosmosDBParserHEXADECIMAL                 = 43
-	CosmosDBParserSINGLE_QUOTE_STRING_LITERAL = 44
-	CosmosDBParserDOUBLE_QUOTE_STRING_LITERAL = 45
+	CosmosDBParserEOF                            = antlr.TokenEOF
+	CosmosDBParserMULTIPLY_OPERATOR              = 1
+	CosmosDBParserAS_SYMBOL                      = 2
+	CosmosDBParserSELECT_SYMBOL                  = 3
+	CosmosDBParserFROM_SYMBOL                    = 4
+	CosmosDBParserDISTINCT_SYMBOL                = 5
+	CosmosDBParserUNDEFINED_SYMBOL               = 6
+	CosmosDBParserNULL_SYMBOL                    = 7
+	CosmosDBParserFALSE_SYMBOL                   = 8
+	CosmosDBParserTRUE_SYMBOL                    = 9
+	CosmosDBParserNOT_SYMBOL                     = 10
+	CosmosDBParserUDF_SYMBOL                     = 11
+	CosmosDBParserWHERE_SYMBOL                   = 12
+	CosmosDBParserAND_SYMBOL                     = 13
+	CosmosDBParserOR_SYMBOL                      = 14
+	CosmosDBParserAT_SYMBOL                      = 15
+	CosmosDBParserLC_BRACKET_SYMBOL              = 16
+	CosmosDBParserRC_BRACKET_SYMBOL              = 17
+	CosmosDBParserLS_BRACKET_SYMBOL              = 18
+	CosmosDBParserRS_BRACKET_SYMBOL              = 19
+	CosmosDBParserLR_BRACKET_SYMBOL              = 20
+	CosmosDBParserRR_BRACKET_SYMBOL              = 21
+	CosmosDBParserSINGLE_QUOTE_SYMBOL            = 22
+	CosmosDBParserDOUBLE_QUOTE_SYMBOL            = 23
+	CosmosDBParserCOMMA_SYMBOL                   = 24
+	CosmosDBParserDOT_SYMBOL                     = 25
+	CosmosDBParserQUESTION_MARK_SYMBOL           = 26
+	CosmosDBParserCOLON_SYMBOL                   = 27
+	CosmosDBParserPLUS_SYMBOL                    = 28
+	CosmosDBParserMINUS_SYMBOL                   = 29
+	CosmosDBParserBIT_NOT_SYMBOL                 = 30
+	CosmosDBParserDIVIDE_SYMBOL                  = 31
+	CosmosDBParserMODULO_SYMBOL                  = 32
+	CosmosDBParserBIT_AND_SYMBOL                 = 33
+	CosmosDBParserBIT_OR_SYMBOL                  = 34
+	CosmosDBParserDOUBLE_BAR_SYMBOL              = 35
+	CosmosDBParserBIT_XOR_SYMBOL                 = 36
+	CosmosDBParserEQUAL_SYMBOL                   = 37
+	CosmosDBParserLESS_THAN_OPERATOR             = 38
+	CosmosDBParserLESS_THAN_EQUAL_OPERATOR       = 39
+	CosmosDBParserGREATER_THAN_OPERATOR          = 40
+	CosmosDBParserGREATER_THAN_EQUAL_OPERATOR    = 41
+	CosmosDBParserLEFT_SHIFT_OPERATOR            = 42
+	CosmosDBParserRIGHT_SHIFT_OPERATOR           = 43
+	CosmosDBParserZERO_FILL_RIGHT_SHIFT_OPERATOR = 44
+	CosmosDBParserIDENTIFIER                     = 45
+	CosmosDBParserWHITESPACE                     = 46
+	CosmosDBParserDECIMAL                        = 47
+	CosmosDBParserREAL                           = 48
+	CosmosDBParserFLOAT                          = 49
+	CosmosDBParserHEXADECIMAL                    = 50
+	CosmosDBParserSINGLE_QUOTE_STRING_LITERAL    = 51
+	CosmosDBParserDOUBLE_QUOTE_STRING_LITERAL    = 52
 )
 
 // CosmosDBParser rules.
@@ -3989,6 +3999,13 @@ type IBinary_operatorContext interface {
 	BIT_OR_SYMBOL() antlr.TerminalNode
 	DOUBLE_BAR_SYMBOL() antlr.TerminalNode
 	EQUAL_SYMBOL() antlr.TerminalNode
+	LESS_THAN_OPERATOR() antlr.TerminalNode
+	LESS_THAN_EQUAL_OPERATOR() antlr.TerminalNode
+	GREATER_THAN_OPERATOR() antlr.TerminalNode
+	GREATER_THAN_EQUAL_OPERATOR() antlr.TerminalNode
+	LEFT_SHIFT_OPERATOR() antlr.TerminalNode
+	RIGHT_SHIFT_OPERATOR() antlr.TerminalNode
+	ZERO_FILL_RIGHT_SHIFT_OPERATOR() antlr.TerminalNode
 
 	// IsBinary_operatorContext differentiates from other interfaces.
 	IsBinary_operatorContext()
@@ -4066,6 +4083,34 @@ func (s *Binary_operatorContext) EQUAL_SYMBOL() antlr.TerminalNode {
 	return s.GetToken(CosmosDBParserEQUAL_SYMBOL, 0)
 }
 
+func (s *Binary_operatorContext) LESS_THAN_OPERATOR() antlr.TerminalNode {
+	return s.GetToken(CosmosDBParserLESS_THAN_OPERATOR, 0)
+}
+
+func (s *Binary_operatorContext) LESS_THAN_EQUAL_OPERATOR() antlr.TerminalNode {
+	return s.GetToken(CosmosDBParserLESS_THAN_EQUAL_OPERATOR, 0)
+}
+
+func (s *Binary_operatorContext) GREATER_THAN_OPERATOR() antlr.TerminalNode {
+	return s.GetToken(CosmosDBParserGREATER_THAN_OPERATOR, 0)
+}
+
+func (s *Binary_operatorContext) GREATER_THAN_EQUAL_OPERATOR() antlr.TerminalNode {
+	return s.GetToken(CosmosDBParserGREATER_THAN_EQUAL_OPERATOR, 0)
+}
+
+func (s *Binary_operatorContext) LEFT_SHIFT_OPERATOR() antlr.TerminalNode {
+	return s.GetToken(CosmosDBParserLEFT_SHIFT_OPERATOR, 0)
+}
+
+func (s *Binary_operatorContext) RIGHT_SHIFT_OPERATOR() antlr.TerminalNode {
+	return s.GetToken(CosmosDBParserRIGHT_SHIFT_OPERATOR, 0)
+}
+
+func (s *Binary_operatorContext) ZERO_FILL_RIGHT_SHIFT_OPERATOR() antlr.TerminalNode {
+	return s.GetToken(CosmosDBParserZERO_FILL_RIGHT_SHIFT_OPERATOR, 0)
+}
+
 func (s *Binary_operatorContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
@@ -4106,7 +4151,7 @@ func (p *CosmosDBParser) Binary_operator() (localctx IBinary_operatorContext) {
 		p.SetState(233)
 		_la = p.GetTokenStream().LA(1)
 
-		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&273535729666) != 0) {
+		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&35183029911554) != 0) {
 			p.GetErrorHandler().RecoverInline(p)
 		} else {
 			p.GetErrorHandler().ReportMatch(p)
@@ -5198,7 +5243,7 @@ func (p *CosmosDBParser) Array_constant() (localctx IArray_constantContext) {
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&69269232878528) != 0 {
+	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&8866461766714304) != 0 {
 		{
 			p.SetState(271)
 			p.Constant()
@@ -6064,7 +6109,7 @@ func (p *CosmosDBParser) Decimal_literal() (localctx IDecimal_literalContext) {
 		p.SetState(297)
 		_la = p.GetTokenStream().LA(1)
 
-		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&7696581394432) != 0) {
+		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&985162418487296) != 0) {
 			p.GetErrorHandler().RecoverInline(p)
 		} else {
 			p.GetErrorHandler().ReportMatch(p)
