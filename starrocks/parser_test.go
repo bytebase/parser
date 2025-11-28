@@ -1,4 +1,4 @@
-package doris_test
+package starrocks_test
 
 import (
 	"io/ioutil"
@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/antlr4-go/antlr/v4"
-	doris "github.com/bytebase/parser/doris"
+	starrocks "github.com/bytebase/parser/starrocks"
 	"github.com/stretchr/testify/require"
 )
 
@@ -37,7 +37,7 @@ func (l *CustomErrorListener) ReportContextSensitivity(recognizer antlr.Parser, 
 	antlr.ConsoleErrorListenerINSTANCE.ReportContextSensitivity(recognizer, dfa, startIndex, stopIndex, prediction, configs)
 }
 
-func TestDorisSQLParser(t *testing.T) {
+func TestStarRocksSQLParser(t *testing.T) {
 	examples, err := os.ReadDir("examples")
 	require.NoError(t, err)
 
@@ -55,10 +55,10 @@ func TestDorisSQLParser(t *testing.T) {
 
 			input := antlr.NewInputStream(dataString)
 
-			lexer := doris.NewDorisSQLLexer(input)
+			lexer := starrocks.NewStarRocksSQLLexer(input)
 
 			stream := antlr.NewCommonTokenStream(lexer, 0)
-			p := doris.NewDorisSQLParser(stream)
+			p := starrocks.NewStarRocksSQLParser(stream)
 
 			lexerErrors := &CustomErrorListener{}
 			lexer.RemoveErrorListeners()

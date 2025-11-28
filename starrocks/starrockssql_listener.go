@@ -1,10 +1,10 @@
-// Code generated from DorisSQL.g4 by ANTLR 4.13.2. DO NOT EDIT.
+// Code generated from StarRocksSQL.g4 by ANTLR 4.13.2. DO NOT EDIT.
 
-package doris // DorisSQL
+package starrocks // StarRocksSQL
 import "github.com/antlr4-go/antlr/v4"
 
-// DorisSQLListener is a complete listener for a parse tree produced by DorisSQLParser.
-type DorisSQLListener interface {
+// StarRocksSQLListener is a complete listener for a parse tree produced by StarRocksSQLParser.
+type StarRocksSQLListener interface {
 	antlr.ParseTreeListener
 
 	// EnterSqlStatements is called when entering the sqlStatements production.

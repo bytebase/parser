@@ -1,4 +1,4 @@
-The doris-parser is a parser for DORIS SQL. It is based on the [ANTLR4](https://github.com/antlr/antlr4).
+The StarRocks parser is a parser for StarRocks SQL. It is based on the [ANTLR4](https://github.com/antlr/antlr4).
 
 ## Build
 
@@ -20,7 +20,7 @@ requirements:
 
 ## Test the parser
 
-Run `TestDorisSQLDBSQLParser` in `parser_test.go` to test the parser.
+Run `TestStarRocksSQLParser` in `parser_test.go` to test the parser.
 
 ```bash
 go test -v
