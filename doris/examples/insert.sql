@@ -1,0 +1,10 @@
+INSERT INTO test VALUES (1, 2);
+INSERT INTO test (c1, c2) VALUES (1, 2);
+INSERT INTO test (c1, c2) VALUES (1, DEFAULT);
+INSERT INTO test (c1) VALUES (1);
+INSERT INTO test VALUES (1, 2), (3, 2 + 2);
+INSERT INTO test (c1, c2) VALUES (1, 2), (3, 2 * 2);
+INSERT INTO test (c1) VALUES (1), (3);
+INSERT INTO test (c1, c2) VALUES (1, DEFAULT), (3, DEFAULT);
+INSERT INTO test SELECT * FROM test2;
+INSERT INTO test (c1, c2) SELECT * FROM test2
