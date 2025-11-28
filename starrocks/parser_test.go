@@ -1,4 +1,4 @@
-package doris_test
+package starrocks_test
 
 import (
 	"io/ioutil"
@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/antlr4-go/antlr/v4"
-	doris "github.com/bytebase/parser/doris"
+	starrocks "github.com/bytebase/parser/starrocks"
 	"github.com/stretchr/testify/require"
 )
 
@@ -37,7 +37,7 @@ func (l *CustomErrorListener) ReportContextSensitivity(recognizer antlr.Parser, 
 	antlr.ConsoleErrorListenerINSTANCE.ReportContextSensitivity(recognizer, dfa, startIndex, stopIndex, prediction, configs)
 }
 
-func TestDorisParser(t *testing.T) {
+func TestStarRocksSQLParser(t *testing.T) {
 	examples, err := os.ReadDir("examples")
 	require.NoError(t, err)
 
@@ -50,13 +50,15 @@ func TestDorisParser(t *testing.T) {
 			require.NoError(t, err)
 
 			dataString := strings.TrimRight(string(data), " \t\r\n;") + "\n;"
+			// dataString := string(data)
+			// antlr.ConfigureRuntime(antlr.WithParserATNSimulatorDebug(true))
 
 			input := antlr.NewInputStream(dataString)
 
-			lexer := doris.NewDorisLexer(input)
+			lexer := starrocks.NewStarRocksSQLLexer(input)
 
 			stream := antlr.NewCommonTokenStream(lexer, 0)
-			p := doris.NewDorisParser(stream)
+			p := starrocks.NewStarRocksSQLParser(stream)
 
 			lexerErrors := &CustomErrorListener{}
 			lexer.RemoveErrorListeners()
@@ -68,7 +70,11 @@ func TestDorisParser(t *testing.T) {
 
 			p.BuildParseTrees = true
 
-			tree := p.MultiStatements()
+			tree := p.SqlStatements()
+
+			// tree := p.FromClause()
+
+			// fmt.Println(stream.GetAllText())
 
 			require.Equal(t, 0, lexerErrors.errors)
 			require.Equal(t, 0, parserErrors.errors)
