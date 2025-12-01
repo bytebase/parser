@@ -1,9 +1,9 @@
 package doris_test
 
 import (
+	"io/fs"
 	"io/ioutil"
-	"os"
-	"path"
+	"path/filepath"
 	"strings"
 	"testing"
 
@@ -38,36 +38,20 @@ func (l *CustomErrorListener) ReportContextSensitivity(recognizer antlr.Parser, 
 }
 
 func TestDorisParser(t *testing.T) {
-	examples, err := os.ReadDir("examples")
-	require.NoError(t, err)
-
-	for _, file := range examples {
-		if file.IsDir() {
-			// Handle subdirectories like regression/
-			subdir := path.Join("examples", file.Name())
-			subFiles, err := os.ReadDir(subdir)
-			require.NoError(t, err)
-			for _, subFile := range subFiles {
-				if subFile.IsDir() || !strings.HasSuffix(subFile.Name(), ".sql") {
-					continue
-				}
-				filePath := path.Join(subdir, subFile.Name())
-				t.Run(filePath, func(t *testing.T) {
-					t.Parallel()
-					runParserTest(t, filePath)
-				})
-			}
-			continue
+	err := filepath.WalkDir("examples", func(filePath string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
 		}
-		if !strings.HasSuffix(file.Name(), ".sql") {
-			continue
+		if d.IsDir() || !strings.HasSuffix(d.Name(), ".sql") {
+			return nil
 		}
-		filePath := path.Join("examples", file.Name())
 		t.Run(filePath, func(t *testing.T) {
 			t.Parallel()
 			runParserTest(t, filePath)
 		})
-	}
+		return nil
+	})
+	require.NoError(t, err)
 }
 
 func runParserTest(t *testing.T, filePath string) {
