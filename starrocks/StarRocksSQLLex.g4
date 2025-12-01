@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-lexer grammar DorisSQLLex;
+lexer grammar StarRocksSQLLex;
 tokens {
     CONCAT
 }

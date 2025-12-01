@@ -1,14 +1,14 @@
-package doris_test
+package starrocks_test
 
 import (
-	"io/fs"
 	"io/ioutil"
-	"path/filepath"
+	"os"
+	"path"
 	"strings"
 	"testing"
 
 	"github.com/antlr4-go/antlr/v4"
-	doris "github.com/bytebase/parser/doris"
+	starrocks "github.com/bytebase/parser/starrocks"
 	"github.com/stretchr/testify/require"
 )
 
@@ -37,51 +37,49 @@ func (l *CustomErrorListener) ReportContextSensitivity(recognizer antlr.Parser, 
 	antlr.ConsoleErrorListenerINSTANCE.ReportContextSensitivity(recognizer, dfa, startIndex, stopIndex, prediction, configs)
 }
 
-func TestDorisParser(t *testing.T) {
-	err := filepath.WalkDir("examples", func(filePath string, d fs.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-		if d.IsDir() || !strings.HasSuffix(d.Name(), ".sql") {
-			return nil
-		}
+func TestStarRocksSQLParser(t *testing.T) {
+	examples, err := os.ReadDir("examples")
+	require.NoError(t, err)
+
+	for _, file := range examples {
+		filePath := path.Join("examples", file.Name())
 		t.Run(filePath, func(t *testing.T) {
 			t.Parallel()
-			runParserTest(t, filePath)
+			// read all the bytes from the file
+			data, err := ioutil.ReadFile(filePath)
+			require.NoError(t, err)
+
+			dataString := strings.TrimRight(string(data), " \t\r\n;") + "\n;"
+			// dataString := string(data)
+			// antlr.ConfigureRuntime(antlr.WithParserATNSimulatorDebug(true))
+
+			input := antlr.NewInputStream(dataString)
+
+			lexer := starrocks.NewStarRocksSQLLexer(input)
+
+			stream := antlr.NewCommonTokenStream(lexer, 0)
+			p := starrocks.NewStarRocksSQLParser(stream)
+
+			lexerErrors := &CustomErrorListener{}
+			lexer.RemoveErrorListeners()
+			lexer.AddErrorListener(lexerErrors)
+
+			parserErrors := &CustomErrorListener{}
+			p.RemoveErrorListeners()
+			p.AddErrorListener(parserErrors)
+
+			p.BuildParseTrees = true
+
+			tree := p.SqlStatements()
+
+			// tree := p.FromClause()
+
+			// fmt.Println(stream.GetAllText())
+
+			require.Equal(t, 0, lexerErrors.errors)
+			require.Equal(t, 0, parserErrors.errors)
+
+			require.Equal(t, dataString, stream.GetTextFromRuleContext(tree))
 		})
-		return nil
-	})
-	require.NoError(t, err)
-}
-
-func runParserTest(t *testing.T, filePath string) {
-	// read all the bytes from the file
-	data, err := ioutil.ReadFile(filePath)
-	require.NoError(t, err)
-
-	dataString := strings.TrimRight(string(data), " \t\r\n;") + "\n;"
-
-	input := antlr.NewInputStream(dataString)
-
-	lexer := doris.NewDorisLexer(input)
-
-	stream := antlr.NewCommonTokenStream(lexer, 0)
-	p := doris.NewDorisParser(stream)
-
-	lexerErrors := &CustomErrorListener{}
-	lexer.RemoveErrorListeners()
-	lexer.AddErrorListener(lexerErrors)
-
-	parserErrors := &CustomErrorListener{}
-	p.RemoveErrorListeners()
-	p.AddErrorListener(parserErrors)
-
-	p.BuildParseTrees = true
-
-	tree := p.MultiStatements()
-
-	require.Equal(t, 0, lexerErrors.errors)
-	require.Equal(t, 0, parserErrors.errors)
-
-	require.Equal(t, dataString, stream.GetTextFromRuleContext(tree))
+	}
 }
