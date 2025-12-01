@@ -42,38 +42,62 @@ func TestDorisParser(t *testing.T) {
 	require.NoError(t, err)
 
 	for _, file := range examples {
+		if file.IsDir() {
+			// Handle subdirectories like regression/
+			subdir := path.Join("examples", file.Name())
+			subFiles, err := os.ReadDir(subdir)
+			require.NoError(t, err)
+			for _, subFile := range subFiles {
+				if subFile.IsDir() || !strings.HasSuffix(subFile.Name(), ".sql") {
+					continue
+				}
+				filePath := path.Join(subdir, subFile.Name())
+				t.Run(filePath, func(t *testing.T) {
+					t.Parallel()
+					runParserTest(t, filePath)
+				})
+			}
+			continue
+		}
+		if !strings.HasSuffix(file.Name(), ".sql") {
+			continue
+		}
 		filePath := path.Join("examples", file.Name())
 		t.Run(filePath, func(t *testing.T) {
 			t.Parallel()
-			// read all the bytes from the file
-			data, err := ioutil.ReadFile(filePath)
-			require.NoError(t, err)
-
-			dataString := strings.TrimRight(string(data), " \t\r\n;") + "\n;"
-
-			input := antlr.NewInputStream(dataString)
-
-			lexer := doris.NewDorisLexer(input)
-
-			stream := antlr.NewCommonTokenStream(lexer, 0)
-			p := doris.NewDorisParser(stream)
-
-			lexerErrors := &CustomErrorListener{}
-			lexer.RemoveErrorListeners()
-			lexer.AddErrorListener(lexerErrors)
-
-			parserErrors := &CustomErrorListener{}
-			p.RemoveErrorListeners()
-			p.AddErrorListener(parserErrors)
-
-			p.BuildParseTrees = true
-
-			tree := p.MultiStatements()
-
-			require.Equal(t, 0, lexerErrors.errors)
-			require.Equal(t, 0, parserErrors.errors)
-
-			require.Equal(t, dataString, stream.GetTextFromRuleContext(tree))
+			runParserTest(t, filePath)
 		})
 	}
+}
+
+func runParserTest(t *testing.T, filePath string) {
+	// read all the bytes from the file
+	data, err := ioutil.ReadFile(filePath)
+	require.NoError(t, err)
+
+	dataString := strings.TrimRight(string(data), " \t\r\n;") + "\n;"
+
+	input := antlr.NewInputStream(dataString)
+
+	lexer := doris.NewDorisLexer(input)
+
+	stream := antlr.NewCommonTokenStream(lexer, 0)
+	p := doris.NewDorisParser(stream)
+
+	lexerErrors := &CustomErrorListener{}
+	lexer.RemoveErrorListeners()
+	lexer.AddErrorListener(lexerErrors)
+
+	parserErrors := &CustomErrorListener{}
+	p.RemoveErrorListeners()
+	p.AddErrorListener(parserErrors)
+
+	p.BuildParseTrees = true
+
+	tree := p.MultiStatements()
+
+	require.Equal(t, 0, lexerErrors.errors)
+	require.Equal(t, 0, parserErrors.errors)
+
+	require.Equal(t, dataString, stream.GetTextFromRuleContext(tree))
 }
