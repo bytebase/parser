@@ -19,6 +19,8 @@
 
 lexer grammar DorisLexer;
 
+options { caseInsensitive = true; }
+
 // @members section removed - Java code not compatible with Go target
 // Original predicates isValidDecimal() and isNoBackslashEscapes removed
 
