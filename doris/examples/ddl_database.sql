@@ -7,4 +7,8 @@ ALTER DATABASE example_db SET REPLICA QUOTA 102400;
 ALTER DATABASE example_db SET PROPERTIES("replication_allocation" = "tag.location.default:2");
 ALTER DATABASE example_db SET PROPERTIES("replication_allocation" = "");
 ALTER DATABASE example_db SET PROPERTIES("storage_vault_name" = "hdfs_demo_vault");
-ALTER DATABASE example_db SET PROPERTIES("storage_vault_name" = "")
+ALTER DATABASE example_db SET PROPERTIES("storage_vault_name" = "");
+DROP DATABASE db_test;
+SHOW DATABASES;
+SHOW DATABASES FROM hms_catalog;
+SHOW DATABASES LIKE 'infor%'
