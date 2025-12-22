@@ -4557,6 +4557,12 @@ func (s *BasePostgreSQLParserListener) EnterCollabel(ctx *CollabelContext) {}
 // ExitCollabel is called when production collabel is exited.
 func (s *BasePostgreSQLParserListener) ExitCollabel(ctx *CollabelContext) {}
 
+// EnterBare_col_label is called when production bare_col_label is entered.
+func (s *BasePostgreSQLParserListener) EnterBare_col_label(ctx *Bare_col_labelContext) {}
+
+// ExitBare_col_label is called when production bare_col_label is exited.
+func (s *BasePostgreSQLParserListener) ExitBare_col_label(ctx *Bare_col_labelContext) {}
+
 // EnterIdentifier is called when production identifier is entered.
 func (s *BasePostgreSQLParserListener) EnterIdentifier(ctx *IdentifierContext) {}
 
@@ -5297,3 +5303,9 @@ func (s *BasePostgreSQLParserListener) EnterType_func_name_keyword(ctx *Type_fun
 // ExitType_func_name_keyword is called when production type_func_name_keyword is exited.
 func (s *BasePostgreSQLParserListener) ExitType_func_name_keyword(ctx *Type_func_name_keywordContext) {
 }
+
+// EnterBare_label_keyword is called when production bare_label_keyword is entered.
+func (s *BasePostgreSQLParserListener) EnterBare_label_keyword(ctx *Bare_label_keywordContext) {}
+
+// ExitBare_label_keyword is called when production bare_label_keyword is exited.
+func (s *BasePostgreSQLParserListener) ExitBare_label_keyword(ctx *Bare_label_keywordContext) {}

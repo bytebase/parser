@@ -2179,6 +2179,9 @@ type PostgreSQLParserListener interface {
 	// EnterCollabel is called when entering the collabel production.
 	EnterCollabel(c *CollabelContext)
 
+	// EnterBare_col_label is called when entering the bare_col_label production.
+	EnterBare_col_label(c *Bare_col_labelContext)
+
 	// EnterIdentifier is called when entering the identifier production.
 	EnterIdentifier(c *IdentifierContext)
 
@@ -2538,6 +2541,9 @@ type PostgreSQLParserListener interface {
 
 	// EnterType_func_name_keyword is called when entering the type_func_name_keyword production.
 	EnterType_func_name_keyword(c *Type_func_name_keywordContext)
+
+	// EnterBare_label_keyword is called when entering the bare_label_keyword production.
+	EnterBare_label_keyword(c *Bare_label_keywordContext)
 
 	// ExitRoot is called when exiting the root production.
 	ExitRoot(c *RootContext)
@@ -4711,6 +4717,9 @@ type PostgreSQLParserListener interface {
 	// ExitCollabel is called when exiting the collabel production.
 	ExitCollabel(c *CollabelContext)
 
+	// ExitBare_col_label is called when exiting the bare_col_label production.
+	ExitBare_col_label(c *Bare_col_labelContext)
+
 	// ExitIdentifier is called when exiting the identifier production.
 	ExitIdentifier(c *IdentifierContext)
 
@@ -5070,4 +5079,7 @@ type PostgreSQLParserListener interface {
 
 	// ExitType_func_name_keyword is called when exiting the type_func_name_keyword production.
 	ExitType_func_name_keyword(c *Type_func_name_keywordContext)
+
+	// ExitBare_label_keyword is called when exiting the bare_label_keyword production.
+	ExitBare_label_keyword(c *Bare_label_keywordContext)
 }
