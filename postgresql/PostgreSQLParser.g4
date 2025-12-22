@@ -4043,7 +4043,7 @@ target_el
    
 target_alias
    : AS collabel
-   | identifier
+   | bare_col_label
    ;
 
 qualified_name_list
@@ -4182,6 +4182,14 @@ collabel
    | reserved_keyword
    ;
 
+// Bare column label - names that can be column labels without writing "AS".
+// This classification is orthogonal to the other keyword categories.
+// See PostgreSQL's gram.y BareColLabel rule.
+bare_col_label
+   : identifier
+   | bare_label_keyword
+   ;
+
 identifier
    : Identifier opt_uescape?
    | QuotedIdentifier
@@ -4197,9 +4205,9 @@ plsqlidentifier
 
 // ============================================================================
 // NOTE: The keyword rules (reserved_keyword, unreserved_keyword,
-// col_name_keyword, type_func_name_keyword) are now imported from
-// PostgreSQLKeywords.g4, which is auto-generated from PostgreSQL's official
-// kwlist.h file.
+// col_name_keyword, type_func_name_keyword, bare_label_keyword) are now
+// imported from PostgreSQLKeywords.g4, which is auto-generated from
+// PostgreSQL's official kwlist.h file.
 //
 // To regenerate: make generate-keywords
 // ============================================================================

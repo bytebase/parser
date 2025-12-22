@@ -27,6 +27,10 @@ const (
 	CategoryColName      = "COL_NAME_KEYWORD"
 	CategoryTypeFuncName = "TYPE_FUNC_NAME_KEYWORD"
 
+	// Label types for bare column labels (orthogonal to keyword categories)
+	LabelBare = "BARE_LABEL"
+	LabelAS   = "AS_LABEL"
+
 	// PostgreSQL version/branch to fetch keywords from
 	PostgreSQLVersion   = "REL_18_STABLE"
 	PostgreSQLKwlistURL = "https://raw.githubusercontent.com/postgres/postgres/" + PostgreSQLVersion + "/src/include/parser/kwlist.h"
@@ -49,8 +53,11 @@ func main() {
 
 	fmt.Printf("✓ Parsed %d keywords\n\n", len(keywords))
 
-	// Categorize keywords
+	// Categorize keywords by category
 	categorized := categorizeKeywords(keywords)
+
+	// Categorize keywords by label type
+	labelCategorized := categorizeByLabel(keywords)
 
 	fmt.Printf("Keyword Statistics:\n")
 	fmt.Printf("  Reserved keywords:          %3d\n", len(categorized[CategoryReserved]))
@@ -60,9 +67,13 @@ func main() {
 	fmt.Printf("  ───────────────────────────────\n")
 	fmt.Printf("  Total:                      %3d\n\n", len(keywords))
 
+	fmt.Printf("Label Statistics (orthogonal to categories):\n")
+	fmt.Printf("  Bare label keywords:        %3d\n", len(labelCategorized[LabelBare]))
+	fmt.Printf("  AS-only label keywords:     %3d\n\n", len(labelCategorized[LabelAS]))
+
 	// Generate ANTLR parser grammar fragment
 	parserOutputPath := path.Join(*outputDir, "PostgreSQLKeywords.g4")
-	err = generateANTLRGrammar(categorized, parserOutputPath)
+	err = generateANTLRGrammar(categorized, labelCategorized, parserOutputPath)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error generating parser grammar: %v\n", err)
 		os.Exit(1)
@@ -146,6 +157,17 @@ func categorizeKeywords(keywords []Keyword) map[string][]Keyword {
 	return categorized
 }
 
+// categorizeByLabel groups keywords by their label type (BARE_LABEL vs AS_LABEL)
+func categorizeByLabel(keywords []Keyword) map[string][]Keyword {
+	categorized := make(map[string][]Keyword)
+
+	for _, kw := range keywords {
+		categorized[kw.Label] = append(categorized[kw.Label], kw)
+	}
+
+	return categorized
+}
+
 // applyTokenRename applies ANTLR reserved name renaming to token names
 func applyTokenRename(token string) string {
 	antlrReservedNames := map[string]bool{
@@ -160,7 +182,7 @@ func applyTokenRename(token string) string {
 }
 
 // generateANTLRGrammar generates ANTLR grammar file with keyword rules
-func generateANTLRGrammar(categorized map[string][]Keyword, outputPath string) error {
+func generateANTLRGrammar(categorized map[string][]Keyword, labelCategorized map[string][]Keyword, outputPath string) error {
 	f, err := os.Create(outputPath)
 	if err != nil {
 		return fmt.Errorf("failed to create output file: %w", err)
@@ -254,6 +276,26 @@ func generateANTLRGrammar(categorized map[string][]Keyword, outputPath string) e
 		fmt.Fprintf(w, "// Examples: AUTHORIZATION, BINARY, COLLATION, CROSS, JOIN\n")
 		fmt.Fprintf(w, "// ============================================================================\n\n")
 		fmt.Fprintf(w, "type_func_name_keyword\n")
+		fmt.Fprintf(w, "   : %s\n", applyTokenRename(keywords[0].Token))
+		for i := 1; i < len(keywords); i++ {
+			fmt.Fprintf(w, "   | %s\n", applyTokenRename(keywords[i].Token))
+		}
+		fmt.Fprintf(w, "   ;\n\n")
+	}
+
+	// Generate bare_label_keyword rule (orthogonal to the other categories)
+	if keywords := labelCategorized[LabelBare]; len(keywords) > 0 {
+		fmt.Fprintf(w, "// ============================================================================\n")
+		fmt.Fprintf(w, "// Bare Label Keywords (%d total)\n", len(keywords))
+		fmt.Fprintf(w, "// ============================================================================\n")
+		fmt.Fprintf(w, "// These keywords can be used as column labels WITHOUT the AS keyword.\n")
+		fmt.Fprintf(w, "// This classification is orthogonal to the other keyword categories.\n")
+		fmt.Fprintf(w, "// Keywords not in this list require the AS keyword when used as labels.\n")
+		fmt.Fprintf(w, "//\n")
+		fmt.Fprintf(w, "// Usage: SELECT 1 name; -- 'name' is a bare_label_keyword, no AS needed\n")
+		fmt.Fprintf(w, "//        SELECT 1 AS year; -- 'year' requires AS (not a bare_label_keyword)\n")
+		fmt.Fprintf(w, "// ============================================================================\n\n")
+		fmt.Fprintf(w, "bare_label_keyword\n")
 		fmt.Fprintf(w, "   : %s\n", applyTokenRename(keywords[0].Token))
 		for i := 1; i < len(keywords); i++ {
 			fmt.Fprintf(w, "   | %s\n", applyTokenRename(keywords[i].Token))

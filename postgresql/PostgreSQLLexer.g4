@@ -52,7 +52,7 @@ options {
 //
 // Source: PostgreSQL REL_18_STABLE kwlist.h
 // URL: https://raw.githubusercontent.com/postgres/postgres/REL_18_STABLE/src/include/parser/kwlist.h
-// Generated: 2025-11-13T17:32:00+08:00
+// Generated: 2025-12-22T17:51:41+08:00
 // Total Keywords: 494
 //
 // NOTE: These keyword rules must appear BEFORE the Identifier rule

@@ -2179,6 +2179,9 @@ type PostgreSQLParserVisitor interface {
 	// Visit a parse tree produced by PostgreSQLParser#collabel.
 	VisitCollabel(ctx *CollabelContext) interface{}
 
+	// Visit a parse tree produced by PostgreSQLParser#bare_col_label.
+	VisitBare_col_label(ctx *Bare_col_labelContext) interface{}
+
 	// Visit a parse tree produced by PostgreSQLParser#identifier.
 	VisitIdentifier(ctx *IdentifierContext) interface{}
 
@@ -2538,4 +2541,7 @@ type PostgreSQLParserVisitor interface {
 
 	// Visit a parse tree produced by PostgreSQLParser#type_func_name_keyword.
 	VisitType_func_name_keyword(ctx *Type_func_name_keywordContext) interface{}
+
+	// Visit a parse tree produced by PostgreSQLParser#bare_label_keyword.
+	VisitBare_label_keyword(ctx *Bare_label_keywordContext) interface{}
 }

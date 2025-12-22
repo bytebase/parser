@@ -2903,6 +2903,10 @@ func (v *BasePostgreSQLParserVisitor) VisitCollabel(ctx *CollabelContext) interf
 	return v.VisitChildren(ctx)
 }
 
+func (v *BasePostgreSQLParserVisitor) VisitBare_col_label(ctx *Bare_col_labelContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BasePostgreSQLParserVisitor) VisitIdentifier(ctx *IdentifierContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -3380,5 +3384,9 @@ func (v *BasePostgreSQLParserVisitor) VisitCol_name_keyword(ctx *Col_name_keywor
 }
 
 func (v *BasePostgreSQLParserVisitor) VisitType_func_name_keyword(ctx *Type_func_name_keywordContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePostgreSQLParserVisitor) VisitBare_label_keyword(ctx *Bare_label_keywordContext) interface{} {
 	return v.VisitChildren(ctx)
 }
