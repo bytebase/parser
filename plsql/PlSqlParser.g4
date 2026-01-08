@@ -2399,9 +2399,9 @@ rename_object
 grant_statement
     : GRANT
         ( COMMA?
-          (role_name
+          (object_privilege paren_column_list?
           | system_privilege
-          | object_privilege paren_column_list?
+          | role_name
           )
         )+
       (ON grant_object_name)?
@@ -2418,7 +2418,7 @@ container_clause
 
 // https://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/REVOKE.html
 revoke_statement
-    : REVOKE ((revoke_system_privilege | revoke_object_privileges) container_clause? | revoke_roles_from_programs)
+    : REVOKE ((revoke_object_privileges | revoke_system_privilege) container_clause? | revoke_roles_from_programs)
     ;
 
 revoke_system_privilege
