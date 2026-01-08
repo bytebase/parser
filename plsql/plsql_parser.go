@@ -2257,7 +2257,7 @@ func plsqlparserParserInit() {
 		8, 371, 3, 371, 7967, 8, 371, 1, 371, 1, 371, 3, 371, 7971, 8, 371, 1,
 		371, 3, 371, 7974, 8, 371, 1, 371, 3, 371, 7977, 8, 371, 1, 372, 1, 372,
 		1, 372, 1, 372, 1, 372, 1, 372, 1, 373, 1, 373, 3, 373, 7987, 8, 373, 1,
-		373, 1, 373, 1, 373, 1, 373, 3, 373, 7993, 8, 373, 3, 373, 7995, 8, 373,
+		373, 1, 373, 3, 373, 7991, 8, 373, 1, 373, 1, 373, 3, 373, 7995, 8, 373,
 		4, 373, 7997, 8, 373, 11, 373, 12, 373, 7998, 1, 373, 1, 373, 3, 373, 8003,
 		8, 373, 1, 373, 1, 373, 1, 373, 3, 373, 8008, 8, 373, 1, 373, 1, 373, 1,
 		373, 3, 373, 8013, 8, 373, 5, 373, 8015, 8, 373, 10, 373, 12, 373, 8018,
@@ -6947,11 +6947,11 @@ func plsqlparserParserInit() {
 		0, 0, 7979, 7980, 3, 722, 361, 0, 7980, 7981, 5, 2029, 0, 0, 7981, 7982,
 		3, 722, 361, 0, 7982, 7983, 5, 2396, 0, 0, 7983, 745, 1, 0, 0, 0, 7984,
 		7996, 5, 591, 0, 0, 7985, 7987, 5, 2382, 0, 0, 7986, 7985, 1, 0, 0, 0,
-		7986, 7987, 1, 0, 0, 0, 7987, 7994, 1, 0, 0, 0, 7988, 7995, 3, 2236, 1118,
-		0, 7989, 7995, 3, 2318, 1159, 0, 7990, 7992, 3, 2316, 1158, 0, 7991, 7993,
-		3, 2286, 1143, 0, 7992, 7991, 1, 0, 0, 0, 7992, 7993, 1, 0, 0, 0, 7993,
-		7995, 1, 0, 0, 0, 7994, 7988, 1, 0, 0, 0, 7994, 7989, 1, 0, 0, 0, 7994,
-		7990, 1, 0, 0, 0, 7995, 7997, 1, 0, 0, 0, 7996, 7986, 1, 0, 0, 0, 7997,
+		7986, 7987, 1, 0, 0, 0, 7987, 7994, 1, 0, 0, 0, 7988, 7990, 3, 2316, 1158,
+		0, 7989, 7991, 3, 2286, 1143, 0, 7990, 7989, 1, 0, 0, 0, 7990, 7991, 1,
+		0, 0, 0, 7991, 7995, 1, 0, 0, 0, 7992, 7995, 3, 2318, 1159, 0, 7993, 7995,
+		3, 2236, 1118, 0, 7994, 7988, 1, 0, 0, 0, 7994, 7992, 1, 0, 0, 0, 7994,
+		7993, 1, 0, 0, 0, 7995, 7997, 1, 0, 0, 0, 7996, 7986, 1, 0, 0, 0, 7997,
 		7998, 1, 0, 0, 0, 7998, 7996, 1, 0, 0, 0, 7998, 7999, 1, 0, 0, 0, 7999,
 		8002, 1, 0, 0, 0, 8000, 8001, 5, 1175, 0, 0, 8001, 8003, 3, 2282, 1141,
 		0, 8002, 8000, 1, 0, 0, 0, 8002, 8003, 1, 0, 0, 0, 8003, 8004, 1, 0, 0,
@@ -6971,7 +6971,7 @@ func plsqlparserParserInit() {
 		1, 0, 0, 0, 8035, 8036, 1, 0, 0, 0, 8036, 8037, 1, 0, 0, 0, 8037, 8038,
 		5, 2396, 0, 0, 8038, 747, 1, 0, 0, 0, 8039, 8040, 5, 270, 0, 0, 8040, 8041,
 		5, 2398, 0, 0, 8041, 8042, 7, 72, 0, 0, 8042, 749, 1, 0, 0, 0, 8043, 8052,
-		5, 1490, 0, 0, 8044, 8047, 3, 752, 376, 0, 8045, 8047, 3, 756, 378, 0,
+		5, 1490, 0, 0, 8044, 8047, 3, 756, 378, 0, 8045, 8047, 3, 752, 376, 0,
 		8046, 8044, 1, 0, 0, 0, 8046, 8045, 1, 0, 0, 0, 8047, 8049, 1, 0, 0, 0,
 		8048, 8050, 3, 748, 374, 0, 8049, 8048, 1, 0, 0, 0, 8049, 8050, 1, 0, 0,
 		0, 8050, 8053, 1, 0, 0, 0, 8051, 8053, 3, 760, 380, 0, 8052, 8046, 1, 0,
@@ -12632,7 +12632,7 @@ func plsqlparserParserInit() {
 		7757, 7766, 7774, 7781, 7788, 7793, 7800, 7807, 7812, 7819, 7826, 7831,
 		7838, 7845, 7850, 7857, 7864, 7869, 7872, 7875, 7882, 7886, 7895, 7906,
 		7915, 7919, 7926, 7928, 7935, 7943, 7948, 7952, 7957, 7964, 7966, 7970,
-		7973, 7976, 7986, 7992, 7994, 7998, 8002, 8007, 8012, 8016, 8022, 8027,
+		7973, 7976, 7986, 7990, 7994, 7998, 8002, 8007, 8012, 8016, 8022, 8027,
 		8032, 8035, 8046, 8049, 8052, 8058, 8065, 8070, 8074, 8080, 8082, 8088,
 		8090, 8094, 8103, 8109, 8118, 8130, 8138, 8147, 8150, 8157, 8161, 8169,
 		8176, 8186, 8191, 8193, 8198, 8205, 8222, 8229, 8239, 8248, 8257, 8266,
@@ -119269,12 +119269,12 @@ type IGrant_statementContext interface {
 	Container_clause() IContainer_clauseContext
 	ADMIN() antlr.TerminalNode
 	DELEGATE() antlr.TerminalNode
-	AllRole_name() []IRole_nameContext
-	Role_name(i int) IRole_nameContext
-	AllSystem_privilege() []ISystem_privilegeContext
-	System_privilege(i int) ISystem_privilegeContext
 	AllObject_privilege() []IObject_privilegeContext
 	Object_privilege(i int) IObject_privilegeContext
+	AllSystem_privilege() []ISystem_privilegeContext
+	System_privilege(i int) ISystem_privilegeContext
+	AllRole_name() []IRole_nameContext
+	Role_name(i int) IRole_nameContext
 	AllParen_column_list() []IParen_column_listContext
 	Paren_column_list(i int) IParen_column_listContext
 
@@ -119451,20 +119451,20 @@ func (s *Grant_statementContext) DELEGATE() antlr.TerminalNode {
 	return s.GetToken(PlSqlParserDELEGATE, 0)
 }
 
-func (s *Grant_statementContext) AllRole_name() []IRole_nameContext {
+func (s *Grant_statementContext) AllObject_privilege() []IObject_privilegeContext {
 	children := s.GetChildren()
 	len := 0
 	for _, ctx := range children {
-		if _, ok := ctx.(IRole_nameContext); ok {
+		if _, ok := ctx.(IObject_privilegeContext); ok {
 			len++
 		}
 	}
 
-	tst := make([]IRole_nameContext, len)
+	tst := make([]IObject_privilegeContext, len)
 	i := 0
 	for _, ctx := range children {
-		if t, ok := ctx.(IRole_nameContext); ok {
-			tst[i] = t.(IRole_nameContext)
+		if t, ok := ctx.(IObject_privilegeContext); ok {
+			tst[i] = t.(IObject_privilegeContext)
 			i++
 		}
 	}
@@ -119472,11 +119472,11 @@ func (s *Grant_statementContext) AllRole_name() []IRole_nameContext {
 	return tst
 }
 
-func (s *Grant_statementContext) Role_name(i int) IRole_nameContext {
+func (s *Grant_statementContext) Object_privilege(i int) IObject_privilegeContext {
 	var t antlr.RuleContext
 	j := 0
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IRole_nameContext); ok {
+		if _, ok := ctx.(IObject_privilegeContext); ok {
 			if j == i {
 				t = ctx.(antlr.RuleContext)
 				break
@@ -119489,7 +119489,7 @@ func (s *Grant_statementContext) Role_name(i int) IRole_nameContext {
 		return nil
 	}
 
-	return t.(IRole_nameContext)
+	return t.(IObject_privilegeContext)
 }
 
 func (s *Grant_statementContext) AllSystem_privilege() []ISystem_privilegeContext {
@@ -119533,20 +119533,20 @@ func (s *Grant_statementContext) System_privilege(i int) ISystem_privilegeContex
 	return t.(ISystem_privilegeContext)
 }
 
-func (s *Grant_statementContext) AllObject_privilege() []IObject_privilegeContext {
+func (s *Grant_statementContext) AllRole_name() []IRole_nameContext {
 	children := s.GetChildren()
 	len := 0
 	for _, ctx := range children {
-		if _, ok := ctx.(IObject_privilegeContext); ok {
+		if _, ok := ctx.(IRole_nameContext); ok {
 			len++
 		}
 	}
 
-	tst := make([]IObject_privilegeContext, len)
+	tst := make([]IRole_nameContext, len)
 	i := 0
 	for _, ctx := range children {
-		if t, ok := ctx.(IObject_privilegeContext); ok {
-			tst[i] = t.(IObject_privilegeContext)
+		if t, ok := ctx.(IRole_nameContext); ok {
+			tst[i] = t.(IRole_nameContext)
 			i++
 		}
 	}
@@ -119554,11 +119554,11 @@ func (s *Grant_statementContext) AllObject_privilege() []IObject_privilegeContex
 	return tst
 }
 
-func (s *Grant_statementContext) Object_privilege(i int) IObject_privilegeContext {
+func (s *Grant_statementContext) Role_name(i int) IRole_nameContext {
 	var t antlr.RuleContext
 	j := 0
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IObject_privilegeContext); ok {
+		if _, ok := ctx.(IRole_nameContext); ok {
 			if j == i {
 				t = ctx.(antlr.RuleContext)
 				break
@@ -119571,7 +119571,7 @@ func (s *Grant_statementContext) Object_privilege(i int) IObject_privilegeContex
 		return nil
 	}
 
-	return t.(IObject_privilegeContext)
+	return t.(IRole_nameContext)
 }
 
 func (s *Grant_statementContext) AllParen_column_list() []IParen_column_listContext {
@@ -119698,21 +119698,9 @@ func (p *PlSqlParser) Grant_statement() (localctx IGrant_statementContext) {
 			case 1:
 				{
 					p.SetState(7988)
-					p.Role_name()
-				}
-
-			case 2:
-				{
-					p.SetState(7989)
-					p.System_privilege()
-				}
-
-			case 3:
-				{
-					p.SetState(7990)
 					p.Object_privilege()
 				}
-				p.SetState(7992)
+				p.SetState(7990)
 				p.GetErrorHandler().Sync(p)
 				if p.HasError() {
 					goto errorExit
@@ -119721,10 +119709,22 @@ func (p *PlSqlParser) Grant_statement() (localctx IGrant_statementContext) {
 
 				if _la == PlSqlParserLEFT_PAREN {
 					{
-						p.SetState(7991)
+						p.SetState(7989)
 						p.Paren_column_list()
 					}
 
+				}
+
+			case 2:
+				{
+					p.SetState(7992)
+					p.System_privilege()
+				}
+
+			case 3:
+				{
+					p.SetState(7993)
+					p.Role_name()
 				}
 
 			case antlr.ATNInvalidAltNumber:
@@ -120138,8 +120138,8 @@ type IRevoke_statementContext interface {
 	// Getter signatures
 	REVOKE() antlr.TerminalNode
 	Revoke_roles_from_programs() IRevoke_roles_from_programsContext
-	Revoke_system_privilege() IRevoke_system_privilegeContext
 	Revoke_object_privileges() IRevoke_object_privilegesContext
+	Revoke_system_privilege() IRevoke_system_privilegeContext
 	Container_clause() IContainer_clauseContext
 
 	// IsRevoke_statementContext differentiates from other interfaces.
@@ -120198,22 +120198,6 @@ func (s *Revoke_statementContext) Revoke_roles_from_programs() IRevoke_roles_fro
 	return t.(IRevoke_roles_from_programsContext)
 }
 
-func (s *Revoke_statementContext) Revoke_system_privilege() IRevoke_system_privilegeContext {
-	var t antlr.RuleContext
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IRevoke_system_privilegeContext); ok {
-			t = ctx.(antlr.RuleContext)
-			break
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IRevoke_system_privilegeContext)
-}
-
 func (s *Revoke_statementContext) Revoke_object_privileges() IRevoke_object_privilegesContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
@@ -120228,6 +120212,22 @@ func (s *Revoke_statementContext) Revoke_object_privileges() IRevoke_object_priv
 	}
 
 	return t.(IRevoke_object_privilegesContext)
+}
+
+func (s *Revoke_statementContext) Revoke_system_privilege() IRevoke_system_privilegeContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IRevoke_system_privilegeContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IRevoke_system_privilegeContext)
 }
 
 func (s *Revoke_statementContext) Container_clause() IContainer_clauseContext {
@@ -120306,13 +120306,13 @@ func (p *PlSqlParser) Revoke_statement() (localctx IRevoke_statementContext) {
 		case 1:
 			{
 				p.SetState(8044)
-				p.Revoke_system_privilege()
+				p.Revoke_object_privileges()
 			}
 
 		case 2:
 			{
 				p.SetState(8045)
-				p.Revoke_object_privileges()
+				p.Revoke_system_privilege()
 			}
 
 		case antlr.ATNInvalidAltNumber:
