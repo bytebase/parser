@@ -108,6 +108,7 @@ unit_statement
     | create_restore_point
     | create_role
     | create_rollback_segment
+    | create_schema
     | create_sequence
     | create_spfile
     | create_synonym
@@ -139,6 +140,7 @@ unit_statement
     | drop_library
     | drop_lockdown_profile
     | drop_materialized_view
+    | drop_materialized_view_log
     | drop_materialized_zonemap
     | drop_operator
     | drop_outline
@@ -478,9 +480,10 @@ match_string
 
 create_function_body
     : CREATE (OR REPLACE)? FUNCTION function_name (LEFT_PAREN parameter (COMMA parameter)* RIGHT_PAREN)?
-      RETURN type_spec (invoker_rights_clause | parallel_enable_clause | result_cache_clause | DETERMINISTIC)*
+      RETURN type_spec (invoker_rights_clause | accessible_by_clause | parallel_enable_clause | result_cache_clause | DETERMINISTIC | default_collation_clause | annotations_clause)*
       ((PIPELINED? (IS | AS) (DECLARE? seq_of_declare_specs? body | call_spec))
-        | (PIPELINED | AGGREGATE) USING implementation_type_name
+        | pipelined_using_clause
+        | AGGREGATE USING implementation_type_name
         | sql_macro_body
       ) SEMICOLON
     ;
@@ -594,7 +597,9 @@ alter_package
     ;
 
 create_package
-    : CREATE (OR REPLACE)? PACKAGE (schema_object_name PERIOD)? package_name invoker_rights_clause? (IS | AS) package_obj_spec* END package_name? SEMICOLON
+    : CREATE (OR REPLACE)? PACKAGE (schema_object_name PERIOD)? package_name
+      (invoker_rights_clause | accessible_by_clause | default_collation_clause | annotations_clause)*
+      (IS | AS) package_obj_spec* END package_name? SEMICOLON
     ;
 
 create_package_body
@@ -674,7 +679,7 @@ procedure_body
 
 create_procedure_body
     : CREATE (OR REPLACE)? PROCEDURE procedure_name (LEFT_PAREN parameter (COMMA parameter)* RIGHT_PAREN)?
-      invoker_rights_clause? (IS | AS)
+      (invoker_rights_clause | accessible_by_clause | default_collation_clause | annotations_clause)* (IS | AS)
       (DECLARE? seq_of_declare_specs? body | call_spec | EXTERNAL) SEMICOLON
     ;
 
@@ -773,7 +778,7 @@ non_dml_trigger
     ;
 
 trigger_body
-    : COMPOUND TRIGGER
+    : compound_trigger_block
     | CALL identifier
     | trigger_block
     ;
