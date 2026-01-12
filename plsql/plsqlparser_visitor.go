@@ -3580,6 +3580,90 @@ type PlSqlParserVisitor interface {
 	// Visit a parse tree produced by PlSqlParser#filter_condition.
 	VisitFilter_condition(ctx *Filter_conditionContext) interface{}
 
+	// Visit a parse tree produced by PlSqlParser#c_external_parameter.
+	VisitC_external_parameter(ctx *C_external_parameterContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#c_property.
+	VisitC_property(ctx *C_propertyContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#hierarchies_clause.
+	VisitHierarchies_clause(ctx *Hierarchies_clauseContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#filter_clause.
+	VisitFilter_clause(ctx *Filter_clauseContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#filter_clauses.
+	VisitFilter_clauses(ctx *Filter_clausesContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#subav_clause.
+	VisitSubav_clause(ctx *Subav_clauseContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#subav_factoring_clause.
+	VisitSubav_factoring_clause(ctx *Subav_factoring_clauseContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#add_calc_meas_clause.
+	VisitAdd_calc_meas_clause(ctx *Add_calc_meas_clauseContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#add_calcs_clause.
+	VisitAdd_calcs_clause(ctx *Add_calcs_clauseContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#aggregate_clause.
+	VisitAggregate_clause(ctx *Aggregate_clauseContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#parallel_instances_clause.
+	VisitParallel_instances_clause(ctx *Parallel_instances_clauseContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#overriding_procedure_spec.
+	VisitOverriding_procedure_spec(ctx *Overriding_procedure_specContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#assignable_element.
+	VisitAssignable_element(ctx *Assignable_elementContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#connection_qualifier.
+	VisitConnection_qualifier(ctx *Connection_qualifierContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#local_link_name.
+	VisitLocal_link_name(ctx *Local_link_nameContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#by_user_for_statistics_clause.
+	VisitBy_user_for_statistics_clause(ctx *By_user_for_statistics_clauseContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#unary_logical_operation.
+	VisitUnary_logical_operation(ctx *Unary_logical_operationContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#variable_or_collection.
+	VisitVariable_or_collection(ctx *Variable_or_collectionContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#collection_expression.
+	VisitCollection_expression(ctx *Collection_expressionContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#virtual_column_expression.
+	VisitVirtual_column_expression(ctx *Virtual_column_expressionContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#index_partitioning_values_list.
+	VisitIndex_partitioning_values_list(ctx *Index_partitioning_values_listContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#range_values_list.
+	VisitRange_values_list(ctx *Range_values_listContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#expressions_.
+	VisitExpressions_(ctx *Expressions_Context) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#string_delimiter.
+	VisitString_delimiter(ctx *String_delimiterContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#clear_command.
+	VisitClear_command(ctx *Clear_commandContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#start_command.
+	VisitStart_command(ctx *Start_commandContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#sql_plus_command_no_semicolon.
+	VisitSql_plus_command_no_semicolon(ctx *Sql_plus_command_no_semicolonContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#system_actions.
+	VisitSystem_actions(ctx *System_actionsContext) interface{}
+
 	// Visit a parse tree produced by PlSqlParser#regular_id.
 	VisitRegular_id(ctx *Regular_idContext) interface{}
 

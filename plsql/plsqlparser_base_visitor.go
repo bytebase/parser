@@ -4771,6 +4771,118 @@ func (v *BasePlSqlParserVisitor) VisitFilter_condition(ctx *Filter_conditionCont
 	return v.VisitChildren(ctx)
 }
 
+func (v *BasePlSqlParserVisitor) VisitC_external_parameter(ctx *C_external_parameterContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitC_property(ctx *C_propertyContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitHierarchies_clause(ctx *Hierarchies_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitFilter_clause(ctx *Filter_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitFilter_clauses(ctx *Filter_clausesContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitSubav_clause(ctx *Subav_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitSubav_factoring_clause(ctx *Subav_factoring_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitAdd_calc_meas_clause(ctx *Add_calc_meas_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitAdd_calcs_clause(ctx *Add_calcs_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitAggregate_clause(ctx *Aggregate_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitParallel_instances_clause(ctx *Parallel_instances_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitOverriding_procedure_spec(ctx *Overriding_procedure_specContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitAssignable_element(ctx *Assignable_elementContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitConnection_qualifier(ctx *Connection_qualifierContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitLocal_link_name(ctx *Local_link_nameContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitBy_user_for_statistics_clause(ctx *By_user_for_statistics_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitUnary_logical_operation(ctx *Unary_logical_operationContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitVariable_or_collection(ctx *Variable_or_collectionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitCollection_expression(ctx *Collection_expressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitVirtual_column_expression(ctx *Virtual_column_expressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitIndex_partitioning_values_list(ctx *Index_partitioning_values_listContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitRange_values_list(ctx *Range_values_listContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitExpressions_(ctx *Expressions_Context) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitString_delimiter(ctx *String_delimiterContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitClear_command(ctx *Clear_commandContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitStart_command(ctx *Start_commandContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitSql_plus_command_no_semicolon(ctx *Sql_plus_command_no_semicolonContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitSystem_actions(ctx *System_actionsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BasePlSqlParserVisitor) VisitRegular_id(ctx *Regular_idContext) interface{} {
 	return v.VisitChildren(ctx)
 }
