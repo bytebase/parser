@@ -3520,6 +3520,66 @@ type PlSqlParserVisitor interface {
 	// Visit a parse tree produced by PlSqlParser#outer_join_sign.
 	VisitOuter_join_sign(ctx *Outer_join_signContext) interface{}
 
+	// Visit a parse tree produced by PlSqlParser#annotations_clause.
+	VisitAnnotations_clause(ctx *Annotations_clauseContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#annotations_list.
+	VisitAnnotations_list(ctx *Annotations_listContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#annotation.
+	VisitAnnotation(ctx *AnnotationContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#create_schema.
+	VisitCreate_schema(ctx *Create_schemaContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#drop_materialized_view_log.
+	VisitDrop_materialized_view_log(ctx *Drop_materialized_view_logContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#compound_trigger_block.
+	VisitCompound_trigger_block(ctx *Compound_trigger_blockContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#timing_point_section.
+	VisitTiming_point_section(ctx *Timing_point_sectionContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#tps_block.
+	VisitTps_block(ctx *Tps_blockContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#move_table_partition.
+	VisitMove_table_partition(ctx *Move_table_partitionContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#rename_table_partition.
+	VisitRename_table_partition(ctx *Rename_table_partitionContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#implicit_cursor_expression.
+	VisitImplicit_cursor_expression(ctx *Implicit_cursor_expressionContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#inquiry_directive.
+	VisitInquiry_directive(ctx *Inquiry_directiveContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#error_directive.
+	VisitError_directive(ctx *Error_directiveContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#selection_directive.
+	VisitSelection_directive(ctx *Selection_directiveContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#selection_directive_body.
+	VisitSelection_directive_body(ctx *Selection_directive_bodyContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#pipelined_using_clause.
+	VisitPipelined_using_clause(ctx *Pipelined_using_clauseContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#accessible_by_clause.
+	VisitAccessible_by_clause(ctx *Accessible_by_clauseContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#accessor.
+	VisitAccessor(ctx *AccessorContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#default_collation_clause.
+	VisitDefault_collation_clause(ctx *Default_collation_clauseContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#filter_condition.
+	VisitFilter_condition(ctx *Filter_conditionContext) interface{}
+
 	// Visit a parse tree produced by PlSqlParser#regular_id.
 	VisitRegular_id(ctx *Regular_idContext) interface{}
 

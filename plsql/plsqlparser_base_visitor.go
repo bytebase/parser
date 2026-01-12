@@ -4691,6 +4691,86 @@ func (v *BasePlSqlParserVisitor) VisitOuter_join_sign(ctx *Outer_join_signContex
 	return v.VisitChildren(ctx)
 }
 
+func (v *BasePlSqlParserVisitor) VisitAnnotations_clause(ctx *Annotations_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitAnnotations_list(ctx *Annotations_listContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitAnnotation(ctx *AnnotationContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitCreate_schema(ctx *Create_schemaContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitDrop_materialized_view_log(ctx *Drop_materialized_view_logContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitCompound_trigger_block(ctx *Compound_trigger_blockContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitTiming_point_section(ctx *Timing_point_sectionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitTps_block(ctx *Tps_blockContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitMove_table_partition(ctx *Move_table_partitionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitRename_table_partition(ctx *Rename_table_partitionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitImplicit_cursor_expression(ctx *Implicit_cursor_expressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitInquiry_directive(ctx *Inquiry_directiveContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitError_directive(ctx *Error_directiveContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitSelection_directive(ctx *Selection_directiveContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitSelection_directive_body(ctx *Selection_directive_bodyContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitPipelined_using_clause(ctx *Pipelined_using_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitAccessible_by_clause(ctx *Accessible_by_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitAccessor(ctx *AccessorContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitDefault_collation_clause(ctx *Default_collation_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitFilter_condition(ctx *Filter_conditionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BasePlSqlParserVisitor) VisitRegular_id(ctx *Regular_idContext) interface{} {
 	return v.VisitChildren(ctx)
 }

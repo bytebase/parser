@@ -1042,13 +1042,14 @@ alter_session_set_clause
     ;
 
 create_sequence
-    : CREATE SEQUENCE sequence_name (sequence_start_clause | sequence_spec)* SEMICOLON
+    : CREATE SEQUENCE (IF NOT EXISTS)? sequence_name sequence_spec* (SHARING EQUALS_OP (METADATA | DATA | NONE))? SEMICOLON
     ;
 
 // Common Sequence
 
 sequence_spec
     : INCREMENT BY UNSIGNED_INTEGER
+    | sequence_start_clause
     | MAXVALUE UNSIGNED_INTEGER
     | NOMAXVALUE
     | MINVALUE UNSIGNED_INTEGER
@@ -1059,6 +1060,14 @@ sequence_spec
     | NOCACHE
     | ORDER
     | NOORDER
+    | KEEP
+    | NOKEEP
+    | SCALE (EXTEND | NOEXTEND)?
+    | NOSCALE
+    | SHARD (EXTEND | NOEXTEND)?
+    | NOSHARD
+    | SESSION
+    | GLOBAL
     ;
 
 sequence_start_clause
@@ -7237,6 +7246,106 @@ id_expression
 
 outer_join_sign
     : LEFT_PAREN PLUS_SIGN RIGHT_PAREN
+    ;
+
+// === Rules added from upstream for enhanced Oracle support ===
+
+// Oracle 21c+ annotations support
+annotations_clause
+    : ANNOTATIONS '(' annotations_list ')'
+    ;
+
+annotations_list
+    : (ADD (IF NOT EXISTS | OR REPLACE)? | DROP (IF EXISTS)? | REPLACE)? annotation (',' annotations_list)*
+    ;
+
+annotation
+    : identifier CHAR_STRING?
+    ;
+
+// CREATE SCHEMA statement
+create_schema
+    : CREATE SCHEMA AUTHORIZATION schema_name (create_table | create_view | grant_statement)*
+    ;
+
+// DROP MATERIALIZED VIEW LOG statement
+drop_materialized_view_log
+    : DROP MATERIALIZED VIEW LOG (IF EXISTS)? ON tableview_name
+    ;
+
+// Compound trigger support
+compound_trigger_block
+    : COMPOUND TRIGGER seq_of_declare_specs? timing_point_section+ END trigger_name?
+    ;
+
+timing_point_section
+    : bk = BEFORE STATEMENT IS tps_block BEFORE STATEMENT ';'
+    | bk = BEFORE EACH ROW IS tps_block BEFORE EACH ROW ';'
+    | ak = AFTER STATEMENT IS tps_block AFTER STATEMENT ';'
+    | ak = AFTER EACH ROW IS tps_block AFTER EACH ROW ';'
+    ;
+
+tps_block
+    : declare_spec* body
+    ;
+
+// Partition operations
+move_table_partition
+    : MOVE (partition_extended_names (MAPPING TABLE)? table_partition_description
+          | subpartition_extended_names indexing_clause? partitioning_storage_clause?)
+      (filter_condition | update_index_clauses | parallel_clause | allow_or_disallow CLUSTERING | ONLINE)*
+    ;
+
+rename_table_partition
+    : RENAME (partition_extended_names | subpartition_extended_names) TO partition_name
+    ;
+
+// Implicit cursor expressions (SQL%BULK_ROWCOUNT, SQL%BULK_EXCEPTIONS)
+implicit_cursor_expression
+    : SQL (PERCENT_BULK_ROWCOUNT '(' expression ')'
+         | PERCENT_BULK_EXCEPTIONS ('.' COUNT | '(' expression ')' '.' (ERROR_INDEX | ERROR_CODE)))
+    ;
+
+// Preprocessor directives
+inquiry_directive
+    : INQUIRY_DIRECTIVE
+    ;
+
+error_directive
+    : DOLLAR_ERROR concatenation DOLLAR_END
+    ;
+
+selection_directive
+    : DOLLAR_IF condition DOLLAR_THEN selection_directive_body
+      (DOLLAR_ELSIF selection_directive_body)* (DOLLAR_ELSE selection_directive_body)? DOLLAR_END
+    ;
+
+selection_directive_body
+    : (pragma_declaration? statement ';' | variable_declaration | error_directive | function_body | procedure_body)+
+    ;
+
+// Pipelined functions with USING clause
+pipelined_using_clause
+    : PIPELINED ((ROW | TABLE) POLYMORPHIC)? USING implementation_type_name
+    ;
+
+// Accessible by clause for package visibility
+accessible_by_clause
+    : ACCESSIBLE BY '(' accessor (',' accessor)* ')'
+    ;
+
+accessor
+    : (FUNCTION | PROCEDURE | PACKAGE | TRIGGER | TYPE) function_name
+    ;
+
+// Default collation clause
+default_collation_clause
+    : DEFAULT COLLATION USING_NLS_COMP
+    ;
+
+// Helper rule for filter condition in partition operations
+filter_condition
+    : INCLUDING ROWS where_clause
     ;
 
 regular_id
