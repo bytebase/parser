@@ -7512,6 +7512,7 @@ regular_id
     | REGULAR_ID
     | ABSENT
     | A_LETTER
+    | ACCESSIBLE
     | BYTES
     | CHARSETFORM
     | CHARSETID
@@ -7527,11 +7528,19 @@ regular_id
     | MAXLEN
     | NEWLINE_
     | NOEXTEND
+    | NOLOG
     | NOSCALE
     | NOSHARD
+    | ORC
+    | PARQUET
     | POLYMORPHIC
+    | RCFILE
     | RECORDS
     | SHARD
+    | STRUCT
+    | TDO
+    | TEMPLATE_TABLE
+    | TEXTFILE
     | AGENT
     | AGGREGATE
     | ANALYZE
