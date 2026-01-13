@@ -108,6 +108,7 @@ unit_statement
     | create_restore_point
     | create_role
     | create_rollback_segment
+    | create_schema
     | create_sequence
     | create_spfile
     | create_synonym
@@ -139,6 +140,7 @@ unit_statement
     | drop_library
     | drop_lockdown_profile
     | drop_materialized_view
+    | drop_materialized_view_log
     | drop_materialized_zonemap
     | drop_operator
     | drop_outline
@@ -478,9 +480,10 @@ match_string
 
 create_function_body
     : CREATE (OR REPLACE)? FUNCTION function_name (LEFT_PAREN parameter (COMMA parameter)* RIGHT_PAREN)?
-      RETURN type_spec (invoker_rights_clause | parallel_enable_clause | result_cache_clause | DETERMINISTIC)*
+      RETURN type_spec (invoker_rights_clause | accessible_by_clause | parallel_enable_clause | result_cache_clause | DETERMINISTIC | default_collation_clause | annotations_clause)*
       ((PIPELINED? (IS | AS) (DECLARE? seq_of_declare_specs? body | call_spec))
-        | (PIPELINED | AGGREGATE) USING implementation_type_name
+        | pipelined_using_clause
+        | AGGREGATE USING implementation_type_name
         | sql_macro_body
       ) SEMICOLON
     ;
@@ -594,7 +597,9 @@ alter_package
     ;
 
 create_package
-    : CREATE (OR REPLACE)? PACKAGE (schema_object_name PERIOD)? package_name invoker_rights_clause? (IS | AS) package_obj_spec* END package_name? SEMICOLON
+    : CREATE (OR REPLACE)? PACKAGE (schema_object_name PERIOD)? package_name
+      (invoker_rights_clause | accessible_by_clause | default_collation_clause | annotations_clause)*
+      (IS | AS) package_obj_spec* END package_name? SEMICOLON
     ;
 
 create_package_body
@@ -674,7 +679,7 @@ procedure_body
 
 create_procedure_body
     : CREATE (OR REPLACE)? PROCEDURE procedure_name (LEFT_PAREN parameter (COMMA parameter)* RIGHT_PAREN)?
-      invoker_rights_clause? (IS | AS)
+      (invoker_rights_clause | accessible_by_clause | default_collation_clause | annotations_clause)* (IS | AS)
       (DECLARE? seq_of_declare_specs? body | call_spec | EXTERNAL) SEMICOLON
     ;
 
@@ -773,7 +778,7 @@ non_dml_trigger
     ;
 
 trigger_body
-    : COMPOUND TRIGGER
+    : compound_trigger_block
     | CALL identifier
     | trigger_block
     ;
@@ -1042,13 +1047,14 @@ alter_session_set_clause
     ;
 
 create_sequence
-    : CREATE SEQUENCE sequence_name (sequence_start_clause | sequence_spec)* SEMICOLON
+    : CREATE SEQUENCE (IF NOT EXISTS)? sequence_name sequence_spec* (SHARING EQUALS_OP (METADATA | DATA | NONE))? SEMICOLON
     ;
 
 // Common Sequence
 
 sequence_spec
     : INCREMENT BY UNSIGNED_INTEGER
+    | sequence_start_clause
     | MAXVALUE UNSIGNED_INTEGER
     | NOMAXVALUE
     | MINVALUE UNSIGNED_INTEGER
@@ -1059,6 +1065,14 @@ sequence_spec
     | NOCACHE
     | ORDER
     | NOORDER
+    | KEEP
+    | NOKEEP
+    | SCALE (EXTEND | NOEXTEND)?
+    | NOSCALE
+    | SHARD (EXTEND | NOEXTEND)?
+    | NOSHARD
+    | SESSION
+    | GLOBAL
     ;
 
 sequence_start_clause
@@ -7237,6 +7251,259 @@ id_expression
 
 outer_join_sign
     : LEFT_PAREN PLUS_SIGN RIGHT_PAREN
+    ;
+
+// === Rules added from upstream for enhanced Oracle support ===
+
+// Oracle 21c+ annotations support
+annotations_clause
+    : ANNOTATIONS '(' annotations_list ')'
+    ;
+
+annotations_list
+    : (ADD (IF NOT EXISTS | OR REPLACE)? | DROP (IF EXISTS)? | REPLACE)? annotation (',' annotations_list)*
+    ;
+
+annotation
+    : identifier CHAR_STRING?
+    ;
+
+// CREATE SCHEMA statement
+create_schema
+    : CREATE SCHEMA AUTHORIZATION schema_name (create_table | create_view | grant_statement)*
+    ;
+
+// DROP MATERIALIZED VIEW LOG statement
+drop_materialized_view_log
+    : DROP MATERIALIZED VIEW LOG (IF EXISTS)? ON tableview_name
+    ;
+
+// Compound trigger support
+compound_trigger_block
+    : COMPOUND TRIGGER seq_of_declare_specs? timing_point_section+ END trigger_name?
+    ;
+
+timing_point_section
+    : bk = BEFORE STATEMENT IS tps_block BEFORE STATEMENT ';'
+    | bk = BEFORE EACH ROW IS tps_block BEFORE EACH ROW ';'
+    | ak = AFTER STATEMENT IS tps_block AFTER STATEMENT ';'
+    | ak = AFTER EACH ROW IS tps_block AFTER EACH ROW ';'
+    ;
+
+tps_block
+    : declare_spec* body
+    ;
+
+// Partition operations
+move_table_partition
+    : MOVE (partition_extended_names (MAPPING TABLE)? table_partition_description
+          | subpartition_extended_names indexing_clause? partitioning_storage_clause?)
+      (filter_condition | update_index_clauses | parallel_clause | allow_or_disallow CLUSTERING | ONLINE)*
+    ;
+
+rename_table_partition
+    : RENAME (partition_extended_names | subpartition_extended_names) TO partition_name
+    ;
+
+// Implicit cursor expressions (SQL%BULK_ROWCOUNT, SQL%BULK_EXCEPTIONS)
+implicit_cursor_expression
+    : SQL (PERCENT_BULK_ROWCOUNT '(' expression ')'
+         | PERCENT_BULK_EXCEPTIONS ('.' COUNT | '(' expression ')' '.' (ERROR_INDEX | ERROR_CODE)))
+    ;
+
+// Preprocessor directives
+inquiry_directive
+    : INQUIRY_DIRECTIVE
+    ;
+
+error_directive
+    : DOLLAR_ERROR concatenation DOLLAR_END
+    ;
+
+selection_directive
+    : DOLLAR_IF condition DOLLAR_THEN selection_directive_body
+      (DOLLAR_ELSIF selection_directive_body)* (DOLLAR_ELSE selection_directive_body)? DOLLAR_END
+    ;
+
+selection_directive_body
+    : (pragma_declaration? statement ';' | variable_declaration | error_directive | function_body | procedure_body)+
+    ;
+
+// Pipelined functions with USING clause
+pipelined_using_clause
+    : PIPELINED ((ROW | TABLE) POLYMORPHIC)? USING implementation_type_name
+    ;
+
+// Accessible by clause for package visibility
+accessible_by_clause
+    : ACCESSIBLE BY '(' accessor (',' accessor)* ')'
+    ;
+
+accessor
+    : (FUNCTION | PROCEDURE | PACKAGE | TRIGGER | TYPE) function_name
+    ;
+
+// Default collation clause
+default_collation_clause
+    : DEFAULT COLLATION USING_NLS_COMP
+    ;
+
+// Helper rule for filter condition in partition operations
+filter_condition
+    : INCLUDING ROWS where_clause
+    ;
+
+// === Extended upstream rules for more complete Oracle support ===
+
+// C external call parameter support (extends c_parameters_clause)
+c_external_parameter
+    : CONTEXT
+    | SELF (TDO | c_property)?
+    | (parameter_name | RETURN) c_property? (BY REFERENCE)? external_datatype=regular_id?
+    ;
+
+c_property
+    : INDICATOR (STRUCT | TDO)?
+    | LENGTH
+    | DURATION
+    | MAXLEN
+    | CHARSETID
+    | CHARSETFORM
+    ;
+
+// Analytic view hierarchies
+hierarchies_clause
+    : HIERARCHIES '(' hier_alias+=object_name (',' hier_alias+=object_name)* ')'
+    ;
+
+// Filter clauses for analytic views
+filter_clause
+    : (MEASURES | hier_alias=object_name) TO condition
+    ;
+
+filter_clauses
+    : FILTER FACT '(' filter_clause (',' filter_clause)* ')'
+    ;
+
+// Subanalytic view support
+subav_clause
+    : USING subav_name=object_name hierarchies_clause? filter_clauses? add_calcs_clause?
+    ;
+
+subav_factoring_clause
+    : subav_name=id_expression ANALYTIC VIEW AS '(' subav_clause ')'
+    ;
+
+// Analytic view calculated measures
+add_calc_meas_clause
+    : meas_name=id_expression AS '(' expression ')'
+    ;
+
+add_calcs_clause
+    : ADD MEASURES '(' add_calc_meas_clause (',' add_calc_meas_clause)* ')'
+    ;
+
+// Aggregate clause for user-defined aggregate functions
+aggregate_clause
+    : AGGREGATE USING implementation_type_name
+    ;
+
+// Parallel instances clause
+parallel_instances_clause
+    : INSTANCES (UNSIGNED_INTEGER | DEFAULT)
+    ;
+
+// Overriding procedure spec for object types
+overriding_procedure_spec
+    : PROCEDURE procedure_name ('(' type_elements_parameter (',' type_elements_parameter)* ')')?
+      (IS | AS) (call_spec | DECLARE? seq_of_declare_specs? body ';')
+    ;
+
+// Assignable element (assignment target)
+assignable_element
+    : general_element
+    | bind_variable
+    ;
+
+// Database link connection qualifier
+connection_qualifier
+    : identifier
+    ;
+
+local_link_name
+    : identifier
+    ;
+
+// Statistics clause
+by_user_for_statistics_clause
+    : BY USER FOR STATISTICS
+    ;
+
+// Unary logical operation
+unary_logical_operation
+    : IS NOT? logical_operation
+    ;
+
+// Variable or collection reference
+variable_or_collection
+    : variable_name
+    | collection_expression
+    ;
+
+// Collection expression
+collection_expression
+    : collation_name '(' expression ')' ('.' general_element_part)*
+    ;
+
+// Virtual column expression definition
+virtual_column_expression
+    : autogenerated_sequence_definition
+    | (GENERATED ALWAYS?)? AS '(' expression ')'
+    ;
+
+// Partition values lists
+index_partitioning_values_list
+    : literal (',' literal)*
+    | TIMESTAMP literal (',' TIMESTAMP literal)*
+    ;
+
+range_values_list
+    : literal (',' literal)*
+    | TIMESTAMP literal (',' TIMESTAMP literal)*
+    ;
+
+// Expression list (with underscore suffix per upstream naming)
+expressions_
+    : expression (',' expression)*
+    ;
+
+// String delimiter helper
+string_delimiter
+    : CHAR_STRING
+    | string_function
+    | string_delimiter BAR BAR string_delimiter
+    | '(' string_delimiter ')'
+    | id_expression
+    ;
+
+// SQL*Plus clear command
+clear_command
+    : CLEAR (COLUMN? regular_id | ALL)
+    ;
+
+// SQL*Plus start command
+start_command
+    : START_CMD id_expression PERIOD (SQL | FILE_EXT)
+    ;
+
+// SQL*Plus command without semicolon
+sql_plus_command_no_semicolon
+    : set_command
+    ;
+
+// System actions for audit
+system_actions
+    : ACTIONS system_privilege (',' system_privilege)*
     ;
 
 regular_id

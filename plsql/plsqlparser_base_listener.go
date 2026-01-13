@@ -7454,6 +7454,314 @@ func (s *BasePlSqlParserListener) EnterOuter_join_sign(ctx *Outer_join_signConte
 // ExitOuter_join_sign is called when production outer_join_sign is exited.
 func (s *BasePlSqlParserListener) ExitOuter_join_sign(ctx *Outer_join_signContext) {}
 
+// EnterAnnotations_clause is called when production annotations_clause is entered.
+func (s *BasePlSqlParserListener) EnterAnnotations_clause(ctx *Annotations_clauseContext) {}
+
+// ExitAnnotations_clause is called when production annotations_clause is exited.
+func (s *BasePlSqlParserListener) ExitAnnotations_clause(ctx *Annotations_clauseContext) {}
+
+// EnterAnnotations_list is called when production annotations_list is entered.
+func (s *BasePlSqlParserListener) EnterAnnotations_list(ctx *Annotations_listContext) {}
+
+// ExitAnnotations_list is called when production annotations_list is exited.
+func (s *BasePlSqlParserListener) ExitAnnotations_list(ctx *Annotations_listContext) {}
+
+// EnterAnnotation is called when production annotation is entered.
+func (s *BasePlSqlParserListener) EnterAnnotation(ctx *AnnotationContext) {}
+
+// ExitAnnotation is called when production annotation is exited.
+func (s *BasePlSqlParserListener) ExitAnnotation(ctx *AnnotationContext) {}
+
+// EnterCreate_schema is called when production create_schema is entered.
+func (s *BasePlSqlParserListener) EnterCreate_schema(ctx *Create_schemaContext) {}
+
+// ExitCreate_schema is called when production create_schema is exited.
+func (s *BasePlSqlParserListener) ExitCreate_schema(ctx *Create_schemaContext) {}
+
+// EnterDrop_materialized_view_log is called when production drop_materialized_view_log is entered.
+func (s *BasePlSqlParserListener) EnterDrop_materialized_view_log(ctx *Drop_materialized_view_logContext) {
+}
+
+// ExitDrop_materialized_view_log is called when production drop_materialized_view_log is exited.
+func (s *BasePlSqlParserListener) ExitDrop_materialized_view_log(ctx *Drop_materialized_view_logContext) {
+}
+
+// EnterCompound_trigger_block is called when production compound_trigger_block is entered.
+func (s *BasePlSqlParserListener) EnterCompound_trigger_block(ctx *Compound_trigger_blockContext) {}
+
+// ExitCompound_trigger_block is called when production compound_trigger_block is exited.
+func (s *BasePlSqlParserListener) ExitCompound_trigger_block(ctx *Compound_trigger_blockContext) {}
+
+// EnterTiming_point_section is called when production timing_point_section is entered.
+func (s *BasePlSqlParserListener) EnterTiming_point_section(ctx *Timing_point_sectionContext) {}
+
+// ExitTiming_point_section is called when production timing_point_section is exited.
+func (s *BasePlSqlParserListener) ExitTiming_point_section(ctx *Timing_point_sectionContext) {}
+
+// EnterTps_block is called when production tps_block is entered.
+func (s *BasePlSqlParserListener) EnterTps_block(ctx *Tps_blockContext) {}
+
+// ExitTps_block is called when production tps_block is exited.
+func (s *BasePlSqlParserListener) ExitTps_block(ctx *Tps_blockContext) {}
+
+// EnterMove_table_partition is called when production move_table_partition is entered.
+func (s *BasePlSqlParserListener) EnterMove_table_partition(ctx *Move_table_partitionContext) {}
+
+// ExitMove_table_partition is called when production move_table_partition is exited.
+func (s *BasePlSqlParserListener) ExitMove_table_partition(ctx *Move_table_partitionContext) {}
+
+// EnterRename_table_partition is called when production rename_table_partition is entered.
+func (s *BasePlSqlParserListener) EnterRename_table_partition(ctx *Rename_table_partitionContext) {}
+
+// ExitRename_table_partition is called when production rename_table_partition is exited.
+func (s *BasePlSqlParserListener) ExitRename_table_partition(ctx *Rename_table_partitionContext) {}
+
+// EnterImplicit_cursor_expression is called when production implicit_cursor_expression is entered.
+func (s *BasePlSqlParserListener) EnterImplicit_cursor_expression(ctx *Implicit_cursor_expressionContext) {
+}
+
+// ExitImplicit_cursor_expression is called when production implicit_cursor_expression is exited.
+func (s *BasePlSqlParserListener) ExitImplicit_cursor_expression(ctx *Implicit_cursor_expressionContext) {
+}
+
+// EnterInquiry_directive is called when production inquiry_directive is entered.
+func (s *BasePlSqlParserListener) EnterInquiry_directive(ctx *Inquiry_directiveContext) {}
+
+// ExitInquiry_directive is called when production inquiry_directive is exited.
+func (s *BasePlSqlParserListener) ExitInquiry_directive(ctx *Inquiry_directiveContext) {}
+
+// EnterError_directive is called when production error_directive is entered.
+func (s *BasePlSqlParserListener) EnterError_directive(ctx *Error_directiveContext) {}
+
+// ExitError_directive is called when production error_directive is exited.
+func (s *BasePlSqlParserListener) ExitError_directive(ctx *Error_directiveContext) {}
+
+// EnterSelection_directive is called when production selection_directive is entered.
+func (s *BasePlSqlParserListener) EnterSelection_directive(ctx *Selection_directiveContext) {}
+
+// ExitSelection_directive is called when production selection_directive is exited.
+func (s *BasePlSqlParserListener) ExitSelection_directive(ctx *Selection_directiveContext) {}
+
+// EnterSelection_directive_body is called when production selection_directive_body is entered.
+func (s *BasePlSqlParserListener) EnterSelection_directive_body(ctx *Selection_directive_bodyContext) {
+}
+
+// ExitSelection_directive_body is called when production selection_directive_body is exited.
+func (s *BasePlSqlParserListener) ExitSelection_directive_body(ctx *Selection_directive_bodyContext) {
+}
+
+// EnterPipelined_using_clause is called when production pipelined_using_clause is entered.
+func (s *BasePlSqlParserListener) EnterPipelined_using_clause(ctx *Pipelined_using_clauseContext) {}
+
+// ExitPipelined_using_clause is called when production pipelined_using_clause is exited.
+func (s *BasePlSqlParserListener) ExitPipelined_using_clause(ctx *Pipelined_using_clauseContext) {}
+
+// EnterAccessible_by_clause is called when production accessible_by_clause is entered.
+func (s *BasePlSqlParserListener) EnterAccessible_by_clause(ctx *Accessible_by_clauseContext) {}
+
+// ExitAccessible_by_clause is called when production accessible_by_clause is exited.
+func (s *BasePlSqlParserListener) ExitAccessible_by_clause(ctx *Accessible_by_clauseContext) {}
+
+// EnterAccessor is called when production accessor is entered.
+func (s *BasePlSqlParserListener) EnterAccessor(ctx *AccessorContext) {}
+
+// ExitAccessor is called when production accessor is exited.
+func (s *BasePlSqlParserListener) ExitAccessor(ctx *AccessorContext) {}
+
+// EnterDefault_collation_clause is called when production default_collation_clause is entered.
+func (s *BasePlSqlParserListener) EnterDefault_collation_clause(ctx *Default_collation_clauseContext) {
+}
+
+// ExitDefault_collation_clause is called when production default_collation_clause is exited.
+func (s *BasePlSqlParserListener) ExitDefault_collation_clause(ctx *Default_collation_clauseContext) {
+}
+
+// EnterFilter_condition is called when production filter_condition is entered.
+func (s *BasePlSqlParserListener) EnterFilter_condition(ctx *Filter_conditionContext) {}
+
+// ExitFilter_condition is called when production filter_condition is exited.
+func (s *BasePlSqlParserListener) ExitFilter_condition(ctx *Filter_conditionContext) {}
+
+// EnterC_external_parameter is called when production c_external_parameter is entered.
+func (s *BasePlSqlParserListener) EnterC_external_parameter(ctx *C_external_parameterContext) {}
+
+// ExitC_external_parameter is called when production c_external_parameter is exited.
+func (s *BasePlSqlParserListener) ExitC_external_parameter(ctx *C_external_parameterContext) {}
+
+// EnterC_property is called when production c_property is entered.
+func (s *BasePlSqlParserListener) EnterC_property(ctx *C_propertyContext) {}
+
+// ExitC_property is called when production c_property is exited.
+func (s *BasePlSqlParserListener) ExitC_property(ctx *C_propertyContext) {}
+
+// EnterHierarchies_clause is called when production hierarchies_clause is entered.
+func (s *BasePlSqlParserListener) EnterHierarchies_clause(ctx *Hierarchies_clauseContext) {}
+
+// ExitHierarchies_clause is called when production hierarchies_clause is exited.
+func (s *BasePlSqlParserListener) ExitHierarchies_clause(ctx *Hierarchies_clauseContext) {}
+
+// EnterFilter_clause is called when production filter_clause is entered.
+func (s *BasePlSqlParserListener) EnterFilter_clause(ctx *Filter_clauseContext) {}
+
+// ExitFilter_clause is called when production filter_clause is exited.
+func (s *BasePlSqlParserListener) ExitFilter_clause(ctx *Filter_clauseContext) {}
+
+// EnterFilter_clauses is called when production filter_clauses is entered.
+func (s *BasePlSqlParserListener) EnterFilter_clauses(ctx *Filter_clausesContext) {}
+
+// ExitFilter_clauses is called when production filter_clauses is exited.
+func (s *BasePlSqlParserListener) ExitFilter_clauses(ctx *Filter_clausesContext) {}
+
+// EnterSubav_clause is called when production subav_clause is entered.
+func (s *BasePlSqlParserListener) EnterSubav_clause(ctx *Subav_clauseContext) {}
+
+// ExitSubav_clause is called when production subav_clause is exited.
+func (s *BasePlSqlParserListener) ExitSubav_clause(ctx *Subav_clauseContext) {}
+
+// EnterSubav_factoring_clause is called when production subav_factoring_clause is entered.
+func (s *BasePlSqlParserListener) EnterSubav_factoring_clause(ctx *Subav_factoring_clauseContext) {}
+
+// ExitSubav_factoring_clause is called when production subav_factoring_clause is exited.
+func (s *BasePlSqlParserListener) ExitSubav_factoring_clause(ctx *Subav_factoring_clauseContext) {}
+
+// EnterAdd_calc_meas_clause is called when production add_calc_meas_clause is entered.
+func (s *BasePlSqlParserListener) EnterAdd_calc_meas_clause(ctx *Add_calc_meas_clauseContext) {}
+
+// ExitAdd_calc_meas_clause is called when production add_calc_meas_clause is exited.
+func (s *BasePlSqlParserListener) ExitAdd_calc_meas_clause(ctx *Add_calc_meas_clauseContext) {}
+
+// EnterAdd_calcs_clause is called when production add_calcs_clause is entered.
+func (s *BasePlSqlParserListener) EnterAdd_calcs_clause(ctx *Add_calcs_clauseContext) {}
+
+// ExitAdd_calcs_clause is called when production add_calcs_clause is exited.
+func (s *BasePlSqlParserListener) ExitAdd_calcs_clause(ctx *Add_calcs_clauseContext) {}
+
+// EnterAggregate_clause is called when production aggregate_clause is entered.
+func (s *BasePlSqlParserListener) EnterAggregate_clause(ctx *Aggregate_clauseContext) {}
+
+// ExitAggregate_clause is called when production aggregate_clause is exited.
+func (s *BasePlSqlParserListener) ExitAggregate_clause(ctx *Aggregate_clauseContext) {}
+
+// EnterParallel_instances_clause is called when production parallel_instances_clause is entered.
+func (s *BasePlSqlParserListener) EnterParallel_instances_clause(ctx *Parallel_instances_clauseContext) {
+}
+
+// ExitParallel_instances_clause is called when production parallel_instances_clause is exited.
+func (s *BasePlSqlParserListener) ExitParallel_instances_clause(ctx *Parallel_instances_clauseContext) {
+}
+
+// EnterOverriding_procedure_spec is called when production overriding_procedure_spec is entered.
+func (s *BasePlSqlParserListener) EnterOverriding_procedure_spec(ctx *Overriding_procedure_specContext) {
+}
+
+// ExitOverriding_procedure_spec is called when production overriding_procedure_spec is exited.
+func (s *BasePlSqlParserListener) ExitOverriding_procedure_spec(ctx *Overriding_procedure_specContext) {
+}
+
+// EnterAssignable_element is called when production assignable_element is entered.
+func (s *BasePlSqlParserListener) EnterAssignable_element(ctx *Assignable_elementContext) {}
+
+// ExitAssignable_element is called when production assignable_element is exited.
+func (s *BasePlSqlParserListener) ExitAssignable_element(ctx *Assignable_elementContext) {}
+
+// EnterConnection_qualifier is called when production connection_qualifier is entered.
+func (s *BasePlSqlParserListener) EnterConnection_qualifier(ctx *Connection_qualifierContext) {}
+
+// ExitConnection_qualifier is called when production connection_qualifier is exited.
+func (s *BasePlSqlParserListener) ExitConnection_qualifier(ctx *Connection_qualifierContext) {}
+
+// EnterLocal_link_name is called when production local_link_name is entered.
+func (s *BasePlSqlParserListener) EnterLocal_link_name(ctx *Local_link_nameContext) {}
+
+// ExitLocal_link_name is called when production local_link_name is exited.
+func (s *BasePlSqlParserListener) ExitLocal_link_name(ctx *Local_link_nameContext) {}
+
+// EnterBy_user_for_statistics_clause is called when production by_user_for_statistics_clause is entered.
+func (s *BasePlSqlParserListener) EnterBy_user_for_statistics_clause(ctx *By_user_for_statistics_clauseContext) {
+}
+
+// ExitBy_user_for_statistics_clause is called when production by_user_for_statistics_clause is exited.
+func (s *BasePlSqlParserListener) ExitBy_user_for_statistics_clause(ctx *By_user_for_statistics_clauseContext) {
+}
+
+// EnterUnary_logical_operation is called when production unary_logical_operation is entered.
+func (s *BasePlSqlParserListener) EnterUnary_logical_operation(ctx *Unary_logical_operationContext) {}
+
+// ExitUnary_logical_operation is called when production unary_logical_operation is exited.
+func (s *BasePlSqlParserListener) ExitUnary_logical_operation(ctx *Unary_logical_operationContext) {}
+
+// EnterVariable_or_collection is called when production variable_or_collection is entered.
+func (s *BasePlSqlParserListener) EnterVariable_or_collection(ctx *Variable_or_collectionContext) {}
+
+// ExitVariable_or_collection is called when production variable_or_collection is exited.
+func (s *BasePlSqlParserListener) ExitVariable_or_collection(ctx *Variable_or_collectionContext) {}
+
+// EnterCollection_expression is called when production collection_expression is entered.
+func (s *BasePlSqlParserListener) EnterCollection_expression(ctx *Collection_expressionContext) {}
+
+// ExitCollection_expression is called when production collection_expression is exited.
+func (s *BasePlSqlParserListener) ExitCollection_expression(ctx *Collection_expressionContext) {}
+
+// EnterVirtual_column_expression is called when production virtual_column_expression is entered.
+func (s *BasePlSqlParserListener) EnterVirtual_column_expression(ctx *Virtual_column_expressionContext) {
+}
+
+// ExitVirtual_column_expression is called when production virtual_column_expression is exited.
+func (s *BasePlSqlParserListener) ExitVirtual_column_expression(ctx *Virtual_column_expressionContext) {
+}
+
+// EnterIndex_partitioning_values_list is called when production index_partitioning_values_list is entered.
+func (s *BasePlSqlParserListener) EnterIndex_partitioning_values_list(ctx *Index_partitioning_values_listContext) {
+}
+
+// ExitIndex_partitioning_values_list is called when production index_partitioning_values_list is exited.
+func (s *BasePlSqlParserListener) ExitIndex_partitioning_values_list(ctx *Index_partitioning_values_listContext) {
+}
+
+// EnterRange_values_list is called when production range_values_list is entered.
+func (s *BasePlSqlParserListener) EnterRange_values_list(ctx *Range_values_listContext) {}
+
+// ExitRange_values_list is called when production range_values_list is exited.
+func (s *BasePlSqlParserListener) ExitRange_values_list(ctx *Range_values_listContext) {}
+
+// EnterExpressions_ is called when production expressions_ is entered.
+func (s *BasePlSqlParserListener) EnterExpressions_(ctx *Expressions_Context) {}
+
+// ExitExpressions_ is called when production expressions_ is exited.
+func (s *BasePlSqlParserListener) ExitExpressions_(ctx *Expressions_Context) {}
+
+// EnterString_delimiter is called when production string_delimiter is entered.
+func (s *BasePlSqlParserListener) EnterString_delimiter(ctx *String_delimiterContext) {}
+
+// ExitString_delimiter is called when production string_delimiter is exited.
+func (s *BasePlSqlParserListener) ExitString_delimiter(ctx *String_delimiterContext) {}
+
+// EnterClear_command is called when production clear_command is entered.
+func (s *BasePlSqlParserListener) EnterClear_command(ctx *Clear_commandContext) {}
+
+// ExitClear_command is called when production clear_command is exited.
+func (s *BasePlSqlParserListener) ExitClear_command(ctx *Clear_commandContext) {}
+
+// EnterStart_command is called when production start_command is entered.
+func (s *BasePlSqlParserListener) EnterStart_command(ctx *Start_commandContext) {}
+
+// ExitStart_command is called when production start_command is exited.
+func (s *BasePlSqlParserListener) ExitStart_command(ctx *Start_commandContext) {}
+
+// EnterSql_plus_command_no_semicolon is called when production sql_plus_command_no_semicolon is entered.
+func (s *BasePlSqlParserListener) EnterSql_plus_command_no_semicolon(ctx *Sql_plus_command_no_semicolonContext) {
+}
+
+// ExitSql_plus_command_no_semicolon is called when production sql_plus_command_no_semicolon is exited.
+func (s *BasePlSqlParserListener) ExitSql_plus_command_no_semicolon(ctx *Sql_plus_command_no_semicolonContext) {
+}
+
+// EnterSystem_actions is called when production system_actions is entered.
+func (s *BasePlSqlParserListener) EnterSystem_actions(ctx *System_actionsContext) {}
+
+// ExitSystem_actions is called when production system_actions is exited.
+func (s *BasePlSqlParserListener) ExitSystem_actions(ctx *System_actionsContext) {}
+
 // EnterRegular_id is called when production regular_id is entered.
 func (s *BasePlSqlParserListener) EnterRegular_id(ctx *Regular_idContext) {}
 

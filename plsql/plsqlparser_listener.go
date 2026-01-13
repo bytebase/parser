@@ -3520,6 +3520,150 @@ type PlSqlParserListener interface {
 	// EnterOuter_join_sign is called when entering the outer_join_sign production.
 	EnterOuter_join_sign(c *Outer_join_signContext)
 
+	// EnterAnnotations_clause is called when entering the annotations_clause production.
+	EnterAnnotations_clause(c *Annotations_clauseContext)
+
+	// EnterAnnotations_list is called when entering the annotations_list production.
+	EnterAnnotations_list(c *Annotations_listContext)
+
+	// EnterAnnotation is called when entering the annotation production.
+	EnterAnnotation(c *AnnotationContext)
+
+	// EnterCreate_schema is called when entering the create_schema production.
+	EnterCreate_schema(c *Create_schemaContext)
+
+	// EnterDrop_materialized_view_log is called when entering the drop_materialized_view_log production.
+	EnterDrop_materialized_view_log(c *Drop_materialized_view_logContext)
+
+	// EnterCompound_trigger_block is called when entering the compound_trigger_block production.
+	EnterCompound_trigger_block(c *Compound_trigger_blockContext)
+
+	// EnterTiming_point_section is called when entering the timing_point_section production.
+	EnterTiming_point_section(c *Timing_point_sectionContext)
+
+	// EnterTps_block is called when entering the tps_block production.
+	EnterTps_block(c *Tps_blockContext)
+
+	// EnterMove_table_partition is called when entering the move_table_partition production.
+	EnterMove_table_partition(c *Move_table_partitionContext)
+
+	// EnterRename_table_partition is called when entering the rename_table_partition production.
+	EnterRename_table_partition(c *Rename_table_partitionContext)
+
+	// EnterImplicit_cursor_expression is called when entering the implicit_cursor_expression production.
+	EnterImplicit_cursor_expression(c *Implicit_cursor_expressionContext)
+
+	// EnterInquiry_directive is called when entering the inquiry_directive production.
+	EnterInquiry_directive(c *Inquiry_directiveContext)
+
+	// EnterError_directive is called when entering the error_directive production.
+	EnterError_directive(c *Error_directiveContext)
+
+	// EnterSelection_directive is called when entering the selection_directive production.
+	EnterSelection_directive(c *Selection_directiveContext)
+
+	// EnterSelection_directive_body is called when entering the selection_directive_body production.
+	EnterSelection_directive_body(c *Selection_directive_bodyContext)
+
+	// EnterPipelined_using_clause is called when entering the pipelined_using_clause production.
+	EnterPipelined_using_clause(c *Pipelined_using_clauseContext)
+
+	// EnterAccessible_by_clause is called when entering the accessible_by_clause production.
+	EnterAccessible_by_clause(c *Accessible_by_clauseContext)
+
+	// EnterAccessor is called when entering the accessor production.
+	EnterAccessor(c *AccessorContext)
+
+	// EnterDefault_collation_clause is called when entering the default_collation_clause production.
+	EnterDefault_collation_clause(c *Default_collation_clauseContext)
+
+	// EnterFilter_condition is called when entering the filter_condition production.
+	EnterFilter_condition(c *Filter_conditionContext)
+
+	// EnterC_external_parameter is called when entering the c_external_parameter production.
+	EnterC_external_parameter(c *C_external_parameterContext)
+
+	// EnterC_property is called when entering the c_property production.
+	EnterC_property(c *C_propertyContext)
+
+	// EnterHierarchies_clause is called when entering the hierarchies_clause production.
+	EnterHierarchies_clause(c *Hierarchies_clauseContext)
+
+	// EnterFilter_clause is called when entering the filter_clause production.
+	EnterFilter_clause(c *Filter_clauseContext)
+
+	// EnterFilter_clauses is called when entering the filter_clauses production.
+	EnterFilter_clauses(c *Filter_clausesContext)
+
+	// EnterSubav_clause is called when entering the subav_clause production.
+	EnterSubav_clause(c *Subav_clauseContext)
+
+	// EnterSubav_factoring_clause is called when entering the subav_factoring_clause production.
+	EnterSubav_factoring_clause(c *Subav_factoring_clauseContext)
+
+	// EnterAdd_calc_meas_clause is called when entering the add_calc_meas_clause production.
+	EnterAdd_calc_meas_clause(c *Add_calc_meas_clauseContext)
+
+	// EnterAdd_calcs_clause is called when entering the add_calcs_clause production.
+	EnterAdd_calcs_clause(c *Add_calcs_clauseContext)
+
+	// EnterAggregate_clause is called when entering the aggregate_clause production.
+	EnterAggregate_clause(c *Aggregate_clauseContext)
+
+	// EnterParallel_instances_clause is called when entering the parallel_instances_clause production.
+	EnterParallel_instances_clause(c *Parallel_instances_clauseContext)
+
+	// EnterOverriding_procedure_spec is called when entering the overriding_procedure_spec production.
+	EnterOverriding_procedure_spec(c *Overriding_procedure_specContext)
+
+	// EnterAssignable_element is called when entering the assignable_element production.
+	EnterAssignable_element(c *Assignable_elementContext)
+
+	// EnterConnection_qualifier is called when entering the connection_qualifier production.
+	EnterConnection_qualifier(c *Connection_qualifierContext)
+
+	// EnterLocal_link_name is called when entering the local_link_name production.
+	EnterLocal_link_name(c *Local_link_nameContext)
+
+	// EnterBy_user_for_statistics_clause is called when entering the by_user_for_statistics_clause production.
+	EnterBy_user_for_statistics_clause(c *By_user_for_statistics_clauseContext)
+
+	// EnterUnary_logical_operation is called when entering the unary_logical_operation production.
+	EnterUnary_logical_operation(c *Unary_logical_operationContext)
+
+	// EnterVariable_or_collection is called when entering the variable_or_collection production.
+	EnterVariable_or_collection(c *Variable_or_collectionContext)
+
+	// EnterCollection_expression is called when entering the collection_expression production.
+	EnterCollection_expression(c *Collection_expressionContext)
+
+	// EnterVirtual_column_expression is called when entering the virtual_column_expression production.
+	EnterVirtual_column_expression(c *Virtual_column_expressionContext)
+
+	// EnterIndex_partitioning_values_list is called when entering the index_partitioning_values_list production.
+	EnterIndex_partitioning_values_list(c *Index_partitioning_values_listContext)
+
+	// EnterRange_values_list is called when entering the range_values_list production.
+	EnterRange_values_list(c *Range_values_listContext)
+
+	// EnterExpressions_ is called when entering the expressions_ production.
+	EnterExpressions_(c *Expressions_Context)
+
+	// EnterString_delimiter is called when entering the string_delimiter production.
+	EnterString_delimiter(c *String_delimiterContext)
+
+	// EnterClear_command is called when entering the clear_command production.
+	EnterClear_command(c *Clear_commandContext)
+
+	// EnterStart_command is called when entering the start_command production.
+	EnterStart_command(c *Start_commandContext)
+
+	// EnterSql_plus_command_no_semicolon is called when entering the sql_plus_command_no_semicolon production.
+	EnterSql_plus_command_no_semicolon(c *Sql_plus_command_no_semicolonContext)
+
+	// EnterSystem_actions is called when entering the system_actions production.
+	EnterSystem_actions(c *System_actionsContext)
+
 	// EnterRegular_id is called when entering the regular_id production.
 	EnterRegular_id(c *Regular_idContext)
 
@@ -7041,6 +7185,150 @@ type PlSqlParserListener interface {
 
 	// ExitOuter_join_sign is called when exiting the outer_join_sign production.
 	ExitOuter_join_sign(c *Outer_join_signContext)
+
+	// ExitAnnotations_clause is called when exiting the annotations_clause production.
+	ExitAnnotations_clause(c *Annotations_clauseContext)
+
+	// ExitAnnotations_list is called when exiting the annotations_list production.
+	ExitAnnotations_list(c *Annotations_listContext)
+
+	// ExitAnnotation is called when exiting the annotation production.
+	ExitAnnotation(c *AnnotationContext)
+
+	// ExitCreate_schema is called when exiting the create_schema production.
+	ExitCreate_schema(c *Create_schemaContext)
+
+	// ExitDrop_materialized_view_log is called when exiting the drop_materialized_view_log production.
+	ExitDrop_materialized_view_log(c *Drop_materialized_view_logContext)
+
+	// ExitCompound_trigger_block is called when exiting the compound_trigger_block production.
+	ExitCompound_trigger_block(c *Compound_trigger_blockContext)
+
+	// ExitTiming_point_section is called when exiting the timing_point_section production.
+	ExitTiming_point_section(c *Timing_point_sectionContext)
+
+	// ExitTps_block is called when exiting the tps_block production.
+	ExitTps_block(c *Tps_blockContext)
+
+	// ExitMove_table_partition is called when exiting the move_table_partition production.
+	ExitMove_table_partition(c *Move_table_partitionContext)
+
+	// ExitRename_table_partition is called when exiting the rename_table_partition production.
+	ExitRename_table_partition(c *Rename_table_partitionContext)
+
+	// ExitImplicit_cursor_expression is called when exiting the implicit_cursor_expression production.
+	ExitImplicit_cursor_expression(c *Implicit_cursor_expressionContext)
+
+	// ExitInquiry_directive is called when exiting the inquiry_directive production.
+	ExitInquiry_directive(c *Inquiry_directiveContext)
+
+	// ExitError_directive is called when exiting the error_directive production.
+	ExitError_directive(c *Error_directiveContext)
+
+	// ExitSelection_directive is called when exiting the selection_directive production.
+	ExitSelection_directive(c *Selection_directiveContext)
+
+	// ExitSelection_directive_body is called when exiting the selection_directive_body production.
+	ExitSelection_directive_body(c *Selection_directive_bodyContext)
+
+	// ExitPipelined_using_clause is called when exiting the pipelined_using_clause production.
+	ExitPipelined_using_clause(c *Pipelined_using_clauseContext)
+
+	// ExitAccessible_by_clause is called when exiting the accessible_by_clause production.
+	ExitAccessible_by_clause(c *Accessible_by_clauseContext)
+
+	// ExitAccessor is called when exiting the accessor production.
+	ExitAccessor(c *AccessorContext)
+
+	// ExitDefault_collation_clause is called when exiting the default_collation_clause production.
+	ExitDefault_collation_clause(c *Default_collation_clauseContext)
+
+	// ExitFilter_condition is called when exiting the filter_condition production.
+	ExitFilter_condition(c *Filter_conditionContext)
+
+	// ExitC_external_parameter is called when exiting the c_external_parameter production.
+	ExitC_external_parameter(c *C_external_parameterContext)
+
+	// ExitC_property is called when exiting the c_property production.
+	ExitC_property(c *C_propertyContext)
+
+	// ExitHierarchies_clause is called when exiting the hierarchies_clause production.
+	ExitHierarchies_clause(c *Hierarchies_clauseContext)
+
+	// ExitFilter_clause is called when exiting the filter_clause production.
+	ExitFilter_clause(c *Filter_clauseContext)
+
+	// ExitFilter_clauses is called when exiting the filter_clauses production.
+	ExitFilter_clauses(c *Filter_clausesContext)
+
+	// ExitSubav_clause is called when exiting the subav_clause production.
+	ExitSubav_clause(c *Subav_clauseContext)
+
+	// ExitSubav_factoring_clause is called when exiting the subav_factoring_clause production.
+	ExitSubav_factoring_clause(c *Subav_factoring_clauseContext)
+
+	// ExitAdd_calc_meas_clause is called when exiting the add_calc_meas_clause production.
+	ExitAdd_calc_meas_clause(c *Add_calc_meas_clauseContext)
+
+	// ExitAdd_calcs_clause is called when exiting the add_calcs_clause production.
+	ExitAdd_calcs_clause(c *Add_calcs_clauseContext)
+
+	// ExitAggregate_clause is called when exiting the aggregate_clause production.
+	ExitAggregate_clause(c *Aggregate_clauseContext)
+
+	// ExitParallel_instances_clause is called when exiting the parallel_instances_clause production.
+	ExitParallel_instances_clause(c *Parallel_instances_clauseContext)
+
+	// ExitOverriding_procedure_spec is called when exiting the overriding_procedure_spec production.
+	ExitOverriding_procedure_spec(c *Overriding_procedure_specContext)
+
+	// ExitAssignable_element is called when exiting the assignable_element production.
+	ExitAssignable_element(c *Assignable_elementContext)
+
+	// ExitConnection_qualifier is called when exiting the connection_qualifier production.
+	ExitConnection_qualifier(c *Connection_qualifierContext)
+
+	// ExitLocal_link_name is called when exiting the local_link_name production.
+	ExitLocal_link_name(c *Local_link_nameContext)
+
+	// ExitBy_user_for_statistics_clause is called when exiting the by_user_for_statistics_clause production.
+	ExitBy_user_for_statistics_clause(c *By_user_for_statistics_clauseContext)
+
+	// ExitUnary_logical_operation is called when exiting the unary_logical_operation production.
+	ExitUnary_logical_operation(c *Unary_logical_operationContext)
+
+	// ExitVariable_or_collection is called when exiting the variable_or_collection production.
+	ExitVariable_or_collection(c *Variable_or_collectionContext)
+
+	// ExitCollection_expression is called when exiting the collection_expression production.
+	ExitCollection_expression(c *Collection_expressionContext)
+
+	// ExitVirtual_column_expression is called when exiting the virtual_column_expression production.
+	ExitVirtual_column_expression(c *Virtual_column_expressionContext)
+
+	// ExitIndex_partitioning_values_list is called when exiting the index_partitioning_values_list production.
+	ExitIndex_partitioning_values_list(c *Index_partitioning_values_listContext)
+
+	// ExitRange_values_list is called when exiting the range_values_list production.
+	ExitRange_values_list(c *Range_values_listContext)
+
+	// ExitExpressions_ is called when exiting the expressions_ production.
+	ExitExpressions_(c *Expressions_Context)
+
+	// ExitString_delimiter is called when exiting the string_delimiter production.
+	ExitString_delimiter(c *String_delimiterContext)
+
+	// ExitClear_command is called when exiting the clear_command production.
+	ExitClear_command(c *Clear_commandContext)
+
+	// ExitStart_command is called when exiting the start_command production.
+	ExitStart_command(c *Start_commandContext)
+
+	// ExitSql_plus_command_no_semicolon is called when exiting the sql_plus_command_no_semicolon production.
+	ExitSql_plus_command_no_semicolon(c *Sql_plus_command_no_semicolonContext)
+
+	// ExitSystem_actions is called when exiting the system_actions production.
+	ExitSystem_actions(c *System_actionsContext)
 
 	// ExitRegular_id is called when exiting the regular_id production.
 	ExitRegular_id(c *Regular_idContext)
