@@ -2459,7 +2459,6 @@ INQUIRY_DIRECTIVE:             '$$' (SIMPLE_LETTER | '_')+;
 INTERNAL:                      'INTERNAL';
 ITEMS:                         'ITEMS';
 LATEST:                        'LATEST';
-LEFT_CURLY_PAREN:              '{';
 LINES:                         'LINES';
 MAXLEN:                        'MAXLEN';
 NOLOG:                         'NOLOG';
@@ -2470,7 +2469,6 @@ PERCENT_BULK_EXCEPTIONS:       '%' SPACE* 'BULK_EXCEPTIONS';
 PERCENT_BULK_ROWCOUNT:         '%' SPACE* 'BULK_ROWCOUNT';
 POLYMORPHIC:                   'POLYMORPHIC';
 RCFILE:                        'RCFILE';
-RIGHT_CURLY_PAREN:             '}';
 SEQUENCEFILE:                  'SEQUENCEFILE';
 SERDE:                         'SERDE';
 SERDEPROPERTIES:               'SERDEPROPERTIES';
@@ -2611,8 +2609,10 @@ SEMICOLON:                 ';';
 BAR:       '|';
 EQUALS_OP: '=';
 
-LEFT_BRACKET:  '[';
-RIGHT_BRACKET: ']';
+LEFT_BRACKET:      '[';
+RIGHT_BRACKET:     ']';
+LEFT_CURLY_PAREN:  '{';
+RIGHT_CURLY_PAREN: '}';
 
 INTRODUCER: '_';
 
