@@ -7512,6 +7512,26 @@ regular_id
     | REGULAR_ID
     | ABSENT
     | A_LETTER
+    | BYTES
+    | CHARSETFORM
+    | CHARSETID
+    | DURATION
+    | ENABLED
+    | ERROR_CODE
+    | ERROR_INDEX
+    | EXTEND
+    | FIELD
+    | ITEMS
+    | LINES
+    | MASK
+    | MAXLEN
+    | NEWLINE_
+    | NOEXTEND
+    | NOSCALE
+    | NOSHARD
+    | POLYMORPHIC
+    | RECORDS
+    | SHARD
     | AGENT
     | AGGREGATE
     | ANALYZE
