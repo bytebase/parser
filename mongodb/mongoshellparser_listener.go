@@ -49,6 +49,21 @@ type MongoShellParserListener interface {
 	// EnterFindOneMethod is called when entering the findOneMethod production.
 	EnterFindOneMethod(c *FindOneMethodContext)
 
+	// EnterCountDocumentsMethod is called when entering the countDocumentsMethod production.
+	EnterCountDocumentsMethod(c *CountDocumentsMethodContext)
+
+	// EnterEstimatedDocumentCountMethod is called when entering the estimatedDocumentCountMethod production.
+	EnterEstimatedDocumentCountMethod(c *EstimatedDocumentCountMethodContext)
+
+	// EnterDistinctMethod is called when entering the distinctMethod production.
+	EnterDistinctMethod(c *DistinctMethodContext)
+
+	// EnterAggregateMethod is called when entering the aggregateMethod production.
+	EnterAggregateMethod(c *AggregateMethodContext)
+
+	// EnterGetIndexesMethod is called when entering the getIndexesMethod production.
+	EnterGetIndexesMethod(c *GetIndexesMethodContext)
+
 	// EnterSortMethod is called when entering the sortMethod production.
 	EnterSortMethod(c *SortMethodContext)
 
@@ -57,6 +72,9 @@ type MongoShellParserListener interface {
 
 	// EnterSkipMethod is called when entering the skipMethod production.
 	EnterSkipMethod(c *SkipMethodContext)
+
+	// EnterCountMethod is called when entering the countMethod production.
+	EnterCountMethod(c *CountMethodContext)
 
 	// EnterProjectionMethod is called when entering the projectionMethod production.
 	EnterProjectionMethod(c *ProjectionMethodContext)
@@ -99,6 +117,12 @@ type MongoShellParserListener interface {
 
 	// EnterLiteralValue is called when entering the literalValue production.
 	EnterLiteralValue(c *LiteralValueContext)
+
+	// EnterNewKeywordValue is called when entering the newKeywordValue production.
+	EnterNewKeywordValue(c *NewKeywordValueContext)
+
+	// EnterNewKeywordError is called when entering the newKeywordError production.
+	EnterNewKeywordError(c *NewKeywordErrorContext)
 
 	// EnterArray is called when entering the array production.
 	EnterArray(c *ArrayContext)
@@ -202,6 +226,21 @@ type MongoShellParserListener interface {
 	// ExitFindOneMethod is called when exiting the findOneMethod production.
 	ExitFindOneMethod(c *FindOneMethodContext)
 
+	// ExitCountDocumentsMethod is called when exiting the countDocumentsMethod production.
+	ExitCountDocumentsMethod(c *CountDocumentsMethodContext)
+
+	// ExitEstimatedDocumentCountMethod is called when exiting the estimatedDocumentCountMethod production.
+	ExitEstimatedDocumentCountMethod(c *EstimatedDocumentCountMethodContext)
+
+	// ExitDistinctMethod is called when exiting the distinctMethod production.
+	ExitDistinctMethod(c *DistinctMethodContext)
+
+	// ExitAggregateMethod is called when exiting the aggregateMethod production.
+	ExitAggregateMethod(c *AggregateMethodContext)
+
+	// ExitGetIndexesMethod is called when exiting the getIndexesMethod production.
+	ExitGetIndexesMethod(c *GetIndexesMethodContext)
+
 	// ExitSortMethod is called when exiting the sortMethod production.
 	ExitSortMethod(c *SortMethodContext)
 
@@ -210,6 +249,9 @@ type MongoShellParserListener interface {
 
 	// ExitSkipMethod is called when exiting the skipMethod production.
 	ExitSkipMethod(c *SkipMethodContext)
+
+	// ExitCountMethod is called when exiting the countMethod production.
+	ExitCountMethod(c *CountMethodContext)
 
 	// ExitProjectionMethod is called when exiting the projectionMethod production.
 	ExitProjectionMethod(c *ProjectionMethodContext)
@@ -252,6 +294,12 @@ type MongoShellParserListener interface {
 
 	// ExitLiteralValue is called when exiting the literalValue production.
 	ExitLiteralValue(c *LiteralValueContext)
+
+	// ExitNewKeywordValue is called when exiting the newKeywordValue production.
+	ExitNewKeywordValue(c *NewKeywordValueContext)
+
+	// ExitNewKeywordError is called when exiting the newKeywordError production.
+	ExitNewKeywordError(c *NewKeywordErrorContext)
 
 	// ExitArray is called when exiting the array production.
 	ExitArray(c *ArrayContext)

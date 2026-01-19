@@ -34,14 +34,22 @@ NUMBER_DECIMAL: 'NumberDecimal';
 TIMESTAMP: 'Timestamp';
 REG_EXP: 'RegExp';
 
-// Cursor modifiers (methods)
+// Collection methods
 FIND: 'find';
 FIND_ONE: 'findOne';
+COUNT_DOCUMENTS: 'countDocuments';
+ESTIMATED_DOCUMENT_COUNT: 'estimatedDocumentCount';
+DISTINCT: 'distinct';
+AGGREGATE: 'aggregate';
+GET_INDEXES: 'getIndexes';
+
+// Cursor modifiers (methods)
 SORT: 'sort';
 LIMIT: 'limit';
 SKIP_: 'skip';
 PROJECTION: 'projection';
 PROJECT: 'project';
+COUNT: 'count';
 
 // Punctuation
 LPAREN: '(';

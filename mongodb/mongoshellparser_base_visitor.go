@@ -63,6 +63,26 @@ func (v *BaseMongoShellParserVisitor) VisitFindOneMethod(ctx *FindOneMethodConte
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseMongoShellParserVisitor) VisitCountDocumentsMethod(ctx *CountDocumentsMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitEstimatedDocumentCountMethod(ctx *EstimatedDocumentCountMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDistinctMethod(ctx *DistinctMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitAggregateMethod(ctx *AggregateMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitGetIndexesMethod(ctx *GetIndexesMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseMongoShellParserVisitor) VisitSortMethod(ctx *SortMethodContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -72,6 +92,10 @@ func (v *BaseMongoShellParserVisitor) VisitLimitMethod(ctx *LimitMethodContext) 
 }
 
 func (v *BaseMongoShellParserVisitor) VisitSkipMethod(ctx *SkipMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitCountMethod(ctx *CountMethodContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -128,6 +152,14 @@ func (v *BaseMongoShellParserVisitor) VisitRegexpConstructorValue(ctx *RegexpCon
 }
 
 func (v *BaseMongoShellParserVisitor) VisitLiteralValue(ctx *LiteralValueContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitNewKeywordValue(ctx *NewKeywordValueContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitNewKeywordError(ctx *NewKeywordErrorContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

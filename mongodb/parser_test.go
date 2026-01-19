@@ -23,11 +23,11 @@ func NewTestErrorListener() *TestErrorListener {
 }
 
 func (l *TestErrorListener) SyntaxError(
-	recognizer antlr.Recognizer,
-	offendingSymbol interface{},
-	line, column int,
+	_ antlr.Recognizer,
+	_ any,
+	_, _ int,
 	msg string,
-	e antlr.RecognitionException,
+	_ antlr.RecognitionException,
 ) {
 	l.errors = append(l.errors, msg)
 }
@@ -36,7 +36,7 @@ func (l *TestErrorListener) HasErrors() bool {
 	return len(l.errors) > 0
 }
 
-func parseMongoShell(t *testing.T, input string) (antlr.Tree, *TestErrorListener, *TestErrorListener) {
+func parseMongoShell(_ *testing.T, input string) (antlr.Tree, *TestErrorListener, *TestErrorListener) {
 	is := antlr.NewInputStream(input)
 	lexer := mongodb.NewMongoShellLexer(is)
 
@@ -69,6 +69,21 @@ func testFile(t *testing.T, filePath string) {
 	})
 }
 
+// TestMongoShellParser runs all .js example files as parser tests.
+// Each .js file in the examples/ directory tests a specific feature:
+//   - collection-find.js: db.collection.find() with filters, operators, cursor modifiers
+//   - collection-findOne.js: db.collection.findOne() operations
+//   - collection-countDocuments.js: db.collection.countDocuments() operations
+//   - collection-estimatedDocumentCount.js: db.collection.estimatedDocumentCount() operations
+//   - collection-distinct.js: db.collection.distinct() operations
+//   - collection-aggregate.js: db.collection.aggregate() pipelines
+//   - collection-getIndexes.js: db.collection.getIndexes() operations
+//   - shell_commands.js: show dbs, show databases, show collections
+//   - helper_functions.js: ObjectId(), ISODate(), UUID(), NumberLong(), etc.
+//   - document_syntax.js: Document syntax with unquoted keys, trailing commas
+//   - literals.js: String, number, boolean, null literals
+//   - regex.js: Regex literals and RegExp() constructor
+//   - comments.js: Line and block comments
 func TestMongoShellParser(t *testing.T) {
 	entries, err := os.ReadDir("examples")
 	require.NoError(t, err)
@@ -77,240 +92,6 @@ func TestMongoShellParser(t *testing.T) {
 		if !entry.IsDir() && filepath.Ext(entry.Name()) == ".js" {
 			testFile(t, filepath.Join("examples", entry.Name()))
 		}
-	}
-}
-
-func TestShellCommands(t *testing.T) {
-	tests := []string{
-		"show dbs",
-		"show databases",
-		"show collections",
-	}
-
-	for _, tc := range tests {
-		t.Run(tc, func(t *testing.T) {
-			_, lexerErrors, parserErrors := parseMongoShell(t, tc)
-			require.False(t, lexerErrors.HasErrors(), "Lexer errors: %v", lexerErrors.errors)
-			require.False(t, parserErrors.HasErrors(), "Parser errors: %v", parserErrors.errors)
-		})
-	}
-}
-
-func TestFindOperations(t *testing.T) {
-	tests := []string{
-		`db.users.find()`,
-		`db.users.find({})`,
-		`db.users.findOne()`,
-		`db.users.findOne({})`,
-		`db.users.find({ name: "alice" })`,
-		`db.users.find({ age: { $gt: 25 } })`,
-		`db.users.find({ age: { $gte: 18, $lt: 65 } })`,
-		`db.users.find({ status: { $in: ["active", "pending"] } })`,
-		`db.users.find({ $or: [{ name: "alice" }, { name: "bob" }] })`,
-	}
-
-	for _, tc := range tests {
-		t.Run(tc, func(t *testing.T) {
-			_, lexerErrors, parserErrors := parseMongoShell(t, tc)
-			require.False(t, lexerErrors.HasErrors(), "Lexer errors: %v", lexerErrors.errors)
-			require.False(t, parserErrors.HasErrors(), "Parser errors: %v", parserErrors.errors)
-		})
-	}
-}
-
-func TestCursorModifiers(t *testing.T) {
-	tests := []string{
-		`db.users.find().sort({ age: -1 })`,
-		`db.users.find().limit(10)`,
-		`db.users.find().skip(5)`,
-		`db.users.find().projection({ name: 1, age: 1 })`,
-		`db.users.find().project({ name: 1, email: 1 })`,
-		`db.users.find().sort({ age: -1 }).limit(10)`,
-		`db.users.find().sort({ createdAt: -1 }).skip(20).limit(10)`,
-		`db.users.find({ status: "active" }).sort({ name: 1 }).limit(100).skip(0)`,
-	}
-
-	for _, tc := range tests {
-		t.Run(tc, func(t *testing.T) {
-			_, lexerErrors, parserErrors := parseMongoShell(t, tc)
-			require.False(t, lexerErrors.HasErrors(), "Lexer errors: %v", lexerErrors.errors)
-			require.False(t, parserErrors.HasErrors(), "Parser errors: %v", parserErrors.errors)
-		})
-	}
-}
-
-func TestCollectionAccess(t *testing.T) {
-	tests := []string{
-		`db.users.find()`,
-		`db["users"].find()`,
-		`db['users'].find()`,
-		`db.getCollection("users").find()`,
-		`db.getCollection('users').find()`,
-		`db["user-logs"].find()`,
-		`db.getCollection("my.collection").find()`,
-		`db.getCollectionNames()`,
-		`db.getCollectionInfos()`,
-		`db.getCollectionInfos({ name: "users" })`,
-		`db.getCollectionInfos({}, { nameOnly: true })`,
-	}
-
-	for _, tc := range tests {
-		t.Run(tc, func(t *testing.T) {
-			_, lexerErrors, parserErrors := parseMongoShell(t, tc)
-			require.False(t, lexerErrors.HasErrors(), "Lexer errors: %v", lexerErrors.errors)
-			require.False(t, parserErrors.HasErrors(), "Parser errors: %v", parserErrors.errors)
-		})
-	}
-}
-
-func TestHelperFunctions(t *testing.T) {
-	tests := []string{
-		`db.users.find({ _id: ObjectId("507f1f77bcf86cd799439011") })`,
-		`db.users.find({ _id: ObjectId() })`,
-		`db.events.find({ createdAt: ISODate("2024-01-15T00:00:00.000Z") })`,
-		`db.events.find({ createdAt: { $gt: ISODate() } })`,
-		`db.events.find({ timestamp: Date() })`,
-		`db.events.find({ timestamp: Date("2024-01-15") })`,
-		`db.events.find({ timestamp: Date(1705276800000) })`,
-		`db.sessions.find({ sessionId: UUID("550e8400-e29b-41d4-a716-446655440000") })`,
-		`db.stats.find({ count: Long(9007199254740993) })`,
-		`db.stats.find({ count: Long("9007199254740993") })`,
-		`db.stats.find({ count: NumberLong(123456789012345) })`,
-		`db.items.find({ quantity: Int32(100) })`,
-		`db.items.find({ quantity: NumberInt(100) })`,
-		`db.measurements.find({ value: Double(3.14159) })`,
-		`db.financial.find({ amount: Decimal128("1234567890.123456789") })`,
-		`db.financial.find({ amount: NumberDecimal("99.99") })`,
-		`db.oplog.find({ ts: Timestamp(1627811580, 1) })`,
-		`db.oplog.find({ ts: Timestamp({ t: 1627811580, i: 1 }) })`,
-	}
-
-	for _, tc := range tests {
-		t.Run(tc, func(t *testing.T) {
-			_, lexerErrors, parserErrors := parseMongoShell(t, tc)
-			require.False(t, lexerErrors.HasErrors(), "Lexer errors: %v", lexerErrors.errors)
-			require.False(t, parserErrors.HasErrors(), "Parser errors: %v", parserErrors.errors)
-		})
-	}
-}
-
-func TestRegex(t *testing.T) {
-	tests := []string{
-		`db.users.find({ name: /alice/ })`,
-		`db.users.find({ name: /^alice/i })`,
-		`db.users.find({ email: /.*@example\.com$/ })`,
-		`db.users.find({ name: RegExp("alice") })`,
-		`db.users.find({ name: RegExp("^alice", "i") })`,
-		`db.users.find({ name: RegExp("test", "gi") })`,
-	}
-
-	for _, tc := range tests {
-		t.Run(tc, func(t *testing.T) {
-			_, lexerErrors, parserErrors := parseMongoShell(t, tc)
-			require.False(t, lexerErrors.HasErrors(), "Lexer errors: %v", lexerErrors.errors)
-			require.False(t, parserErrors.HasErrors(), "Parser errors: %v", parserErrors.errors)
-		})
-	}
-}
-
-func TestDocumentSyntax(t *testing.T) {
-	tests := []string{
-		// Unquoted keys
-		`db.users.find({ name: "alice", age: 25 })`,
-		// Quoted keys
-		`db.users.find({ "name": "alice", "age": 25 })`,
-		`db.users.find({ 'name': 'alice' })`,
-		// Mixed
-		`db.users.find({ name: "alice", "special-field": "value" })`,
-		// Nested
-		`db.users.find({ profile: { name: "test", active: true } })`,
-		// Arrays
-		`db.users.find({ tags: ["a", "b", "c"] })`,
-		// Trailing commas
-		`db.users.find({ name: "alice", age: 25, })`,
-		`db.users.find({ tags: ["a", "b", "c",] })`,
-	}
-
-	for _, tc := range tests {
-		t.Run(tc, func(t *testing.T) {
-			_, lexerErrors, parserErrors := parseMongoShell(t, tc)
-			require.False(t, lexerErrors.HasErrors(), "Lexer errors: %v", lexerErrors.errors)
-			require.False(t, parserErrors.HasErrors(), "Parser errors: %v", parserErrors.errors)
-		})
-	}
-}
-
-func TestLiterals(t *testing.T) {
-	tests := []string{
-		// Strings
-		`db.users.find({ name: "alice" })`,
-		`db.users.find({ name: 'alice' })`,
-		// Numbers
-		`db.users.find({ age: 25 })`,
-		`db.users.find({ score: -10 })`,
-		`db.users.find({ price: 19.99 })`,
-		`db.users.find({ tiny: .001 })`,
-		`db.users.find({ distance: 1.5e10 })`,
-		`db.users.find({ small: 1e-6 })`,
-		// Booleans
-		`db.users.find({ active: true })`,
-		`db.users.find({ deleted: false })`,
-		// Null
-		`db.users.find({ deletedAt: null })`,
-	}
-
-	for _, tc := range tests {
-		t.Run(tc, func(t *testing.T) {
-			_, lexerErrors, parserErrors := parseMongoShell(t, tc)
-			require.False(t, lexerErrors.HasErrors(), "Lexer errors: %v", lexerErrors.errors)
-			require.False(t, parserErrors.HasErrors(), "Parser errors: %v", parserErrors.errors)
-		})
-	}
-}
-
-func TestComments(t *testing.T) {
-	tests := []string{
-		`// Line comment
-db.users.find()`,
-		`db.users.find() // inline comment`,
-		`/* Block comment */ db.users.find()`,
-		`db.users.find({ /* comment */ name: "alice" })`,
-	}
-
-	for _, tc := range tests {
-		t.Run(tc, func(t *testing.T) {
-			_, lexerErrors, parserErrors := parseMongoShell(t, tc)
-			require.False(t, lexerErrors.HasErrors(), "Lexer errors: %v", lexerErrors.errors)
-			require.False(t, parserErrors.HasErrors(), "Parser errors: %v", parserErrors.errors)
-		})
-	}
-}
-
-func TestComplexQueries(t *testing.T) {
-	tests := []string{
-		// Complex filter with helpers
-		`db.users.find({
-			_id: ObjectId("507f1f77bcf86cd799439011"),
-			createdAt: { $gt: ISODate("2024-01-01T00:00:00Z") },
-			lastLogin: { $lt: Date() },
-			sessionId: UUID("550e8400-e29b-41d4-a716-446655440000"),
-			loginCount: NumberLong(1000)
-		})`,
-		// Multiple chained methods
-		`db.users.find({ age: { $gt: 18 } }).sort({ lastName: 1, firstName: 1 }).skip(10).limit(20).projection({ firstName: 1, lastName: 1, email: 1 })`,
-		// Multiple statements
-		`show dbs
-show collections
-db.users.find()
-db.users.find({ name: "alice" }).limit(10)`,
-	}
-
-	for _, tc := range tests {
-		t.Run(tc, func(t *testing.T) {
-			_, lexerErrors, parserErrors := parseMongoShell(t, tc)
-			require.False(t, lexerErrors.HasErrors(), "Lexer errors: %v", lexerErrors.errors)
-			require.False(t, parserErrors.HasErrors(), "Parser errors: %v", parserErrors.errors)
-		})
 	}
 }
 
@@ -368,9 +149,9 @@ func TestNewKeywordErrorMessage(t *testing.T) {
 
 			require.True(t, errorListener.HasErrors(), "Expected parse errors for 'new' keyword usage")
 			require.NotEmpty(t, errorListener.Errors)
-			// Verify error message contains hint about 'new' keyword
-			require.Contains(t, errorListener.Errors[0].Message, "new",
-				"Error message should mention 'new' keyword")
+			// Verify error message provides helpful guidance about 'new' keyword
+			require.Contains(t, errorListener.Errors[0].Message, "'new' keyword is not supported",
+				"Error message should provide helpful guidance about 'new' keyword")
 		})
 	}
 }
