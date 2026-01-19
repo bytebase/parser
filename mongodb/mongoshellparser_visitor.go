@@ -49,6 +49,21 @@ type MongoShellParserVisitor interface {
 	// Visit a parse tree produced by MongoShellParser#findOneMethod.
 	VisitFindOneMethod(ctx *FindOneMethodContext) interface{}
 
+	// Visit a parse tree produced by MongoShellParser#countDocumentsMethod.
+	VisitCountDocumentsMethod(ctx *CountDocumentsMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#estimatedDocumentCountMethod.
+	VisitEstimatedDocumentCountMethod(ctx *EstimatedDocumentCountMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#distinctMethod.
+	VisitDistinctMethod(ctx *DistinctMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#aggregateMethod.
+	VisitAggregateMethod(ctx *AggregateMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#getIndexesMethod.
+	VisitGetIndexesMethod(ctx *GetIndexesMethodContext) interface{}
+
 	// Visit a parse tree produced by MongoShellParser#sortMethod.
 	VisitSortMethod(ctx *SortMethodContext) interface{}
 
@@ -57,6 +72,9 @@ type MongoShellParserVisitor interface {
 
 	// Visit a parse tree produced by MongoShellParser#skipMethod.
 	VisitSkipMethod(ctx *SkipMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#countMethod.
+	VisitCountMethod(ctx *CountMethodContext) interface{}
 
 	// Visit a parse tree produced by MongoShellParser#projectionMethod.
 	VisitProjectionMethod(ctx *ProjectionMethodContext) interface{}
@@ -99,6 +117,12 @@ type MongoShellParserVisitor interface {
 
 	// Visit a parse tree produced by MongoShellParser#literalValue.
 	VisitLiteralValue(ctx *LiteralValueContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#newKeywordValue.
+	VisitNewKeywordValue(ctx *NewKeywordValueContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#newKeywordError.
+	VisitNewKeywordError(ctx *NewKeywordErrorContext) interface{}
 
 	// Visit a parse tree produced by MongoShellParser#array.
 	VisitArray(ctx *ArrayContext) interface{}

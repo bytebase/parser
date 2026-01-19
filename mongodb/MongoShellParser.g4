@@ -2,12 +2,14 @@
  * MongoDB Shell (mongosh) Parser Grammar
  * For use with ANTLR 4
  *
- * Supports MVP read operations:
+ * Milestone 1: Read Operations + Utility + Aggregation
  * - Shell commands: show dbs, show databases, show collections
- * - Database statements: db.collection.method(...)
- * - Read methods: find(), findOne()
- * - Cursor modifiers: sort(), limit(), skip(), projection(), project()
- * - Helper functions: ObjectId(), ISODate(), UUID(), Long(), etc.
+ * - Utility: db.getCollectionNames(), db.getCollectionInfos()
+ * - Collection info: db.collection.getIndexes()
+ * - Read methods: find(), findOne(), countDocuments(), estimatedDocumentCount(), distinct()
+ * - Aggregation: db.collection.aggregate()
+ * - Cursor modifiers: sort(), limit(), skip(), count(), projection(), project()
+ * - Object constructors: ObjectId(), ISODate(), UUID(), NumberInt(), NumberLong(), NumberDecimal()
  * - Document syntax with unquoted keys and trailing commas
  */
 
@@ -55,9 +57,15 @@ methodChain
 methodCall
     : findMethod
     | findOneMethod
+    | countDocumentsMethod
+    | estimatedDocumentCountMethod
+    | distinctMethod
+    | aggregateMethod
+    | getIndexesMethod
     | sortMethod
     | limitMethod
     | skipMethod
+    | countMethod
     | projectionMethod
     | genericMethod
     ;
@@ -71,6 +79,31 @@ findOneMethod
     : FIND_ONE LPAREN argument? RPAREN
     ;
 
+// countDocuments(filter?, options?)
+countDocumentsMethod
+    : COUNT_DOCUMENTS LPAREN arguments? RPAREN
+    ;
+
+// estimatedDocumentCount(options?)
+estimatedDocumentCountMethod
+    : ESTIMATED_DOCUMENT_COUNT LPAREN argument? RPAREN
+    ;
+
+// distinct(field, query?, options?)
+distinctMethod
+    : DISTINCT LPAREN arguments RPAREN
+    ;
+
+// aggregate(pipeline, options?)
+aggregateMethod
+    : AGGREGATE LPAREN arguments RPAREN
+    ;
+
+// getIndexes()
+getIndexesMethod
+    : GET_INDEXES LPAREN RPAREN
+    ;
+
 sortMethod
     : SORT LPAREN document RPAREN
     ;
@@ -81,6 +114,11 @@ limitMethod
 
 skipMethod
     : SKIP_ LPAREN NUMBER RPAREN
+    ;
+
+// cursor.count() - returns count of documents matching the query
+countMethod
+    : COUNT LPAREN RPAREN
     ;
 
 projectionMethod
@@ -125,6 +163,14 @@ value
     | REGEX_LITERAL           # regexLiteralValue
     | regExpConstructor       # regexpConstructorValue
     | literal                 # literalValue
+    | newKeywordError         # newKeywordValue
+    ;
+
+// Catch 'new' keyword usage and provide helpful error message
+newKeywordError
+    : NEW (OBJECT_ID | ISO_DATE | DATE | UUID | LONG | NUMBER_LONG | INT32 | NUMBER_INT | DOUBLE | DECIMAL128 | NUMBER_DECIMAL | TIMESTAMP | REG_EXP)
+      { p.NotifyErrorListeners("'new' keyword is not supported. Use ObjectId(), ISODate(), UUID(), etc. directly without 'new'", nil, nil) }
+      LPAREN arguments? RPAREN
     ;
 
 // Array: [ value, ... ] with optional trailing comma
@@ -149,19 +195,16 @@ helperFunction
 // ObjectId("hex") or ObjectId()
 objectIdHelper
     : OBJECT_ID LPAREN stringLiteral? RPAREN
-    | NEW OBJECT_ID { p.NotifyErrorListeners("'new' keyword is not supported. Use ObjectId() directly", nil, nil) }
     ;
 
 // ISODate("iso-string") or ISODate()
 isoDateHelper
     : ISO_DATE LPAREN stringLiteral? RPAREN
-    | NEW ISO_DATE { p.NotifyErrorListeners("'new' keyword is not supported. Use ISODate() directly", nil, nil) }
     ;
 
 // Date() or Date("string") or Date(timestamp)
 dateHelper
     : DATE LPAREN (stringLiteral | NUMBER)? RPAREN
-    | NEW DATE { p.NotifyErrorListeners("'new' keyword is not supported. Use Date() directly", nil, nil) }
     ;
 
 // UUID("uuid-string")
@@ -198,7 +241,6 @@ timestampHelper
 // RegExp("pattern", "flags") constructor
 regExpConstructor
     : REG_EXP LPAREN stringLiteral (COMMA stringLiteral)? RPAREN
-    | NEW REG_EXP { p.NotifyErrorListeners("'new' keyword is not supported. Use RegExp() directly", nil, nil) }
     ;
 
 // Literals
@@ -233,9 +275,15 @@ identifier
     | NULL
     | FIND
     | FIND_ONE
+    | COUNT_DOCUMENTS
+    | ESTIMATED_DOCUMENT_COUNT
+    | DISTINCT
+    | AGGREGATE
+    | GET_INDEXES
     | SORT
     | LIMIT
     | SKIP_
+    | COUNT
     | PROJECTION
     | PROJECT
     | GET_COLLECTION

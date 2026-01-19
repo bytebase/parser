@@ -104,6 +104,38 @@ func (s *BaseMongoShellParserListener) EnterFindOneMethod(ctx *FindOneMethodCont
 // ExitFindOneMethod is called when production findOneMethod is exited.
 func (s *BaseMongoShellParserListener) ExitFindOneMethod(ctx *FindOneMethodContext) {}
 
+// EnterCountDocumentsMethod is called when production countDocumentsMethod is entered.
+func (s *BaseMongoShellParserListener) EnterCountDocumentsMethod(ctx *CountDocumentsMethodContext) {}
+
+// ExitCountDocumentsMethod is called when production countDocumentsMethod is exited.
+func (s *BaseMongoShellParserListener) ExitCountDocumentsMethod(ctx *CountDocumentsMethodContext) {}
+
+// EnterEstimatedDocumentCountMethod is called when production estimatedDocumentCountMethod is entered.
+func (s *BaseMongoShellParserListener) EnterEstimatedDocumentCountMethod(ctx *EstimatedDocumentCountMethodContext) {
+}
+
+// ExitEstimatedDocumentCountMethod is called when production estimatedDocumentCountMethod is exited.
+func (s *BaseMongoShellParserListener) ExitEstimatedDocumentCountMethod(ctx *EstimatedDocumentCountMethodContext) {
+}
+
+// EnterDistinctMethod is called when production distinctMethod is entered.
+func (s *BaseMongoShellParserListener) EnterDistinctMethod(ctx *DistinctMethodContext) {}
+
+// ExitDistinctMethod is called when production distinctMethod is exited.
+func (s *BaseMongoShellParserListener) ExitDistinctMethod(ctx *DistinctMethodContext) {}
+
+// EnterAggregateMethod is called when production aggregateMethod is entered.
+func (s *BaseMongoShellParserListener) EnterAggregateMethod(ctx *AggregateMethodContext) {}
+
+// ExitAggregateMethod is called when production aggregateMethod is exited.
+func (s *BaseMongoShellParserListener) ExitAggregateMethod(ctx *AggregateMethodContext) {}
+
+// EnterGetIndexesMethod is called when production getIndexesMethod is entered.
+func (s *BaseMongoShellParserListener) EnterGetIndexesMethod(ctx *GetIndexesMethodContext) {}
+
+// ExitGetIndexesMethod is called when production getIndexesMethod is exited.
+func (s *BaseMongoShellParserListener) ExitGetIndexesMethod(ctx *GetIndexesMethodContext) {}
+
 // EnterSortMethod is called when production sortMethod is entered.
 func (s *BaseMongoShellParserListener) EnterSortMethod(ctx *SortMethodContext) {}
 
@@ -121,6 +153,12 @@ func (s *BaseMongoShellParserListener) EnterSkipMethod(ctx *SkipMethodContext) {
 
 // ExitSkipMethod is called when production skipMethod is exited.
 func (s *BaseMongoShellParserListener) ExitSkipMethod(ctx *SkipMethodContext) {}
+
+// EnterCountMethod is called when production countMethod is entered.
+func (s *BaseMongoShellParserListener) EnterCountMethod(ctx *CountMethodContext) {}
+
+// ExitCountMethod is called when production countMethod is exited.
+func (s *BaseMongoShellParserListener) ExitCountMethod(ctx *CountMethodContext) {}
 
 // EnterProjectionMethod is called when production projectionMethod is entered.
 func (s *BaseMongoShellParserListener) EnterProjectionMethod(ctx *ProjectionMethodContext) {}
@@ -207,6 +245,18 @@ func (s *BaseMongoShellParserListener) EnterLiteralValue(ctx *LiteralValueContex
 
 // ExitLiteralValue is called when production literalValue is exited.
 func (s *BaseMongoShellParserListener) ExitLiteralValue(ctx *LiteralValueContext) {}
+
+// EnterNewKeywordValue is called when production newKeywordValue is entered.
+func (s *BaseMongoShellParserListener) EnterNewKeywordValue(ctx *NewKeywordValueContext) {}
+
+// ExitNewKeywordValue is called when production newKeywordValue is exited.
+func (s *BaseMongoShellParserListener) ExitNewKeywordValue(ctx *NewKeywordValueContext) {}
+
+// EnterNewKeywordError is called when production newKeywordError is entered.
+func (s *BaseMongoShellParserListener) EnterNewKeywordError(ctx *NewKeywordErrorContext) {}
+
+// ExitNewKeywordError is called when production newKeywordError is exited.
+func (s *BaseMongoShellParserListener) ExitNewKeywordError(ctx *NewKeywordErrorContext) {}
 
 // EnterArray is called when production array is entered.
 func (s *BaseMongoShellParserListener) EnterArray(ctx *ArrayContext) {}
