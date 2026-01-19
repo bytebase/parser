@@ -149,6 +149,9 @@ func TestCollectionAccess(t *testing.T) {
 		`db["user-logs"].find()`,
 		`db.getCollection("my.collection").find()`,
 		`db.getCollectionNames()`,
+		`db.getCollectionInfos()`,
+		`db.getCollectionInfos({ name: "users" })`,
+		`db.getCollectionInfos({}, { nameOnly: true })`,
 	}
 
 	for _, tc := range tests {

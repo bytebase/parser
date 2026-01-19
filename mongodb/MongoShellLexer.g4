@@ -17,6 +17,7 @@ FALSE: 'false';
 NULL: 'null';
 GET_COLLECTION: 'getCollection';
 GET_COLLECTION_NAMES: 'getCollectionNames';
+GET_COLLECTION_INFOS: 'getCollectionInfos';
 
 // Helper function names (recognized as distinct tokens)
 OBJECT_ID: 'ObjectId';
