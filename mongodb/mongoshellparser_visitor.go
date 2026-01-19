@@ -22,6 +22,9 @@ type MongoShellParserVisitor interface {
 	// Visit a parse tree produced by MongoShellParser#getCollectionNames.
 	VisitGetCollectionNames(ctx *GetCollectionNamesContext) interface{}
 
+	// Visit a parse tree produced by MongoShellParser#getCollectionInfos.
+	VisitGetCollectionInfos(ctx *GetCollectionInfosContext) interface{}
+
 	// Visit a parse tree produced by MongoShellParser#collectionOperation.
 	VisitCollectionOperation(ctx *CollectionOperationContext) interface{}
 

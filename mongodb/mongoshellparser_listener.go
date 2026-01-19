@@ -22,6 +22,9 @@ type MongoShellParserListener interface {
 	// EnterGetCollectionNames is called when entering the getCollectionNames production.
 	EnterGetCollectionNames(c *GetCollectionNamesContext)
 
+	// EnterGetCollectionInfos is called when entering the getCollectionInfos production.
+	EnterGetCollectionInfos(c *GetCollectionInfosContext)
+
 	// EnterCollectionOperation is called when entering the collectionOperation production.
 	EnterCollectionOperation(c *CollectionOperationContext)
 
@@ -171,6 +174,9 @@ type MongoShellParserListener interface {
 
 	// ExitGetCollectionNames is called when exiting the getCollectionNames production.
 	ExitGetCollectionNames(c *GetCollectionNamesContext)
+
+	// ExitGetCollectionInfos is called when exiting the getCollectionInfos production.
+	ExitGetCollectionInfos(c *GetCollectionInfosContext)
 
 	// ExitCollectionOperation is called when exiting the collectionOperation production.
 	ExitCollectionOperation(c *CollectionOperationContext)

@@ -50,6 +50,12 @@ func (s *BaseMongoShellParserListener) EnterGetCollectionNames(ctx *GetCollectio
 // ExitGetCollectionNames is called when production getCollectionNames is exited.
 func (s *BaseMongoShellParserListener) ExitGetCollectionNames(ctx *GetCollectionNamesContext) {}
 
+// EnterGetCollectionInfos is called when production getCollectionInfos is entered.
+func (s *BaseMongoShellParserListener) EnterGetCollectionInfos(ctx *GetCollectionInfosContext) {}
+
+// ExitGetCollectionInfos is called when production getCollectionInfos is exited.
+func (s *BaseMongoShellParserListener) ExitGetCollectionInfos(ctx *GetCollectionInfosContext) {}
+
 // EnterCollectionOperation is called when production collectionOperation is entered.
 func (s *BaseMongoShellParserListener) EnterCollectionOperation(ctx *CollectionOperationContext) {}
 

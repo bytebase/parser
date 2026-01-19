@@ -32,10 +32,11 @@ shellCommand
     | SHOW COLLECTIONS                          # showCollections
     ;
 
-// Database statements: db.collection.method(...) or db.getCollectionNames()
+// Database statements: db.collection.method(...) or db.getCollectionNames() or db.getCollectionInfos()
 dbStatement
-    : DB DOT GET_COLLECTION_NAMES LPAREN RPAREN methodChain?    # getCollectionNames
-    | DB collectionAccess methodChain                           # collectionOperation
+    : DB DOT GET_COLLECTION_NAMES LPAREN RPAREN methodChain?                    # getCollectionNames
+    | DB DOT GET_COLLECTION_INFOS LPAREN arguments? RPAREN methodChain?         # getCollectionInfos
+    | DB collectionAccess methodChain                                           # collectionOperation
     ;
 
 // Collection access patterns
@@ -239,6 +240,7 @@ identifier
     | PROJECT
     | GET_COLLECTION
     | GET_COLLECTION_NAMES
+    | GET_COLLECTION_INFOS
     | OBJECT_ID
     | ISO_DATE
     | DATE

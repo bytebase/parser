@@ -27,6 +27,10 @@ func (v *BaseMongoShellParserVisitor) VisitGetCollectionNames(ctx *GetCollection
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseMongoShellParserVisitor) VisitGetCollectionInfos(ctx *GetCollectionInfosContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseMongoShellParserVisitor) VisitCollectionOperation(ctx *CollectionOperationContext) interface{} {
 	return v.VisitChildren(ctx)
 }
