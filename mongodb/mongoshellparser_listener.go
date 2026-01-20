@@ -25,8 +25,161 @@ type MongoShellParserListener interface {
 	// EnterGetCollectionInfos is called when entering the getCollectionInfos production.
 	EnterGetCollectionInfos(c *GetCollectionInfosContext)
 
+	// EnterCreateCollection is called when entering the createCollection production.
+	EnterCreateCollection(c *CreateCollectionContext)
+
+	// EnterDropDatabase is called when entering the dropDatabase production.
+	EnterDropDatabase(c *DropDatabaseContext)
+
+	// EnterDbStats is called when entering the dbStats production.
+	EnterDbStats(c *DbStatsContext)
+
+	// EnterServerStatus is called when entering the serverStatus production.
+	EnterServerStatus(c *ServerStatusContext)
+
+	// EnterServerBuildInfo is called when entering the serverBuildInfo production.
+	EnterServerBuildInfo(c *ServerBuildInfoContext)
+
+	// EnterDbVersion is called when entering the dbVersion production.
+	EnterDbVersion(c *DbVersionContext)
+
+	// EnterHostInfo is called when entering the hostInfo production.
+	EnterHostInfo(c *HostInfoContext)
+
+	// EnterListCommands is called when entering the listCommands production.
+	EnterListCommands(c *ListCommandsContext)
+
+	// EnterRunCommand is called when entering the runCommand production.
+	EnterRunCommand(c *RunCommandContext)
+
+	// EnterAdminCommand is called when entering the adminCommand production.
+	EnterAdminCommand(c *AdminCommandContext)
+
+	// EnterGetName is called when entering the getName production.
+	EnterGetName(c *GetNameContext)
+
+	// EnterGetMongo is called when entering the getMongo production.
+	EnterGetMongo(c *GetMongoContext)
+
+	// EnterGetSiblingDB is called when entering the getSiblingDB production.
+	EnterGetSiblingDB(c *GetSiblingDBContext)
+
+	// EnterDbGenericMethod is called when entering the dbGenericMethod production.
+	EnterDbGenericMethod(c *DbGenericMethodContext)
+
 	// EnterCollectionOperation is called when entering the collectionOperation production.
 	EnterCollectionOperation(c *CollectionOperationContext)
+
+	// EnterGenericDbMethod is called when entering the genericDbMethod production.
+	EnterGenericDbMethod(c *GenericDbMethodContext)
+
+	// EnterBulkStatement is called when entering the bulkStatement production.
+	EnterBulkStatement(c *BulkStatementContext)
+
+	// EnterBulkInitMethod is called when entering the bulkInitMethod production.
+	EnterBulkInitMethod(c *BulkInitMethodContext)
+
+	// EnterBulkMethodChain is called when entering the bulkMethodChain production.
+	EnterBulkMethodChain(c *BulkMethodChainContext)
+
+	// EnterBulkFind is called when entering the bulkFind production.
+	EnterBulkFind(c *BulkFindContext)
+
+	// EnterBulkInsert is called when entering the bulkInsert production.
+	EnterBulkInsert(c *BulkInsertContext)
+
+	// EnterBulkRemove is called when entering the bulkRemove production.
+	EnterBulkRemove(c *BulkRemoveContext)
+
+	// EnterBulkExecute is called when entering the bulkExecute production.
+	EnterBulkExecute(c *BulkExecuteContext)
+
+	// EnterBulkGetOperations is called when entering the bulkGetOperations production.
+	EnterBulkGetOperations(c *BulkGetOperationsContext)
+
+	// EnterBulkToString is called when entering the bulkToString production.
+	EnterBulkToString(c *BulkToStringContext)
+
+	// EnterBulkGenericMethod is called when entering the bulkGenericMethod production.
+	EnterBulkGenericMethod(c *BulkGenericMethodContext)
+
+	// EnterMongoConnection is called when entering the mongoConnection production.
+	EnterMongoConnection(c *MongoConnectionContext)
+
+	// EnterConnectCall is called when entering the connectCall production.
+	EnterConnectCall(c *ConnectCallContext)
+
+	// EnterDbGetMongoChain is called when entering the dbGetMongoChain production.
+	EnterDbGetMongoChain(c *DbGetMongoChainContext)
+
+	// EnterConnectionMethodChain is called when entering the connectionMethodChain production.
+	EnterConnectionMethodChain(c *ConnectionMethodChainContext)
+
+	// EnterRsStatement is called when entering the rsStatement production.
+	EnterRsStatement(c *RsStatementContext)
+
+	// EnterShStatement is called when entering the shStatement production.
+	EnterShStatement(c *ShStatementContext)
+
+	// EnterKeyVaultStatement is called when entering the keyVaultStatement production.
+	EnterKeyVaultStatement(c *KeyVaultStatementContext)
+
+	// EnterClientEncryptionStatement is called when entering the clientEncryptionStatement production.
+	EnterClientEncryptionStatement(c *ClientEncryptionStatementContext)
+
+	// EnterPlanCacheStatement is called when entering the planCacheStatement production.
+	EnterPlanCacheStatement(c *PlanCacheStatementContext)
+
+	// EnterSpStatement is called when entering the spStatement production.
+	EnterSpStatement(c *SpStatementContext)
+
+	// EnterNativeFunctionCall is called when entering the nativeFunctionCall production.
+	EnterNativeFunctionCall(c *NativeFunctionCallContext)
+
+	// EnterConnGetDB is called when entering the connGetDB production.
+	EnterConnGetDB(c *ConnGetDBContext)
+
+	// EnterConnGetReadConcern is called when entering the connGetReadConcern production.
+	EnterConnGetReadConcern(c *ConnGetReadConcernContext)
+
+	// EnterConnGetReadPref is called when entering the connGetReadPref production.
+	EnterConnGetReadPref(c *ConnGetReadPrefContext)
+
+	// EnterConnGetReadPrefMode is called when entering the connGetReadPrefMode production.
+	EnterConnGetReadPrefMode(c *ConnGetReadPrefModeContext)
+
+	// EnterConnGetReadPrefTagSet is called when entering the connGetReadPrefTagSet production.
+	EnterConnGetReadPrefTagSet(c *ConnGetReadPrefTagSetContext)
+
+	// EnterConnGetWriteConcern is called when entering the connGetWriteConcern production.
+	EnterConnGetWriteConcern(c *ConnGetWriteConcernContext)
+
+	// EnterConnSetReadPref is called when entering the connSetReadPref production.
+	EnterConnSetReadPref(c *ConnSetReadPrefContext)
+
+	// EnterConnSetReadConcern is called when entering the connSetReadConcern production.
+	EnterConnSetReadConcern(c *ConnSetReadConcernContext)
+
+	// EnterConnSetWriteConcern is called when entering the connSetWriteConcern production.
+	EnterConnSetWriteConcern(c *ConnSetWriteConcernContext)
+
+	// EnterConnStartSession is called when entering the connStartSession production.
+	EnterConnStartSession(c *ConnStartSessionContext)
+
+	// EnterConnWatch is called when entering the connWatch production.
+	EnterConnWatch(c *ConnWatchContext)
+
+	// EnterConnClose is called when entering the connClose production.
+	EnterConnClose(c *ConnCloseContext)
+
+	// EnterConnAdminCommand is called when entering the connAdminCommand production.
+	EnterConnAdminCommand(c *ConnAdminCommandContext)
+
+	// EnterConnGetDBNames is called when entering the connGetDBNames production.
+	EnterConnGetDBNames(c *ConnGetDBNamesContext)
+
+	// EnterConnGenericMethod is called when entering the connGenericMethod production.
+	EnterConnGenericMethod(c *ConnGenericMethodContext)
 
 	// EnterDotAccess is called when entering the dotAccess production.
 	EnterDotAccess(c *DotAccessContext)
@@ -64,6 +217,78 @@ type MongoShellParserListener interface {
 	// EnterGetIndexesMethod is called when entering the getIndexesMethod production.
 	EnterGetIndexesMethod(c *GetIndexesMethodContext)
 
+	// EnterInsertOneMethod is called when entering the insertOneMethod production.
+	EnterInsertOneMethod(c *InsertOneMethodContext)
+
+	// EnterInsertManyMethod is called when entering the insertManyMethod production.
+	EnterInsertManyMethod(c *InsertManyMethodContext)
+
+	// EnterUpdateOneMethod is called when entering the updateOneMethod production.
+	EnterUpdateOneMethod(c *UpdateOneMethodContext)
+
+	// EnterUpdateManyMethod is called when entering the updateManyMethod production.
+	EnterUpdateManyMethod(c *UpdateManyMethodContext)
+
+	// EnterDeleteOneMethod is called when entering the deleteOneMethod production.
+	EnterDeleteOneMethod(c *DeleteOneMethodContext)
+
+	// EnterDeleteManyMethod is called when entering the deleteManyMethod production.
+	EnterDeleteManyMethod(c *DeleteManyMethodContext)
+
+	// EnterReplaceOneMethod is called when entering the replaceOneMethod production.
+	EnterReplaceOneMethod(c *ReplaceOneMethodContext)
+
+	// EnterFindOneAndUpdateMethod is called when entering the findOneAndUpdateMethod production.
+	EnterFindOneAndUpdateMethod(c *FindOneAndUpdateMethodContext)
+
+	// EnterFindOneAndReplaceMethod is called when entering the findOneAndReplaceMethod production.
+	EnterFindOneAndReplaceMethod(c *FindOneAndReplaceMethodContext)
+
+	// EnterFindOneAndDeleteMethod is called when entering the findOneAndDeleteMethod production.
+	EnterFindOneAndDeleteMethod(c *FindOneAndDeleteMethodContext)
+
+	// EnterCreateIndexMethod is called when entering the createIndexMethod production.
+	EnterCreateIndexMethod(c *CreateIndexMethodContext)
+
+	// EnterCreateIndexesMethod is called when entering the createIndexesMethod production.
+	EnterCreateIndexesMethod(c *CreateIndexesMethodContext)
+
+	// EnterDropIndexMethod is called when entering the dropIndexMethod production.
+	EnterDropIndexMethod(c *DropIndexMethodContext)
+
+	// EnterDropIndexesMethod is called when entering the dropIndexesMethod production.
+	EnterDropIndexesMethod(c *DropIndexesMethodContext)
+
+	// EnterDropMethod is called when entering the dropMethod production.
+	EnterDropMethod(c *DropMethodContext)
+
+	// EnterRenameCollectionMethod is called when entering the renameCollectionMethod production.
+	EnterRenameCollectionMethod(c *RenameCollectionMethodContext)
+
+	// EnterStatsMethod is called when entering the statsMethod production.
+	EnterStatsMethod(c *StatsMethodContext)
+
+	// EnterStorageSizeMethod is called when entering the storageSizeMethod production.
+	EnterStorageSizeMethod(c *StorageSizeMethodContext)
+
+	// EnterTotalIndexSizeMethod is called when entering the totalIndexSizeMethod production.
+	EnterTotalIndexSizeMethod(c *TotalIndexSizeMethodContext)
+
+	// EnterTotalSizeMethod is called when entering the totalSizeMethod production.
+	EnterTotalSizeMethod(c *TotalSizeMethodContext)
+
+	// EnterDataSizeMethod is called when entering the dataSizeMethod production.
+	EnterDataSizeMethod(c *DataSizeMethodContext)
+
+	// EnterIsCappedMethod is called when entering the isCappedMethod production.
+	EnterIsCappedMethod(c *IsCappedMethodContext)
+
+	// EnterValidateMethod is called when entering the validateMethod production.
+	EnterValidateMethod(c *ValidateMethodContext)
+
+	// EnterLatencyStatsMethod is called when entering the latencyStatsMethod production.
+	EnterLatencyStatsMethod(c *LatencyStatsMethodContext)
+
 	// EnterSortMethod is called when entering the sortMethod production.
 	EnterSortMethod(c *SortMethodContext)
 
@@ -78,6 +303,96 @@ type MongoShellParserListener interface {
 
 	// EnterProjectionMethod is called when entering the projectionMethod production.
 	EnterProjectionMethod(c *ProjectionMethodContext)
+
+	// EnterBatchSizeMethod is called when entering the batchSizeMethod production.
+	EnterBatchSizeMethod(c *BatchSizeMethodContext)
+
+	// EnterCloseMethod is called when entering the closeMethod production.
+	EnterCloseMethod(c *CloseMethodContext)
+
+	// EnterCollationMethod is called when entering the collationMethod production.
+	EnterCollationMethod(c *CollationMethodContext)
+
+	// EnterCommentMethod is called when entering the commentMethod production.
+	EnterCommentMethod(c *CommentMethodContext)
+
+	// EnterExplainMethod is called when entering the explainMethod production.
+	EnterExplainMethod(c *ExplainMethodContext)
+
+	// EnterForEachMethod is called when entering the forEachMethod production.
+	EnterForEachMethod(c *ForEachMethodContext)
+
+	// EnterHasNextMethod is called when entering the hasNextMethod production.
+	EnterHasNextMethod(c *HasNextMethodContext)
+
+	// EnterHintMethod is called when entering the hintMethod production.
+	EnterHintMethod(c *HintMethodContext)
+
+	// EnterIsClosedMethod is called when entering the isClosedMethod production.
+	EnterIsClosedMethod(c *IsClosedMethodContext)
+
+	// EnterIsExhaustedMethod is called when entering the isExhaustedMethod production.
+	EnterIsExhaustedMethod(c *IsExhaustedMethodContext)
+
+	// EnterItcountMethod is called when entering the itcountMethod production.
+	EnterItcountMethod(c *ItcountMethodContext)
+
+	// EnterMapMethod is called when entering the mapMethod production.
+	EnterMapMethod(c *MapMethodContext)
+
+	// EnterMaxMethod is called when entering the maxMethod production.
+	EnterMaxMethod(c *MaxMethodContext)
+
+	// EnterMaxAwaitTimeMSMethod is called when entering the maxAwaitTimeMSMethod production.
+	EnterMaxAwaitTimeMSMethod(c *MaxAwaitTimeMSMethodContext)
+
+	// EnterMaxTimeMSMethod is called when entering the maxTimeMSMethod production.
+	EnterMaxTimeMSMethod(c *MaxTimeMSMethodContext)
+
+	// EnterMinMethod is called when entering the minMethod production.
+	EnterMinMethod(c *MinMethodContext)
+
+	// EnterNextMethod is called when entering the nextMethod production.
+	EnterNextMethod(c *NextMethodContext)
+
+	// EnterNoCursorTimeoutMethod is called when entering the noCursorTimeoutMethod production.
+	EnterNoCursorTimeoutMethod(c *NoCursorTimeoutMethodContext)
+
+	// EnterObjsLeftInBatchMethod is called when entering the objsLeftInBatchMethod production.
+	EnterObjsLeftInBatchMethod(c *ObjsLeftInBatchMethodContext)
+
+	// EnterPrettyMethod is called when entering the prettyMethod production.
+	EnterPrettyMethod(c *PrettyMethodContext)
+
+	// EnterReadConcernMethod is called when entering the readConcernMethod production.
+	EnterReadConcernMethod(c *ReadConcernMethodContext)
+
+	// EnterReadPrefMethod is called when entering the readPrefMethod production.
+	EnterReadPrefMethod(c *ReadPrefMethodContext)
+
+	// EnterReturnKeyMethod is called when entering the returnKeyMethod production.
+	EnterReturnKeyMethod(c *ReturnKeyMethodContext)
+
+	// EnterShowRecordIdMethod is called when entering the showRecordIdMethod production.
+	EnterShowRecordIdMethod(c *ShowRecordIdMethodContext)
+
+	// EnterSizeMethod is called when entering the sizeMethod production.
+	EnterSizeMethod(c *SizeMethodContext)
+
+	// EnterTailableMethod is called when entering the tailableMethod production.
+	EnterTailableMethod(c *TailableMethodContext)
+
+	// EnterToArrayMethod is called when entering the toArrayMethod production.
+	EnterToArrayMethod(c *ToArrayMethodContext)
+
+	// EnterTryNextMethod is called when entering the tryNextMethod production.
+	EnterTryNextMethod(c *TryNextMethodContext)
+
+	// EnterAllowDiskUseMethod is called when entering the allowDiskUseMethod production.
+	EnterAllowDiskUseMethod(c *AllowDiskUseMethodContext)
+
+	// EnterAddOptionMethod is called when entering the addOptionMethod production.
+	EnterAddOptionMethod(c *AddOptionMethodContext)
 
 	// EnterGenericMethod is called when entering the genericMethod production.
 	EnterGenericMethod(c *GenericMethodContext)
@@ -163,6 +478,18 @@ type MongoShellParserListener interface {
 	// EnterRegExpConstructor is called when entering the regExpConstructor production.
 	EnterRegExpConstructor(c *RegExpConstructorContext)
 
+	// EnterBinDataHelper is called when entering the binDataHelper production.
+	EnterBinDataHelper(c *BinDataHelperContext)
+
+	// EnterBinaryHelper is called when entering the binaryHelper production.
+	EnterBinaryHelper(c *BinaryHelperContext)
+
+	// EnterBsonRegExpHelper is called when entering the bsonRegExpHelper production.
+	EnterBsonRegExpHelper(c *BsonRegExpHelperContext)
+
+	// EnterHexDataHelper is called when entering the hexDataHelper production.
+	EnterHexDataHelper(c *HexDataHelperContext)
+
 	// EnterStringLiteralValue is called when entering the stringLiteralValue production.
 	EnterStringLiteralValue(c *StringLiteralValueContext)
 
@@ -202,8 +529,161 @@ type MongoShellParserListener interface {
 	// ExitGetCollectionInfos is called when exiting the getCollectionInfos production.
 	ExitGetCollectionInfos(c *GetCollectionInfosContext)
 
+	// ExitCreateCollection is called when exiting the createCollection production.
+	ExitCreateCollection(c *CreateCollectionContext)
+
+	// ExitDropDatabase is called when exiting the dropDatabase production.
+	ExitDropDatabase(c *DropDatabaseContext)
+
+	// ExitDbStats is called when exiting the dbStats production.
+	ExitDbStats(c *DbStatsContext)
+
+	// ExitServerStatus is called when exiting the serverStatus production.
+	ExitServerStatus(c *ServerStatusContext)
+
+	// ExitServerBuildInfo is called when exiting the serverBuildInfo production.
+	ExitServerBuildInfo(c *ServerBuildInfoContext)
+
+	// ExitDbVersion is called when exiting the dbVersion production.
+	ExitDbVersion(c *DbVersionContext)
+
+	// ExitHostInfo is called when exiting the hostInfo production.
+	ExitHostInfo(c *HostInfoContext)
+
+	// ExitListCommands is called when exiting the listCommands production.
+	ExitListCommands(c *ListCommandsContext)
+
+	// ExitRunCommand is called when exiting the runCommand production.
+	ExitRunCommand(c *RunCommandContext)
+
+	// ExitAdminCommand is called when exiting the adminCommand production.
+	ExitAdminCommand(c *AdminCommandContext)
+
+	// ExitGetName is called when exiting the getName production.
+	ExitGetName(c *GetNameContext)
+
+	// ExitGetMongo is called when exiting the getMongo production.
+	ExitGetMongo(c *GetMongoContext)
+
+	// ExitGetSiblingDB is called when exiting the getSiblingDB production.
+	ExitGetSiblingDB(c *GetSiblingDBContext)
+
+	// ExitDbGenericMethod is called when exiting the dbGenericMethod production.
+	ExitDbGenericMethod(c *DbGenericMethodContext)
+
 	// ExitCollectionOperation is called when exiting the collectionOperation production.
 	ExitCollectionOperation(c *CollectionOperationContext)
+
+	// ExitGenericDbMethod is called when exiting the genericDbMethod production.
+	ExitGenericDbMethod(c *GenericDbMethodContext)
+
+	// ExitBulkStatement is called when exiting the bulkStatement production.
+	ExitBulkStatement(c *BulkStatementContext)
+
+	// ExitBulkInitMethod is called when exiting the bulkInitMethod production.
+	ExitBulkInitMethod(c *BulkInitMethodContext)
+
+	// ExitBulkMethodChain is called when exiting the bulkMethodChain production.
+	ExitBulkMethodChain(c *BulkMethodChainContext)
+
+	// ExitBulkFind is called when exiting the bulkFind production.
+	ExitBulkFind(c *BulkFindContext)
+
+	// ExitBulkInsert is called when exiting the bulkInsert production.
+	ExitBulkInsert(c *BulkInsertContext)
+
+	// ExitBulkRemove is called when exiting the bulkRemove production.
+	ExitBulkRemove(c *BulkRemoveContext)
+
+	// ExitBulkExecute is called when exiting the bulkExecute production.
+	ExitBulkExecute(c *BulkExecuteContext)
+
+	// ExitBulkGetOperations is called when exiting the bulkGetOperations production.
+	ExitBulkGetOperations(c *BulkGetOperationsContext)
+
+	// ExitBulkToString is called when exiting the bulkToString production.
+	ExitBulkToString(c *BulkToStringContext)
+
+	// ExitBulkGenericMethod is called when exiting the bulkGenericMethod production.
+	ExitBulkGenericMethod(c *BulkGenericMethodContext)
+
+	// ExitMongoConnection is called when exiting the mongoConnection production.
+	ExitMongoConnection(c *MongoConnectionContext)
+
+	// ExitConnectCall is called when exiting the connectCall production.
+	ExitConnectCall(c *ConnectCallContext)
+
+	// ExitDbGetMongoChain is called when exiting the dbGetMongoChain production.
+	ExitDbGetMongoChain(c *DbGetMongoChainContext)
+
+	// ExitConnectionMethodChain is called when exiting the connectionMethodChain production.
+	ExitConnectionMethodChain(c *ConnectionMethodChainContext)
+
+	// ExitRsStatement is called when exiting the rsStatement production.
+	ExitRsStatement(c *RsStatementContext)
+
+	// ExitShStatement is called when exiting the shStatement production.
+	ExitShStatement(c *ShStatementContext)
+
+	// ExitKeyVaultStatement is called when exiting the keyVaultStatement production.
+	ExitKeyVaultStatement(c *KeyVaultStatementContext)
+
+	// ExitClientEncryptionStatement is called when exiting the clientEncryptionStatement production.
+	ExitClientEncryptionStatement(c *ClientEncryptionStatementContext)
+
+	// ExitPlanCacheStatement is called when exiting the planCacheStatement production.
+	ExitPlanCacheStatement(c *PlanCacheStatementContext)
+
+	// ExitSpStatement is called when exiting the spStatement production.
+	ExitSpStatement(c *SpStatementContext)
+
+	// ExitNativeFunctionCall is called when exiting the nativeFunctionCall production.
+	ExitNativeFunctionCall(c *NativeFunctionCallContext)
+
+	// ExitConnGetDB is called when exiting the connGetDB production.
+	ExitConnGetDB(c *ConnGetDBContext)
+
+	// ExitConnGetReadConcern is called when exiting the connGetReadConcern production.
+	ExitConnGetReadConcern(c *ConnGetReadConcernContext)
+
+	// ExitConnGetReadPref is called when exiting the connGetReadPref production.
+	ExitConnGetReadPref(c *ConnGetReadPrefContext)
+
+	// ExitConnGetReadPrefMode is called when exiting the connGetReadPrefMode production.
+	ExitConnGetReadPrefMode(c *ConnGetReadPrefModeContext)
+
+	// ExitConnGetReadPrefTagSet is called when exiting the connGetReadPrefTagSet production.
+	ExitConnGetReadPrefTagSet(c *ConnGetReadPrefTagSetContext)
+
+	// ExitConnGetWriteConcern is called when exiting the connGetWriteConcern production.
+	ExitConnGetWriteConcern(c *ConnGetWriteConcernContext)
+
+	// ExitConnSetReadPref is called when exiting the connSetReadPref production.
+	ExitConnSetReadPref(c *ConnSetReadPrefContext)
+
+	// ExitConnSetReadConcern is called when exiting the connSetReadConcern production.
+	ExitConnSetReadConcern(c *ConnSetReadConcernContext)
+
+	// ExitConnSetWriteConcern is called when exiting the connSetWriteConcern production.
+	ExitConnSetWriteConcern(c *ConnSetWriteConcernContext)
+
+	// ExitConnStartSession is called when exiting the connStartSession production.
+	ExitConnStartSession(c *ConnStartSessionContext)
+
+	// ExitConnWatch is called when exiting the connWatch production.
+	ExitConnWatch(c *ConnWatchContext)
+
+	// ExitConnClose is called when exiting the connClose production.
+	ExitConnClose(c *ConnCloseContext)
+
+	// ExitConnAdminCommand is called when exiting the connAdminCommand production.
+	ExitConnAdminCommand(c *ConnAdminCommandContext)
+
+	// ExitConnGetDBNames is called when exiting the connGetDBNames production.
+	ExitConnGetDBNames(c *ConnGetDBNamesContext)
+
+	// ExitConnGenericMethod is called when exiting the connGenericMethod production.
+	ExitConnGenericMethod(c *ConnGenericMethodContext)
 
 	// ExitDotAccess is called when exiting the dotAccess production.
 	ExitDotAccess(c *DotAccessContext)
@@ -241,6 +721,78 @@ type MongoShellParserListener interface {
 	// ExitGetIndexesMethod is called when exiting the getIndexesMethod production.
 	ExitGetIndexesMethod(c *GetIndexesMethodContext)
 
+	// ExitInsertOneMethod is called when exiting the insertOneMethod production.
+	ExitInsertOneMethod(c *InsertOneMethodContext)
+
+	// ExitInsertManyMethod is called when exiting the insertManyMethod production.
+	ExitInsertManyMethod(c *InsertManyMethodContext)
+
+	// ExitUpdateOneMethod is called when exiting the updateOneMethod production.
+	ExitUpdateOneMethod(c *UpdateOneMethodContext)
+
+	// ExitUpdateManyMethod is called when exiting the updateManyMethod production.
+	ExitUpdateManyMethod(c *UpdateManyMethodContext)
+
+	// ExitDeleteOneMethod is called when exiting the deleteOneMethod production.
+	ExitDeleteOneMethod(c *DeleteOneMethodContext)
+
+	// ExitDeleteManyMethod is called when exiting the deleteManyMethod production.
+	ExitDeleteManyMethod(c *DeleteManyMethodContext)
+
+	// ExitReplaceOneMethod is called when exiting the replaceOneMethod production.
+	ExitReplaceOneMethod(c *ReplaceOneMethodContext)
+
+	// ExitFindOneAndUpdateMethod is called when exiting the findOneAndUpdateMethod production.
+	ExitFindOneAndUpdateMethod(c *FindOneAndUpdateMethodContext)
+
+	// ExitFindOneAndReplaceMethod is called when exiting the findOneAndReplaceMethod production.
+	ExitFindOneAndReplaceMethod(c *FindOneAndReplaceMethodContext)
+
+	// ExitFindOneAndDeleteMethod is called when exiting the findOneAndDeleteMethod production.
+	ExitFindOneAndDeleteMethod(c *FindOneAndDeleteMethodContext)
+
+	// ExitCreateIndexMethod is called when exiting the createIndexMethod production.
+	ExitCreateIndexMethod(c *CreateIndexMethodContext)
+
+	// ExitCreateIndexesMethod is called when exiting the createIndexesMethod production.
+	ExitCreateIndexesMethod(c *CreateIndexesMethodContext)
+
+	// ExitDropIndexMethod is called when exiting the dropIndexMethod production.
+	ExitDropIndexMethod(c *DropIndexMethodContext)
+
+	// ExitDropIndexesMethod is called when exiting the dropIndexesMethod production.
+	ExitDropIndexesMethod(c *DropIndexesMethodContext)
+
+	// ExitDropMethod is called when exiting the dropMethod production.
+	ExitDropMethod(c *DropMethodContext)
+
+	// ExitRenameCollectionMethod is called when exiting the renameCollectionMethod production.
+	ExitRenameCollectionMethod(c *RenameCollectionMethodContext)
+
+	// ExitStatsMethod is called when exiting the statsMethod production.
+	ExitStatsMethod(c *StatsMethodContext)
+
+	// ExitStorageSizeMethod is called when exiting the storageSizeMethod production.
+	ExitStorageSizeMethod(c *StorageSizeMethodContext)
+
+	// ExitTotalIndexSizeMethod is called when exiting the totalIndexSizeMethod production.
+	ExitTotalIndexSizeMethod(c *TotalIndexSizeMethodContext)
+
+	// ExitTotalSizeMethod is called when exiting the totalSizeMethod production.
+	ExitTotalSizeMethod(c *TotalSizeMethodContext)
+
+	// ExitDataSizeMethod is called when exiting the dataSizeMethod production.
+	ExitDataSizeMethod(c *DataSizeMethodContext)
+
+	// ExitIsCappedMethod is called when exiting the isCappedMethod production.
+	ExitIsCappedMethod(c *IsCappedMethodContext)
+
+	// ExitValidateMethod is called when exiting the validateMethod production.
+	ExitValidateMethod(c *ValidateMethodContext)
+
+	// ExitLatencyStatsMethod is called when exiting the latencyStatsMethod production.
+	ExitLatencyStatsMethod(c *LatencyStatsMethodContext)
+
 	// ExitSortMethod is called when exiting the sortMethod production.
 	ExitSortMethod(c *SortMethodContext)
 
@@ -255,6 +807,96 @@ type MongoShellParserListener interface {
 
 	// ExitProjectionMethod is called when exiting the projectionMethod production.
 	ExitProjectionMethod(c *ProjectionMethodContext)
+
+	// ExitBatchSizeMethod is called when exiting the batchSizeMethod production.
+	ExitBatchSizeMethod(c *BatchSizeMethodContext)
+
+	// ExitCloseMethod is called when exiting the closeMethod production.
+	ExitCloseMethod(c *CloseMethodContext)
+
+	// ExitCollationMethod is called when exiting the collationMethod production.
+	ExitCollationMethod(c *CollationMethodContext)
+
+	// ExitCommentMethod is called when exiting the commentMethod production.
+	ExitCommentMethod(c *CommentMethodContext)
+
+	// ExitExplainMethod is called when exiting the explainMethod production.
+	ExitExplainMethod(c *ExplainMethodContext)
+
+	// ExitForEachMethod is called when exiting the forEachMethod production.
+	ExitForEachMethod(c *ForEachMethodContext)
+
+	// ExitHasNextMethod is called when exiting the hasNextMethod production.
+	ExitHasNextMethod(c *HasNextMethodContext)
+
+	// ExitHintMethod is called when exiting the hintMethod production.
+	ExitHintMethod(c *HintMethodContext)
+
+	// ExitIsClosedMethod is called when exiting the isClosedMethod production.
+	ExitIsClosedMethod(c *IsClosedMethodContext)
+
+	// ExitIsExhaustedMethod is called when exiting the isExhaustedMethod production.
+	ExitIsExhaustedMethod(c *IsExhaustedMethodContext)
+
+	// ExitItcountMethod is called when exiting the itcountMethod production.
+	ExitItcountMethod(c *ItcountMethodContext)
+
+	// ExitMapMethod is called when exiting the mapMethod production.
+	ExitMapMethod(c *MapMethodContext)
+
+	// ExitMaxMethod is called when exiting the maxMethod production.
+	ExitMaxMethod(c *MaxMethodContext)
+
+	// ExitMaxAwaitTimeMSMethod is called when exiting the maxAwaitTimeMSMethod production.
+	ExitMaxAwaitTimeMSMethod(c *MaxAwaitTimeMSMethodContext)
+
+	// ExitMaxTimeMSMethod is called when exiting the maxTimeMSMethod production.
+	ExitMaxTimeMSMethod(c *MaxTimeMSMethodContext)
+
+	// ExitMinMethod is called when exiting the minMethod production.
+	ExitMinMethod(c *MinMethodContext)
+
+	// ExitNextMethod is called when exiting the nextMethod production.
+	ExitNextMethod(c *NextMethodContext)
+
+	// ExitNoCursorTimeoutMethod is called when exiting the noCursorTimeoutMethod production.
+	ExitNoCursorTimeoutMethod(c *NoCursorTimeoutMethodContext)
+
+	// ExitObjsLeftInBatchMethod is called when exiting the objsLeftInBatchMethod production.
+	ExitObjsLeftInBatchMethod(c *ObjsLeftInBatchMethodContext)
+
+	// ExitPrettyMethod is called when exiting the prettyMethod production.
+	ExitPrettyMethod(c *PrettyMethodContext)
+
+	// ExitReadConcernMethod is called when exiting the readConcernMethod production.
+	ExitReadConcernMethod(c *ReadConcernMethodContext)
+
+	// ExitReadPrefMethod is called when exiting the readPrefMethod production.
+	ExitReadPrefMethod(c *ReadPrefMethodContext)
+
+	// ExitReturnKeyMethod is called when exiting the returnKeyMethod production.
+	ExitReturnKeyMethod(c *ReturnKeyMethodContext)
+
+	// ExitShowRecordIdMethod is called when exiting the showRecordIdMethod production.
+	ExitShowRecordIdMethod(c *ShowRecordIdMethodContext)
+
+	// ExitSizeMethod is called when exiting the sizeMethod production.
+	ExitSizeMethod(c *SizeMethodContext)
+
+	// ExitTailableMethod is called when exiting the tailableMethod production.
+	ExitTailableMethod(c *TailableMethodContext)
+
+	// ExitToArrayMethod is called when exiting the toArrayMethod production.
+	ExitToArrayMethod(c *ToArrayMethodContext)
+
+	// ExitTryNextMethod is called when exiting the tryNextMethod production.
+	ExitTryNextMethod(c *TryNextMethodContext)
+
+	// ExitAllowDiskUseMethod is called when exiting the allowDiskUseMethod production.
+	ExitAllowDiskUseMethod(c *AllowDiskUseMethodContext)
+
+	// ExitAddOptionMethod is called when exiting the addOptionMethod production.
+	ExitAddOptionMethod(c *AddOptionMethodContext)
 
 	// ExitGenericMethod is called when exiting the genericMethod production.
 	ExitGenericMethod(c *GenericMethodContext)
@@ -339,6 +981,18 @@ type MongoShellParserListener interface {
 
 	// ExitRegExpConstructor is called when exiting the regExpConstructor production.
 	ExitRegExpConstructor(c *RegExpConstructorContext)
+
+	// ExitBinDataHelper is called when exiting the binDataHelper production.
+	ExitBinDataHelper(c *BinDataHelperContext)
+
+	// ExitBinaryHelper is called when exiting the binaryHelper production.
+	ExitBinaryHelper(c *BinaryHelperContext)
+
+	// ExitBsonRegExpHelper is called when exiting the bsonRegExpHelper production.
+	ExitBsonRegExpHelper(c *BsonRegExpHelperContext)
+
+	// ExitHexDataHelper is called when exiting the hexDataHelper production.
+	ExitHexDataHelper(c *HexDataHelperContext)
 
 	// ExitStringLiteralValue is called when exiting the stringLiteralValue production.
 	ExitStringLiteralValue(c *StringLiteralValueContext)
