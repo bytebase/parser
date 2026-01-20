@@ -2,14 +2,22 @@
  * MongoDB Shell (mongosh) Parser Grammar
  * For use with ANTLR 4
  *
- * Milestone 1: Read Operations + Utility + Aggregation
+ * Supports all mongosh commands:
+ * - Collection methods (48): find, insertOne, updateMany, aggregate, etc.
+ * - Cursor methods (34): sort, limit, skip, forEach, toArray, etc.
+ * - Database methods (39): createCollection, dropDatabase, stats, etc.
+ * - Bulk operations (21): initializeOrderedBulkOp, Bulk.insert, etc.
+ * - Connection methods (16): Mongo, connect, getDB, setReadPref, etc.
+ * - Replication methods (14): rs.status, rs.initiate, rs.add, etc.
+ * - Sharding methods (52): sh.status, sh.enableSharding, sh.shardCollection, etc.
+ * - User management (12): createUser, dropUser, auth, etc.
+ * - Role management (10): createRole, dropRole, grantRolesToUser, etc.
+ * - Encryption methods (17): KeyVault, ClientEncryption, getKeyVault, etc.
+ * - Native methods (16): cat, load, quit, pwd, etc.
+ * - Object constructors (18): ObjectId, ISODate, UUID, BinData, etc.
+ * - Query plan cache (5): getPlanCache, clear, list, etc.
+ * - Atlas-specific (13): Search Index (4), Stream Processing (9)
  * - Shell commands: show dbs, show databases, show collections
- * - Utility: db.getCollectionNames(), db.getCollectionInfos()
- * - Collection info: db.collection.getIndexes()
- * - Read methods: find(), findOne(), countDocuments(), estimatedDocumentCount(), distinct()
- * - Aggregation: db.collection.aggregate()
- * - Cursor modifiers: sort(), limit(), skip(), count(), projection(), project()
- * - Object constructors: ObjectId(), ISODate(), UUID(), NumberInt(), NumberLong(), NumberDecimal()
  * - Document syntax with unquoted keys and trailing commas
  */
 
@@ -22,10 +30,18 @@ program
     : statement* EOF
     ;
 
-// A statement is either a shell command or a database statement
+// A statement is either a shell command, a database statement, a bulk statement, a connection statement, a replica set statement, a sharding statement, an encryption statement, a plan cache statement, a stream processing statement, or a native function call
 statement
     : shellCommand SEMI?
     | dbStatement SEMI?
+    | bulkStatement SEMI?
+    | connectionStatement SEMI?
+    | rsStatement SEMI?
+    | shStatement SEMI?
+    | encryptionStatement SEMI?
+    | planCacheStatement SEMI?
+    | spStatement SEMI?
+    | nativeFunctionCall SEMI?
     ;
 
 // Shell commands: show dbs, show databases, show collections
@@ -38,7 +54,114 @@ shellCommand
 dbStatement
     : DB DOT GET_COLLECTION_NAMES LPAREN RPAREN methodChain?                    # getCollectionNames
     | DB DOT GET_COLLECTION_INFOS LPAREN arguments? RPAREN methodChain?         # getCollectionInfos
+    | DB DOT CREATE_COLLECTION LPAREN arguments RPAREN                          # createCollection
+    | DB DOT DROP_DATABASE LPAREN RPAREN                                        # dropDatabase
+    | DB DOT STATS LPAREN argument? RPAREN                                      # dbStats
+    | DB DOT SERVER_STATUS LPAREN argument? RPAREN                              # serverStatus
+    | DB DOT SERVER_BUILD_INFO LPAREN RPAREN                                    # serverBuildInfo
+    | DB DOT VERSION LPAREN RPAREN                                              # dbVersion
+    | DB DOT HOST_INFO LPAREN RPAREN                                            # hostInfo
+    | DB DOT LIST_COMMANDS LPAREN RPAREN                                        # listCommands
+    | DB DOT RUN_COMMAND LPAREN arguments RPAREN                                # runCommand
+    | DB DOT ADMIN_COMMAND LPAREN arguments RPAREN                              # adminCommand
+    | DB DOT GET_NAME LPAREN RPAREN                                             # getName
+    | DB DOT GET_MONGO LPAREN RPAREN                                            # getMongo
+    | DB DOT GET_SIBLING_DB LPAREN argument RPAREN                              # getSiblingDB
+    | DB DOT genericDbMethod                                                    # dbGenericMethod
     | DB collectionAccess methodChain                                           # collectionOperation
+    ;
+
+// Generic database method for extensibility (unsupported methods)
+genericDbMethod
+    : identifier LPAREN arguments? RPAREN
+    ;
+
+// Bulk operation statements
+// Pattern: db.collection.initializeOrderedBulkOp().find(...).update(...).execute()
+bulkStatement
+    : DB collectionAccess DOT bulkInitMethod bulkMethodChain?
+    ;
+
+bulkInitMethod
+    : INITIALIZE_ORDERED_BULK_OP LPAREN RPAREN
+    | INITIALIZE_UNORDERED_BULK_OP LPAREN RPAREN
+    ;
+
+bulkMethodChain
+    : (DOT bulkMethod)+
+    ;
+
+bulkMethod
+    : FIND LPAREN argument RPAREN                    # bulkFind
+    | INSERT LPAREN argument RPAREN                  # bulkInsert
+    | REMOVE LPAREN RPAREN                           # bulkRemove
+    | EXECUTE LPAREN argument? RPAREN                # bulkExecute
+    | GET_OPERATIONS LPAREN RPAREN                   # bulkGetOperations
+    | TO_STRING LPAREN RPAREN                        # bulkToString
+    | identifier LPAREN arguments? RPAREN            # bulkGenericMethod
+    ;
+
+// Connection statements - top-level Mongo() constructor and connect() function
+connectionStatement
+    : MONGO LPAREN arguments? RPAREN connectionMethodChain?        # mongoConnection
+    | CONNECT LPAREN arguments? RPAREN connectionMethodChain?      # connectCall
+    | DB DOT GET_MONGO LPAREN RPAREN connectionMethodChain         # dbGetMongoChain
+    ;
+
+// Connection method chain for chaining methods on a connection
+connectionMethodChain
+    : (DOT connectionMethod)+
+    ;
+
+// Replication (replica set) statements - rs.method()
+rsStatement
+    : RS DOT identifier LPAREN arguments? RPAREN
+    ;
+
+// Sharding statements - sh.method()
+shStatement
+    : SH DOT identifier LPAREN arguments? RPAREN
+    ;
+
+// Encryption statements - db.getMongo().getKeyVault().xxx() or db.getMongo().getClientEncryption().xxx()
+encryptionStatement
+    : DB DOT GET_MONGO LPAREN RPAREN DOT GET_KEY_VAULT LPAREN RPAREN (DOT identifier LPAREN arguments? RPAREN)*     # keyVaultStatement
+    | DB DOT GET_MONGO LPAREN RPAREN DOT GET_CLIENT_ENCRYPTION LPAREN RPAREN (DOT identifier LPAREN arguments? RPAREN)*  # clientEncryptionStatement
+    ;
+
+// Plan cache statements - db.collection.getPlanCache().xxx()
+planCacheStatement
+    : DB collectionAccess DOT GET_PLAN_CACHE LPAREN RPAREN (DOT identifier LPAREN arguments? RPAREN)*
+    ;
+
+// Stream processing statements - sp.method() or sp.processor.method()
+spStatement
+    : SP DOT identifier LPAREN arguments? RPAREN
+    | SP DOT identifier DOT identifier LPAREN arguments? RPAREN
+    ;
+
+// Native shell function calls - top-level functions like cat(), load(), quit()
+nativeFunctionCall
+    : identifier LPAREN arguments? RPAREN
+    ;
+
+// Connection methods that can be called on a Mongo connection object
+connectionMethod
+    : GET_DB LPAREN argument RPAREN                           # connGetDB
+    | GET_READ_CONCERN LPAREN RPAREN                          # connGetReadConcern
+    | GET_READ_PREF LPAREN RPAREN                             # connGetReadPref
+    | GET_READ_PREF_MODE LPAREN RPAREN                        # connGetReadPrefMode
+    | GET_READ_PREF_TAG_SET LPAREN RPAREN                     # connGetReadPrefTagSet
+    | GET_WRITE_CONCERN LPAREN RPAREN                         # connGetWriteConcern
+    | SET_READ_PREF LPAREN arguments RPAREN                   # connSetReadPref
+    | SET_READ_CONCERN LPAREN argument RPAREN                 # connSetReadConcern
+    | SET_WRITE_CONCERN LPAREN argument RPAREN                # connSetWriteConcern
+    | START_SESSION LPAREN argument? RPAREN                   # connStartSession
+    | WATCH LPAREN arguments? RPAREN                          # connWatch
+    | CLOSE LPAREN RPAREN                                     # connClose
+    | ADMIN_COMMAND LPAREN arguments RPAREN                   # connAdminCommand
+    | GET_DB_NAMES LPAREN RPAREN                              # connGetDBNames
+    | identifier LPAREN arguments? RPAREN                     # connGenericMethod
     ;
 
 // Collection access patterns
@@ -62,11 +185,65 @@ methodCall
     | distinctMethod
     | aggregateMethod
     | getIndexesMethod
+    | insertOneMethod
+    | insertManyMethod
+    | updateOneMethod
+    | updateManyMethod
+    | deleteOneMethod
+    | deleteManyMethod
+    | replaceOneMethod
+    | findOneAndUpdateMethod
+    | findOneAndReplaceMethod
+    | findOneAndDeleteMethod
+    | createIndexMethod
+    | createIndexesMethod
+    | dropIndexMethod
+    | dropIndexesMethod
+    | dropMethod
+    | renameCollectionMethod
+    | statsMethod
+    | storageSizeMethod
+    | totalIndexSizeMethod
+    | totalSizeMethod
+    | dataSizeMethod
+    | isCappedMethod
+    | validateMethod
+    | latencyStatsMethod
     | sortMethod
     | limitMethod
     | skipMethod
     | countMethod
     | projectionMethod
+    | batchSizeMethod
+    | closeMethod
+    | collationMethod
+    | commentMethod
+    | explainMethod
+    | forEachMethod
+    | hasNextMethod
+    | hintMethod
+    | isClosedMethod
+    | isExhaustedMethod
+    | itcountMethod
+    | mapMethod
+    | maxMethod
+    | maxAwaitTimeMSMethod
+    | maxTimeMSMethod
+    | minMethod
+    | nextMethod
+    | noCursorTimeoutMethod
+    | objsLeftInBatchMethod
+    | prettyMethod
+    | readConcernMethod
+    | readPrefMethod
+    | returnKeyMethod
+    | showRecordIdMethod
+    | sizeMethod
+    | tailableMethod
+    | toArrayMethod
+    | tryNextMethod
+    | allowDiskUseMethod
+    | addOptionMethod
     | genericMethod
     ;
 
@@ -104,6 +281,126 @@ getIndexesMethod
     : GET_INDEXES LPAREN RPAREN
     ;
 
+// insertOne(document, options?)
+insertOneMethod
+    : INSERT_ONE LPAREN arguments RPAREN
+    ;
+
+// insertMany(documents, options?)
+insertManyMethod
+    : INSERT_MANY LPAREN arguments RPAREN
+    ;
+
+// updateOne(filter, update, options?)
+updateOneMethod
+    : UPDATE_ONE LPAREN arguments RPAREN
+    ;
+
+// updateMany(filter, update, options?)
+updateManyMethod
+    : UPDATE_MANY LPAREN arguments RPAREN
+    ;
+
+// deleteOne(filter, options?)
+deleteOneMethod
+    : DELETE_ONE LPAREN arguments RPAREN
+    ;
+
+// deleteMany(filter, options?)
+deleteManyMethod
+    : DELETE_MANY LPAREN arguments RPAREN
+    ;
+
+// replaceOne(filter, replacement, options?)
+replaceOneMethod
+    : REPLACE_ONE LPAREN arguments RPAREN
+    ;
+
+// findOneAndUpdate(filter, update, options?)
+findOneAndUpdateMethod
+    : FIND_ONE_AND_UPDATE LPAREN arguments RPAREN
+    ;
+
+// findOneAndReplace(filter, replacement, options?)
+findOneAndReplaceMethod
+    : FIND_ONE_AND_REPLACE LPAREN arguments RPAREN
+    ;
+
+// findOneAndDelete(filter, options?)
+findOneAndDeleteMethod
+    : FIND_ONE_AND_DELETE LPAREN arguments RPAREN
+    ;
+
+// createIndex(keys, options?)
+createIndexMethod
+    : CREATE_INDEX LPAREN arguments RPAREN
+    ;
+
+// createIndexes(keyPatterns, options?)
+createIndexesMethod
+    : CREATE_INDEXES LPAREN arguments RPAREN
+    ;
+
+// dropIndex(index)
+dropIndexMethod
+    : DROP_INDEX LPAREN argument RPAREN
+    ;
+
+// dropIndexes(indexes?)
+dropIndexesMethod
+    : DROP_INDEXES LPAREN argument? RPAREN
+    ;
+
+// drop(options?)
+dropMethod
+    : DROP LPAREN argument? RPAREN
+    ;
+
+// renameCollection(newName, dropTarget?)
+renameCollectionMethod
+    : RENAME_COLLECTION LPAREN arguments RPAREN
+    ;
+
+// stats(options?)
+statsMethod
+    : STATS LPAREN argument? RPAREN
+    ;
+
+// storageSize()
+storageSizeMethod
+    : STORAGE_SIZE LPAREN RPAREN
+    ;
+
+// totalIndexSize()
+totalIndexSizeMethod
+    : TOTAL_INDEX_SIZE LPAREN RPAREN
+    ;
+
+// totalSize()
+totalSizeMethod
+    : TOTAL_SIZE LPAREN RPAREN
+    ;
+
+// dataSize()
+dataSizeMethod
+    : DATA_SIZE LPAREN RPAREN
+    ;
+
+// isCapped()
+isCappedMethod
+    : IS_CAPPED LPAREN RPAREN
+    ;
+
+// validate(options?)
+validateMethod
+    : VALIDATE LPAREN argument? RPAREN
+    ;
+
+// latencyStats(options?)
+latencyStatsMethod
+    : LATENCY_STATS LPAREN argument? RPAREN
+    ;
+
 sortMethod
     : SORT LPAREN document RPAREN
     ;
@@ -123,6 +420,127 @@ countMethod
 
 projectionMethod
     : (PROJECTION | PROJECT) LPAREN document RPAREN
+    ;
+
+// Cursor methods
+batchSizeMethod
+    : BATCH_SIZE LPAREN NUMBER RPAREN
+    ;
+
+closeMethod
+    : CLOSE LPAREN RPAREN
+    ;
+
+collationMethod
+    : COLLATION LPAREN document RPAREN
+    ;
+
+commentMethod
+    : COMMENT LPAREN stringLiteral RPAREN
+    ;
+
+explainMethod
+    : EXPLAIN LPAREN stringLiteral? RPAREN
+    ;
+
+forEachMethod
+    : FOR_EACH LPAREN argument RPAREN
+    ;
+
+hasNextMethod
+    : HAS_NEXT LPAREN RPAREN
+    ;
+
+hintMethod
+    : HINT LPAREN argument RPAREN
+    ;
+
+isClosedMethod
+    : IS_CLOSED LPAREN RPAREN
+    ;
+
+isExhaustedMethod
+    : IS_EXHAUSTED LPAREN RPAREN
+    ;
+
+itcountMethod
+    : IT_COUNT LPAREN RPAREN
+    ;
+
+mapMethod
+    : MAP LPAREN argument RPAREN
+    ;
+
+maxMethod
+    : MAX LPAREN document RPAREN
+    ;
+
+maxAwaitTimeMSMethod
+    : MAX_AWAIT_TIME_MS LPAREN NUMBER RPAREN
+    ;
+
+maxTimeMSMethod
+    : MAX_TIME_MS LPAREN NUMBER RPAREN
+    ;
+
+minMethod
+    : MIN LPAREN document RPAREN
+    ;
+
+nextMethod
+    : NEXT LPAREN RPAREN
+    ;
+
+noCursorTimeoutMethod
+    : NO_CURSOR_TIMEOUT LPAREN RPAREN
+    ;
+
+objsLeftInBatchMethod
+    : OBJS_LEFT_IN_BATCH LPAREN RPAREN
+    ;
+
+prettyMethod
+    : PRETTY LPAREN RPAREN
+    ;
+
+readConcernMethod
+    : READ_CONCERN LPAREN document RPAREN
+    ;
+
+readPrefMethod
+    : READ_PREF LPAREN arguments RPAREN
+    ;
+
+returnKeyMethod
+    : RETURN_KEY LPAREN (TRUE | FALSE) RPAREN
+    ;
+
+showRecordIdMethod
+    : SHOW_RECORD_ID LPAREN (TRUE | FALSE) RPAREN
+    ;
+
+sizeMethod
+    : SIZE LPAREN RPAREN
+    ;
+
+tailableMethod
+    : TAILABLE LPAREN (TRUE | FALSE)? RPAREN
+    ;
+
+toArrayMethod
+    : TO_ARRAY LPAREN RPAREN
+    ;
+
+tryNextMethod
+    : TRY_NEXT LPAREN RPAREN
+    ;
+
+allowDiskUseMethod
+    : ALLOW_DISK_USE LPAREN (TRUE | FALSE)? RPAREN
+    ;
+
+addOptionMethod
+    : ADD_OPTION LPAREN NUMBER RPAREN
     ;
 
 // Generic method for extensibility (other methods will be caught here)
@@ -168,7 +586,7 @@ value
 
 // Catch 'new' keyword usage and provide helpful error message
 newKeywordError
-    : NEW (OBJECT_ID | ISO_DATE | DATE | UUID | LONG | NUMBER_LONG | INT32 | NUMBER_INT | DOUBLE | DECIMAL128 | NUMBER_DECIMAL | TIMESTAMP | REG_EXP)
+    : NEW (OBJECT_ID | ISO_DATE | DATE | UUID | LONG | NUMBER_LONG | INT32 | NUMBER_INT | DOUBLE | DECIMAL128 | NUMBER_DECIMAL | TIMESTAMP | REG_EXP | BIN_DATA | BINARY | BSON_REG_EXP | HEX_DATA)
       { p.NotifyErrorListeners("'new' keyword is not supported. Use ObjectId(), ISODate(), UUID(), etc. directly without 'new'", nil, nil) }
       LPAREN arguments? RPAREN
     ;
@@ -190,6 +608,10 @@ helperFunction
     | doubleHelper
     | decimal128Helper
     | timestampHelper
+    | binDataHelper
+    | binaryHelper
+    | bsonRegExpHelper
+    | hexDataHelper
     ;
 
 // ObjectId("hex") or ObjectId()
@@ -243,6 +665,27 @@ regExpConstructor
     : REG_EXP LPAREN stringLiteral (COMMA stringLiteral)? RPAREN
     ;
 
+// BinData(subtype, base64) - Binary data with subtype
+binDataHelper
+    : BIN_DATA LPAREN NUMBER COMMA stringLiteral RPAREN
+    ;
+
+// Binary(buffer, subtype) or Binary.createFromBase64(base64, subtype)
+binaryHelper
+    : BINARY LPAREN arguments RPAREN
+    | BINARY DOT identifier LPAREN arguments RPAREN
+    ;
+
+// BSONRegExp(pattern, flags)
+bsonRegExpHelper
+    : BSON_REG_EXP LPAREN arguments RPAREN
+    ;
+
+// HexData(subtype, hex)
+hexDataHelper
+    : HEX_DATA LPAREN NUMBER COMMA stringLiteral RPAREN
+    ;
+
 // Literals
 literal
     : stringLiteral     # stringLiteralValue
@@ -280,6 +723,30 @@ identifier
     | DISTINCT
     | AGGREGATE
     | GET_INDEXES
+    | INSERT_ONE
+    | INSERT_MANY
+    | UPDATE_ONE
+    | UPDATE_MANY
+    | DELETE_ONE
+    | DELETE_MANY
+    | REPLACE_ONE
+    | FIND_ONE_AND_UPDATE
+    | FIND_ONE_AND_REPLACE
+    | FIND_ONE_AND_DELETE
+    | CREATE_INDEX
+    | CREATE_INDEXES
+    | DROP_INDEX
+    | DROP_INDEXES
+    | DROP
+    | RENAME_COLLECTION
+    | STATS
+    | STORAGE_SIZE
+    | TOTAL_INDEX_SIZE
+    | TOTAL_SIZE
+    | DATA_SIZE
+    | IS_CAPPED
+    | VALIDATE
+    | LATENCY_STATS
     | SORT
     | LIMIT
     | SKIP_
@@ -289,6 +756,18 @@ identifier
     | GET_COLLECTION
     | GET_COLLECTION_NAMES
     | GET_COLLECTION_INFOS
+    | CREATE_COLLECTION
+    | DROP_DATABASE
+    | HOST_INFO
+    | LIST_COMMANDS
+    | SERVER_BUILD_INFO
+    | SERVER_STATUS
+    | VERSION
+    | RUN_COMMAND
+    | ADMIN_COMMAND
+    | GET_NAME
+    | GET_MONGO
+    | GET_SIBLING_DB
     | OBJECT_ID
     | ISO_DATE
     | DATE
@@ -302,4 +781,73 @@ identifier
     | NUMBER_DECIMAL
     | TIMESTAMP
     | REG_EXP
+    | BIN_DATA
+    | BINARY
+    | BSON_REG_EXP
+    | HEX_DATA
+    // Cursor method tokens
+    | BATCH_SIZE
+    | CLOSE
+    | COLLATION
+    | COMMENT
+    | EXPLAIN
+    | FOR_EACH
+    | HAS_NEXT
+    | HINT
+    | IS_CLOSED
+    | IS_EXHAUSTED
+    | IT_COUNT
+    | MAP
+    | MAX
+    | MAX_AWAIT_TIME_MS
+    | MAX_TIME_MS
+    | MIN
+    | NEXT
+    | NO_CURSOR_TIMEOUT
+    | OBJS_LEFT_IN_BATCH
+    | PRETTY
+    | READ_CONCERN
+    | READ_PREF
+    | RETURN_KEY
+    | SHOW_RECORD_ID
+    | SIZE
+    | TAILABLE
+    | TO_ARRAY
+    | TRY_NEXT
+    | ALLOW_DISK_USE
+    | ADD_OPTION
+    // Bulk operation tokens
+    | INITIALIZE_ORDERED_BULK_OP
+    | INITIALIZE_UNORDERED_BULK_OP
+    | EXECUTE
+    | GET_OPERATIONS
+    | TO_STRING
+    | INSERT
+    | REMOVE
+    // Connection method tokens
+    | MONGO
+    | CONNECT
+    | GET_DB
+    | GET_READ_CONCERN
+    | GET_READ_PREF
+    | GET_READ_PREF_MODE
+    | GET_READ_PREF_TAG_SET
+    | GET_WRITE_CONCERN
+    | SET_READ_PREF
+    | SET_READ_CONCERN
+    | SET_WRITE_CONCERN
+    | START_SESSION
+    | WATCH
+    | GET_DB_NAMES
+    // Replication method tokens
+    | RS
+    // Sharding method tokens
+    | SH
+    // Stream processing token
+    | SP
+    // Encryption method tokens
+    | GET_KEY_VAULT
+    | GET_CLIENT_ENCRYPTION
+    // Plan cache method tokens
+    | GET_PLAN_CACHE
     ;
