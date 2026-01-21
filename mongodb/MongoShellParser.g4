@@ -248,12 +248,14 @@ methodCall
     ;
 
 // Specific method rules for better AST structure
+// find(filter?, projection?)
 findMethod
-    : FIND LPAREN argument? RPAREN
+    : FIND LPAREN arguments? RPAREN
     ;
 
+// findOne(filter?, projection?)
 findOneMethod
-    : FIND_ONE LPAREN argument? RPAREN
+    : FIND_ONE LPAREN arguments? RPAREN
     ;
 
 // countDocuments(filter?, options?)
@@ -271,9 +273,9 @@ distinctMethod
     : DISTINCT LPAREN arguments RPAREN
     ;
 
-// aggregate(pipeline, options?)
+// aggregate(pipeline?, options?)
 aggregateMethod
-    : AGGREGATE LPAREN arguments RPAREN
+    : AGGREGATE LPAREN arguments? RPAREN
     ;
 
 // getIndexes()
@@ -401,8 +403,9 @@ latencyStatsMethod
     : LATENCY_STATS LPAREN argument? RPAREN
     ;
 
+// sort(specification?) - can be called without args
 sortMethod
-    : SORT LPAREN document RPAREN
+    : SORT LPAREN document? RPAREN
     ;
 
 limitMethod
@@ -418,8 +421,9 @@ countMethod
     : COUNT LPAREN RPAREN
     ;
 
+// projection(doc?) - can be called without args
 projectionMethod
-    : (PROJECTION | PROJECT) LPAREN document RPAREN
+    : (PROJECTION | PROJECT) LPAREN document? RPAREN
     ;
 
 // Cursor methods
@@ -431,12 +435,14 @@ closeMethod
     : CLOSE LPAREN RPAREN
     ;
 
+// collation(doc?) - can be called without args
 collationMethod
-    : COLLATION LPAREN document RPAREN
+    : COLLATION LPAREN document? RPAREN
     ;
 
+// comment(str?) - can be called without args
 commentMethod
-    : COMMENT LPAREN stringLiteral RPAREN
+    : COMMENT LPAREN stringLiteral? RPAREN
     ;
 
 explainMethod
@@ -451,8 +457,9 @@ hasNextMethod
     : HAS_NEXT LPAREN RPAREN
     ;
 
+// hint(indexSpec?) - can be called without args
 hintMethod
-    : HINT LPAREN argument RPAREN
+    : HINT LPAREN argument? RPAREN
     ;
 
 isClosedMethod
@@ -471,8 +478,9 @@ mapMethod
     : MAP LPAREN argument RPAREN
     ;
 
+// max(indexBounds?) - can be called without args
 maxMethod
-    : MAX LPAREN document RPAREN
+    : MAX LPAREN document? RPAREN
     ;
 
 maxAwaitTimeMSMethod
@@ -483,8 +491,9 @@ maxTimeMSMethod
     : MAX_TIME_MS LPAREN NUMBER RPAREN
     ;
 
+// min(indexBounds?) - can be called without args
 minMethod
-    : MIN LPAREN document RPAREN
+    : MIN LPAREN document? RPAREN
     ;
 
 nextMethod
@@ -503,20 +512,23 @@ prettyMethod
     : PRETTY LPAREN RPAREN
     ;
 
+// readConcern(doc?) - can be called without args
 readConcernMethod
-    : READ_CONCERN LPAREN document RPAREN
+    : READ_CONCERN LPAREN document? RPAREN
     ;
 
 readPrefMethod
     : READ_PREF LPAREN arguments RPAREN
     ;
 
+// returnKey(bool?) - can be called without args
 returnKeyMethod
-    : RETURN_KEY LPAREN (TRUE | FALSE) RPAREN
+    : RETURN_KEY LPAREN (TRUE | FALSE)? RPAREN
     ;
 
+// showRecordId(bool?) - can be called without args
 showRecordIdMethod
-    : SHOW_RECORD_ID LPAREN (TRUE | FALSE) RPAREN
+    : SHOW_RECORD_ID LPAREN (TRUE | FALSE)? RPAREN
     ;
 
 sizeMethod
