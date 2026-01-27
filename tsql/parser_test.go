@@ -124,6 +124,32 @@ func TestDDLIndexParser(t *testing.T) {
 	require.Equal(t, 0, parserErrors.errors)
 }
 
+func TestSpatialStaticMethodsParser(t *testing.T) {
+	filePath := "examples/spatial_static_methods.sql"
+	input, err := antlr.NewFileStream(filePath)
+	require.NoError(t, err)
+
+	lexer := tsql.NewTSqlLexer(input)
+
+	stream := antlr.NewCommonTokenStream(lexer, 0)
+	p := tsql.NewTSqlParser(stream)
+
+	lexerErrors := &CustomErrorListener{}
+	lexer.RemoveErrorListeners()
+	lexer.AddErrorListener(lexerErrors)
+
+	parserErrors := &CustomErrorListener{}
+	p.RemoveErrorListeners()
+	p.AddErrorListener(parserErrors)
+
+	p.BuildParseTrees = true
+
+	_ = p.Tsql_file()
+
+	require.Equal(t, 0, lexerErrors.errors)
+	require.Equal(t, 0, parserErrors.errors)
+}
+
 func TestSpatialComprehensiveParser(t *testing.T) {
 	filePath := "examples/spatial_comprehensive.sql"
 	input, err := antlr.NewFileStream(filePath)

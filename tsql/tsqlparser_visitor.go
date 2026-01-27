@@ -1609,6 +1609,9 @@ type TSqlParserVisitor interface {
 	// Visit a parse tree produced by TSqlParser#HIERARCHYID_METHOD.
 	VisitHIERARCHYID_METHOD(ctx *HIERARCHYID_METHODContext) interface{}
 
+	// Visit a parse tree produced by TSqlParser#SPATIAL_METHOD.
+	VisitSPATIAL_METHOD(ctx *SPATIAL_METHODContext) interface{}
+
 	// Visit a parse tree produced by TSqlParser#partition_function.
 	VisitPartition_function(ctx *Partition_functionContext) interface{}
 
@@ -2265,6 +2268,9 @@ type TSqlParserVisitor interface {
 
 	// Visit a parse tree produced by TSqlParser#hierarchyid_static_method.
 	VisitHierarchyid_static_method(ctx *Hierarchyid_static_methodContext) interface{}
+
+	// Visit a parse tree produced by TSqlParser#spatial_static_method.
+	VisitSpatial_static_method(ctx *Spatial_static_methodContext) interface{}
 
 	// Visit a parse tree produced by TSqlParser#nodes_method.
 	VisitNodes_method(ctx *Nodes_methodContext) interface{}
