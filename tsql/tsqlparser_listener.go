@@ -1609,6 +1609,9 @@ type TSqlParserListener interface {
 	// EnterHIERARCHYID_METHOD is called when entering the HIERARCHYID_METHOD production.
 	EnterHIERARCHYID_METHOD(c *HIERARCHYID_METHODContext)
 
+	// EnterSPATIAL_METHOD is called when entering the SPATIAL_METHOD production.
+	EnterSPATIAL_METHOD(c *SPATIAL_METHODContext)
+
 	// EnterPartition_function is called when entering the partition_function production.
 	EnterPartition_function(c *Partition_functionContext)
 
@@ -2265,6 +2268,9 @@ type TSqlParserListener interface {
 
 	// EnterHierarchyid_static_method is called when entering the hierarchyid_static_method production.
 	EnterHierarchyid_static_method(c *Hierarchyid_static_methodContext)
+
+	// EnterSpatial_static_method is called when entering the spatial_static_method production.
+	EnterSpatial_static_method(c *Spatial_static_methodContext)
 
 	// EnterNodes_method is called when entering the nodes_method production.
 	EnterNodes_method(c *Nodes_methodContext)
@@ -4087,6 +4093,9 @@ type TSqlParserListener interface {
 	// ExitHIERARCHYID_METHOD is called when exiting the HIERARCHYID_METHOD production.
 	ExitHIERARCHYID_METHOD(c *HIERARCHYID_METHODContext)
 
+	// ExitSPATIAL_METHOD is called when exiting the SPATIAL_METHOD production.
+	ExitSPATIAL_METHOD(c *SPATIAL_METHODContext)
+
 	// ExitPartition_function is called when exiting the partition_function production.
 	ExitPartition_function(c *Partition_functionContext)
 
@@ -4743,6 +4752,9 @@ type TSqlParserListener interface {
 
 	// ExitHierarchyid_static_method is called when exiting the hierarchyid_static_method production.
 	ExitHierarchyid_static_method(c *Hierarchyid_static_methodContext)
+
+	// ExitSpatial_static_method is called when exiting the spatial_static_method production.
+	ExitSpatial_static_method(c *Spatial_static_methodContext)
 
 	// ExitNodes_method is called when exiting the nodes_method production.
 	ExitNodes_method(c *Nodes_methodContext)

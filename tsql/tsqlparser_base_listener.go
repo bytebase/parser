@@ -3460,6 +3460,12 @@ func (s *BaseTSqlParserListener) EnterHIERARCHYID_METHOD(ctx *HIERARCHYID_METHOD
 // ExitHIERARCHYID_METHOD is called when production HIERARCHYID_METHOD is exited.
 func (s *BaseTSqlParserListener) ExitHIERARCHYID_METHOD(ctx *HIERARCHYID_METHODContext) {}
 
+// EnterSPATIAL_METHOD is called when production SPATIAL_METHOD is entered.
+func (s *BaseTSqlParserListener) EnterSPATIAL_METHOD(ctx *SPATIAL_METHODContext) {}
+
+// ExitSPATIAL_METHOD is called when production SPATIAL_METHOD is exited.
+func (s *BaseTSqlParserListener) ExitSPATIAL_METHOD(ctx *SPATIAL_METHODContext) {}
+
 // EnterPartition_function is called when production partition_function is entered.
 func (s *BaseTSqlParserListener) EnterPartition_function(ctx *Partition_functionContext) {}
 
@@ -4777,6 +4783,12 @@ func (s *BaseTSqlParserListener) EnterHierarchyid_static_method(ctx *Hierarchyid
 // ExitHierarchyid_static_method is called when production hierarchyid_static_method is exited.
 func (s *BaseTSqlParserListener) ExitHierarchyid_static_method(ctx *Hierarchyid_static_methodContext) {
 }
+
+// EnterSpatial_static_method is called when production spatial_static_method is entered.
+func (s *BaseTSqlParserListener) EnterSpatial_static_method(ctx *Spatial_static_methodContext) {}
+
+// ExitSpatial_static_method is called when production spatial_static_method is exited.
+func (s *BaseTSqlParserListener) ExitSpatial_static_method(ctx *Spatial_static_methodContext) {}
 
 // EnterNodes_method is called when production nodes_method is entered.
 func (s *BaseTSqlParserListener) EnterNodes_method(ctx *Nodes_methodContext) {}

@@ -2143,6 +2143,10 @@ func (v *BaseTSqlParserVisitor) VisitHIERARCHYID_METHOD(ctx *HIERARCHYID_METHODC
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTSqlParserVisitor) VisitSPATIAL_METHOD(ctx *SPATIAL_METHODContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTSqlParserVisitor) VisitPartition_function(ctx *Partition_functionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -3016,6 +3020,10 @@ func (v *BaseTSqlParserVisitor) VisitHierarchyid_call(ctx *Hierarchyid_callConte
 }
 
 func (v *BaseTSqlParserVisitor) VisitHierarchyid_static_method(ctx *Hierarchyid_static_methodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSqlParserVisitor) VisitSpatial_static_method(ctx *Spatial_static_methodContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

@@ -4201,6 +4201,7 @@ function_call
     | freetext_function                                 #FREE_TEXT
     | partition_function                                #PARTITION_FUNC
     | hierarchyid_static_method                         #HIERARCHYID_METHOD
+    | spatial_static_method                             #SPATIAL_METHOD
     ;
 
 partition_function
@@ -4731,6 +4732,10 @@ hierarchyid_call
 
 hierarchyid_static_method
     : HIERARCHYID DOUBLE_COLON (GETROOT '(' ')' | PARSE '(' input=expression ')')
+    ;
+
+spatial_static_method
+    : (GEOGRAPHY | GEOMETRY) DOUBLE_COLON id_ '(' expression_list_? ')'
     ;
 
 nodes_method
@@ -5541,6 +5546,7 @@ keyword
     | PAGECOUNT
     | PAGLOCK
     | PARAMETERIZATION
+    | PARSE
     | PARSENAME
     | PARSEONLY
     | PARTITION

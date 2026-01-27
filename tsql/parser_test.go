@@ -3,6 +3,7 @@ package tsql_test
 import (
 	"os"
 	"path"
+	"strings"
 	"testing"
 
 	"github.com/antlr4-go/antlr/v4"
@@ -40,11 +41,11 @@ func TestTSQLParser(t *testing.T) {
 	require.NoError(t, err)
 
 	for _, file := range examples {
-		if file.Name() != "test.sql" {
+		if !strings.HasSuffix(file.Name(), ".sql") {
 			continue
 		}
 		filePath := path.Join("examples", file.Name())
-		t.Run(filePath, func(t *testing.T) {
+		t.Run(file.Name(), func(t *testing.T) {
 			t.Parallel()
 			input, err := antlr.NewFileStream(filePath)
 			require.NoError(t, err)
@@ -70,82 +71,4 @@ func TestTSQLParser(t *testing.T) {
 			require.Equal(t, 0, parserErrors.errors)
 		})
 	}
-}
-
-func TestSpatialIndexParser(t *testing.T) {
-	filePath := "examples/spatial_index.sql"
-	input, err := antlr.NewFileStream(filePath)
-	require.NoError(t, err)
-
-	lexer := tsql.NewTSqlLexer(input)
-
-	stream := antlr.NewCommonTokenStream(lexer, 0)
-	p := tsql.NewTSqlParser(stream)
-
-	lexerErrors := &CustomErrorListener{}
-	lexer.RemoveErrorListeners()
-	lexer.AddErrorListener(lexerErrors)
-
-	parserErrors := &CustomErrorListener{}
-	p.RemoveErrorListeners()
-	p.AddErrorListener(parserErrors)
-
-	p.BuildParseTrees = true
-
-	_ = p.Tsql_file()
-
-	require.Equal(t, 0, lexerErrors.errors)
-	require.Equal(t, 0, parserErrors.errors)
-}
-
-func TestDDLIndexParser(t *testing.T) {
-	filePath := "examples/ddl_index.sql"
-	input, err := antlr.NewFileStream(filePath)
-	require.NoError(t, err)
-
-	lexer := tsql.NewTSqlLexer(input)
-
-	stream := antlr.NewCommonTokenStream(lexer, 0)
-	p := tsql.NewTSqlParser(stream)
-
-	lexerErrors := &CustomErrorListener{}
-	lexer.RemoveErrorListeners()
-	lexer.AddErrorListener(lexerErrors)
-
-	parserErrors := &CustomErrorListener{}
-	p.RemoveErrorListeners()
-	p.AddErrorListener(parserErrors)
-
-	p.BuildParseTrees = true
-
-	_ = p.Tsql_file()
-
-	require.Equal(t, 0, lexerErrors.errors)
-	require.Equal(t, 0, parserErrors.errors)
-}
-
-func TestSpatialComprehensiveParser(t *testing.T) {
-	filePath := "examples/spatial_comprehensive.sql"
-	input, err := antlr.NewFileStream(filePath)
-	require.NoError(t, err)
-
-	lexer := tsql.NewTSqlLexer(input)
-
-	stream := antlr.NewCommonTokenStream(lexer, 0)
-	p := tsql.NewTSqlParser(stream)
-
-	lexerErrors := &CustomErrorListener{}
-	lexer.RemoveErrorListeners()
-	lexer.AddErrorListener(lexerErrors)
-
-	parserErrors := &CustomErrorListener{}
-	p.RemoveErrorListeners()
-	p.AddErrorListener(parserErrors)
-
-	p.BuildParseTrees = true
-
-	_ = p.Tsql_file()
-
-	require.Equal(t, 0, lexerErrors.errors)
-	require.Equal(t, 0, parserErrors.errors)
 }
