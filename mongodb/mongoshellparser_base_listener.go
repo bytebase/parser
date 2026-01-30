@@ -134,23 +134,314 @@ func (s *BaseMongoShellParserListener) EnterGetSiblingDB(ctx *GetSiblingDBContex
 // ExitGetSiblingDB is called when production getSiblingDB is exited.
 func (s *BaseMongoShellParserListener) ExitGetSiblingDB(ctx *GetSiblingDBContext) {}
 
-// EnterDbGenericMethod is called when production dbGenericMethod is entered.
-func (s *BaseMongoShellParserListener) EnterDbGenericMethod(ctx *DbGenericMethodContext) {}
+// EnterDbAggregate is called when production dbAggregate is entered.
+func (s *BaseMongoShellParserListener) EnterDbAggregate(ctx *DbAggregateContext) {}
 
-// ExitDbGenericMethod is called when production dbGenericMethod is exited.
-func (s *BaseMongoShellParserListener) ExitDbGenericMethod(ctx *DbGenericMethodContext) {}
+// ExitDbAggregate is called when production dbAggregate is exited.
+func (s *BaseMongoShellParserListener) ExitDbAggregate(ctx *DbAggregateContext) {}
+
+// EnterDbAuth is called when production dbAuth is entered.
+func (s *BaseMongoShellParserListener) EnterDbAuth(ctx *DbAuthContext) {}
+
+// ExitDbAuth is called when production dbAuth is exited.
+func (s *BaseMongoShellParserListener) ExitDbAuth(ctx *DbAuthContext) {}
+
+// EnterDbChangeUserPassword is called when production dbChangeUserPassword is entered.
+func (s *BaseMongoShellParserListener) EnterDbChangeUserPassword(ctx *DbChangeUserPasswordContext) {}
+
+// ExitDbChangeUserPassword is called when production dbChangeUserPassword is exited.
+func (s *BaseMongoShellParserListener) ExitDbChangeUserPassword(ctx *DbChangeUserPasswordContext) {}
+
+// EnterDbCloneDatabase is called when production dbCloneDatabase is entered.
+func (s *BaseMongoShellParserListener) EnterDbCloneDatabase(ctx *DbCloneDatabaseContext) {}
+
+// ExitDbCloneDatabase is called when production dbCloneDatabase is exited.
+func (s *BaseMongoShellParserListener) ExitDbCloneDatabase(ctx *DbCloneDatabaseContext) {}
+
+// EnterDbCommandHelp is called when production dbCommandHelp is entered.
+func (s *BaseMongoShellParserListener) EnterDbCommandHelp(ctx *DbCommandHelpContext) {}
+
+// ExitDbCommandHelp is called when production dbCommandHelp is exited.
+func (s *BaseMongoShellParserListener) ExitDbCommandHelp(ctx *DbCommandHelpContext) {}
+
+// EnterDbCopyDatabase is called when production dbCopyDatabase is entered.
+func (s *BaseMongoShellParserListener) EnterDbCopyDatabase(ctx *DbCopyDatabaseContext) {}
+
+// ExitDbCopyDatabase is called when production dbCopyDatabase is exited.
+func (s *BaseMongoShellParserListener) ExitDbCopyDatabase(ctx *DbCopyDatabaseContext) {}
+
+// EnterDbCreateRole is called when production dbCreateRole is entered.
+func (s *BaseMongoShellParserListener) EnterDbCreateRole(ctx *DbCreateRoleContext) {}
+
+// ExitDbCreateRole is called when production dbCreateRole is exited.
+func (s *BaseMongoShellParserListener) ExitDbCreateRole(ctx *DbCreateRoleContext) {}
+
+// EnterDbCreateUser is called when production dbCreateUser is entered.
+func (s *BaseMongoShellParserListener) EnterDbCreateUser(ctx *DbCreateUserContext) {}
+
+// ExitDbCreateUser is called when production dbCreateUser is exited.
+func (s *BaseMongoShellParserListener) ExitDbCreateUser(ctx *DbCreateUserContext) {}
+
+// EnterDbCreateView is called when production dbCreateView is entered.
+func (s *BaseMongoShellParserListener) EnterDbCreateView(ctx *DbCreateViewContext) {}
+
+// ExitDbCreateView is called when production dbCreateView is exited.
+func (s *BaseMongoShellParserListener) ExitDbCreateView(ctx *DbCreateViewContext) {}
+
+// EnterDbCurrentOp is called when production dbCurrentOp is entered.
+func (s *BaseMongoShellParserListener) EnterDbCurrentOp(ctx *DbCurrentOpContext) {}
+
+// ExitDbCurrentOp is called when production dbCurrentOp is exited.
+func (s *BaseMongoShellParserListener) ExitDbCurrentOp(ctx *DbCurrentOpContext) {}
+
+// EnterDbDropAllRoles is called when production dbDropAllRoles is entered.
+func (s *BaseMongoShellParserListener) EnterDbDropAllRoles(ctx *DbDropAllRolesContext) {}
+
+// ExitDbDropAllRoles is called when production dbDropAllRoles is exited.
+func (s *BaseMongoShellParserListener) ExitDbDropAllRoles(ctx *DbDropAllRolesContext) {}
+
+// EnterDbDropAllUsers is called when production dbDropAllUsers is entered.
+func (s *BaseMongoShellParserListener) EnterDbDropAllUsers(ctx *DbDropAllUsersContext) {}
+
+// ExitDbDropAllUsers is called when production dbDropAllUsers is exited.
+func (s *BaseMongoShellParserListener) ExitDbDropAllUsers(ctx *DbDropAllUsersContext) {}
+
+// EnterDbDropRole is called when production dbDropRole is entered.
+func (s *BaseMongoShellParserListener) EnterDbDropRole(ctx *DbDropRoleContext) {}
+
+// ExitDbDropRole is called when production dbDropRole is exited.
+func (s *BaseMongoShellParserListener) ExitDbDropRole(ctx *DbDropRoleContext) {}
+
+// EnterDbDropUser is called when production dbDropUser is entered.
+func (s *BaseMongoShellParserListener) EnterDbDropUser(ctx *DbDropUserContext) {}
+
+// ExitDbDropUser is called when production dbDropUser is exited.
+func (s *BaseMongoShellParserListener) ExitDbDropUser(ctx *DbDropUserContext) {}
+
+// EnterDbFsyncLock is called when production dbFsyncLock is entered.
+func (s *BaseMongoShellParserListener) EnterDbFsyncLock(ctx *DbFsyncLockContext) {}
+
+// ExitDbFsyncLock is called when production dbFsyncLock is exited.
+func (s *BaseMongoShellParserListener) ExitDbFsyncLock(ctx *DbFsyncLockContext) {}
+
+// EnterDbFsyncUnlock is called when production dbFsyncUnlock is entered.
+func (s *BaseMongoShellParserListener) EnterDbFsyncUnlock(ctx *DbFsyncUnlockContext) {}
+
+// ExitDbFsyncUnlock is called when production dbFsyncUnlock is exited.
+func (s *BaseMongoShellParserListener) ExitDbFsyncUnlock(ctx *DbFsyncUnlockContext) {}
+
+// EnterDbGetLogComponents is called when production dbGetLogComponents is entered.
+func (s *BaseMongoShellParserListener) EnterDbGetLogComponents(ctx *DbGetLogComponentsContext) {}
+
+// ExitDbGetLogComponents is called when production dbGetLogComponents is exited.
+func (s *BaseMongoShellParserListener) ExitDbGetLogComponents(ctx *DbGetLogComponentsContext) {}
+
+// EnterDbGetProfilingLevel is called when production dbGetProfilingLevel is entered.
+func (s *BaseMongoShellParserListener) EnterDbGetProfilingLevel(ctx *DbGetProfilingLevelContext) {}
+
+// ExitDbGetProfilingLevel is called when production dbGetProfilingLevel is exited.
+func (s *BaseMongoShellParserListener) ExitDbGetProfilingLevel(ctx *DbGetProfilingLevelContext) {}
+
+// EnterDbGetProfilingStatus is called when production dbGetProfilingStatus is entered.
+func (s *BaseMongoShellParserListener) EnterDbGetProfilingStatus(ctx *DbGetProfilingStatusContext) {}
+
+// ExitDbGetProfilingStatus is called when production dbGetProfilingStatus is exited.
+func (s *BaseMongoShellParserListener) ExitDbGetProfilingStatus(ctx *DbGetProfilingStatusContext) {}
+
+// EnterDbGetReplicationInfo is called when production dbGetReplicationInfo is entered.
+func (s *BaseMongoShellParserListener) EnterDbGetReplicationInfo(ctx *DbGetReplicationInfoContext) {}
+
+// ExitDbGetReplicationInfo is called when production dbGetReplicationInfo is exited.
+func (s *BaseMongoShellParserListener) ExitDbGetReplicationInfo(ctx *DbGetReplicationInfoContext) {}
+
+// EnterDbGetRole is called when production dbGetRole is entered.
+func (s *BaseMongoShellParserListener) EnterDbGetRole(ctx *DbGetRoleContext) {}
+
+// ExitDbGetRole is called when production dbGetRole is exited.
+func (s *BaseMongoShellParserListener) ExitDbGetRole(ctx *DbGetRoleContext) {}
+
+// EnterDbGetRoles is called when production dbGetRoles is entered.
+func (s *BaseMongoShellParserListener) EnterDbGetRoles(ctx *DbGetRolesContext) {}
+
+// ExitDbGetRoles is called when production dbGetRoles is exited.
+func (s *BaseMongoShellParserListener) ExitDbGetRoles(ctx *DbGetRolesContext) {}
+
+// EnterDbGetUser is called when production dbGetUser is entered.
+func (s *BaseMongoShellParserListener) EnterDbGetUser(ctx *DbGetUserContext) {}
+
+// ExitDbGetUser is called when production dbGetUser is exited.
+func (s *BaseMongoShellParserListener) ExitDbGetUser(ctx *DbGetUserContext) {}
+
+// EnterDbGetUsers is called when production dbGetUsers is entered.
+func (s *BaseMongoShellParserListener) EnterDbGetUsers(ctx *DbGetUsersContext) {}
+
+// ExitDbGetUsers is called when production dbGetUsers is exited.
+func (s *BaseMongoShellParserListener) ExitDbGetUsers(ctx *DbGetUsersContext) {}
+
+// EnterDbGrantPrivilegesToRole is called when production dbGrantPrivilegesToRole is entered.
+func (s *BaseMongoShellParserListener) EnterDbGrantPrivilegesToRole(ctx *DbGrantPrivilegesToRoleContext) {
+}
+
+// ExitDbGrantPrivilegesToRole is called when production dbGrantPrivilegesToRole is exited.
+func (s *BaseMongoShellParserListener) ExitDbGrantPrivilegesToRole(ctx *DbGrantPrivilegesToRoleContext) {
+}
+
+// EnterDbGrantRolesToRole is called when production dbGrantRolesToRole is entered.
+func (s *BaseMongoShellParserListener) EnterDbGrantRolesToRole(ctx *DbGrantRolesToRoleContext) {}
+
+// ExitDbGrantRolesToRole is called when production dbGrantRolesToRole is exited.
+func (s *BaseMongoShellParserListener) ExitDbGrantRolesToRole(ctx *DbGrantRolesToRoleContext) {}
+
+// EnterDbGrantRolesToUser is called when production dbGrantRolesToUser is entered.
+func (s *BaseMongoShellParserListener) EnterDbGrantRolesToUser(ctx *DbGrantRolesToUserContext) {}
+
+// ExitDbGrantRolesToUser is called when production dbGrantRolesToUser is exited.
+func (s *BaseMongoShellParserListener) ExitDbGrantRolesToUser(ctx *DbGrantRolesToUserContext) {}
+
+// EnterDbHello is called when production dbHello is entered.
+func (s *BaseMongoShellParserListener) EnterDbHello(ctx *DbHelloContext) {}
+
+// ExitDbHello is called when production dbHello is exited.
+func (s *BaseMongoShellParserListener) ExitDbHello(ctx *DbHelloContext) {}
+
+// EnterDbIsMaster is called when production dbIsMaster is entered.
+func (s *BaseMongoShellParserListener) EnterDbIsMaster(ctx *DbIsMasterContext) {}
+
+// ExitDbIsMaster is called when production dbIsMaster is exited.
+func (s *BaseMongoShellParserListener) ExitDbIsMaster(ctx *DbIsMasterContext) {}
+
+// EnterDbKillOp is called when production dbKillOp is entered.
+func (s *BaseMongoShellParserListener) EnterDbKillOp(ctx *DbKillOpContext) {}
+
+// ExitDbKillOp is called when production dbKillOp is exited.
+func (s *BaseMongoShellParserListener) ExitDbKillOp(ctx *DbKillOpContext) {}
+
+// EnterDbLogout is called when production dbLogout is entered.
+func (s *BaseMongoShellParserListener) EnterDbLogout(ctx *DbLogoutContext) {}
+
+// ExitDbLogout is called when production dbLogout is exited.
+func (s *BaseMongoShellParserListener) ExitDbLogout(ctx *DbLogoutContext) {}
+
+// EnterDbPrintCollectionStats is called when production dbPrintCollectionStats is entered.
+func (s *BaseMongoShellParserListener) EnterDbPrintCollectionStats(ctx *DbPrintCollectionStatsContext) {
+}
+
+// ExitDbPrintCollectionStats is called when production dbPrintCollectionStats is exited.
+func (s *BaseMongoShellParserListener) ExitDbPrintCollectionStats(ctx *DbPrintCollectionStatsContext) {
+}
+
+// EnterDbPrintReplicationInfo is called when production dbPrintReplicationInfo is entered.
+func (s *BaseMongoShellParserListener) EnterDbPrintReplicationInfo(ctx *DbPrintReplicationInfoContext) {
+}
+
+// ExitDbPrintReplicationInfo is called when production dbPrintReplicationInfo is exited.
+func (s *BaseMongoShellParserListener) ExitDbPrintReplicationInfo(ctx *DbPrintReplicationInfoContext) {
+}
+
+// EnterDbPrintSecondaryReplicationInfo is called when production dbPrintSecondaryReplicationInfo is entered.
+func (s *BaseMongoShellParserListener) EnterDbPrintSecondaryReplicationInfo(ctx *DbPrintSecondaryReplicationInfoContext) {
+}
+
+// ExitDbPrintSecondaryReplicationInfo is called when production dbPrintSecondaryReplicationInfo is exited.
+func (s *BaseMongoShellParserListener) ExitDbPrintSecondaryReplicationInfo(ctx *DbPrintSecondaryReplicationInfoContext) {
+}
+
+// EnterDbPrintShardingStatus is called when production dbPrintShardingStatus is entered.
+func (s *BaseMongoShellParserListener) EnterDbPrintShardingStatus(ctx *DbPrintShardingStatusContext) {
+}
+
+// ExitDbPrintShardingStatus is called when production dbPrintShardingStatus is exited.
+func (s *BaseMongoShellParserListener) ExitDbPrintShardingStatus(ctx *DbPrintShardingStatusContext) {}
+
+// EnterDbPrintSlaveReplicationInfo is called when production dbPrintSlaveReplicationInfo is entered.
+func (s *BaseMongoShellParserListener) EnterDbPrintSlaveReplicationInfo(ctx *DbPrintSlaveReplicationInfoContext) {
+}
+
+// ExitDbPrintSlaveReplicationInfo is called when production dbPrintSlaveReplicationInfo is exited.
+func (s *BaseMongoShellParserListener) ExitDbPrintSlaveReplicationInfo(ctx *DbPrintSlaveReplicationInfoContext) {
+}
+
+// EnterDbRevokePrivilegesFromRole is called when production dbRevokePrivilegesFromRole is entered.
+func (s *BaseMongoShellParserListener) EnterDbRevokePrivilegesFromRole(ctx *DbRevokePrivilegesFromRoleContext) {
+}
+
+// ExitDbRevokePrivilegesFromRole is called when production dbRevokePrivilegesFromRole is exited.
+func (s *BaseMongoShellParserListener) ExitDbRevokePrivilegesFromRole(ctx *DbRevokePrivilegesFromRoleContext) {
+}
+
+// EnterDbRevokeRolesFromRole is called when production dbRevokeRolesFromRole is entered.
+func (s *BaseMongoShellParserListener) EnterDbRevokeRolesFromRole(ctx *DbRevokeRolesFromRoleContext) {
+}
+
+// ExitDbRevokeRolesFromRole is called when production dbRevokeRolesFromRole is exited.
+func (s *BaseMongoShellParserListener) ExitDbRevokeRolesFromRole(ctx *DbRevokeRolesFromRoleContext) {}
+
+// EnterDbRevokeRolesFromUser is called when production dbRevokeRolesFromUser is entered.
+func (s *BaseMongoShellParserListener) EnterDbRevokeRolesFromUser(ctx *DbRevokeRolesFromUserContext) {
+}
+
+// ExitDbRevokeRolesFromUser is called when production dbRevokeRolesFromUser is exited.
+func (s *BaseMongoShellParserListener) ExitDbRevokeRolesFromUser(ctx *DbRevokeRolesFromUserContext) {}
+
+// EnterDbRotateCertificates is called when production dbRotateCertificates is entered.
+func (s *BaseMongoShellParserListener) EnterDbRotateCertificates(ctx *DbRotateCertificatesContext) {}
+
+// ExitDbRotateCertificates is called when production dbRotateCertificates is exited.
+func (s *BaseMongoShellParserListener) ExitDbRotateCertificates(ctx *DbRotateCertificatesContext) {}
+
+// EnterDbSetLogLevel is called when production dbSetLogLevel is entered.
+func (s *BaseMongoShellParserListener) EnterDbSetLogLevel(ctx *DbSetLogLevelContext) {}
+
+// ExitDbSetLogLevel is called when production dbSetLogLevel is exited.
+func (s *BaseMongoShellParserListener) ExitDbSetLogLevel(ctx *DbSetLogLevelContext) {}
+
+// EnterDbSetProfilingLevel is called when production dbSetProfilingLevel is entered.
+func (s *BaseMongoShellParserListener) EnterDbSetProfilingLevel(ctx *DbSetProfilingLevelContext) {}
+
+// ExitDbSetProfilingLevel is called when production dbSetProfilingLevel is exited.
+func (s *BaseMongoShellParserListener) ExitDbSetProfilingLevel(ctx *DbSetProfilingLevelContext) {}
+
+// EnterDbSetSecondaryOk is called when production dbSetSecondaryOk is entered.
+func (s *BaseMongoShellParserListener) EnterDbSetSecondaryOk(ctx *DbSetSecondaryOkContext) {}
+
+// ExitDbSetSecondaryOk is called when production dbSetSecondaryOk is exited.
+func (s *BaseMongoShellParserListener) ExitDbSetSecondaryOk(ctx *DbSetSecondaryOkContext) {}
+
+// EnterDbSetWriteConcern is called when production dbSetWriteConcern is entered.
+func (s *BaseMongoShellParserListener) EnterDbSetWriteConcern(ctx *DbSetWriteConcernContext) {}
+
+// ExitDbSetWriteConcern is called when production dbSetWriteConcern is exited.
+func (s *BaseMongoShellParserListener) ExitDbSetWriteConcern(ctx *DbSetWriteConcernContext) {}
+
+// EnterDbShutdownServer is called when production dbShutdownServer is entered.
+func (s *BaseMongoShellParserListener) EnterDbShutdownServer(ctx *DbShutdownServerContext) {}
+
+// ExitDbShutdownServer is called when production dbShutdownServer is exited.
+func (s *BaseMongoShellParserListener) ExitDbShutdownServer(ctx *DbShutdownServerContext) {}
+
+// EnterDbUpdateRole is called when production dbUpdateRole is entered.
+func (s *BaseMongoShellParserListener) EnterDbUpdateRole(ctx *DbUpdateRoleContext) {}
+
+// ExitDbUpdateRole is called when production dbUpdateRole is exited.
+func (s *BaseMongoShellParserListener) ExitDbUpdateRole(ctx *DbUpdateRoleContext) {}
+
+// EnterDbUpdateUser is called when production dbUpdateUser is entered.
+func (s *BaseMongoShellParserListener) EnterDbUpdateUser(ctx *DbUpdateUserContext) {}
+
+// ExitDbUpdateUser is called when production dbUpdateUser is exited.
+func (s *BaseMongoShellParserListener) ExitDbUpdateUser(ctx *DbUpdateUserContext) {}
+
+// EnterDbWatch is called when production dbWatch is entered.
+func (s *BaseMongoShellParserListener) EnterDbWatch(ctx *DbWatchContext) {}
+
+// ExitDbWatch is called when production dbWatch is exited.
+func (s *BaseMongoShellParserListener) ExitDbWatch(ctx *DbWatchContext) {}
 
 // EnterCollectionOperation is called when production collectionOperation is entered.
 func (s *BaseMongoShellParserListener) EnterCollectionOperation(ctx *CollectionOperationContext) {}
 
 // ExitCollectionOperation is called when production collectionOperation is exited.
 func (s *BaseMongoShellParserListener) ExitCollectionOperation(ctx *CollectionOperationContext) {}
-
-// EnterGenericDbMethod is called when production genericDbMethod is entered.
-func (s *BaseMongoShellParserListener) EnterGenericDbMethod(ctx *GenericDbMethodContext) {}
-
-// ExitGenericDbMethod is called when production genericDbMethod is exited.
-func (s *BaseMongoShellParserListener) ExitGenericDbMethod(ctx *GenericDbMethodContext) {}
 
 // EnterBulkStatement is called when production bulkStatement is entered.
 func (s *BaseMongoShellParserListener) EnterBulkStatement(ctx *BulkStatementContext) {}

@@ -83,15 +83,199 @@ func (v *BaseMongoShellParserVisitor) VisitGetSiblingDB(ctx *GetSiblingDBContext
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseMongoShellParserVisitor) VisitDbGenericMethod(ctx *DbGenericMethodContext) interface{} {
+func (v *BaseMongoShellParserVisitor) VisitDbAggregate(ctx *DbAggregateContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbAuth(ctx *DbAuthContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbChangeUserPassword(ctx *DbChangeUserPasswordContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbCloneDatabase(ctx *DbCloneDatabaseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbCommandHelp(ctx *DbCommandHelpContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbCopyDatabase(ctx *DbCopyDatabaseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbCreateRole(ctx *DbCreateRoleContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbCreateUser(ctx *DbCreateUserContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbCreateView(ctx *DbCreateViewContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbCurrentOp(ctx *DbCurrentOpContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbDropAllRoles(ctx *DbDropAllRolesContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbDropAllUsers(ctx *DbDropAllUsersContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbDropRole(ctx *DbDropRoleContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbDropUser(ctx *DbDropUserContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbFsyncLock(ctx *DbFsyncLockContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbFsyncUnlock(ctx *DbFsyncUnlockContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbGetLogComponents(ctx *DbGetLogComponentsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbGetProfilingLevel(ctx *DbGetProfilingLevelContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbGetProfilingStatus(ctx *DbGetProfilingStatusContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbGetReplicationInfo(ctx *DbGetReplicationInfoContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbGetRole(ctx *DbGetRoleContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbGetRoles(ctx *DbGetRolesContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbGetUser(ctx *DbGetUserContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbGetUsers(ctx *DbGetUsersContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbGrantPrivilegesToRole(ctx *DbGrantPrivilegesToRoleContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbGrantRolesToRole(ctx *DbGrantRolesToRoleContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbGrantRolesToUser(ctx *DbGrantRolesToUserContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbHello(ctx *DbHelloContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbIsMaster(ctx *DbIsMasterContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbKillOp(ctx *DbKillOpContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbLogout(ctx *DbLogoutContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbPrintCollectionStats(ctx *DbPrintCollectionStatsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbPrintReplicationInfo(ctx *DbPrintReplicationInfoContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbPrintSecondaryReplicationInfo(ctx *DbPrintSecondaryReplicationInfoContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbPrintShardingStatus(ctx *DbPrintShardingStatusContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbPrintSlaveReplicationInfo(ctx *DbPrintSlaveReplicationInfoContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbRevokePrivilegesFromRole(ctx *DbRevokePrivilegesFromRoleContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbRevokeRolesFromRole(ctx *DbRevokeRolesFromRoleContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbRevokeRolesFromUser(ctx *DbRevokeRolesFromUserContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbRotateCertificates(ctx *DbRotateCertificatesContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbSetLogLevel(ctx *DbSetLogLevelContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbSetProfilingLevel(ctx *DbSetProfilingLevelContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbSetSecondaryOk(ctx *DbSetSecondaryOkContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbSetWriteConcern(ctx *DbSetWriteConcernContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbShutdownServer(ctx *DbShutdownServerContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbUpdateRole(ctx *DbUpdateRoleContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbUpdateUser(ctx *DbUpdateUserContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDbWatch(ctx *DbWatchContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
 func (v *BaseMongoShellParserVisitor) VisitCollectionOperation(ctx *CollectionOperationContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseMongoShellParserVisitor) VisitGenericDbMethod(ctx *GenericDbMethodContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

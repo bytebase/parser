@@ -64,14 +64,152 @@ type MongoShellParserListener interface {
 	// EnterGetSiblingDB is called when entering the getSiblingDB production.
 	EnterGetSiblingDB(c *GetSiblingDBContext)
 
-	// EnterDbGenericMethod is called when entering the dbGenericMethod production.
-	EnterDbGenericMethod(c *DbGenericMethodContext)
+	// EnterDbAggregate is called when entering the dbAggregate production.
+	EnterDbAggregate(c *DbAggregateContext)
+
+	// EnterDbAuth is called when entering the dbAuth production.
+	EnterDbAuth(c *DbAuthContext)
+
+	// EnterDbChangeUserPassword is called when entering the dbChangeUserPassword production.
+	EnterDbChangeUserPassword(c *DbChangeUserPasswordContext)
+
+	// EnterDbCloneDatabase is called when entering the dbCloneDatabase production.
+	EnterDbCloneDatabase(c *DbCloneDatabaseContext)
+
+	// EnterDbCommandHelp is called when entering the dbCommandHelp production.
+	EnterDbCommandHelp(c *DbCommandHelpContext)
+
+	// EnterDbCopyDatabase is called when entering the dbCopyDatabase production.
+	EnterDbCopyDatabase(c *DbCopyDatabaseContext)
+
+	// EnterDbCreateRole is called when entering the dbCreateRole production.
+	EnterDbCreateRole(c *DbCreateRoleContext)
+
+	// EnterDbCreateUser is called when entering the dbCreateUser production.
+	EnterDbCreateUser(c *DbCreateUserContext)
+
+	// EnterDbCreateView is called when entering the dbCreateView production.
+	EnterDbCreateView(c *DbCreateViewContext)
+
+	// EnterDbCurrentOp is called when entering the dbCurrentOp production.
+	EnterDbCurrentOp(c *DbCurrentOpContext)
+
+	// EnterDbDropAllRoles is called when entering the dbDropAllRoles production.
+	EnterDbDropAllRoles(c *DbDropAllRolesContext)
+
+	// EnterDbDropAllUsers is called when entering the dbDropAllUsers production.
+	EnterDbDropAllUsers(c *DbDropAllUsersContext)
+
+	// EnterDbDropRole is called when entering the dbDropRole production.
+	EnterDbDropRole(c *DbDropRoleContext)
+
+	// EnterDbDropUser is called when entering the dbDropUser production.
+	EnterDbDropUser(c *DbDropUserContext)
+
+	// EnterDbFsyncLock is called when entering the dbFsyncLock production.
+	EnterDbFsyncLock(c *DbFsyncLockContext)
+
+	// EnterDbFsyncUnlock is called when entering the dbFsyncUnlock production.
+	EnterDbFsyncUnlock(c *DbFsyncUnlockContext)
+
+	// EnterDbGetLogComponents is called when entering the dbGetLogComponents production.
+	EnterDbGetLogComponents(c *DbGetLogComponentsContext)
+
+	// EnterDbGetProfilingLevel is called when entering the dbGetProfilingLevel production.
+	EnterDbGetProfilingLevel(c *DbGetProfilingLevelContext)
+
+	// EnterDbGetProfilingStatus is called when entering the dbGetProfilingStatus production.
+	EnterDbGetProfilingStatus(c *DbGetProfilingStatusContext)
+
+	// EnterDbGetReplicationInfo is called when entering the dbGetReplicationInfo production.
+	EnterDbGetReplicationInfo(c *DbGetReplicationInfoContext)
+
+	// EnterDbGetRole is called when entering the dbGetRole production.
+	EnterDbGetRole(c *DbGetRoleContext)
+
+	// EnterDbGetRoles is called when entering the dbGetRoles production.
+	EnterDbGetRoles(c *DbGetRolesContext)
+
+	// EnterDbGetUser is called when entering the dbGetUser production.
+	EnterDbGetUser(c *DbGetUserContext)
+
+	// EnterDbGetUsers is called when entering the dbGetUsers production.
+	EnterDbGetUsers(c *DbGetUsersContext)
+
+	// EnterDbGrantPrivilegesToRole is called when entering the dbGrantPrivilegesToRole production.
+	EnterDbGrantPrivilegesToRole(c *DbGrantPrivilegesToRoleContext)
+
+	// EnterDbGrantRolesToRole is called when entering the dbGrantRolesToRole production.
+	EnterDbGrantRolesToRole(c *DbGrantRolesToRoleContext)
+
+	// EnterDbGrantRolesToUser is called when entering the dbGrantRolesToUser production.
+	EnterDbGrantRolesToUser(c *DbGrantRolesToUserContext)
+
+	// EnterDbHello is called when entering the dbHello production.
+	EnterDbHello(c *DbHelloContext)
+
+	// EnterDbIsMaster is called when entering the dbIsMaster production.
+	EnterDbIsMaster(c *DbIsMasterContext)
+
+	// EnterDbKillOp is called when entering the dbKillOp production.
+	EnterDbKillOp(c *DbKillOpContext)
+
+	// EnterDbLogout is called when entering the dbLogout production.
+	EnterDbLogout(c *DbLogoutContext)
+
+	// EnterDbPrintCollectionStats is called when entering the dbPrintCollectionStats production.
+	EnterDbPrintCollectionStats(c *DbPrintCollectionStatsContext)
+
+	// EnterDbPrintReplicationInfo is called when entering the dbPrintReplicationInfo production.
+	EnterDbPrintReplicationInfo(c *DbPrintReplicationInfoContext)
+
+	// EnterDbPrintSecondaryReplicationInfo is called when entering the dbPrintSecondaryReplicationInfo production.
+	EnterDbPrintSecondaryReplicationInfo(c *DbPrintSecondaryReplicationInfoContext)
+
+	// EnterDbPrintShardingStatus is called when entering the dbPrintShardingStatus production.
+	EnterDbPrintShardingStatus(c *DbPrintShardingStatusContext)
+
+	// EnterDbPrintSlaveReplicationInfo is called when entering the dbPrintSlaveReplicationInfo production.
+	EnterDbPrintSlaveReplicationInfo(c *DbPrintSlaveReplicationInfoContext)
+
+	// EnterDbRevokePrivilegesFromRole is called when entering the dbRevokePrivilegesFromRole production.
+	EnterDbRevokePrivilegesFromRole(c *DbRevokePrivilegesFromRoleContext)
+
+	// EnterDbRevokeRolesFromRole is called when entering the dbRevokeRolesFromRole production.
+	EnterDbRevokeRolesFromRole(c *DbRevokeRolesFromRoleContext)
+
+	// EnterDbRevokeRolesFromUser is called when entering the dbRevokeRolesFromUser production.
+	EnterDbRevokeRolesFromUser(c *DbRevokeRolesFromUserContext)
+
+	// EnterDbRotateCertificates is called when entering the dbRotateCertificates production.
+	EnterDbRotateCertificates(c *DbRotateCertificatesContext)
+
+	// EnterDbSetLogLevel is called when entering the dbSetLogLevel production.
+	EnterDbSetLogLevel(c *DbSetLogLevelContext)
+
+	// EnterDbSetProfilingLevel is called when entering the dbSetProfilingLevel production.
+	EnterDbSetProfilingLevel(c *DbSetProfilingLevelContext)
+
+	// EnterDbSetSecondaryOk is called when entering the dbSetSecondaryOk production.
+	EnterDbSetSecondaryOk(c *DbSetSecondaryOkContext)
+
+	// EnterDbSetWriteConcern is called when entering the dbSetWriteConcern production.
+	EnterDbSetWriteConcern(c *DbSetWriteConcernContext)
+
+	// EnterDbShutdownServer is called when entering the dbShutdownServer production.
+	EnterDbShutdownServer(c *DbShutdownServerContext)
+
+	// EnterDbUpdateRole is called when entering the dbUpdateRole production.
+	EnterDbUpdateRole(c *DbUpdateRoleContext)
+
+	// EnterDbUpdateUser is called when entering the dbUpdateUser production.
+	EnterDbUpdateUser(c *DbUpdateUserContext)
+
+	// EnterDbWatch is called when entering the dbWatch production.
+	EnterDbWatch(c *DbWatchContext)
 
 	// EnterCollectionOperation is called when entering the collectionOperation production.
 	EnterCollectionOperation(c *CollectionOperationContext)
-
-	// EnterGenericDbMethod is called when entering the genericDbMethod production.
-	EnterGenericDbMethod(c *GenericDbMethodContext)
 
 	// EnterBulkStatement is called when entering the bulkStatement production.
 	EnterBulkStatement(c *BulkStatementContext)
@@ -631,14 +769,152 @@ type MongoShellParserListener interface {
 	// ExitGetSiblingDB is called when exiting the getSiblingDB production.
 	ExitGetSiblingDB(c *GetSiblingDBContext)
 
-	// ExitDbGenericMethod is called when exiting the dbGenericMethod production.
-	ExitDbGenericMethod(c *DbGenericMethodContext)
+	// ExitDbAggregate is called when exiting the dbAggregate production.
+	ExitDbAggregate(c *DbAggregateContext)
+
+	// ExitDbAuth is called when exiting the dbAuth production.
+	ExitDbAuth(c *DbAuthContext)
+
+	// ExitDbChangeUserPassword is called when exiting the dbChangeUserPassword production.
+	ExitDbChangeUserPassword(c *DbChangeUserPasswordContext)
+
+	// ExitDbCloneDatabase is called when exiting the dbCloneDatabase production.
+	ExitDbCloneDatabase(c *DbCloneDatabaseContext)
+
+	// ExitDbCommandHelp is called when exiting the dbCommandHelp production.
+	ExitDbCommandHelp(c *DbCommandHelpContext)
+
+	// ExitDbCopyDatabase is called when exiting the dbCopyDatabase production.
+	ExitDbCopyDatabase(c *DbCopyDatabaseContext)
+
+	// ExitDbCreateRole is called when exiting the dbCreateRole production.
+	ExitDbCreateRole(c *DbCreateRoleContext)
+
+	// ExitDbCreateUser is called when exiting the dbCreateUser production.
+	ExitDbCreateUser(c *DbCreateUserContext)
+
+	// ExitDbCreateView is called when exiting the dbCreateView production.
+	ExitDbCreateView(c *DbCreateViewContext)
+
+	// ExitDbCurrentOp is called when exiting the dbCurrentOp production.
+	ExitDbCurrentOp(c *DbCurrentOpContext)
+
+	// ExitDbDropAllRoles is called when exiting the dbDropAllRoles production.
+	ExitDbDropAllRoles(c *DbDropAllRolesContext)
+
+	// ExitDbDropAllUsers is called when exiting the dbDropAllUsers production.
+	ExitDbDropAllUsers(c *DbDropAllUsersContext)
+
+	// ExitDbDropRole is called when exiting the dbDropRole production.
+	ExitDbDropRole(c *DbDropRoleContext)
+
+	// ExitDbDropUser is called when exiting the dbDropUser production.
+	ExitDbDropUser(c *DbDropUserContext)
+
+	// ExitDbFsyncLock is called when exiting the dbFsyncLock production.
+	ExitDbFsyncLock(c *DbFsyncLockContext)
+
+	// ExitDbFsyncUnlock is called when exiting the dbFsyncUnlock production.
+	ExitDbFsyncUnlock(c *DbFsyncUnlockContext)
+
+	// ExitDbGetLogComponents is called when exiting the dbGetLogComponents production.
+	ExitDbGetLogComponents(c *DbGetLogComponentsContext)
+
+	// ExitDbGetProfilingLevel is called when exiting the dbGetProfilingLevel production.
+	ExitDbGetProfilingLevel(c *DbGetProfilingLevelContext)
+
+	// ExitDbGetProfilingStatus is called when exiting the dbGetProfilingStatus production.
+	ExitDbGetProfilingStatus(c *DbGetProfilingStatusContext)
+
+	// ExitDbGetReplicationInfo is called when exiting the dbGetReplicationInfo production.
+	ExitDbGetReplicationInfo(c *DbGetReplicationInfoContext)
+
+	// ExitDbGetRole is called when exiting the dbGetRole production.
+	ExitDbGetRole(c *DbGetRoleContext)
+
+	// ExitDbGetRoles is called when exiting the dbGetRoles production.
+	ExitDbGetRoles(c *DbGetRolesContext)
+
+	// ExitDbGetUser is called when exiting the dbGetUser production.
+	ExitDbGetUser(c *DbGetUserContext)
+
+	// ExitDbGetUsers is called when exiting the dbGetUsers production.
+	ExitDbGetUsers(c *DbGetUsersContext)
+
+	// ExitDbGrantPrivilegesToRole is called when exiting the dbGrantPrivilegesToRole production.
+	ExitDbGrantPrivilegesToRole(c *DbGrantPrivilegesToRoleContext)
+
+	// ExitDbGrantRolesToRole is called when exiting the dbGrantRolesToRole production.
+	ExitDbGrantRolesToRole(c *DbGrantRolesToRoleContext)
+
+	// ExitDbGrantRolesToUser is called when exiting the dbGrantRolesToUser production.
+	ExitDbGrantRolesToUser(c *DbGrantRolesToUserContext)
+
+	// ExitDbHello is called when exiting the dbHello production.
+	ExitDbHello(c *DbHelloContext)
+
+	// ExitDbIsMaster is called when exiting the dbIsMaster production.
+	ExitDbIsMaster(c *DbIsMasterContext)
+
+	// ExitDbKillOp is called when exiting the dbKillOp production.
+	ExitDbKillOp(c *DbKillOpContext)
+
+	// ExitDbLogout is called when exiting the dbLogout production.
+	ExitDbLogout(c *DbLogoutContext)
+
+	// ExitDbPrintCollectionStats is called when exiting the dbPrintCollectionStats production.
+	ExitDbPrintCollectionStats(c *DbPrintCollectionStatsContext)
+
+	// ExitDbPrintReplicationInfo is called when exiting the dbPrintReplicationInfo production.
+	ExitDbPrintReplicationInfo(c *DbPrintReplicationInfoContext)
+
+	// ExitDbPrintSecondaryReplicationInfo is called when exiting the dbPrintSecondaryReplicationInfo production.
+	ExitDbPrintSecondaryReplicationInfo(c *DbPrintSecondaryReplicationInfoContext)
+
+	// ExitDbPrintShardingStatus is called when exiting the dbPrintShardingStatus production.
+	ExitDbPrintShardingStatus(c *DbPrintShardingStatusContext)
+
+	// ExitDbPrintSlaveReplicationInfo is called when exiting the dbPrintSlaveReplicationInfo production.
+	ExitDbPrintSlaveReplicationInfo(c *DbPrintSlaveReplicationInfoContext)
+
+	// ExitDbRevokePrivilegesFromRole is called when exiting the dbRevokePrivilegesFromRole production.
+	ExitDbRevokePrivilegesFromRole(c *DbRevokePrivilegesFromRoleContext)
+
+	// ExitDbRevokeRolesFromRole is called when exiting the dbRevokeRolesFromRole production.
+	ExitDbRevokeRolesFromRole(c *DbRevokeRolesFromRoleContext)
+
+	// ExitDbRevokeRolesFromUser is called when exiting the dbRevokeRolesFromUser production.
+	ExitDbRevokeRolesFromUser(c *DbRevokeRolesFromUserContext)
+
+	// ExitDbRotateCertificates is called when exiting the dbRotateCertificates production.
+	ExitDbRotateCertificates(c *DbRotateCertificatesContext)
+
+	// ExitDbSetLogLevel is called when exiting the dbSetLogLevel production.
+	ExitDbSetLogLevel(c *DbSetLogLevelContext)
+
+	// ExitDbSetProfilingLevel is called when exiting the dbSetProfilingLevel production.
+	ExitDbSetProfilingLevel(c *DbSetProfilingLevelContext)
+
+	// ExitDbSetSecondaryOk is called when exiting the dbSetSecondaryOk production.
+	ExitDbSetSecondaryOk(c *DbSetSecondaryOkContext)
+
+	// ExitDbSetWriteConcern is called when exiting the dbSetWriteConcern production.
+	ExitDbSetWriteConcern(c *DbSetWriteConcernContext)
+
+	// ExitDbShutdownServer is called when exiting the dbShutdownServer production.
+	ExitDbShutdownServer(c *DbShutdownServerContext)
+
+	// ExitDbUpdateRole is called when exiting the dbUpdateRole production.
+	ExitDbUpdateRole(c *DbUpdateRoleContext)
+
+	// ExitDbUpdateUser is called when exiting the dbUpdateUser production.
+	ExitDbUpdateUser(c *DbUpdateUserContext)
+
+	// ExitDbWatch is called when exiting the dbWatch production.
+	ExitDbWatch(c *DbWatchContext)
 
 	// ExitCollectionOperation is called when exiting the collectionOperation production.
 	ExitCollectionOperation(c *CollectionOperationContext)
-
-	// ExitGenericDbMethod is called when exiting the genericDbMethod production.
-	ExitGenericDbMethod(c *GenericDbMethodContext)
 
 	// ExitBulkStatement is called when exiting the bulkStatement production.
 	ExitBulkStatement(c *BulkStatementContext)

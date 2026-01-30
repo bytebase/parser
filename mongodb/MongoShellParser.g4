@@ -67,13 +67,55 @@ dbStatement
     | DB DOT GET_NAME LPAREN RPAREN                                             # getName
     | DB DOT GET_MONGO LPAREN RPAREN                                            # getMongo
     | DB DOT GET_SIBLING_DB LPAREN argument RPAREN                              # getSiblingDB
-    | DB DOT genericDbMethod                                                    # dbGenericMethod
+    | DB DOT AGGREGATE LPAREN arguments? RPAREN                                # dbAggregate
+    | DB DOT AUTH LPAREN arguments? RPAREN                                     # dbAuth
+    | DB DOT CHANGE_USER_PASSWORD LPAREN arguments? RPAREN                     # dbChangeUserPassword
+    | DB DOT CLONE_DATABASE LPAREN arguments? RPAREN                           # dbCloneDatabase
+    | DB DOT COMMAND_HELP LPAREN arguments? RPAREN                             # dbCommandHelp
+    | DB DOT COPY_DATABASE LPAREN arguments? RPAREN                            # dbCopyDatabase
+    | DB DOT CREATE_ROLE LPAREN arguments? RPAREN                              # dbCreateRole
+    | DB DOT CREATE_USER LPAREN arguments? RPAREN                              # dbCreateUser
+    | DB DOT CREATE_VIEW LPAREN arguments? RPAREN                              # dbCreateView
+    | DB DOT CURRENT_OP LPAREN arguments? RPAREN                               # dbCurrentOp
+    | DB DOT DROP_ALL_ROLES LPAREN arguments? RPAREN                           # dbDropAllRoles
+    | DB DOT DROP_ALL_USERS LPAREN arguments? RPAREN                           # dbDropAllUsers
+    | DB DOT DROP_ROLE LPAREN arguments? RPAREN                                # dbDropRole
+    | DB DOT DROP_USER LPAREN arguments? RPAREN                                # dbDropUser
+    | DB DOT FSYNC_LOCK LPAREN arguments? RPAREN                               # dbFsyncLock
+    | DB DOT FSYNC_UNLOCK LPAREN arguments? RPAREN                             # dbFsyncUnlock
+    | DB DOT GET_LOG_COMPONENTS LPAREN arguments? RPAREN                       # dbGetLogComponents
+    | DB DOT GET_PROFILING_LEVEL LPAREN arguments? RPAREN                      # dbGetProfilingLevel
+    | DB DOT GET_PROFILING_STATUS LPAREN arguments? RPAREN                     # dbGetProfilingStatus
+    | DB DOT GET_REPLICATION_INFO LPAREN arguments? RPAREN                     # dbGetReplicationInfo
+    | DB DOT GET_ROLE LPAREN arguments? RPAREN                                 # dbGetRole
+    | DB DOT GET_ROLES LPAREN arguments? RPAREN                                # dbGetRoles
+    | DB DOT GET_USER LPAREN arguments? RPAREN                                 # dbGetUser
+    | DB DOT GET_USERS LPAREN arguments? RPAREN                                # dbGetUsers
+    | DB DOT GRANT_PRIVILEGES_TO_ROLE LPAREN arguments? RPAREN                 # dbGrantPrivilegesToRole
+    | DB DOT GRANT_ROLES_TO_ROLE LPAREN arguments? RPAREN                      # dbGrantRolesToRole
+    | DB DOT GRANT_ROLES_TO_USER LPAREN arguments? RPAREN                      # dbGrantRolesToUser
+    | DB DOT HELLO LPAREN arguments? RPAREN                                    # dbHello
+    | DB DOT IS_MASTER LPAREN arguments? RPAREN                                # dbIsMaster
+    | DB DOT KILL_OP LPAREN arguments? RPAREN                                  # dbKillOp
+    | DB DOT LOGOUT LPAREN arguments? RPAREN                                   # dbLogout
+    | DB DOT PRINT_COLLECTION_STATS LPAREN arguments? RPAREN                   # dbPrintCollectionStats
+    | DB DOT PRINT_REPLICATION_INFO LPAREN arguments? RPAREN                   # dbPrintReplicationInfo
+    | DB DOT PRINT_SECONDARY_REPLICATION_INFO LPAREN arguments? RPAREN         # dbPrintSecondaryReplicationInfo
+    | DB DOT PRINT_SHARDING_STATUS LPAREN arguments? RPAREN                    # dbPrintShardingStatus
+    | DB DOT PRINT_SLAVE_REPLICATION_INFO LPAREN arguments? RPAREN             # dbPrintSlaveReplicationInfo
+    | DB DOT REVOKE_PRIVILEGES_FROM_ROLE LPAREN arguments? RPAREN              # dbRevokePrivilegesFromRole
+    | DB DOT REVOKE_ROLES_FROM_ROLE LPAREN arguments? RPAREN                   # dbRevokeRolesFromRole
+    | DB DOT REVOKE_ROLES_FROM_USER LPAREN arguments? RPAREN                   # dbRevokeRolesFromUser
+    | DB DOT ROTATE_CERTIFICATES LPAREN arguments? RPAREN                      # dbRotateCertificates
+    | DB DOT SET_LOG_LEVEL LPAREN arguments? RPAREN                            # dbSetLogLevel
+    | DB DOT SET_PROFILING_LEVEL LPAREN arguments? RPAREN                      # dbSetProfilingLevel
+    | DB DOT SET_SECONDARY_OK LPAREN arguments? RPAREN                         # dbSetSecondaryOk
+    | DB DOT SET_WRITE_CONCERN LPAREN arguments? RPAREN                        # dbSetWriteConcern
+    | DB DOT SHUTDOWN_SERVER LPAREN arguments? RPAREN                          # dbShutdownServer
+    | DB DOT UPDATE_ROLE LPAREN arguments? RPAREN                              # dbUpdateRole
+    | DB DOT UPDATE_USER LPAREN arguments? RPAREN                              # dbUpdateUser
+    | DB DOT WATCH LPAREN arguments? RPAREN                                    # dbWatch
     | DB collectionAccess methodChain                                           # collectionOperation
-    ;
-
-// Generic database method for extensibility (unsupported methods)
-genericDbMethod
-    : identifier LPAREN arguments? RPAREN
     ;
 
 // Bulk operation statements
@@ -1005,4 +1047,50 @@ identifier
     | CREATE_SEARCH_INDEXES
     | DROP_SEARCH_INDEX
     | UPDATE_SEARCH_INDEX
+    // Database method tokens (additional)
+    | AUTH
+    | CHANGE_USER_PASSWORD
+    | CLONE_DATABASE
+    | COMMAND_HELP
+    | COPY_DATABASE
+    | CREATE_ROLE
+    | CREATE_USER
+    | CREATE_VIEW
+    | CURRENT_OP
+    | DROP_ALL_ROLES
+    | DROP_ALL_USERS
+    | DROP_ROLE
+    | DROP_USER
+    | FSYNC_LOCK
+    | FSYNC_UNLOCK
+    | GET_LOG_COMPONENTS
+    | GET_PROFILING_LEVEL
+    | GET_PROFILING_STATUS
+    | GET_REPLICATION_INFO
+    | GET_ROLE
+    | GET_ROLES
+    | GET_USER
+    | GET_USERS
+    | GRANT_PRIVILEGES_TO_ROLE
+    | GRANT_ROLES_TO_ROLE
+    | GRANT_ROLES_TO_USER
+    | HELLO
+    | IS_MASTER
+    | KILL_OP
+    | LOGOUT
+    | PRINT_COLLECTION_STATS
+    | PRINT_REPLICATION_INFO
+    | PRINT_SECONDARY_REPLICATION_INFO
+    | PRINT_SHARDING_STATUS
+    | PRINT_SLAVE_REPLICATION_INFO
+    | REVOKE_PRIVILEGES_FROM_ROLE
+    | REVOKE_ROLES_FROM_ROLE
+    | REVOKE_ROLES_FROM_USER
+    | ROTATE_CERTIFICATES
+    | SET_LOG_LEVEL
+    | SET_PROFILING_LEVEL
+    | SET_SECONDARY_OK
+    | SHUTDOWN_SERVER
+    | UPDATE_ROLE
+    | UPDATE_USER
     ;
