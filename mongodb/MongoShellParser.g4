@@ -171,11 +171,11 @@ collectionAccess
     | DOT GET_COLLECTION LPAREN stringLiteral RPAREN    # getCollectionAccess
     ;
 
-// Method chain: first call can be collection or cursor, subsequent are cursor methods
-// Special case: explain() returns an explainable object that supports collection methods
+// Method chain: first call must be a collection method, subsequent calls are cursor methods.
+// Special case: explain() returns an explainable object that supports collection methods.
 methodChain
-    : DOT collectionExplainMethod DOT (collectionMethodCall | cursorMethodCall) (DOT cursorMethodCall)*
-    | DOT (collectionMethodCall | cursorMethodCall) (DOT cursorMethodCall)*
+    : DOT collectionExplainMethod DOT collectionMethodCall (DOT cursorMethodCall)*
+    | DOT collectionMethodCall (DOT cursorMethodCall)*
     ;
 
 // Collection method call: methods that operate on a collection directly
