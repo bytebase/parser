@@ -64,14 +64,152 @@ type MongoShellParserVisitor interface {
 	// Visit a parse tree produced by MongoShellParser#getSiblingDB.
 	VisitGetSiblingDB(ctx *GetSiblingDBContext) interface{}
 
-	// Visit a parse tree produced by MongoShellParser#dbGenericMethod.
-	VisitDbGenericMethod(ctx *DbGenericMethodContext) interface{}
+	// Visit a parse tree produced by MongoShellParser#dbAggregate.
+	VisitDbAggregate(ctx *DbAggregateContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbAuth.
+	VisitDbAuth(ctx *DbAuthContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbChangeUserPassword.
+	VisitDbChangeUserPassword(ctx *DbChangeUserPasswordContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbCloneDatabase.
+	VisitDbCloneDatabase(ctx *DbCloneDatabaseContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbCommandHelp.
+	VisitDbCommandHelp(ctx *DbCommandHelpContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbCopyDatabase.
+	VisitDbCopyDatabase(ctx *DbCopyDatabaseContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbCreateRole.
+	VisitDbCreateRole(ctx *DbCreateRoleContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbCreateUser.
+	VisitDbCreateUser(ctx *DbCreateUserContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbCreateView.
+	VisitDbCreateView(ctx *DbCreateViewContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbCurrentOp.
+	VisitDbCurrentOp(ctx *DbCurrentOpContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbDropAllRoles.
+	VisitDbDropAllRoles(ctx *DbDropAllRolesContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbDropAllUsers.
+	VisitDbDropAllUsers(ctx *DbDropAllUsersContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbDropRole.
+	VisitDbDropRole(ctx *DbDropRoleContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbDropUser.
+	VisitDbDropUser(ctx *DbDropUserContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbFsyncLock.
+	VisitDbFsyncLock(ctx *DbFsyncLockContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbFsyncUnlock.
+	VisitDbFsyncUnlock(ctx *DbFsyncUnlockContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbGetLogComponents.
+	VisitDbGetLogComponents(ctx *DbGetLogComponentsContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbGetProfilingLevel.
+	VisitDbGetProfilingLevel(ctx *DbGetProfilingLevelContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbGetProfilingStatus.
+	VisitDbGetProfilingStatus(ctx *DbGetProfilingStatusContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbGetReplicationInfo.
+	VisitDbGetReplicationInfo(ctx *DbGetReplicationInfoContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbGetRole.
+	VisitDbGetRole(ctx *DbGetRoleContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbGetRoles.
+	VisitDbGetRoles(ctx *DbGetRolesContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbGetUser.
+	VisitDbGetUser(ctx *DbGetUserContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbGetUsers.
+	VisitDbGetUsers(ctx *DbGetUsersContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbGrantPrivilegesToRole.
+	VisitDbGrantPrivilegesToRole(ctx *DbGrantPrivilegesToRoleContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbGrantRolesToRole.
+	VisitDbGrantRolesToRole(ctx *DbGrantRolesToRoleContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbGrantRolesToUser.
+	VisitDbGrantRolesToUser(ctx *DbGrantRolesToUserContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbHello.
+	VisitDbHello(ctx *DbHelloContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbIsMaster.
+	VisitDbIsMaster(ctx *DbIsMasterContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbKillOp.
+	VisitDbKillOp(ctx *DbKillOpContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbLogout.
+	VisitDbLogout(ctx *DbLogoutContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbPrintCollectionStats.
+	VisitDbPrintCollectionStats(ctx *DbPrintCollectionStatsContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbPrintReplicationInfo.
+	VisitDbPrintReplicationInfo(ctx *DbPrintReplicationInfoContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbPrintSecondaryReplicationInfo.
+	VisitDbPrintSecondaryReplicationInfo(ctx *DbPrintSecondaryReplicationInfoContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbPrintShardingStatus.
+	VisitDbPrintShardingStatus(ctx *DbPrintShardingStatusContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbPrintSlaveReplicationInfo.
+	VisitDbPrintSlaveReplicationInfo(ctx *DbPrintSlaveReplicationInfoContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbRevokePrivilegesFromRole.
+	VisitDbRevokePrivilegesFromRole(ctx *DbRevokePrivilegesFromRoleContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbRevokeRolesFromRole.
+	VisitDbRevokeRolesFromRole(ctx *DbRevokeRolesFromRoleContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbRevokeRolesFromUser.
+	VisitDbRevokeRolesFromUser(ctx *DbRevokeRolesFromUserContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbRotateCertificates.
+	VisitDbRotateCertificates(ctx *DbRotateCertificatesContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbSetLogLevel.
+	VisitDbSetLogLevel(ctx *DbSetLogLevelContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbSetProfilingLevel.
+	VisitDbSetProfilingLevel(ctx *DbSetProfilingLevelContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbSetSecondaryOk.
+	VisitDbSetSecondaryOk(ctx *DbSetSecondaryOkContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbSetWriteConcern.
+	VisitDbSetWriteConcern(ctx *DbSetWriteConcernContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbShutdownServer.
+	VisitDbShutdownServer(ctx *DbShutdownServerContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbUpdateRole.
+	VisitDbUpdateRole(ctx *DbUpdateRoleContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbUpdateUser.
+	VisitDbUpdateUser(ctx *DbUpdateUserContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dbWatch.
+	VisitDbWatch(ctx *DbWatchContext) interface{}
 
 	// Visit a parse tree produced by MongoShellParser#collectionOperation.
 	VisitCollectionOperation(ctx *CollectionOperationContext) interface{}
-
-	// Visit a parse tree produced by MongoShellParser#genericDbMethod.
-	VisitGenericDbMethod(ctx *GenericDbMethodContext) interface{}
 
 	// Visit a parse tree produced by MongoShellParser#bulkStatement.
 	VisitBulkStatement(ctx *BulkStatementContext) interface{}
@@ -193,8 +331,11 @@ type MongoShellParserVisitor interface {
 	// Visit a parse tree produced by MongoShellParser#methodChain.
 	VisitMethodChain(ctx *MethodChainContext) interface{}
 
-	// Visit a parse tree produced by MongoShellParser#methodCall.
-	VisitMethodCall(ctx *MethodCallContext) interface{}
+	// Visit a parse tree produced by MongoShellParser#collectionMethodCall.
+	VisitCollectionMethodCall(ctx *CollectionMethodCallContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#cursorMethodCall.
+	VisitCursorMethodCall(ctx *CursorMethodCallContext) interface{}
 
 	// Visit a parse tree produced by MongoShellParser#findMethod.
 	VisitFindMethod(ctx *FindMethodContext) interface{}
@@ -288,6 +429,69 @@ type MongoShellParserVisitor interface {
 
 	// Visit a parse tree produced by MongoShellParser#latencyStatsMethod.
 	VisitLatencyStatsMethod(ctx *LatencyStatsMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#watchMethod.
+	VisitWatchMethod(ctx *WatchMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#bulkWriteMethod.
+	VisitBulkWriteMethod(ctx *BulkWriteMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#collectionCountMethod.
+	VisitCollectionCountMethod(ctx *CollectionCountMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#collectionInsertMethod.
+	VisitCollectionInsertMethod(ctx *CollectionInsertMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#collectionRemoveMethod.
+	VisitCollectionRemoveMethod(ctx *CollectionRemoveMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#updateMethod.
+	VisitUpdateMethod(ctx *UpdateMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#mapReduceMethod.
+	VisitMapReduceMethod(ctx *MapReduceMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#findAndModifyMethod.
+	VisitFindAndModifyMethod(ctx *FindAndModifyMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#collectionExplainMethod.
+	VisitCollectionExplainMethod(ctx *CollectionExplainMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#analyzeShardKeyMethod.
+	VisitAnalyzeShardKeyMethod(ctx *AnalyzeShardKeyMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#configureQueryAnalyzerMethod.
+	VisitConfigureQueryAnalyzerMethod(ctx *ConfigureQueryAnalyzerMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#compactStructuredEncryptionDataMethod.
+	VisitCompactStructuredEncryptionDataMethod(ctx *CompactStructuredEncryptionDataMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#hideIndexMethod.
+	VisitHideIndexMethod(ctx *HideIndexMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#unhideIndexMethod.
+	VisitUnhideIndexMethod(ctx *UnhideIndexMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#reIndexMethod.
+	VisitReIndexMethod(ctx *ReIndexMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#getShardDistributionMethod.
+	VisitGetShardDistributionMethod(ctx *GetShardDistributionMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#getShardVersionMethod.
+	VisitGetShardVersionMethod(ctx *GetShardVersionMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#createSearchIndexMethod.
+	VisitCreateSearchIndexMethod(ctx *CreateSearchIndexMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#createSearchIndexesMethod.
+	VisitCreateSearchIndexesMethod(ctx *CreateSearchIndexesMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dropSearchIndexMethod.
+	VisitDropSearchIndexMethod(ctx *DropSearchIndexMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#updateSearchIndexMethod.
+	VisitUpdateSearchIndexMethod(ctx *UpdateSearchIndexMethodContext) interface{}
 
 	// Visit a parse tree produced by MongoShellParser#sortMethod.
 	VisitSortMethod(ctx *SortMethodContext) interface{}
@@ -393,9 +597,6 @@ type MongoShellParserVisitor interface {
 
 	// Visit a parse tree produced by MongoShellParser#addOptionMethod.
 	VisitAddOptionMethod(ctx *AddOptionMethodContext) interface{}
-
-	// Visit a parse tree produced by MongoShellParser#genericMethod.
-	VisitGenericMethod(ctx *GenericMethodContext) interface{}
 
 	// Visit a parse tree produced by MongoShellParser#arguments.
 	VisitArguments(ctx *ArgumentsContext) interface{}

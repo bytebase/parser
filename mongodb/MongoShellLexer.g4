@@ -77,6 +77,25 @@ IS_CAPPED: 'isCapped';
 VALIDATE: 'validate';
 LATENCY_STATS: 'latencyStats';
 
+// Collection methods (additional)
+BULK_WRITE: 'bulkWrite';
+UPDATE: 'update';
+MAP_REDUCE: 'mapReduce';
+FIND_AND_MODIFY: 'findAndModify';
+ANALYZE_SHARD_KEY: 'analyzeShardKey';
+CONFIGURE_QUERY_ANALYZER: 'configureQueryAnalyzer';
+COMPACT_STRUCTURED_ENCRYPTION_DATA: 'compactStructuredEncryptionData';
+HIDE_INDEX: 'hideIndex';
+UNHIDE_INDEX: 'unhideIndex';
+RE_INDEX: 'reIndex';
+GET_SHARD_DISTRIBUTION: 'getShardDistribution';
+GET_SHARD_VERSION: 'getShardVersion';
+// Atlas Search Index methods
+CREATE_SEARCH_INDEX: 'createSearchIndex';
+CREATE_SEARCH_INDEXES: 'createSearchIndexes';
+DROP_SEARCH_INDEX: 'dropSearchIndex';
+UPDATE_SEARCH_INDEX: 'updateSearchIndex';
+
 // Database methods (M4)
 CREATE_COLLECTION: 'createCollection';
 DROP_DATABASE: 'dropDatabase';
@@ -90,6 +109,53 @@ ADMIN_COMMAND: 'adminCommand';
 GET_NAME: 'getName';
 GET_MONGO: 'getMongo';
 GET_SIBLING_DB: 'getSiblingDB';
+
+// Database methods (additional)
+AUTH: 'auth';
+CHANGE_USER_PASSWORD: 'changeUserPassword';
+CLONE_DATABASE: 'cloneDatabase';
+COMMAND_HELP: 'commandHelp';
+COPY_DATABASE: 'copyDatabase';
+CREATE_ROLE: 'createRole';
+CREATE_USER: 'createUser';
+CREATE_VIEW: 'createView';
+CURRENT_OP: 'currentOp';
+DROP_ALL_ROLES: 'dropAllRoles';
+DROP_ALL_USERS: 'dropAllUsers';
+DROP_ROLE: 'dropRole';
+DROP_USER: 'dropUser';
+FSYNC_LOCK: 'fsyncLock';
+FSYNC_UNLOCK: 'fsyncUnlock';
+GET_LOG_COMPONENTS: 'getLogComponents';
+GET_PROFILING_LEVEL: 'getProfilingLevel';
+GET_PROFILING_STATUS: 'getProfilingStatus';
+GET_REPLICATION_INFO: 'getReplicationInfo';
+GET_ROLE: 'getRole';
+GET_ROLES: 'getRoles';
+GET_USER: 'getUser';
+GET_USERS: 'getUsers';
+GRANT_PRIVILEGES_TO_ROLE: 'grantPrivilegesToRole';
+GRANT_ROLES_TO_ROLE: 'grantRolesToRole';
+GRANT_ROLES_TO_USER: 'grantRolesToUser';
+HELLO: 'hello';
+IS_MASTER: 'isMaster';
+KILL_OP: 'killOp';
+LOGOUT: 'logout';
+PRINT_COLLECTION_STATS: 'printCollectionStats';
+PRINT_REPLICATION_INFO: 'printReplicationInfo';
+PRINT_SECONDARY_REPLICATION_INFO: 'printSecondaryReplicationInfo';
+PRINT_SHARDING_STATUS: 'printShardingStatus';
+PRINT_SLAVE_REPLICATION_INFO: 'printSlaveReplicationInfo';
+REVOKE_PRIVILEGES_FROM_ROLE: 'revokePrivilegesFromRole';
+REVOKE_ROLES_FROM_ROLE: 'revokeRolesFromRole';
+REVOKE_ROLES_FROM_USER: 'revokeRolesFromUser';
+ROTATE_CERTIFICATES: 'rotateCertificates';
+SET_LOG_LEVEL: 'setLogLevel';
+SET_PROFILING_LEVEL: 'setProfilingLevel';
+SET_SECONDARY_OK: 'setSecondaryOk';
+SHUTDOWN_SERVER: 'shutdownServer';
+UPDATE_ROLE: 'updateRole';
+UPDATE_USER: 'updateUser';
 
 // Connection methods
 MONGO: 'Mongo';
