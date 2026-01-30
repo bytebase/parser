@@ -171,13 +171,15 @@ collectionAccess
     | DOT GET_COLLECTION LPAREN stringLiteral RPAREN    # getCollectionAccess
     ;
 
-// Method chain: one or more method calls chained with dots
+// Method chain: first call can be collection or cursor, subsequent are cursor methods
+// Special case: explain() returns an explainable object that supports collection methods
 methodChain
-    : DOT methodCall (DOT methodCall)*
+    : DOT collectionExplainMethod DOT (collectionMethodCall | cursorMethodCall) (DOT cursorMethodCall)*
+    | DOT (collectionMethodCall | cursorMethodCall) (DOT cursorMethodCall)*
     ;
 
-// Method call: methodName(arguments?)
-methodCall
+// Collection method call: methods that operate on a collection directly
+collectionMethodCall
     : findMethod
     | findOneMethod
     | countDocumentsMethod
@@ -209,7 +211,32 @@ methodCall
     | isCappedMethod
     | validateMethod
     | latencyStatsMethod
-    | sortMethod
+    | watchMethod
+    | bulkWriteMethod
+    | collectionCountMethod
+    | collectionInsertMethod
+    | collectionRemoveMethod
+    | updateMethod
+    | mapReduceMethod
+    | findAndModifyMethod
+    | collectionExplainMethod
+    | analyzeShardKeyMethod
+    | configureQueryAnalyzerMethod
+    | compactStructuredEncryptionDataMethod
+    | hideIndexMethod
+    | unhideIndexMethod
+    | reIndexMethod
+    | getShardDistributionMethod
+    | getShardVersionMethod
+    | createSearchIndexMethod
+    | createSearchIndexesMethod
+    | dropSearchIndexMethod
+    | updateSearchIndexMethod
+    ;
+
+// Cursor method call: methods that operate on a cursor (chainable after collection methods)
+cursorMethodCall
+    : sortMethod
     | limitMethod
     | skipMethod
     | countMethod
@@ -244,7 +271,6 @@ methodCall
     | tryNextMethod
     | allowDiskUseMethod
     | addOptionMethod
-    | genericMethod
     ;
 
 // Specific method rules for better AST structure
@@ -403,6 +429,111 @@ latencyStatsMethod
     : LATENCY_STATS LPAREN argument? RPAREN
     ;
 
+// watch(pipeline?, options?)
+watchMethod
+    : WATCH LPAREN arguments? RPAREN
+    ;
+
+// bulkWrite(operations, options?)
+bulkWriteMethod
+    : BULK_WRITE LPAREN arguments RPAREN
+    ;
+
+// count(filter?, options?) - deprecated collection-level count
+collectionCountMethod
+    : COUNT LPAREN arguments? RPAREN
+    ;
+
+// insert(document/array, options?) - deprecated
+collectionInsertMethod
+    : INSERT LPAREN arguments RPAREN
+    ;
+
+// remove(filter, options?) - deprecated
+collectionRemoveMethod
+    : REMOVE LPAREN arguments RPAREN
+    ;
+
+// update(filter, update, options?) - deprecated
+updateMethod
+    : UPDATE LPAREN arguments RPAREN
+    ;
+
+// mapReduce(map, reduce, options?) - deprecated
+mapReduceMethod
+    : MAP_REDUCE LPAREN arguments RPAREN
+    ;
+
+// findAndModify(document)
+findAndModifyMethod
+    : FIND_AND_MODIFY LPAREN arguments RPAREN
+    ;
+
+// explain(verbosity?) - collection-level explain
+collectionExplainMethod
+    : EXPLAIN LPAREN arguments? RPAREN
+    ;
+
+// analyzeShardKey(key, options?)
+analyzeShardKeyMethod
+    : ANALYZE_SHARD_KEY LPAREN arguments RPAREN
+    ;
+
+// configureQueryAnalyzer(options)
+configureQueryAnalyzerMethod
+    : CONFIGURE_QUERY_ANALYZER LPAREN arguments RPAREN
+    ;
+
+// compactStructuredEncryptionData(options?)
+compactStructuredEncryptionDataMethod
+    : COMPACT_STRUCTURED_ENCRYPTION_DATA LPAREN arguments? RPAREN
+    ;
+
+// hideIndex(indexName/spec)
+hideIndexMethod
+    : HIDE_INDEX LPAREN argument RPAREN
+    ;
+
+// unhideIndex(indexName/spec)
+unhideIndexMethod
+    : UNHIDE_INDEX LPAREN argument RPAREN
+    ;
+
+// reIndex()
+reIndexMethod
+    : RE_INDEX LPAREN RPAREN
+    ;
+
+// getShardDistribution()
+getShardDistributionMethod
+    : GET_SHARD_DISTRIBUTION LPAREN RPAREN
+    ;
+
+// getShardVersion()
+getShardVersionMethod
+    : GET_SHARD_VERSION LPAREN RPAREN
+    ;
+
+// createSearchIndex(definition)
+createSearchIndexMethod
+    : CREATE_SEARCH_INDEX LPAREN arguments RPAREN
+    ;
+
+// createSearchIndexes(definitions)
+createSearchIndexesMethod
+    : CREATE_SEARCH_INDEXES LPAREN arguments RPAREN
+    ;
+
+// dropSearchIndex(name)
+dropSearchIndexMethod
+    : DROP_SEARCH_INDEX LPAREN argument RPAREN
+    ;
+
+// updateSearchIndex(name, definition)
+updateSearchIndexMethod
+    : UPDATE_SEARCH_INDEX LPAREN arguments RPAREN
+    ;
+
 // sort(specification?) - can be called without args
 sortMethod
     : SORT LPAREN document? RPAREN
@@ -553,11 +684,6 @@ allowDiskUseMethod
 
 addOptionMethod
     : ADD_OPTION LPAREN NUMBER RPAREN
-    ;
-
-// Generic method for extensibility (other methods will be caught here)
-genericMethod
-    : identifier LPAREN arguments? RPAREN
     ;
 
 // Arguments: comma-separated list of values
@@ -862,4 +988,21 @@ identifier
     | GET_CLIENT_ENCRYPTION
     // Plan cache method tokens
     | GET_PLAN_CACHE
+    // Collection method tokens (additional)
+    | BULK_WRITE
+    | UPDATE
+    | MAP_REDUCE
+    | FIND_AND_MODIFY
+    | ANALYZE_SHARD_KEY
+    | CONFIGURE_QUERY_ANALYZER
+    | COMPACT_STRUCTURED_ENCRYPTION_DATA
+    | HIDE_INDEX
+    | UNHIDE_INDEX
+    | RE_INDEX
+    | GET_SHARD_DISTRIBUTION
+    | GET_SHARD_VERSION
+    | CREATE_SEARCH_INDEX
+    | CREATE_SEARCH_INDEXES
+    | DROP_SEARCH_INDEX
+    | UPDATE_SEARCH_INDEX
     ;

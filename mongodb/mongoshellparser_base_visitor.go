@@ -255,7 +255,11 @@ func (v *BaseMongoShellParserVisitor) VisitMethodChain(ctx *MethodChainContext) 
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseMongoShellParserVisitor) VisitMethodCall(ctx *MethodCallContext) interface{} {
+func (v *BaseMongoShellParserVisitor) VisitCollectionMethodCall(ctx *CollectionMethodCallContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitCursorMethodCall(ctx *CursorMethodCallContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -380,6 +384,90 @@ func (v *BaseMongoShellParserVisitor) VisitValidateMethod(ctx *ValidateMethodCon
 }
 
 func (v *BaseMongoShellParserVisitor) VisitLatencyStatsMethod(ctx *LatencyStatsMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitWatchMethod(ctx *WatchMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitBulkWriteMethod(ctx *BulkWriteMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitCollectionCountMethod(ctx *CollectionCountMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitCollectionInsertMethod(ctx *CollectionInsertMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitCollectionRemoveMethod(ctx *CollectionRemoveMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitUpdateMethod(ctx *UpdateMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitMapReduceMethod(ctx *MapReduceMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitFindAndModifyMethod(ctx *FindAndModifyMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitCollectionExplainMethod(ctx *CollectionExplainMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitAnalyzeShardKeyMethod(ctx *AnalyzeShardKeyMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitConfigureQueryAnalyzerMethod(ctx *ConfigureQueryAnalyzerMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitCompactStructuredEncryptionDataMethod(ctx *CompactStructuredEncryptionDataMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitHideIndexMethod(ctx *HideIndexMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitUnhideIndexMethod(ctx *UnhideIndexMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitReIndexMethod(ctx *ReIndexMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitGetShardDistributionMethod(ctx *GetShardDistributionMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitGetShardVersionMethod(ctx *GetShardVersionMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitCreateSearchIndexMethod(ctx *CreateSearchIndexMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitCreateSearchIndexesMethod(ctx *CreateSearchIndexesMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitDropSearchIndexMethod(ctx *DropSearchIndexMethodContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMongoShellParserVisitor) VisitUpdateSearchIndexMethod(ctx *UpdateSearchIndexMethodContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -520,10 +608,6 @@ func (v *BaseMongoShellParserVisitor) VisitAllowDiskUseMethod(ctx *AllowDiskUseM
 }
 
 func (v *BaseMongoShellParserVisitor) VisitAddOptionMethod(ctx *AddOptionMethodContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseMongoShellParserVisitor) VisitGenericMethod(ctx *GenericMethodContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

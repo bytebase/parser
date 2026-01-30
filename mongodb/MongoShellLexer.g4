@@ -77,6 +77,25 @@ IS_CAPPED: 'isCapped';
 VALIDATE: 'validate';
 LATENCY_STATS: 'latencyStats';
 
+// Collection methods (additional)
+BULK_WRITE: 'bulkWrite';
+UPDATE: 'update';
+MAP_REDUCE: 'mapReduce';
+FIND_AND_MODIFY: 'findAndModify';
+ANALYZE_SHARD_KEY: 'analyzeShardKey';
+CONFIGURE_QUERY_ANALYZER: 'configureQueryAnalyzer';
+COMPACT_STRUCTURED_ENCRYPTION_DATA: 'compactStructuredEncryptionData';
+HIDE_INDEX: 'hideIndex';
+UNHIDE_INDEX: 'unhideIndex';
+RE_INDEX: 'reIndex';
+GET_SHARD_DISTRIBUTION: 'getShardDistribution';
+GET_SHARD_VERSION: 'getShardVersion';
+// Atlas Search Index methods
+CREATE_SEARCH_INDEX: 'createSearchIndex';
+CREATE_SEARCH_INDEXES: 'createSearchIndexes';
+DROP_SEARCH_INDEX: 'dropSearchIndex';
+UPDATE_SEARCH_INDEX: 'updateSearchIndex';
+
 // Database methods (M4)
 CREATE_COLLECTION: 'createCollection';
 DROP_DATABASE: 'dropDatabase';

@@ -193,8 +193,11 @@ type MongoShellParserListener interface {
 	// EnterMethodChain is called when entering the methodChain production.
 	EnterMethodChain(c *MethodChainContext)
 
-	// EnterMethodCall is called when entering the methodCall production.
-	EnterMethodCall(c *MethodCallContext)
+	// EnterCollectionMethodCall is called when entering the collectionMethodCall production.
+	EnterCollectionMethodCall(c *CollectionMethodCallContext)
+
+	// EnterCursorMethodCall is called when entering the cursorMethodCall production.
+	EnterCursorMethodCall(c *CursorMethodCallContext)
 
 	// EnterFindMethod is called when entering the findMethod production.
 	EnterFindMethod(c *FindMethodContext)
@@ -288,6 +291,69 @@ type MongoShellParserListener interface {
 
 	// EnterLatencyStatsMethod is called when entering the latencyStatsMethod production.
 	EnterLatencyStatsMethod(c *LatencyStatsMethodContext)
+
+	// EnterWatchMethod is called when entering the watchMethod production.
+	EnterWatchMethod(c *WatchMethodContext)
+
+	// EnterBulkWriteMethod is called when entering the bulkWriteMethod production.
+	EnterBulkWriteMethod(c *BulkWriteMethodContext)
+
+	// EnterCollectionCountMethod is called when entering the collectionCountMethod production.
+	EnterCollectionCountMethod(c *CollectionCountMethodContext)
+
+	// EnterCollectionInsertMethod is called when entering the collectionInsertMethod production.
+	EnterCollectionInsertMethod(c *CollectionInsertMethodContext)
+
+	// EnterCollectionRemoveMethod is called when entering the collectionRemoveMethod production.
+	EnterCollectionRemoveMethod(c *CollectionRemoveMethodContext)
+
+	// EnterUpdateMethod is called when entering the updateMethod production.
+	EnterUpdateMethod(c *UpdateMethodContext)
+
+	// EnterMapReduceMethod is called when entering the mapReduceMethod production.
+	EnterMapReduceMethod(c *MapReduceMethodContext)
+
+	// EnterFindAndModifyMethod is called when entering the findAndModifyMethod production.
+	EnterFindAndModifyMethod(c *FindAndModifyMethodContext)
+
+	// EnterCollectionExplainMethod is called when entering the collectionExplainMethod production.
+	EnterCollectionExplainMethod(c *CollectionExplainMethodContext)
+
+	// EnterAnalyzeShardKeyMethod is called when entering the analyzeShardKeyMethod production.
+	EnterAnalyzeShardKeyMethod(c *AnalyzeShardKeyMethodContext)
+
+	// EnterConfigureQueryAnalyzerMethod is called when entering the configureQueryAnalyzerMethod production.
+	EnterConfigureQueryAnalyzerMethod(c *ConfigureQueryAnalyzerMethodContext)
+
+	// EnterCompactStructuredEncryptionDataMethod is called when entering the compactStructuredEncryptionDataMethod production.
+	EnterCompactStructuredEncryptionDataMethod(c *CompactStructuredEncryptionDataMethodContext)
+
+	// EnterHideIndexMethod is called when entering the hideIndexMethod production.
+	EnterHideIndexMethod(c *HideIndexMethodContext)
+
+	// EnterUnhideIndexMethod is called when entering the unhideIndexMethod production.
+	EnterUnhideIndexMethod(c *UnhideIndexMethodContext)
+
+	// EnterReIndexMethod is called when entering the reIndexMethod production.
+	EnterReIndexMethod(c *ReIndexMethodContext)
+
+	// EnterGetShardDistributionMethod is called when entering the getShardDistributionMethod production.
+	EnterGetShardDistributionMethod(c *GetShardDistributionMethodContext)
+
+	// EnterGetShardVersionMethod is called when entering the getShardVersionMethod production.
+	EnterGetShardVersionMethod(c *GetShardVersionMethodContext)
+
+	// EnterCreateSearchIndexMethod is called when entering the createSearchIndexMethod production.
+	EnterCreateSearchIndexMethod(c *CreateSearchIndexMethodContext)
+
+	// EnterCreateSearchIndexesMethod is called when entering the createSearchIndexesMethod production.
+	EnterCreateSearchIndexesMethod(c *CreateSearchIndexesMethodContext)
+
+	// EnterDropSearchIndexMethod is called when entering the dropSearchIndexMethod production.
+	EnterDropSearchIndexMethod(c *DropSearchIndexMethodContext)
+
+	// EnterUpdateSearchIndexMethod is called when entering the updateSearchIndexMethod production.
+	EnterUpdateSearchIndexMethod(c *UpdateSearchIndexMethodContext)
 
 	// EnterSortMethod is called when entering the sortMethod production.
 	EnterSortMethod(c *SortMethodContext)
@@ -393,9 +459,6 @@ type MongoShellParserListener interface {
 
 	// EnterAddOptionMethod is called when entering the addOptionMethod production.
 	EnterAddOptionMethod(c *AddOptionMethodContext)
-
-	// EnterGenericMethod is called when entering the genericMethod production.
-	EnterGenericMethod(c *GenericMethodContext)
 
 	// EnterArguments is called when entering the arguments production.
 	EnterArguments(c *ArgumentsContext)
@@ -697,8 +760,11 @@ type MongoShellParserListener interface {
 	// ExitMethodChain is called when exiting the methodChain production.
 	ExitMethodChain(c *MethodChainContext)
 
-	// ExitMethodCall is called when exiting the methodCall production.
-	ExitMethodCall(c *MethodCallContext)
+	// ExitCollectionMethodCall is called when exiting the collectionMethodCall production.
+	ExitCollectionMethodCall(c *CollectionMethodCallContext)
+
+	// ExitCursorMethodCall is called when exiting the cursorMethodCall production.
+	ExitCursorMethodCall(c *CursorMethodCallContext)
 
 	// ExitFindMethod is called when exiting the findMethod production.
 	ExitFindMethod(c *FindMethodContext)
@@ -792,6 +858,69 @@ type MongoShellParserListener interface {
 
 	// ExitLatencyStatsMethod is called when exiting the latencyStatsMethod production.
 	ExitLatencyStatsMethod(c *LatencyStatsMethodContext)
+
+	// ExitWatchMethod is called when exiting the watchMethod production.
+	ExitWatchMethod(c *WatchMethodContext)
+
+	// ExitBulkWriteMethod is called when exiting the bulkWriteMethod production.
+	ExitBulkWriteMethod(c *BulkWriteMethodContext)
+
+	// ExitCollectionCountMethod is called when exiting the collectionCountMethod production.
+	ExitCollectionCountMethod(c *CollectionCountMethodContext)
+
+	// ExitCollectionInsertMethod is called when exiting the collectionInsertMethod production.
+	ExitCollectionInsertMethod(c *CollectionInsertMethodContext)
+
+	// ExitCollectionRemoveMethod is called when exiting the collectionRemoveMethod production.
+	ExitCollectionRemoveMethod(c *CollectionRemoveMethodContext)
+
+	// ExitUpdateMethod is called when exiting the updateMethod production.
+	ExitUpdateMethod(c *UpdateMethodContext)
+
+	// ExitMapReduceMethod is called when exiting the mapReduceMethod production.
+	ExitMapReduceMethod(c *MapReduceMethodContext)
+
+	// ExitFindAndModifyMethod is called when exiting the findAndModifyMethod production.
+	ExitFindAndModifyMethod(c *FindAndModifyMethodContext)
+
+	// ExitCollectionExplainMethod is called when exiting the collectionExplainMethod production.
+	ExitCollectionExplainMethod(c *CollectionExplainMethodContext)
+
+	// ExitAnalyzeShardKeyMethod is called when exiting the analyzeShardKeyMethod production.
+	ExitAnalyzeShardKeyMethod(c *AnalyzeShardKeyMethodContext)
+
+	// ExitConfigureQueryAnalyzerMethod is called when exiting the configureQueryAnalyzerMethod production.
+	ExitConfigureQueryAnalyzerMethod(c *ConfigureQueryAnalyzerMethodContext)
+
+	// ExitCompactStructuredEncryptionDataMethod is called when exiting the compactStructuredEncryptionDataMethod production.
+	ExitCompactStructuredEncryptionDataMethod(c *CompactStructuredEncryptionDataMethodContext)
+
+	// ExitHideIndexMethod is called when exiting the hideIndexMethod production.
+	ExitHideIndexMethod(c *HideIndexMethodContext)
+
+	// ExitUnhideIndexMethod is called when exiting the unhideIndexMethod production.
+	ExitUnhideIndexMethod(c *UnhideIndexMethodContext)
+
+	// ExitReIndexMethod is called when exiting the reIndexMethod production.
+	ExitReIndexMethod(c *ReIndexMethodContext)
+
+	// ExitGetShardDistributionMethod is called when exiting the getShardDistributionMethod production.
+	ExitGetShardDistributionMethod(c *GetShardDistributionMethodContext)
+
+	// ExitGetShardVersionMethod is called when exiting the getShardVersionMethod production.
+	ExitGetShardVersionMethod(c *GetShardVersionMethodContext)
+
+	// ExitCreateSearchIndexMethod is called when exiting the createSearchIndexMethod production.
+	ExitCreateSearchIndexMethod(c *CreateSearchIndexMethodContext)
+
+	// ExitCreateSearchIndexesMethod is called when exiting the createSearchIndexesMethod production.
+	ExitCreateSearchIndexesMethod(c *CreateSearchIndexesMethodContext)
+
+	// ExitDropSearchIndexMethod is called when exiting the dropSearchIndexMethod production.
+	ExitDropSearchIndexMethod(c *DropSearchIndexMethodContext)
+
+	// ExitUpdateSearchIndexMethod is called when exiting the updateSearchIndexMethod production.
+	ExitUpdateSearchIndexMethod(c *UpdateSearchIndexMethodContext)
 
 	// ExitSortMethod is called when exiting the sortMethod production.
 	ExitSortMethod(c *SortMethodContext)
@@ -897,9 +1026,6 @@ type MongoShellParserListener interface {
 
 	// ExitAddOptionMethod is called when exiting the addOptionMethod production.
 	ExitAddOptionMethod(c *AddOptionMethodContext)
-
-	// ExitGenericMethod is called when exiting the genericMethod production.
-	ExitGenericMethod(c *GenericMethodContext)
 
 	// ExitArguments is called when exiting the arguments production.
 	ExitArguments(c *ArgumentsContext)

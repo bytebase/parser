@@ -193,8 +193,11 @@ type MongoShellParserVisitor interface {
 	// Visit a parse tree produced by MongoShellParser#methodChain.
 	VisitMethodChain(ctx *MethodChainContext) interface{}
 
-	// Visit a parse tree produced by MongoShellParser#methodCall.
-	VisitMethodCall(ctx *MethodCallContext) interface{}
+	// Visit a parse tree produced by MongoShellParser#collectionMethodCall.
+	VisitCollectionMethodCall(ctx *CollectionMethodCallContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#cursorMethodCall.
+	VisitCursorMethodCall(ctx *CursorMethodCallContext) interface{}
 
 	// Visit a parse tree produced by MongoShellParser#findMethod.
 	VisitFindMethod(ctx *FindMethodContext) interface{}
@@ -288,6 +291,69 @@ type MongoShellParserVisitor interface {
 
 	// Visit a parse tree produced by MongoShellParser#latencyStatsMethod.
 	VisitLatencyStatsMethod(ctx *LatencyStatsMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#watchMethod.
+	VisitWatchMethod(ctx *WatchMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#bulkWriteMethod.
+	VisitBulkWriteMethod(ctx *BulkWriteMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#collectionCountMethod.
+	VisitCollectionCountMethod(ctx *CollectionCountMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#collectionInsertMethod.
+	VisitCollectionInsertMethod(ctx *CollectionInsertMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#collectionRemoveMethod.
+	VisitCollectionRemoveMethod(ctx *CollectionRemoveMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#updateMethod.
+	VisitUpdateMethod(ctx *UpdateMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#mapReduceMethod.
+	VisitMapReduceMethod(ctx *MapReduceMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#findAndModifyMethod.
+	VisitFindAndModifyMethod(ctx *FindAndModifyMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#collectionExplainMethod.
+	VisitCollectionExplainMethod(ctx *CollectionExplainMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#analyzeShardKeyMethod.
+	VisitAnalyzeShardKeyMethod(ctx *AnalyzeShardKeyMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#configureQueryAnalyzerMethod.
+	VisitConfigureQueryAnalyzerMethod(ctx *ConfigureQueryAnalyzerMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#compactStructuredEncryptionDataMethod.
+	VisitCompactStructuredEncryptionDataMethod(ctx *CompactStructuredEncryptionDataMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#hideIndexMethod.
+	VisitHideIndexMethod(ctx *HideIndexMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#unhideIndexMethod.
+	VisitUnhideIndexMethod(ctx *UnhideIndexMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#reIndexMethod.
+	VisitReIndexMethod(ctx *ReIndexMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#getShardDistributionMethod.
+	VisitGetShardDistributionMethod(ctx *GetShardDistributionMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#getShardVersionMethod.
+	VisitGetShardVersionMethod(ctx *GetShardVersionMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#createSearchIndexMethod.
+	VisitCreateSearchIndexMethod(ctx *CreateSearchIndexMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#createSearchIndexesMethod.
+	VisitCreateSearchIndexesMethod(ctx *CreateSearchIndexesMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#dropSearchIndexMethod.
+	VisitDropSearchIndexMethod(ctx *DropSearchIndexMethodContext) interface{}
+
+	// Visit a parse tree produced by MongoShellParser#updateSearchIndexMethod.
+	VisitUpdateSearchIndexMethod(ctx *UpdateSearchIndexMethodContext) interface{}
 
 	// Visit a parse tree produced by MongoShellParser#sortMethod.
 	VisitSortMethod(ctx *SortMethodContext) interface{}
@@ -393,9 +459,6 @@ type MongoShellParserVisitor interface {
 
 	// Visit a parse tree produced by MongoShellParser#addOptionMethod.
 	VisitAddOptionMethod(ctx *AddOptionMethodContext) interface{}
-
-	// Visit a parse tree produced by MongoShellParser#genericMethod.
-	VisitGenericMethod(ctx *GenericMethodContext) interface{}
 
 	// Visit a parse tree produced by MongoShellParser#arguments.
 	VisitArguments(ctx *ArgumentsContext) interface{}

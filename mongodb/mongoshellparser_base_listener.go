@@ -396,11 +396,17 @@ func (s *BaseMongoShellParserListener) EnterMethodChain(ctx *MethodChainContext)
 // ExitMethodChain is called when production methodChain is exited.
 func (s *BaseMongoShellParserListener) ExitMethodChain(ctx *MethodChainContext) {}
 
-// EnterMethodCall is called when production methodCall is entered.
-func (s *BaseMongoShellParserListener) EnterMethodCall(ctx *MethodCallContext) {}
+// EnterCollectionMethodCall is called when production collectionMethodCall is entered.
+func (s *BaseMongoShellParserListener) EnterCollectionMethodCall(ctx *CollectionMethodCallContext) {}
 
-// ExitMethodCall is called when production methodCall is exited.
-func (s *BaseMongoShellParserListener) ExitMethodCall(ctx *MethodCallContext) {}
+// ExitCollectionMethodCall is called when production collectionMethodCall is exited.
+func (s *BaseMongoShellParserListener) ExitCollectionMethodCall(ctx *CollectionMethodCallContext) {}
+
+// EnterCursorMethodCall is called when production cursorMethodCall is entered.
+func (s *BaseMongoShellParserListener) EnterCursorMethodCall(ctx *CursorMethodCallContext) {}
+
+// ExitCursorMethodCall is called when production cursorMethodCall is exited.
+func (s *BaseMongoShellParserListener) ExitCursorMethodCall(ctx *CursorMethodCallContext) {}
 
 // EnterFindMethod is called when production findMethod is entered.
 func (s *BaseMongoShellParserListener) EnterFindMethod(ctx *FindMethodContext) {}
@@ -597,6 +603,154 @@ func (s *BaseMongoShellParserListener) EnterLatencyStatsMethod(ctx *LatencyStats
 
 // ExitLatencyStatsMethod is called when production latencyStatsMethod is exited.
 func (s *BaseMongoShellParserListener) ExitLatencyStatsMethod(ctx *LatencyStatsMethodContext) {}
+
+// EnterWatchMethod is called when production watchMethod is entered.
+func (s *BaseMongoShellParserListener) EnterWatchMethod(ctx *WatchMethodContext) {}
+
+// ExitWatchMethod is called when production watchMethod is exited.
+func (s *BaseMongoShellParserListener) ExitWatchMethod(ctx *WatchMethodContext) {}
+
+// EnterBulkWriteMethod is called when production bulkWriteMethod is entered.
+func (s *BaseMongoShellParserListener) EnterBulkWriteMethod(ctx *BulkWriteMethodContext) {}
+
+// ExitBulkWriteMethod is called when production bulkWriteMethod is exited.
+func (s *BaseMongoShellParserListener) ExitBulkWriteMethod(ctx *BulkWriteMethodContext) {}
+
+// EnterCollectionCountMethod is called when production collectionCountMethod is entered.
+func (s *BaseMongoShellParserListener) EnterCollectionCountMethod(ctx *CollectionCountMethodContext) {
+}
+
+// ExitCollectionCountMethod is called when production collectionCountMethod is exited.
+func (s *BaseMongoShellParserListener) ExitCollectionCountMethod(ctx *CollectionCountMethodContext) {}
+
+// EnterCollectionInsertMethod is called when production collectionInsertMethod is entered.
+func (s *BaseMongoShellParserListener) EnterCollectionInsertMethod(ctx *CollectionInsertMethodContext) {
+}
+
+// ExitCollectionInsertMethod is called when production collectionInsertMethod is exited.
+func (s *BaseMongoShellParserListener) ExitCollectionInsertMethod(ctx *CollectionInsertMethodContext) {
+}
+
+// EnterCollectionRemoveMethod is called when production collectionRemoveMethod is entered.
+func (s *BaseMongoShellParserListener) EnterCollectionRemoveMethod(ctx *CollectionRemoveMethodContext) {
+}
+
+// ExitCollectionRemoveMethod is called when production collectionRemoveMethod is exited.
+func (s *BaseMongoShellParserListener) ExitCollectionRemoveMethod(ctx *CollectionRemoveMethodContext) {
+}
+
+// EnterUpdateMethod is called when production updateMethod is entered.
+func (s *BaseMongoShellParserListener) EnterUpdateMethod(ctx *UpdateMethodContext) {}
+
+// ExitUpdateMethod is called when production updateMethod is exited.
+func (s *BaseMongoShellParserListener) ExitUpdateMethod(ctx *UpdateMethodContext) {}
+
+// EnterMapReduceMethod is called when production mapReduceMethod is entered.
+func (s *BaseMongoShellParserListener) EnterMapReduceMethod(ctx *MapReduceMethodContext) {}
+
+// ExitMapReduceMethod is called when production mapReduceMethod is exited.
+func (s *BaseMongoShellParserListener) ExitMapReduceMethod(ctx *MapReduceMethodContext) {}
+
+// EnterFindAndModifyMethod is called when production findAndModifyMethod is entered.
+func (s *BaseMongoShellParserListener) EnterFindAndModifyMethod(ctx *FindAndModifyMethodContext) {}
+
+// ExitFindAndModifyMethod is called when production findAndModifyMethod is exited.
+func (s *BaseMongoShellParserListener) ExitFindAndModifyMethod(ctx *FindAndModifyMethodContext) {}
+
+// EnterCollectionExplainMethod is called when production collectionExplainMethod is entered.
+func (s *BaseMongoShellParserListener) EnterCollectionExplainMethod(ctx *CollectionExplainMethodContext) {
+}
+
+// ExitCollectionExplainMethod is called when production collectionExplainMethod is exited.
+func (s *BaseMongoShellParserListener) ExitCollectionExplainMethod(ctx *CollectionExplainMethodContext) {
+}
+
+// EnterAnalyzeShardKeyMethod is called when production analyzeShardKeyMethod is entered.
+func (s *BaseMongoShellParserListener) EnterAnalyzeShardKeyMethod(ctx *AnalyzeShardKeyMethodContext) {
+}
+
+// ExitAnalyzeShardKeyMethod is called when production analyzeShardKeyMethod is exited.
+func (s *BaseMongoShellParserListener) ExitAnalyzeShardKeyMethod(ctx *AnalyzeShardKeyMethodContext) {}
+
+// EnterConfigureQueryAnalyzerMethod is called when production configureQueryAnalyzerMethod is entered.
+func (s *BaseMongoShellParserListener) EnterConfigureQueryAnalyzerMethod(ctx *ConfigureQueryAnalyzerMethodContext) {
+}
+
+// ExitConfigureQueryAnalyzerMethod is called when production configureQueryAnalyzerMethod is exited.
+func (s *BaseMongoShellParserListener) ExitConfigureQueryAnalyzerMethod(ctx *ConfigureQueryAnalyzerMethodContext) {
+}
+
+// EnterCompactStructuredEncryptionDataMethod is called when production compactStructuredEncryptionDataMethod is entered.
+func (s *BaseMongoShellParserListener) EnterCompactStructuredEncryptionDataMethod(ctx *CompactStructuredEncryptionDataMethodContext) {
+}
+
+// ExitCompactStructuredEncryptionDataMethod is called when production compactStructuredEncryptionDataMethod is exited.
+func (s *BaseMongoShellParserListener) ExitCompactStructuredEncryptionDataMethod(ctx *CompactStructuredEncryptionDataMethodContext) {
+}
+
+// EnterHideIndexMethod is called when production hideIndexMethod is entered.
+func (s *BaseMongoShellParserListener) EnterHideIndexMethod(ctx *HideIndexMethodContext) {}
+
+// ExitHideIndexMethod is called when production hideIndexMethod is exited.
+func (s *BaseMongoShellParserListener) ExitHideIndexMethod(ctx *HideIndexMethodContext) {}
+
+// EnterUnhideIndexMethod is called when production unhideIndexMethod is entered.
+func (s *BaseMongoShellParserListener) EnterUnhideIndexMethod(ctx *UnhideIndexMethodContext) {}
+
+// ExitUnhideIndexMethod is called when production unhideIndexMethod is exited.
+func (s *BaseMongoShellParserListener) ExitUnhideIndexMethod(ctx *UnhideIndexMethodContext) {}
+
+// EnterReIndexMethod is called when production reIndexMethod is entered.
+func (s *BaseMongoShellParserListener) EnterReIndexMethod(ctx *ReIndexMethodContext) {}
+
+// ExitReIndexMethod is called when production reIndexMethod is exited.
+func (s *BaseMongoShellParserListener) ExitReIndexMethod(ctx *ReIndexMethodContext) {}
+
+// EnterGetShardDistributionMethod is called when production getShardDistributionMethod is entered.
+func (s *BaseMongoShellParserListener) EnterGetShardDistributionMethod(ctx *GetShardDistributionMethodContext) {
+}
+
+// ExitGetShardDistributionMethod is called when production getShardDistributionMethod is exited.
+func (s *BaseMongoShellParserListener) ExitGetShardDistributionMethod(ctx *GetShardDistributionMethodContext) {
+}
+
+// EnterGetShardVersionMethod is called when production getShardVersionMethod is entered.
+func (s *BaseMongoShellParserListener) EnterGetShardVersionMethod(ctx *GetShardVersionMethodContext) {
+}
+
+// ExitGetShardVersionMethod is called when production getShardVersionMethod is exited.
+func (s *BaseMongoShellParserListener) ExitGetShardVersionMethod(ctx *GetShardVersionMethodContext) {}
+
+// EnterCreateSearchIndexMethod is called when production createSearchIndexMethod is entered.
+func (s *BaseMongoShellParserListener) EnterCreateSearchIndexMethod(ctx *CreateSearchIndexMethodContext) {
+}
+
+// ExitCreateSearchIndexMethod is called when production createSearchIndexMethod is exited.
+func (s *BaseMongoShellParserListener) ExitCreateSearchIndexMethod(ctx *CreateSearchIndexMethodContext) {
+}
+
+// EnterCreateSearchIndexesMethod is called when production createSearchIndexesMethod is entered.
+func (s *BaseMongoShellParserListener) EnterCreateSearchIndexesMethod(ctx *CreateSearchIndexesMethodContext) {
+}
+
+// ExitCreateSearchIndexesMethod is called when production createSearchIndexesMethod is exited.
+func (s *BaseMongoShellParserListener) ExitCreateSearchIndexesMethod(ctx *CreateSearchIndexesMethodContext) {
+}
+
+// EnterDropSearchIndexMethod is called when production dropSearchIndexMethod is entered.
+func (s *BaseMongoShellParserListener) EnterDropSearchIndexMethod(ctx *DropSearchIndexMethodContext) {
+}
+
+// ExitDropSearchIndexMethod is called when production dropSearchIndexMethod is exited.
+func (s *BaseMongoShellParserListener) ExitDropSearchIndexMethod(ctx *DropSearchIndexMethodContext) {}
+
+// EnterUpdateSearchIndexMethod is called when production updateSearchIndexMethod is entered.
+func (s *BaseMongoShellParserListener) EnterUpdateSearchIndexMethod(ctx *UpdateSearchIndexMethodContext) {
+}
+
+// ExitUpdateSearchIndexMethod is called when production updateSearchIndexMethod is exited.
+func (s *BaseMongoShellParserListener) ExitUpdateSearchIndexMethod(ctx *UpdateSearchIndexMethodContext) {
+}
 
 // EnterSortMethod is called when production sortMethod is entered.
 func (s *BaseMongoShellParserListener) EnterSortMethod(ctx *SortMethodContext) {}
@@ -809,12 +963,6 @@ func (s *BaseMongoShellParserListener) EnterAddOptionMethod(ctx *AddOptionMethod
 
 // ExitAddOptionMethod is called when production addOptionMethod is exited.
 func (s *BaseMongoShellParserListener) ExitAddOptionMethod(ctx *AddOptionMethodContext) {}
-
-// EnterGenericMethod is called when production genericMethod is entered.
-func (s *BaseMongoShellParserListener) EnterGenericMethod(ctx *GenericMethodContext) {}
-
-// ExitGenericMethod is called when production genericMethod is exited.
-func (s *BaseMongoShellParserListener) ExitGenericMethod(ctx *GenericMethodContext) {}
 
 // EnterArguments is called when production arguments is entered.
 func (s *BaseMongoShellParserListener) EnterArguments(ctx *ArgumentsContext) {}
