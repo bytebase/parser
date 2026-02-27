@@ -835,6 +835,9 @@ type MySQLParserListener interface {
 	// EnterRevoke is called when entering the revoke production.
 	EnterRevoke(c *RevokeContext)
 
+	// EnterIgnoreUnknownUser is called when entering the ignoreUnknownUser production.
+	EnterIgnoreUnknownUser(c *IgnoreUnknownUserContext)
+
 	// EnterOnTypeTo is called when entering the onTypeTo production.
 	EnterOnTypeTo(c *OnTypeToContext)
 
@@ -2802,6 +2805,9 @@ type MySQLParserListener interface {
 
 	// ExitRevoke is called when exiting the revoke production.
 	ExitRevoke(c *RevokeContext)
+
+	// ExitIgnoreUnknownUser is called when exiting the ignoreUnknownUser production.
+	ExitIgnoreUnknownUser(c *IgnoreUnknownUserContext)
 
 	// ExitOnTypeTo is called when exiting the onTypeTo production.
 	ExitOnTypeTo(c *OnTypeToContext)

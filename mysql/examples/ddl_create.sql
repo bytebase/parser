@@ -317,6 +317,7 @@ create definer = current_user() trigger trg_my2 after insert on test.t2 for each
 -- Create trigger 3
 -- delimiter //
 CREATE TRIGGER mask_private_data BEFORE INSERT ON users FOR EACH ROW BEGIN SET NEW.phone = CONCAT('555', NEW.id); END; -- //-- delimiter ;
+CREATE TRIGGER IF NOT EXISTS `my_trigger` BEFORE INSERT ON `my_table` FOR EACH ROW BEGIN SET NEW.my_col = CONCAT(NEW.mycol, NEW.id); END;
 #end
 #begin
 -- Create trigger 4

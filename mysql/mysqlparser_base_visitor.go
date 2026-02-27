@@ -1111,6 +1111,10 @@ func (v *BaseMySQLParserVisitor) VisitRevoke(ctx *RevokeContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseMySQLParserVisitor) VisitIgnoreUnknownUser(ctx *IgnoreUnknownUserContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseMySQLParserVisitor) VisitOnTypeTo(ctx *OnTypeToContext) interface{} {
 	return v.VisitChildren(ctx)
 }

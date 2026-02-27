@@ -700,7 +700,7 @@ viewSuid:
 ;
 
 createTrigger:
-    definerClause? TRIGGER_SYMBOL triggerName timing = (BEFORE_SYMBOL | AFTER_SYMBOL) event = (
+    definerClause? TRIGGER_SYMBOL ifNotExists? triggerName timing = (BEFORE_SYMBOL | AFTER_SYMBOL) event = (
         INSERT_SYMBOL
         | UPDATE_SYMBOL
         | DELETE_SYMBOL
@@ -1883,7 +1883,7 @@ renameUser:
 ;
 
 revoke:
-    REVOKE_SYMBOL (
+    REVOKE_SYMBOL ifExists? (
         roleOrPrivilegesList FROM_SYMBOL userList
         | roleOrPrivilegesList onTypeTo FROM_SYMBOL userList
         | ALL_SYMBOL PRIVILEGES_SYMBOL? (
@@ -1891,7 +1891,11 @@ revoke:
             | COMMA_SYMBOL GRANT_SYMBOL OPTION_SYMBOL FROM_SYMBOL userList
         )
         | PROXY_SYMBOL ON_SYMBOL user FROM_SYMBOL userList
-    )
+    ) ignoreUnknownUser?
+;
+
+ignoreUnknownUser:
+    IGNORE_SYMBOL UNKNOWN_SYMBOL USER_SYMBOL
 ;
 
 onTypeTo: // Optional, starting with 8.0.1.
