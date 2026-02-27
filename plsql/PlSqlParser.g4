@@ -3701,6 +3701,8 @@ table_compression
               | (QUERY | ARCHIVE) (LOW | HIGH)?
               )
         )?
+    | ROW STORE COMPRESS (BASIC | ADVANCED)?
+    | COLUMN STORE COMPRESS (FOR (OLTP | (QUERY | ARCHIVE) (LOW | HIGH)?))? (NO? ROW LEVEL LOCKING)?
     | NOCOMPRESS
     ;
 
