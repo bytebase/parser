@@ -55,6 +55,10 @@ func (v *BaseSnowflakeParserVisitor) VisitMerge_matches(ctx *Merge_matchesContex
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitMerge_cond(ctx *Merge_condContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitMerge_update_delete(ctx *Merge_update_deleteContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -80,6 +84,10 @@ func (v *BaseSnowflakeParserVisitor) VisitValues_builder(ctx *Values_builderCont
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitOther_command(ctx *Other_commandContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitBegin_txn(ctx *Begin_txnContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -119,6 +127,10 @@ func (v *BaseSnowflakeParserVisitor) VisitComment(ctx *CommentContext) interface
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitFunction_signature(ctx *Function_signatureContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitCommit(ctx *CommitContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -128,6 +140,10 @@ func (v *BaseSnowflakeParserVisitor) VisitExecute_immediate(ctx *Execute_immedia
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitExecute_task(ctx *Execute_taskContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitRetry_last(ctx *Retry_lastContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -207,11 +223,19 @@ func (v *BaseSnowflakeParserVisitor) VisitList(ctx *ListContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitInternal_stage(ctx *Internal_stageContext) interface{} {
+func (v *BaseSnowflakeParserVisitor) VisitUser_stage(ctx *User_stageContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitExternal_stage(ctx *External_stageContext) interface{} {
+func (v *BaseSnowflakeParserVisitor) VisitTable_stage(ctx *Table_stageContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitNamed_stage(ctx *Named_stageContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitStage_path(ctx *Stage_pathContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -327,7 +351,15 @@ func (v *BaseSnowflakeParserVisitor) VisitAccount_id_list(ctx *Account_id_listCo
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitAlter_dataset(ctx *Alter_datasetContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitAlter_dynamic_table(ctx *Alter_dynamic_tableContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitId_list(ctx *Id_listContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -372,6 +404,18 @@ func (v *BaseSnowflakeParserVisitor) VisitAlter_function_signature(ctx *Alter_fu
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitData_type_list(ctx *Data_type_listContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitAlter_git_repository(ctx *Alter_git_repositoryContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitAlter_git_set_opts(ctx *Alter_git_set_optsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitAlter_git_unset_opts(ctx *Alter_git_unset_optsContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -439,7 +483,39 @@ func (v *BaseSnowflakeParserVisitor) VisitSchema_property(ctx *Schema_propertyCo
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitAlter_security_integration(ctx *Alter_security_integrationContext) interface{} {
+func (v *BaseSnowflakeParserVisitor) VisitAlter_sequence(ctx *Alter_sequenceContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitAlter_secret(ctx *Alter_secretContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitSecret_opts(ctx *Secret_optsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitSecret_set_opts(ctx *Secret_set_optsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitSecret_oauth_client_creds_opts(ctx *Secret_oauth_client_creds_optsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitSecret_oauth_auth_code_opts(ctx *Secret_oauth_auth_code_optsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitSecret_api_auth_opts(ctx *Secret_api_auth_optsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitSecret_basic_auth_opts(ctx *Secret_basic_auth_optsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitSecret_generic_string_opts(ctx *Secret_generic_string_optsContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -471,10 +547,6 @@ func (v *BaseSnowflakeParserVisitor) VisitSecurity_integration_scim_property(ctx
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitAlter_sequence(ctx *Alter_sequenceContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BaseSnowflakeParserVisitor) VisitAlter_session(ctx *Alter_sessionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -483,11 +555,11 @@ func (v *BaseSnowflakeParserVisitor) VisitAlter_session_policy(ctx *Alter_sessio
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitAlter_share(ctx *Alter_shareContext) interface{} {
+func (v *BaseSnowflakeParserVisitor) VisitAlter_password_policy(ctx *Alter_password_policyContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitAlter_stage(ctx *Alter_stageContext) interface{} {
+func (v *BaseSnowflakeParserVisitor) VisitAlter_share(ctx *Alter_shareContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -503,6 +575,10 @@ func (v *BaseSnowflakeParserVisitor) VisitAlter_table(ctx *Alter_tableContext) i
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitRls_operations(ctx *Rls_operationsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitClustering_action(ctx *Clustering_actionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -511,7 +587,43 @@ func (v *BaseSnowflakeParserVisitor) VisitTable_column_action(ctx *Table_column_
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitAlter_column_clause(ctx *Alter_column_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitInline_constraint(ctx *Inline_constraintContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitEnforced_not_enforced(ctx *Enforced_not_enforcedContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitDeferrable_not_deferrable(ctx *Deferrable_not_deferrableContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitInitially_deferred_or_immediate(ctx *Initially_deferred_or_immediateContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitCommon_constraint_properties(ctx *Common_constraint_propertiesContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitOn_update(ctx *On_updateContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitOn_delete(ctx *On_deleteContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitForeign_key_match(ctx *Foreign_key_matchContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitOn_action(ctx *On_actionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -619,6 +731,10 @@ func (v *BaseSnowflakeParserVisitor) VisitUnset_tags(ctx *Unset_tagsContext) int
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitTag_list(ctx *Tag_listContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitCreate_command(ctx *Create_commandContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -655,10 +771,6 @@ func (v *BaseSnowflakeParserVisitor) VisitCreate_database(ctx *Create_databaseCo
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitCreate_dynamic_table(ctx *Create_dynamic_tableContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BaseSnowflakeParserVisitor) VisitClone_at_before(ctx *Clone_at_beforeContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -676,6 +788,38 @@ func (v *BaseSnowflakeParserVisitor) VisitCompression_type(ctx *Compression_type
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitCompression(ctx *CompressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitCreate_dataset(ctx *Create_datasetContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitCreate_dynamic_table(ctx *Create_dynamic_tableContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitDynamic_table_params(ctx *Dynamic_table_paramsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitDynamic_table_settable_params(ctx *Dynamic_table_settable_paramsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitDynamic_table_unsettable_params(ctx *Dynamic_table_unsettable_paramsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitData_retention_params(ctx *Data_retention_paramsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitSet_data_retention_params(ctx *Set_data_retention_paramsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitCreate_event_table(ctx *Create_event_tableContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -719,7 +863,15 @@ func (v *BaseSnowflakeParserVisitor) VisitArg_decl(ctx *Arg_declContext) interfa
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitArg_default_value_clause(ctx *Arg_default_value_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitCol_decl(ctx *Col_declContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitVirtual_column_decl(ctx *Virtual_column_declContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -728,6 +880,14 @@ func (v *BaseSnowflakeParserVisitor) VisitFunction_definition(ctx *Function_defi
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitCreate_function(ctx *Create_functionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitCreate_git_repository(ctx *Create_git_repositoryContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitCreate_git_opts(ctx *Create_git_optsContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -783,6 +943,10 @@ func (v *BaseSnowflakeParserVisitor) VisitProcedure_definition(ctx *Procedure_de
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitNot_null(ctx *Not_nullContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitCreate_procedure(ctx *Create_procedureContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -804,6 +968,10 @@ func (v *BaseSnowflakeParserVisitor) VisitCreate_row_access_policy(ctx *Create_r
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitCreate_schema(ctx *Create_schemaContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitCreate_secret(ctx *Create_secretContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -843,11 +1011,59 @@ func (v *BaseSnowflakeParserVisitor) VisitIncrement_by(ctx *Increment_byContext)
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitCreate_semantic_view(ctx *Create_semantic_viewContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitLogical_table(ctx *Logical_tableContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitRelationship_def(ctx *Relationship_defContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitWith_synonyms_clause(ctx *With_synonyms_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitSemantic_expression_list(ctx *Semantic_expression_listContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitSemantic_expression(ctx *Semantic_expressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitWith_extension_clause(ctx *With_extension_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitCreate_sequence(ctx *Create_sequenceContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitCreate_session_policy(ctx *Create_session_policyContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitSession_policy_params(ctx *Session_policy_paramsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitSession_policy_param_name(ctx *Session_policy_param_nameContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitCreate_password_policy(ctx *Create_password_policyContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitPassword_policy_params(ctx *Password_policy_paramsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitPassword_policy_param_name(ctx *Password_policy_param_nameContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -867,7 +1083,7 @@ func (v *BaseSnowflakeParserVisitor) VisitCopy_options(ctx *Copy_optionsContext)
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitInternal_stage_params(ctx *Internal_stage_paramsContext) interface{} {
+func (v *BaseSnowflakeParserVisitor) VisitStage_encryption_opts_internal(ctx *Stage_encryption_opts_internalContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -903,6 +1119,34 @@ func (v *BaseSnowflakeParserVisitor) VisitAws_role(ctx *Aws_roleContext) interfa
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitAzure_encryption_value(ctx *Azure_encryption_valueContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitStage_encryption_opts_az(ctx *Stage_encryption_opts_azContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitStorage_integration_eq_id(ctx *Storage_integration_eq_idContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitAz_credential_or_storage_integration(ctx *Az_credential_or_storage_integrationContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitGcp_encryption_value(ctx *Gcp_encryption_valueContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitStage_encryption_opts_gcp(ctx *Stage_encryption_opts_gcpContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitAws_credential_or_storage_integration(ctx *Aws_credential_or_storage_integrationContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitExternal_stage_params(ctx *External_stage_paramsContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -927,11 +1171,35 @@ func (v *BaseSnowflakeParserVisitor) VisitNotification_integration(ctx *Notifica
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitDirectory_table_params(ctx *Directory_table_paramsContext) interface{} {
+func (v *BaseSnowflakeParserVisitor) VisitDirectory_table_internal_params(ctx *Directory_table_internal_paramsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitDirectory_table_external_params(ctx *Directory_table_external_paramsContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitCreate_stage(ctx *Create_stageContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitAlter_semantic_view(ctx *Alter_semantic_viewContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitAlter_stage(ctx *Alter_stageContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitDrop_stage(ctx *Drop_stageContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitDescribe_stage(ctx *Describe_stageContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitShow_stages(ctx *Show_stagesContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1007,7 +1275,7 @@ func (v *BaseSnowflakeParserVisitor) VisitCollate(ctx *CollateContext) interface
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitNot_null(ctx *Not_nullContext) interface{} {
+func (v *BaseSnowflakeParserVisitor) VisitOrder_noorder(ctx *Order_noorderContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1019,11 +1287,23 @@ func (v *BaseSnowflakeParserVisitor) VisitForeign_key(ctx *Foreign_keyContext) i
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitPrimary_key(ctx *Primary_keyContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitOut_of_line_constraint(ctx *Out_of_line_constraintContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitFull_col_decl(ctx *Full_col_declContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitMaterialized_col_decl(ctx *Materialized_col_declContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitMaterialized_col_decl_list(ctx *Materialized_col_decl_listContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1039,11 +1319,27 @@ func (v *BaseSnowflakeParserVisitor) VisitCreate_table(ctx *Create_tableContext)
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitColumn_decl_item_list_paren(ctx *Column_decl_item_list_parenContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitCreate_table_clause(ctx *Create_table_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitCreate_table_as_select(ctx *Create_table_as_selectContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitCreate_table_like(ctx *Create_table_likeContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitCreate_tag(ctx *Create_tagContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitTag_allowed_values(ctx *Tag_allowed_valuesContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1055,11 +1351,7 @@ func (v *BaseSnowflakeParserVisitor) VisitSession_parameter_list(ctx *Session_pa
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitSession_parameter_init_list(ctx *Session_parameter_init_listContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseSnowflakeParserVisitor) VisitSession_parameter_init(ctx *Session_parameter_initContext) interface{} {
+func (v *BaseSnowflakeParserVisitor) VisitSession_params_list(ctx *Session_params_listContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1067,7 +1359,67 @@ func (v *BaseSnowflakeParserVisitor) VisitCreate_task(ctx *Create_taskContext) i
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitTask_parameters(ctx *Task_parametersContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitTask_compute(ctx *Task_computeContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitTask_schedule(ctx *Task_scheduleContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitTask_timeout(ctx *Task_timeoutContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitTask_suspend_after_failure_number(ctx *Task_suspend_after_failure_numberContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitTask_error_integration(ctx *Task_error_integrationContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitTask_overlap(ctx *Task_overlapContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitSql(ctx *SqlContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitTask_sql(ctx *Task_sqlContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitTask_scripting_block(ctx *Task_scripting_blockContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitTask_scripting_declaration_list(ctx *Task_scripting_declaration_listContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitTask_scripting_declaration(ctx *Task_scripting_declarationContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitTask_scripting_statement_list(ctx *Task_scripting_statement_listContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitTask_scripting_statement(ctx *Task_scripting_statementContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitTask_scripting_assignment(ctx *Task_scripting_assignmentContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitTask_scripting_return(ctx *Task_scripting_returnContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1088,6 +1440,14 @@ func (v *BaseSnowflakeParserVisitor) VisitCreate_view(ctx *Create_viewContext) i
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitCreate_warehouse(ctx *Create_warehouseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitWh_common_size(ctx *Wh_common_sizeContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitWh_extra_size(ctx *Wh_extra_sizeContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1151,6 +1511,10 @@ func (v *BaseSnowflakeParserVisitor) VisitDrop_function(ctx *Drop_functionContex
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitDrop_git_repository(ctx *Drop_git_repositoryContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitDrop_integration(ctx *Drop_integrationContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -1199,6 +1563,14 @@ func (v *BaseSnowflakeParserVisitor) VisitDrop_schema(ctx *Drop_schemaContext) i
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitDrop_secret(ctx *Drop_secretContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitDrop_semantic_view(ctx *Drop_semantic_viewContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitDrop_sequence(ctx *Drop_sequenceContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -1207,11 +1579,11 @@ func (v *BaseSnowflakeParserVisitor) VisitDrop_session_policy(ctx *Drop_session_
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitDrop_share(ctx *Drop_shareContext) interface{} {
+func (v *BaseSnowflakeParserVisitor) VisitDrop_password_policy(ctx *Drop_password_policyContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitDrop_stage(ctx *Drop_stageContext) interface{} {
+func (v *BaseSnowflakeParserVisitor) VisitDrop_share(ctx *Drop_shareContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1303,6 +1675,10 @@ func (v *BaseSnowflakeParserVisitor) VisitComment_clause(ctx *Comment_clauseCont
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitInline_comment_clause(ctx *Inline_comment_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitIf_suspended(ctx *If_suspendedContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -1316,6 +1692,10 @@ func (v *BaseSnowflakeParserVisitor) VisitIf_not_exists(ctx *If_not_existsContex
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitOr_replace(ctx *Or_replaceContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitOr_alter(ctx *Or_alterContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1339,6 +1719,10 @@ func (v *BaseSnowflakeParserVisitor) VisitDescribe_dynamic_table(ctx *Describe_d
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitDescribe_event_table(ctx *Describe_event_tableContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitDescribe_external_table(ctx *Describe_external_tableContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -1348,6 +1732,10 @@ func (v *BaseSnowflakeParserVisitor) VisitDescribe_file_format(ctx *Describe_fil
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitDescribe_function(ctx *Describe_functionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitDescribe_git_repository(ctx *Describe_git_repositoryContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1391,6 +1779,10 @@ func (v *BaseSnowflakeParserVisitor) VisitDescribe_search_optimization(ctx *Desc
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitDescribe_semantic_view(ctx *Describe_semantic_viewContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitDescribe_sequence(ctx *Describe_sequenceContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -1399,11 +1791,11 @@ func (v *BaseSnowflakeParserVisitor) VisitDescribe_session_policy(ctx *Describe_
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitDescribe_share(ctx *Describe_shareContext) interface{} {
+func (v *BaseSnowflakeParserVisitor) VisitDescribe_password_policy(ctx *Describe_password_policyContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitDescribe_stage(ctx *Describe_stageContext) interface{} {
+func (v *BaseSnowflakeParserVisitor) VisitDescribe_share(ctx *Describe_shareContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1443,6 +1835,10 @@ func (v *BaseSnowflakeParserVisitor) VisitShow_alerts(ctx *Show_alertsContext) i
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitShow_channels(ctx *Show_channelsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitShow_columns(ctx *Show_columnsContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -1459,6 +1855,10 @@ func (v *BaseSnowflakeParserVisitor) VisitLimit_rows(ctx *Limit_rowsContext) int
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitLimit_rows_2(ctx *Limit_rows_2Context) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitShow_databases(ctx *Show_databasesContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -1471,15 +1871,23 @@ func (v *BaseSnowflakeParserVisitor) VisitShow_databases_in_replication_group(ct
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitShow_datasets(ctx *Show_datasetsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitShow_delegated_authorizations(ctx *Show_delegated_authorizationsContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitShow_external_functions(ctx *Show_external_functionsContext) interface{} {
+func (v *BaseSnowflakeParserVisitor) VisitShow_dynamic_tables(ctx *Show_dynamic_tablesContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitShow_dynamic_tables(ctx *Show_dynamic_tablesContext) interface{} {
+func (v *BaseSnowflakeParserVisitor) VisitShow_event_tables(ctx *Show_event_tablesContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitShow_external_functions(ctx *Show_external_functionsContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1496,6 +1904,18 @@ func (v *BaseSnowflakeParserVisitor) VisitShow_file_formats(ctx *Show_file_forma
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitShow_functions(ctx *Show_functionsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitShow_git_branches(ctx *Show_git_branchesContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitShow_git_repositories(ctx *Show_git_repositoriesContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitShow_git_tags(ctx *Show_git_tagsContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1532,6 +1952,10 @@ func (v *BaseSnowflakeParserVisitor) VisitIn_obj(ctx *In_objContext) interface{}
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitIn_obj_2(ctx *In_obj_2Context) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitIn_obj_3(ctx *In_obj_3Context) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1603,11 +2027,39 @@ func (v *BaseSnowflakeParserVisitor) VisitShow_schemas(ctx *Show_schemasContext)
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitShow_secrets(ctx *Show_secretsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitShow_semantic_views(ctx *Show_semantic_viewsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitShow_semantic_dimensions(ctx *Show_semantic_dimensionsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitShow_semantic_dimensions_for_metric(ctx *Show_semantic_dimensions_for_metricContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitShow_semantic_facts(ctx *Show_semantic_factsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitShow_semantic_metrics(ctx *Show_semantic_metricsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitShow_sequences(ctx *Show_sequencesContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitShow_session_policies(ctx *Show_session_policiesContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitShow_password_policies(ctx *Show_password_policiesContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1620,10 +2072,6 @@ func (v *BaseSnowflakeParserVisitor) VisitShow_shares_in_failover_group(ctx *Sho
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitShow_shares_in_replication_group(ctx *Show_shares_in_replication_groupContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseSnowflakeParserVisitor) VisitShow_stages(ctx *Show_stagesContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1656,6 +2104,10 @@ func (v *BaseSnowflakeParserVisitor) VisitShow_users(ctx *Show_usersContext) int
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitShow_variables(ctx *Show_variablesContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitShow_versions_in_dataset(ctx *Show_versions_in_datasetContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1719,6 +2171,10 @@ func (v *BaseSnowflakeParserVisitor) VisitString_list(ctx *String_listContext) i
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitId_fn(ctx *Id_fnContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitId_(ctx *Id_Context) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -1735,7 +2191,7 @@ func (v *BaseSnowflakeParserVisitor) VisitBuiltin_function(ctx *Builtin_function
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitList_operator(ctx *List_operatorContext) interface{} {
+func (v *BaseSnowflakeParserVisitor) VisitUnary_or_binary_builtin_function(ctx *Unary_or_binary_builtin_functionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1751,6 +2207,10 @@ func (v *BaseSnowflakeParserVisitor) VisitTernary_builtin_function(ctx *Ternary_
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitList_function(ctx *List_functionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitPattern(ctx *PatternContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -1763,7 +2223,19 @@ func (v *BaseSnowflakeParserVisitor) VisitColumn_list(ctx *Column_listContext) i
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitAliased_column_list(ctx *Aliased_column_listContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitColumn_list_with_comment(ctx *Column_list_with_commentContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitObject_name(ctx *Object_nameContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitObject_name_or_identifier(ctx *Object_name_or_identifierContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1783,6 +2255,10 @@ func (v *BaseSnowflakeParserVisitor) VisitExpr(ctx *ExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitLambda_params(ctx *Lambda_paramsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitIff_expr(ctx *Iff_exprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -1792,6 +2268,10 @@ func (v *BaseSnowflakeParserVisitor) VisitTrim_expression(ctx *Trim_expressionCo
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitTry_cast_expr(ctx *Try_cast_exprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitCast_expr(ctx *Cast_exprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1811,7 +2291,15 @@ func (v *BaseSnowflakeParserVisitor) VisitArr_literal(ctx *Arr_literalContext) i
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitData_type_size(ctx *Data_type_sizeContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitData_type(ctx *Data_typeContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitVector_element_type(ctx *Vector_element_typeContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1832,6 +2320,18 @@ func (v *BaseSnowflakeParserVisitor) VisitOver_clause(ctx *Over_clauseContext) i
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitFunction_call(ctx *Function_callContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitParam_assoc_list(ctx *Param_assoc_listContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitParam_assoc(ctx *Param_assocContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitIgnore_or_repect_nulls(ctx *Ignore_or_repect_nullsContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1883,19 +2383,19 @@ func (v *BaseSnowflakeParserVisitor) VisitCommon_table_expression(ctx *Common_ta
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitAnchor_clause(ctx *Anchor_clauseContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseSnowflakeParserVisitor) VisitRecursive_clause(ctx *Recursive_clauseContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BaseSnowflakeParserVisitor) VisitSelect_statement(ctx *Select_statementContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitSet_operators(ctx *Set_operatorsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitBy_name(ctx *By_nameContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitSelect_statement_in_parentheses(ctx *Select_statement_in_parenthesesContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1927,7 +2427,19 @@ func (v *BaseSnowflakeParserVisitor) VisitSelect_list_elem(ctx *Select_list_elem
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitColumn_elem_star(ctx *Column_elem_starContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitColumn_elem(ctx *Column_elemContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitObject_name_or_alias(ctx *Object_name_or_aliasContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitExclude_clause(ctx *Exclude_clauseContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -1991,6 +2503,10 @@ func (v *BaseSnowflakeParserVisitor) VisitFlatten_table(ctx *Flatten_tableContex
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitSplited_table(ctx *Splited_tableContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitPrior_list(ctx *Prior_listContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -2008,6 +2524,10 @@ func (v *BaseSnowflakeParserVisitor) VisitJoin_type(ctx *Join_typeContext) inter
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitJoin_clause(ctx *Join_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitOn_using_clause(ctx *On_using_clauseContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -2079,6 +2599,18 @@ func (v *BaseSnowflakeParserVisitor) VisitPivot_unpivot(ctx *Pivot_unpivotContex
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitInclude_exclude(ctx *Include_excludeContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitPivot_in_clause(ctx *Pivot_in_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitDefault_on_null(ctx *Default_on_nullContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitColumn_alias_list_in_brackets(ctx *Column_alias_list_in_bracketsContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -2087,7 +2619,11 @@ func (v *BaseSnowflakeParserVisitor) VisitExpr_list_in_parentheses(ctx *Expr_lis
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitValues(ctx *ValuesContext) interface{} {
+func (v *BaseSnowflakeParserVisitor) VisitValues_table(ctx *Values_tableContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitValues_table_body(ctx *Values_table_bodyContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -2119,6 +2655,10 @@ func (v *BaseSnowflakeParserVisitor) VisitNull_not_null(ctx *Null_not_nullContex
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSnowflakeParserVisitor) VisitNot_distinct_from(ctx *Not_distinct_fromContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSnowflakeParserVisitor) VisitSubquery(ctx *SubqueryContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -2131,7 +2671,11 @@ func (v *BaseSnowflakeParserVisitor) VisitWhere_clause(ctx *Where_clauseContext)
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseSnowflakeParserVisitor) VisitGroup_item(ctx *Group_itemContext) interface{} {
+func (v *BaseSnowflakeParserVisitor) VisitGroup_by_elem(ctx *Group_by_elemContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitGroup_by_list(ctx *Group_by_listContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -2164,6 +2708,14 @@ func (v *BaseSnowflakeParserVisitor) VisitFirst_next(ctx *First_nextContext) int
 }
 
 func (v *BaseSnowflakeParserVisitor) VisitLimit_clause(ctx *Limit_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitRound_mode(ctx *Round_modeContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSnowflakeParserVisitor) VisitRound_expr(ctx *Round_exprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

@@ -127,19 +127,23 @@ snowflake_reserved_keyword = {
 
 def read_tokens_name_before_token_from_lexer_file(filepath: str, token: str) -> list[str]:    
     tokens_name_before_token = []
-    regex = r"^(?P<token_name>[A-Z_]+)\s*:"
+    regex = r"^\s*(?P<token_name>[A-Z_][A-Z_0-9]*)\s*:"
     start_placeholder = "Build id contains the non reserved keywords start."
     stop_placeholder = "Build id contains the non reserved keywords stop."
     begin = False
     with open(filepath, "r") as lexer_file:
         lines = lexer_file.readlines()
+        has_placeholder = any(start_placeholder in line for line in lines) and any(stop_placeholder in line for line in lines)
+        if not has_placeholder:
+            begin = True
+        reached_target_token = False
         for line in lines:
-            if start_placeholder in line:
+            if has_placeholder and start_placeholder in line:
                 begin = True
                 continue
             if line.isspace() or (not begin):
                 continue
-            if (stop_placeholder in line):
+            if has_placeholder and (stop_placeholder in line):
                 break
 
             matches = re.finditer(regex, line, re.MULTILINE)
@@ -147,8 +151,11 @@ def read_tokens_name_before_token_from_lexer_file(filepath: str, token: str) -> 
                 if matchNum > 1:
                     break
                 if match.group("token_name") == token:
+                    reached_target_token = True
                     break
                 tokens_name_before_token.append(match.group("token_name"))
+            if reached_target_token:
+                break
     return tokens_name_before_token
 
 def pretty_print(tokens: list[str], hello: str | None) -> None:
@@ -197,9 +204,10 @@ def append_non_reserved_token_to_rules_in_parser(parser_file_path: str, append_r
 
 
 def get_content_by_token_name(content: str, token_name: str) -> str: 
-    token_regex = r"^(%s)\s*:[.\s\S]*?;" % token_name
-    # Get the content of the rules_regex match.
-    token_content = re.search(token_regex, content, re.MULTILINE)
+    # Support upstream grammar formatting where comments may appear between
+    # rule name and ':' and where rules can be indented.
+    token_regex = r"(?ms)^\s*(%s)\s*(?:\n\s*//[^\n]*)*\n\s*:[\s\S]*?\n\s*;" % re.escape(token_name)
+    token_content = re.search(token_regex, content)
     if token_content:
         return token_content.group(0)
     return None
@@ -214,4 +222,3 @@ if __name__ == "__main__":
     pretty_print(filtered_tokens, "Tokens before ID token without reserved keywords:")
     append_non_reserved_token_to_rules_in_parser("SnowflakeParser.g4", "id_", "supplement_non_reserved_words", filtered_tokens)
     
-
