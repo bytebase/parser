@@ -858,6 +858,9 @@ type MySQLParserVisitor interface {
 	// Visit a parse tree produced by MySQLParser#revoke.
 	VisitRevoke(ctx *RevokeContext) interface{}
 
+	// Visit a parse tree produced by MySQLParser#ignoreUnknownUser.
+	VisitIgnoreUnknownUser(ctx *IgnoreUnknownUserContext) interface{}
+
 	// Visit a parse tree produced by MySQLParser#onTypeTo.
 	VisitOnTypeTo(ctx *OnTypeToContext) interface{}
 

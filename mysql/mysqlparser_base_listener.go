@@ -1698,6 +1698,12 @@ func (s *BaseMySQLParserListener) EnterRevoke(ctx *RevokeContext) {}
 // ExitRevoke is called when production revoke is exited.
 func (s *BaseMySQLParserListener) ExitRevoke(ctx *RevokeContext) {}
 
+// EnterIgnoreUnknownUser is called when production ignoreUnknownUser is entered.
+func (s *BaseMySQLParserListener) EnterIgnoreUnknownUser(ctx *IgnoreUnknownUserContext) {}
+
+// ExitIgnoreUnknownUser is called when production ignoreUnknownUser is exited.
+func (s *BaseMySQLParserListener) ExitIgnoreUnknownUser(ctx *IgnoreUnknownUserContext) {}
+
 // EnterOnTypeTo is called when production onTypeTo is entered.
 func (s *BaseMySQLParserListener) EnterOnTypeTo(ctx *OnTypeToContext) {}
 
