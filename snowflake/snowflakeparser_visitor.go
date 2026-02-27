@@ -43,6 +43,9 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#merge_matches.
 	VisitMerge_matches(ctx *Merge_matchesContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#merge_cond.
+	VisitMerge_cond(ctx *Merge_condContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#merge_update_delete.
 	VisitMerge_update_delete(ctx *Merge_update_deleteContext) interface{}
 
@@ -63,6 +66,9 @@ type SnowflakeParserVisitor interface {
 
 	// Visit a parse tree produced by SnowflakeParser#other_command.
 	VisitOther_command(ctx *Other_commandContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#begin_txn.
+	VisitBegin_txn(ctx *Begin_txnContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#copy_into_table.
 	VisitCopy_into_table(ctx *Copy_into_tableContext) interface{}
@@ -91,6 +97,9 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#comment.
 	VisitComment(ctx *CommentContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#function_signature.
+	VisitFunction_signature(ctx *Function_signatureContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#commit.
 	VisitCommit(ctx *CommitContext) interface{}
 
@@ -99,6 +108,9 @@ type SnowflakeParserVisitor interface {
 
 	// Visit a parse tree produced by SnowflakeParser#execute_task.
 	VisitExecute_task(ctx *Execute_taskContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#retry_last.
+	VisitRetry_last(ctx *Retry_lastContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#explain.
 	VisitExplain(ctx *ExplainContext) interface{}
@@ -157,11 +169,17 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#list.
 	VisitList(ctx *ListContext) interface{}
 
-	// Visit a parse tree produced by SnowflakeParser#internal_stage.
-	VisitInternal_stage(ctx *Internal_stageContext) interface{}
+	// Visit a parse tree produced by SnowflakeParser#user_stage.
+	VisitUser_stage(ctx *User_stageContext) interface{}
 
-	// Visit a parse tree produced by SnowflakeParser#external_stage.
-	VisitExternal_stage(ctx *External_stageContext) interface{}
+	// Visit a parse tree produced by SnowflakeParser#table_stage.
+	VisitTable_stage(ctx *Table_stageContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#named_stage.
+	VisitNamed_stage(ctx *Named_stageContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#stage_path.
+	VisitStage_path(ctx *Stage_pathContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#put.
 	VisitPut(ctx *PutContext) interface{}
@@ -247,8 +265,14 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#account_id_list.
 	VisitAccount_id_list(ctx *Account_id_listContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#alter_dataset.
+	VisitAlter_dataset(ctx *Alter_datasetContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#alter_dynamic_table.
 	VisitAlter_dynamic_table(ctx *Alter_dynamic_tableContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#id_list.
+	VisitId_list(ctx *Id_listContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#alter_external_table.
 	VisitAlter_external_table(ctx *Alter_external_tableContext) interface{}
@@ -282,6 +306,15 @@ type SnowflakeParserVisitor interface {
 
 	// Visit a parse tree produced by SnowflakeParser#data_type_list.
 	VisitData_type_list(ctx *Data_type_listContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#alter_git_repository.
+	VisitAlter_git_repository(ctx *Alter_git_repositoryContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#alter_git_set_opts.
+	VisitAlter_git_set_opts(ctx *Alter_git_set_optsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#alter_git_unset_opts.
+	VisitAlter_git_unset_opts(ctx *Alter_git_unset_optsContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#alter_masking_policy.
 	VisitAlter_masking_policy(ctx *Alter_masking_policyContext) interface{}
@@ -331,8 +364,32 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#schema_property.
 	VisitSchema_property(ctx *Schema_propertyContext) interface{}
 
-	// Visit a parse tree produced by SnowflakeParser#alter_security_integration.
-	VisitAlter_security_integration(ctx *Alter_security_integrationContext) interface{}
+	// Visit a parse tree produced by SnowflakeParser#alter_sequence.
+	VisitAlter_sequence(ctx *Alter_sequenceContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#alter_secret.
+	VisitAlter_secret(ctx *Alter_secretContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#secret_opts.
+	VisitSecret_opts(ctx *Secret_optsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#secret_set_opts.
+	VisitSecret_set_opts(ctx *Secret_set_optsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#secret_oauth_client_creds_opts.
+	VisitSecret_oauth_client_creds_opts(ctx *Secret_oauth_client_creds_optsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#secret_oauth_auth_code_opts.
+	VisitSecret_oauth_auth_code_opts(ctx *Secret_oauth_auth_code_optsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#secret_api_auth_opts.
+	VisitSecret_api_auth_opts(ctx *Secret_api_auth_optsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#secret_basic_auth_opts.
+	VisitSecret_basic_auth_opts(ctx *Secret_basic_auth_optsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#secret_generic_string_opts.
+	VisitSecret_generic_string_opts(ctx *Secret_generic_string_optsContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#alter_security_integration_external_oauth.
 	VisitAlter_security_integration_external_oauth(ctx *Alter_security_integration_external_oauthContext) interface{}
@@ -355,20 +412,17 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#security_integration_scim_property.
 	VisitSecurity_integration_scim_property(ctx *Security_integration_scim_propertyContext) interface{}
 
-	// Visit a parse tree produced by SnowflakeParser#alter_sequence.
-	VisitAlter_sequence(ctx *Alter_sequenceContext) interface{}
-
 	// Visit a parse tree produced by SnowflakeParser#alter_session.
 	VisitAlter_session(ctx *Alter_sessionContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#alter_session_policy.
 	VisitAlter_session_policy(ctx *Alter_session_policyContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#alter_password_policy.
+	VisitAlter_password_policy(ctx *Alter_password_policyContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#alter_share.
 	VisitAlter_share(ctx *Alter_shareContext) interface{}
-
-	// Visit a parse tree produced by SnowflakeParser#alter_stage.
-	VisitAlter_stage(ctx *Alter_stageContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#alter_storage_integration.
 	VisitAlter_storage_integration(ctx *Alter_storage_integrationContext) interface{}
@@ -379,14 +433,44 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#alter_table.
 	VisitAlter_table(ctx *Alter_tableContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#rls_operations.
+	VisitRls_operations(ctx *Rls_operationsContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#clustering_action.
 	VisitClustering_action(ctx *Clustering_actionContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#table_column_action.
 	VisitTable_column_action(ctx *Table_column_actionContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#alter_column_clause.
+	VisitAlter_column_clause(ctx *Alter_column_clauseContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#inline_constraint.
 	VisitInline_constraint(ctx *Inline_constraintContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#enforced_not_enforced.
+	VisitEnforced_not_enforced(ctx *Enforced_not_enforcedContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#deferrable_not_deferrable.
+	VisitDeferrable_not_deferrable(ctx *Deferrable_not_deferrableContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#initially_deferred_or_immediate.
+	VisitInitially_deferred_or_immediate(ctx *Initially_deferred_or_immediateContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#common_constraint_properties.
+	VisitCommon_constraint_properties(ctx *Common_constraint_propertiesContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#on_update.
+	VisitOn_update(ctx *On_updateContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#on_delete.
+	VisitOn_delete(ctx *On_deleteContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#foreign_key_match.
+	VisitForeign_key_match(ctx *Foreign_key_matchContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#on_action.
+	VisitOn_action(ctx *On_actionContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#constraint_properties.
 	VisitConstraint_properties(ctx *Constraint_propertiesContext) interface{}
@@ -466,6 +550,9 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#unset_tags.
 	VisitUnset_tags(ctx *Unset_tagsContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#tag_list.
+	VisitTag_list(ctx *Tag_listContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#create_command.
 	VisitCreate_command(ctx *Create_commandContext) interface{}
 
@@ -493,9 +580,6 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#create_database.
 	VisitCreate_database(ctx *Create_databaseContext) interface{}
 
-	// Visit a parse tree produced by SnowflakeParser#create_dynamic_table.
-	VisitCreate_dynamic_table(ctx *Create_dynamic_tableContext) interface{}
-
 	// Visit a parse tree produced by SnowflakeParser#clone_at_before.
 	VisitClone_at_before(ctx *Clone_at_beforeContext) interface{}
 
@@ -510,6 +594,30 @@ type SnowflakeParserVisitor interface {
 
 	// Visit a parse tree produced by SnowflakeParser#compression.
 	VisitCompression(ctx *CompressionContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#create_dataset.
+	VisitCreate_dataset(ctx *Create_datasetContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#create_dynamic_table.
+	VisitCreate_dynamic_table(ctx *Create_dynamic_tableContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#dynamic_table_params.
+	VisitDynamic_table_params(ctx *Dynamic_table_paramsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#dynamic_table_settable_params.
+	VisitDynamic_table_settable_params(ctx *Dynamic_table_settable_paramsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#dynamic_table_unsettable_params.
+	VisitDynamic_table_unsettable_params(ctx *Dynamic_table_unsettable_paramsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#data_retention_params.
+	VisitData_retention_params(ctx *Data_retention_paramsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#set_data_retention_params.
+	VisitSet_data_retention_params(ctx *Set_data_retention_paramsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#create_event_table.
+	VisitCreate_event_table(ctx *Create_event_tableContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#create_external_function.
 	VisitCreate_external_function(ctx *Create_external_functionContext) interface{}
@@ -541,14 +649,26 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#arg_decl.
 	VisitArg_decl(ctx *Arg_declContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#arg_default_value_clause.
+	VisitArg_default_value_clause(ctx *Arg_default_value_clauseContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#col_decl.
 	VisitCol_decl(ctx *Col_declContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#virtual_column_decl.
+	VisitVirtual_column_decl(ctx *Virtual_column_declContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#function_definition.
 	VisitFunction_definition(ctx *Function_definitionContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#create_function.
 	VisitCreate_function(ctx *Create_functionContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#create_git_repository.
+	VisitCreate_git_repository(ctx *Create_git_repositoryContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#create_git_opts.
+	VisitCreate_git_opts(ctx *Create_git_optsContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#create_managed_account.
 	VisitCreate_managed_account(ctx *Create_managed_accountContext) interface{}
@@ -589,6 +709,9 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#procedure_definition.
 	VisitProcedure_definition(ctx *Procedure_definitionContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#not_null.
+	VisitNot_null(ctx *Not_nullContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#create_procedure.
 	VisitCreate_procedure(ctx *Create_procedureContext) interface{}
 
@@ -606,6 +729,9 @@ type SnowflakeParserVisitor interface {
 
 	// Visit a parse tree produced by SnowflakeParser#create_schema.
 	VisitCreate_schema(ctx *Create_schemaContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#create_secret.
+	VisitCreate_secret(ctx *Create_secretContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#create_security_integration_external_oauth.
 	VisitCreate_security_integration_external_oauth(ctx *Create_security_integration_external_oauthContext) interface{}
@@ -634,11 +760,47 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#increment_by.
 	VisitIncrement_by(ctx *Increment_byContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#create_semantic_view.
+	VisitCreate_semantic_view(ctx *Create_semantic_viewContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#logical_table.
+	VisitLogical_table(ctx *Logical_tableContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#relationship_def.
+	VisitRelationship_def(ctx *Relationship_defContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#with_synonyms_clause.
+	VisitWith_synonyms_clause(ctx *With_synonyms_clauseContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#semantic_expression_list.
+	VisitSemantic_expression_list(ctx *Semantic_expression_listContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#semantic_expression.
+	VisitSemantic_expression(ctx *Semantic_expressionContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#with_extension_clause.
+	VisitWith_extension_clause(ctx *With_extension_clauseContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#create_sequence.
 	VisitCreate_sequence(ctx *Create_sequenceContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#create_session_policy.
 	VisitCreate_session_policy(ctx *Create_session_policyContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#session_policy_params.
+	VisitSession_policy_params(ctx *Session_policy_paramsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#session_policy_param_name.
+	VisitSession_policy_param_name(ctx *Session_policy_param_nameContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#create_password_policy.
+	VisitCreate_password_policy(ctx *Create_password_policyContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#password_policy_params.
+	VisitPassword_policy_params(ctx *Password_policy_paramsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#password_policy_param_name.
+	VisitPassword_policy_param_name(ctx *Password_policy_param_nameContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#create_share.
 	VisitCreate_share(ctx *Create_shareContext) interface{}
@@ -652,8 +814,8 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#copy_options.
 	VisitCopy_options(ctx *Copy_optionsContext) interface{}
 
-	// Visit a parse tree produced by SnowflakeParser#internal_stage_params.
-	VisitInternal_stage_params(ctx *Internal_stage_paramsContext) interface{}
+	// Visit a parse tree produced by SnowflakeParser#stage_encryption_opts_internal.
+	VisitStage_encryption_opts_internal(ctx *Stage_encryption_opts_internalContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#stage_type.
 	VisitStage_type(ctx *Stage_typeContext) interface{}
@@ -679,6 +841,27 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#aws_role.
 	VisitAws_role(ctx *Aws_roleContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#azure_encryption_value.
+	VisitAzure_encryption_value(ctx *Azure_encryption_valueContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#stage_encryption_opts_az.
+	VisitStage_encryption_opts_az(ctx *Stage_encryption_opts_azContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#storage_integration_eq_id.
+	VisitStorage_integration_eq_id(ctx *Storage_integration_eq_idContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#az_credential_or_storage_integration.
+	VisitAz_credential_or_storage_integration(ctx *Az_credential_or_storage_integrationContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#gcp_encryption_value.
+	VisitGcp_encryption_value(ctx *Gcp_encryption_valueContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#stage_encryption_opts_gcp.
+	VisitStage_encryption_opts_gcp(ctx *Stage_encryption_opts_gcpContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#aws_credential_or_storage_integration.
+	VisitAws_credential_or_storage_integration(ctx *Aws_credential_or_storage_integrationContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#external_stage_params.
 	VisitExternal_stage_params(ctx *External_stage_paramsContext) interface{}
 
@@ -697,11 +880,29 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#notification_integration.
 	VisitNotification_integration(ctx *Notification_integrationContext) interface{}
 
-	// Visit a parse tree produced by SnowflakeParser#directory_table_params.
-	VisitDirectory_table_params(ctx *Directory_table_paramsContext) interface{}
+	// Visit a parse tree produced by SnowflakeParser#directory_table_internal_params.
+	VisitDirectory_table_internal_params(ctx *Directory_table_internal_paramsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#directory_table_external_params.
+	VisitDirectory_table_external_params(ctx *Directory_table_external_paramsContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#create_stage.
 	VisitCreate_stage(ctx *Create_stageContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#alter_semantic_view.
+	VisitAlter_semantic_view(ctx *Alter_semantic_viewContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#alter_stage.
+	VisitAlter_stage(ctx *Alter_stageContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#drop_stage.
+	VisitDrop_stage(ctx *Drop_stageContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#describe_stage.
+	VisitDescribe_stage(ctx *Describe_stageContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#show_stages.
+	VisitShow_stages(ctx *Show_stagesContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#cloud_provider_params.
 	VisitCloud_provider_params(ctx *Cloud_provider_paramsContext) interface{}
@@ -757,8 +958,8 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#collate.
 	VisitCollate(ctx *CollateContext) interface{}
 
-	// Visit a parse tree produced by SnowflakeParser#not_null.
-	VisitNot_null(ctx *Not_nullContext) interface{}
+	// Visit a parse tree produced by SnowflakeParser#order_noorder.
+	VisitOrder_noorder(ctx *Order_noorderContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#default_value.
 	VisitDefault_value(ctx *Default_valueContext) interface{}
@@ -766,11 +967,20 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#foreign_key.
 	VisitForeign_key(ctx *Foreign_keyContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#primary_key.
+	VisitPrimary_key(ctx *Primary_keyContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#out_of_line_constraint.
 	VisitOut_of_line_constraint(ctx *Out_of_line_constraintContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#full_col_decl.
 	VisitFull_col_decl(ctx *Full_col_declContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#materialized_col_decl.
+	VisitMaterialized_col_decl(ctx *Materialized_col_declContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#materialized_col_decl_list.
+	VisitMaterialized_col_decl_list(ctx *Materialized_col_decl_listContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#column_decl_item.
 	VisitColumn_decl_item(ctx *Column_decl_itemContext) interface{}
@@ -781,11 +991,23 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#create_table.
 	VisitCreate_table(ctx *Create_tableContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#column_decl_item_list_paren.
+	VisitColumn_decl_item_list_paren(ctx *Column_decl_item_list_parenContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#create_table_clause.
+	VisitCreate_table_clause(ctx *Create_table_clauseContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#create_table_as_select.
 	VisitCreate_table_as_select(ctx *Create_table_as_selectContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#create_table_like.
+	VisitCreate_table_like(ctx *Create_table_likeContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#create_tag.
 	VisitCreate_tag(ctx *Create_tagContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#tag_allowed_values.
+	VisitTag_allowed_values(ctx *Tag_allowed_valuesContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#session_parameter.
 	VisitSession_parameter(ctx *Session_parameterContext) interface{}
@@ -793,17 +1015,59 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#session_parameter_list.
 	VisitSession_parameter_list(ctx *Session_parameter_listContext) interface{}
 
-	// Visit a parse tree produced by SnowflakeParser#session_parameter_init_list.
-	VisitSession_parameter_init_list(ctx *Session_parameter_init_listContext) interface{}
-
-	// Visit a parse tree produced by SnowflakeParser#session_parameter_init.
-	VisitSession_parameter_init(ctx *Session_parameter_initContext) interface{}
+	// Visit a parse tree produced by SnowflakeParser#session_params_list.
+	VisitSession_params_list(ctx *Session_params_listContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#create_task.
 	VisitCreate_task(ctx *Create_taskContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#task_parameters.
+	VisitTask_parameters(ctx *Task_parametersContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#task_compute.
+	VisitTask_compute(ctx *Task_computeContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#task_schedule.
+	VisitTask_schedule(ctx *Task_scheduleContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#task_timeout.
+	VisitTask_timeout(ctx *Task_timeoutContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#task_suspend_after_failure_number.
+	VisitTask_suspend_after_failure_number(ctx *Task_suspend_after_failure_numberContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#task_error_integration.
+	VisitTask_error_integration(ctx *Task_error_integrationContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#task_overlap.
+	VisitTask_overlap(ctx *Task_overlapContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#sql.
 	VisitSql(ctx *SqlContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#task_sql.
+	VisitTask_sql(ctx *Task_sqlContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#task_scripting_block.
+	VisitTask_scripting_block(ctx *Task_scripting_blockContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#task_scripting_declaration_list.
+	VisitTask_scripting_declaration_list(ctx *Task_scripting_declaration_listContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#task_scripting_declaration.
+	VisitTask_scripting_declaration(ctx *Task_scripting_declarationContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#task_scripting_statement_list.
+	VisitTask_scripting_statement_list(ctx *Task_scripting_statement_listContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#task_scripting_statement.
+	VisitTask_scripting_statement(ctx *Task_scripting_statementContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#task_scripting_assignment.
+	VisitTask_scripting_assignment(ctx *Task_scripting_assignmentContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#task_scripting_return.
+	VisitTask_scripting_return(ctx *Task_scripting_returnContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#call.
 	VisitCall(ctx *CallContext) interface{}
@@ -819,6 +1083,12 @@ type SnowflakeParserVisitor interface {
 
 	// Visit a parse tree produced by SnowflakeParser#create_warehouse.
 	VisitCreate_warehouse(ctx *Create_warehouseContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#wh_common_size.
+	VisitWh_common_size(ctx *Wh_common_sizeContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#wh_extra_size.
+	VisitWh_extra_size(ctx *Wh_extra_sizeContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#wh_properties.
 	VisitWh_properties(ctx *Wh_propertiesContext) interface{}
@@ -865,6 +1135,9 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#drop_function.
 	VisitDrop_function(ctx *Drop_functionContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#drop_git_repository.
+	VisitDrop_git_repository(ctx *Drop_git_repositoryContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#drop_integration.
 	VisitDrop_integration(ctx *Drop_integrationContext) interface{}
 
@@ -901,17 +1174,23 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#drop_schema.
 	VisitDrop_schema(ctx *Drop_schemaContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#drop_secret.
+	VisitDrop_secret(ctx *Drop_secretContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#drop_semantic_view.
+	VisitDrop_semantic_view(ctx *Drop_semantic_viewContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#drop_sequence.
 	VisitDrop_sequence(ctx *Drop_sequenceContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#drop_session_policy.
 	VisitDrop_session_policy(ctx *Drop_session_policyContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#drop_password_policy.
+	VisitDrop_password_policy(ctx *Drop_password_policyContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#drop_share.
 	VisitDrop_share(ctx *Drop_shareContext) interface{}
-
-	// Visit a parse tree produced by SnowflakeParser#drop_stage.
-	VisitDrop_stage(ctx *Drop_stageContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#drop_stream.
 	VisitDrop_stream(ctx *Drop_streamContext) interface{}
@@ -979,6 +1258,9 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#comment_clause.
 	VisitComment_clause(ctx *Comment_clauseContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#inline_comment_clause.
+	VisitInline_comment_clause(ctx *Inline_comment_clauseContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#if_suspended.
 	VisitIf_suspended(ctx *If_suspendedContext) interface{}
 
@@ -990,6 +1272,9 @@ type SnowflakeParserVisitor interface {
 
 	// Visit a parse tree produced by SnowflakeParser#or_replace.
 	VisitOr_replace(ctx *Or_replaceContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#or_alter.
+	VisitOr_alter(ctx *Or_alterContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#describe.
 	VisitDescribe(ctx *DescribeContext) interface{}
@@ -1006,6 +1291,9 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#describe_dynamic_table.
 	VisitDescribe_dynamic_table(ctx *Describe_dynamic_tableContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#describe_event_table.
+	VisitDescribe_event_table(ctx *Describe_event_tableContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#describe_external_table.
 	VisitDescribe_external_table(ctx *Describe_external_tableContext) interface{}
 
@@ -1014,6 +1302,9 @@ type SnowflakeParserVisitor interface {
 
 	// Visit a parse tree produced by SnowflakeParser#describe_function.
 	VisitDescribe_function(ctx *Describe_functionContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#describe_git_repository.
+	VisitDescribe_git_repository(ctx *Describe_git_repositoryContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#describe_integration.
 	VisitDescribe_integration(ctx *Describe_integrationContext) interface{}
@@ -1045,17 +1336,20 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#describe_search_optimization.
 	VisitDescribe_search_optimization(ctx *Describe_search_optimizationContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#describe_semantic_view.
+	VisitDescribe_semantic_view(ctx *Describe_semantic_viewContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#describe_sequence.
 	VisitDescribe_sequence(ctx *Describe_sequenceContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#describe_session_policy.
 	VisitDescribe_session_policy(ctx *Describe_session_policyContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#describe_password_policy.
+	VisitDescribe_password_policy(ctx *Describe_password_policyContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#describe_share.
 	VisitDescribe_share(ctx *Describe_shareContext) interface{}
-
-	// Visit a parse tree produced by SnowflakeParser#describe_stage.
-	VisitDescribe_stage(ctx *Describe_stageContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#describe_stream.
 	VisitDescribe_stream(ctx *Describe_streamContext) interface{}
@@ -1084,6 +1378,9 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#show_alerts.
 	VisitShow_alerts(ctx *Show_alertsContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#show_channels.
+	VisitShow_channels(ctx *Show_channelsContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#show_columns.
 	VisitShow_columns(ctx *Show_columnsContext) interface{}
 
@@ -1096,6 +1393,9 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#limit_rows.
 	VisitLimit_rows(ctx *Limit_rowsContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#limit_rows_2.
+	VisitLimit_rows_2(ctx *Limit_rows_2Context) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#show_databases.
 	VisitShow_databases(ctx *Show_databasesContext) interface{}
 
@@ -1105,14 +1405,20 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#show_databases_in_replication_group.
 	VisitShow_databases_in_replication_group(ctx *Show_databases_in_replication_groupContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#show_datasets.
+	VisitShow_datasets(ctx *Show_datasetsContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#show_delegated_authorizations.
 	VisitShow_delegated_authorizations(ctx *Show_delegated_authorizationsContext) interface{}
 
-	// Visit a parse tree produced by SnowflakeParser#show_external_functions.
-	VisitShow_external_functions(ctx *Show_external_functionsContext) interface{}
-
 	// Visit a parse tree produced by SnowflakeParser#show_dynamic_tables.
 	VisitShow_dynamic_tables(ctx *Show_dynamic_tablesContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#show_event_tables.
+	VisitShow_event_tables(ctx *Show_event_tablesContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#show_external_functions.
+	VisitShow_external_functions(ctx *Show_external_functionsContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#show_external_tables.
 	VisitShow_external_tables(ctx *Show_external_tablesContext) interface{}
@@ -1125,6 +1431,15 @@ type SnowflakeParserVisitor interface {
 
 	// Visit a parse tree produced by SnowflakeParser#show_functions.
 	VisitShow_functions(ctx *Show_functionsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#show_git_branches.
+	VisitShow_git_branches(ctx *Show_git_branchesContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#show_git_repositories.
+	VisitShow_git_repositories(ctx *Show_git_repositoriesContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#show_git_tags.
+	VisitShow_git_tags(ctx *Show_git_tagsContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#show_global_accounts.
 	VisitShow_global_accounts(ctx *Show_global_accountsContext) interface{}
@@ -1152,6 +1467,9 @@ type SnowflakeParserVisitor interface {
 
 	// Visit a parse tree produced by SnowflakeParser#in_obj_2.
 	VisitIn_obj_2(ctx *In_obj_2Context) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#in_obj_3.
+	VisitIn_obj_3(ctx *In_obj_3Context) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#show_materialized_views.
 	VisitShow_materialized_views(ctx *Show_materialized_viewsContext) interface{}
@@ -1204,11 +1522,32 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#show_schemas.
 	VisitShow_schemas(ctx *Show_schemasContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#show_secrets.
+	VisitShow_secrets(ctx *Show_secretsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#show_semantic_views.
+	VisitShow_semantic_views(ctx *Show_semantic_viewsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#show_semantic_dimensions.
+	VisitShow_semantic_dimensions(ctx *Show_semantic_dimensionsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#show_semantic_dimensions_for_metric.
+	VisitShow_semantic_dimensions_for_metric(ctx *Show_semantic_dimensions_for_metricContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#show_semantic_facts.
+	VisitShow_semantic_facts(ctx *Show_semantic_factsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#show_semantic_metrics.
+	VisitShow_semantic_metrics(ctx *Show_semantic_metricsContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#show_sequences.
 	VisitShow_sequences(ctx *Show_sequencesContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#show_session_policies.
 	VisitShow_session_policies(ctx *Show_session_policiesContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#show_password_policies.
+	VisitShow_password_policies(ctx *Show_password_policiesContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#show_shares.
 	VisitShow_shares(ctx *Show_sharesContext) interface{}
@@ -1218,9 +1557,6 @@ type SnowflakeParserVisitor interface {
 
 	// Visit a parse tree produced by SnowflakeParser#show_shares_in_replication_group.
 	VisitShow_shares_in_replication_group(ctx *Show_shares_in_replication_groupContext) interface{}
-
-	// Visit a parse tree produced by SnowflakeParser#show_stages.
-	VisitShow_stages(ctx *Show_stagesContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#show_streams.
 	VisitShow_streams(ctx *Show_streamsContext) interface{}
@@ -1245,6 +1581,9 @@ type SnowflakeParserVisitor interface {
 
 	// Visit a parse tree produced by SnowflakeParser#show_variables.
 	VisitShow_variables(ctx *Show_variablesContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#show_versions_in_dataset.
+	VisitShow_versions_in_dataset(ctx *Show_versions_in_datasetContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#show_views.
 	VisitShow_views(ctx *Show_viewsContext) interface{}
@@ -1291,6 +1630,9 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#string_list.
 	VisitString_list(ctx *String_listContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#id_fn.
+	VisitId_fn(ctx *Id_fnContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#id_.
 	VisitId_(ctx *Id_Context) interface{}
 
@@ -1303,8 +1645,8 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#builtin_function.
 	VisitBuiltin_function(ctx *Builtin_functionContext) interface{}
 
-	// Visit a parse tree produced by SnowflakeParser#list_operator.
-	VisitList_operator(ctx *List_operatorContext) interface{}
+	// Visit a parse tree produced by SnowflakeParser#unary_or_binary_builtin_function.
+	VisitUnary_or_binary_builtin_function(ctx *Unary_or_binary_builtin_functionContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#binary_builtin_function.
 	VisitBinary_builtin_function(ctx *Binary_builtin_functionContext) interface{}
@@ -1315,6 +1657,9 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#ternary_builtin_function.
 	VisitTernary_builtin_function(ctx *Ternary_builtin_functionContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#list_function.
+	VisitList_function(ctx *List_functionContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#pattern.
 	VisitPattern(ctx *PatternContext) interface{}
 
@@ -1324,8 +1669,17 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#column_list.
 	VisitColumn_list(ctx *Column_listContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#aliased_column_list.
+	VisitAliased_column_list(ctx *Aliased_column_listContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#column_list_with_comment.
+	VisitColumn_list_with_comment(ctx *Column_list_with_commentContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#object_name.
 	VisitObject_name(ctx *Object_nameContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#object_name_or_identifier.
+	VisitObject_name_or_identifier(ctx *Object_name_or_identifierContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#num.
 	VisitNum(ctx *NumContext) interface{}
@@ -1339,6 +1693,9 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#expr.
 	VisitExpr(ctx *ExprContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#lambda_params.
+	VisitLambda_params(ctx *Lambda_paramsContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#iff_expr.
 	VisitIff_expr(ctx *Iff_exprContext) interface{}
 
@@ -1347,6 +1704,9 @@ type SnowflakeParserVisitor interface {
 
 	// Visit a parse tree produced by SnowflakeParser#try_cast_expr.
 	VisitTry_cast_expr(ctx *Try_cast_exprContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#cast_expr.
+	VisitCast_expr(ctx *Cast_exprContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#json_literal.
 	VisitJson_literal(ctx *Json_literalContext) interface{}
@@ -1360,8 +1720,14 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#arr_literal.
 	VisitArr_literal(ctx *Arr_literalContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#data_type_size.
+	VisitData_type_size(ctx *Data_type_sizeContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#data_type.
 	VisitData_type(ctx *Data_typeContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#vector_element_type.
+	VisitVector_element_type(ctx *Vector_element_typeContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#primitive_expression.
 	VisitPrimitive_expression(ctx *Primitive_expressionContext) interface{}
@@ -1377,6 +1743,15 @@ type SnowflakeParserVisitor interface {
 
 	// Visit a parse tree produced by SnowflakeParser#function_call.
 	VisitFunction_call(ctx *Function_callContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#param_assoc_list.
+	VisitParam_assoc_list(ctx *Param_assoc_listContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#param_assoc.
+	VisitParam_assoc(ctx *Param_assocContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#ignore_or_repect_nulls.
+	VisitIgnore_or_repect_nulls(ctx *Ignore_or_repect_nullsContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#ranking_windowed_function.
 	VisitRanking_windowed_function(ctx *Ranking_windowed_functionContext) interface{}
@@ -1414,17 +1789,17 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#common_table_expression.
 	VisitCommon_table_expression(ctx *Common_table_expressionContext) interface{}
 
-	// Visit a parse tree produced by SnowflakeParser#anchor_clause.
-	VisitAnchor_clause(ctx *Anchor_clauseContext) interface{}
-
-	// Visit a parse tree produced by SnowflakeParser#recursive_clause.
-	VisitRecursive_clause(ctx *Recursive_clauseContext) interface{}
-
 	// Visit a parse tree produced by SnowflakeParser#select_statement.
 	VisitSelect_statement(ctx *Select_statementContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#set_operators.
 	VisitSet_operators(ctx *Set_operatorsContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#by_name.
+	VisitBy_name(ctx *By_nameContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#select_statement_in_parentheses.
+	VisitSelect_statement_in_parentheses(ctx *Select_statement_in_parenthesesContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#select_optional_clauses.
 	VisitSelect_optional_clauses(ctx *Select_optional_clausesContext) interface{}
@@ -1447,8 +1822,17 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#select_list_elem.
 	VisitSelect_list_elem(ctx *Select_list_elemContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#column_elem_star.
+	VisitColumn_elem_star(ctx *Column_elem_starContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#column_elem.
 	VisitColumn_elem(ctx *Column_elemContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#object_name_or_alias.
+	VisitObject_name_or_alias(ctx *Object_name_or_aliasContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#exclude_clause.
+	VisitExclude_clause(ctx *Exclude_clauseContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#as_alias.
 	VisitAs_alias(ctx *As_aliasContext) interface{}
@@ -1495,6 +1879,9 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#flatten_table.
 	VisitFlatten_table(ctx *Flatten_tableContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#splited_table.
+	VisitSplited_table(ctx *Splited_tableContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#prior_list.
 	VisitPrior_list(ctx *Prior_listContext) interface{}
 
@@ -1509,6 +1896,9 @@ type SnowflakeParserVisitor interface {
 
 	// Visit a parse tree produced by SnowflakeParser#join_clause.
 	VisitJoin_clause(ctx *Join_clauseContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#on_using_clause.
+	VisitOn_using_clause(ctx *On_using_clauseContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#at_before.
 	VisitAt_before(ctx *At_beforeContext) interface{}
@@ -1561,14 +1951,26 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#pivot_unpivot.
 	VisitPivot_unpivot(ctx *Pivot_unpivotContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#include_exclude.
+	VisitInclude_exclude(ctx *Include_excludeContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#pivot_in_clause.
+	VisitPivot_in_clause(ctx *Pivot_in_clauseContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#default_on_null.
+	VisitDefault_on_null(ctx *Default_on_nullContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#column_alias_list_in_brackets.
 	VisitColumn_alias_list_in_brackets(ctx *Column_alias_list_in_bracketsContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#expr_list_in_parentheses.
 	VisitExpr_list_in_parentheses(ctx *Expr_list_in_parenthesesContext) interface{}
 
-	// Visit a parse tree produced by SnowflakeParser#values.
-	VisitValues(ctx *ValuesContext) interface{}
+	// Visit a parse tree produced by SnowflakeParser#values_table.
+	VisitValues_table(ctx *Values_tableContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#values_table_body.
+	VisitValues_table_body(ctx *Values_table_bodyContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#sample_method.
 	VisitSample_method(ctx *Sample_methodContext) interface{}
@@ -1591,6 +1993,9 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#null_not_null.
 	VisitNull_not_null(ctx *Null_not_nullContext) interface{}
 
+	// Visit a parse tree produced by SnowflakeParser#not_distinct_from.
+	VisitNot_distinct_from(ctx *Not_distinct_fromContext) interface{}
+
 	// Visit a parse tree produced by SnowflakeParser#subquery.
 	VisitSubquery(ctx *SubqueryContext) interface{}
 
@@ -1600,8 +2005,11 @@ type SnowflakeParserVisitor interface {
 	// Visit a parse tree produced by SnowflakeParser#where_clause.
 	VisitWhere_clause(ctx *Where_clauseContext) interface{}
 
-	// Visit a parse tree produced by SnowflakeParser#group_item.
-	VisitGroup_item(ctx *Group_itemContext) interface{}
+	// Visit a parse tree produced by SnowflakeParser#group_by_elem.
+	VisitGroup_by_elem(ctx *Group_by_elemContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#group_by_list.
+	VisitGroup_by_list(ctx *Group_by_listContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#group_by_clause.
 	VisitGroup_by_clause(ctx *Group_by_clauseContext) interface{}
@@ -1626,6 +2034,12 @@ type SnowflakeParserVisitor interface {
 
 	// Visit a parse tree produced by SnowflakeParser#limit_clause.
 	VisitLimit_clause(ctx *Limit_clauseContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#round_mode.
+	VisitRound_mode(ctx *Round_modeContext) interface{}
+
+	// Visit a parse tree produced by SnowflakeParser#round_expr.
+	VisitRound_expr(ctx *Round_exprContext) interface{}
 
 	// Visit a parse tree produced by SnowflakeParser#supplement_non_reserved_words.
 	VisitSupplement_non_reserved_words(ctx *Supplement_non_reserved_wordsContext) interface{}

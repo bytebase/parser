@@ -43,6 +43,9 @@ type SnowflakeParserListener interface {
 	// EnterMerge_matches is called when entering the merge_matches production.
 	EnterMerge_matches(c *Merge_matchesContext)
 
+	// EnterMerge_cond is called when entering the merge_cond production.
+	EnterMerge_cond(c *Merge_condContext)
+
 	// EnterMerge_update_delete is called when entering the merge_update_delete production.
 	EnterMerge_update_delete(c *Merge_update_deleteContext)
 
@@ -63,6 +66,9 @@ type SnowflakeParserListener interface {
 
 	// EnterOther_command is called when entering the other_command production.
 	EnterOther_command(c *Other_commandContext)
+
+	// EnterBegin_txn is called when entering the begin_txn production.
+	EnterBegin_txn(c *Begin_txnContext)
 
 	// EnterCopy_into_table is called when entering the copy_into_table production.
 	EnterCopy_into_table(c *Copy_into_tableContext)
@@ -91,6 +97,9 @@ type SnowflakeParserListener interface {
 	// EnterComment is called when entering the comment production.
 	EnterComment(c *CommentContext)
 
+	// EnterFunction_signature is called when entering the function_signature production.
+	EnterFunction_signature(c *Function_signatureContext)
+
 	// EnterCommit is called when entering the commit production.
 	EnterCommit(c *CommitContext)
 
@@ -99,6 +108,9 @@ type SnowflakeParserListener interface {
 
 	// EnterExecute_task is called when entering the execute_task production.
 	EnterExecute_task(c *Execute_taskContext)
+
+	// EnterRetry_last is called when entering the retry_last production.
+	EnterRetry_last(c *Retry_lastContext)
 
 	// EnterExplain is called when entering the explain production.
 	EnterExplain(c *ExplainContext)
@@ -157,11 +169,17 @@ type SnowflakeParserListener interface {
 	// EnterList is called when entering the list production.
 	EnterList(c *ListContext)
 
-	// EnterInternal_stage is called when entering the internal_stage production.
-	EnterInternal_stage(c *Internal_stageContext)
+	// EnterUser_stage is called when entering the user_stage production.
+	EnterUser_stage(c *User_stageContext)
 
-	// EnterExternal_stage is called when entering the external_stage production.
-	EnterExternal_stage(c *External_stageContext)
+	// EnterTable_stage is called when entering the table_stage production.
+	EnterTable_stage(c *Table_stageContext)
+
+	// EnterNamed_stage is called when entering the named_stage production.
+	EnterNamed_stage(c *Named_stageContext)
+
+	// EnterStage_path is called when entering the stage_path production.
+	EnterStage_path(c *Stage_pathContext)
 
 	// EnterPut is called when entering the put production.
 	EnterPut(c *PutContext)
@@ -247,8 +265,14 @@ type SnowflakeParserListener interface {
 	// EnterAccount_id_list is called when entering the account_id_list production.
 	EnterAccount_id_list(c *Account_id_listContext)
 
+	// EnterAlter_dataset is called when entering the alter_dataset production.
+	EnterAlter_dataset(c *Alter_datasetContext)
+
 	// EnterAlter_dynamic_table is called when entering the alter_dynamic_table production.
 	EnterAlter_dynamic_table(c *Alter_dynamic_tableContext)
+
+	// EnterId_list is called when entering the id_list production.
+	EnterId_list(c *Id_listContext)
 
 	// EnterAlter_external_table is called when entering the alter_external_table production.
 	EnterAlter_external_table(c *Alter_external_tableContext)
@@ -282,6 +306,15 @@ type SnowflakeParserListener interface {
 
 	// EnterData_type_list is called when entering the data_type_list production.
 	EnterData_type_list(c *Data_type_listContext)
+
+	// EnterAlter_git_repository is called when entering the alter_git_repository production.
+	EnterAlter_git_repository(c *Alter_git_repositoryContext)
+
+	// EnterAlter_git_set_opts is called when entering the alter_git_set_opts production.
+	EnterAlter_git_set_opts(c *Alter_git_set_optsContext)
+
+	// EnterAlter_git_unset_opts is called when entering the alter_git_unset_opts production.
+	EnterAlter_git_unset_opts(c *Alter_git_unset_optsContext)
 
 	// EnterAlter_masking_policy is called when entering the alter_masking_policy production.
 	EnterAlter_masking_policy(c *Alter_masking_policyContext)
@@ -331,8 +364,32 @@ type SnowflakeParserListener interface {
 	// EnterSchema_property is called when entering the schema_property production.
 	EnterSchema_property(c *Schema_propertyContext)
 
-	// EnterAlter_security_integration is called when entering the alter_security_integration production.
-	EnterAlter_security_integration(c *Alter_security_integrationContext)
+	// EnterAlter_sequence is called when entering the alter_sequence production.
+	EnterAlter_sequence(c *Alter_sequenceContext)
+
+	// EnterAlter_secret is called when entering the alter_secret production.
+	EnterAlter_secret(c *Alter_secretContext)
+
+	// EnterSecret_opts is called when entering the secret_opts production.
+	EnterSecret_opts(c *Secret_optsContext)
+
+	// EnterSecret_set_opts is called when entering the secret_set_opts production.
+	EnterSecret_set_opts(c *Secret_set_optsContext)
+
+	// EnterSecret_oauth_client_creds_opts is called when entering the secret_oauth_client_creds_opts production.
+	EnterSecret_oauth_client_creds_opts(c *Secret_oauth_client_creds_optsContext)
+
+	// EnterSecret_oauth_auth_code_opts is called when entering the secret_oauth_auth_code_opts production.
+	EnterSecret_oauth_auth_code_opts(c *Secret_oauth_auth_code_optsContext)
+
+	// EnterSecret_api_auth_opts is called when entering the secret_api_auth_opts production.
+	EnterSecret_api_auth_opts(c *Secret_api_auth_optsContext)
+
+	// EnterSecret_basic_auth_opts is called when entering the secret_basic_auth_opts production.
+	EnterSecret_basic_auth_opts(c *Secret_basic_auth_optsContext)
+
+	// EnterSecret_generic_string_opts is called when entering the secret_generic_string_opts production.
+	EnterSecret_generic_string_opts(c *Secret_generic_string_optsContext)
 
 	// EnterAlter_security_integration_external_oauth is called when entering the alter_security_integration_external_oauth production.
 	EnterAlter_security_integration_external_oauth(c *Alter_security_integration_external_oauthContext)
@@ -355,20 +412,17 @@ type SnowflakeParserListener interface {
 	// EnterSecurity_integration_scim_property is called when entering the security_integration_scim_property production.
 	EnterSecurity_integration_scim_property(c *Security_integration_scim_propertyContext)
 
-	// EnterAlter_sequence is called when entering the alter_sequence production.
-	EnterAlter_sequence(c *Alter_sequenceContext)
-
 	// EnterAlter_session is called when entering the alter_session production.
 	EnterAlter_session(c *Alter_sessionContext)
 
 	// EnterAlter_session_policy is called when entering the alter_session_policy production.
 	EnterAlter_session_policy(c *Alter_session_policyContext)
 
+	// EnterAlter_password_policy is called when entering the alter_password_policy production.
+	EnterAlter_password_policy(c *Alter_password_policyContext)
+
 	// EnterAlter_share is called when entering the alter_share production.
 	EnterAlter_share(c *Alter_shareContext)
-
-	// EnterAlter_stage is called when entering the alter_stage production.
-	EnterAlter_stage(c *Alter_stageContext)
 
 	// EnterAlter_storage_integration is called when entering the alter_storage_integration production.
 	EnterAlter_storage_integration(c *Alter_storage_integrationContext)
@@ -379,14 +433,44 @@ type SnowflakeParserListener interface {
 	// EnterAlter_table is called when entering the alter_table production.
 	EnterAlter_table(c *Alter_tableContext)
 
+	// EnterRls_operations is called when entering the rls_operations production.
+	EnterRls_operations(c *Rls_operationsContext)
+
 	// EnterClustering_action is called when entering the clustering_action production.
 	EnterClustering_action(c *Clustering_actionContext)
 
 	// EnterTable_column_action is called when entering the table_column_action production.
 	EnterTable_column_action(c *Table_column_actionContext)
 
+	// EnterAlter_column_clause is called when entering the alter_column_clause production.
+	EnterAlter_column_clause(c *Alter_column_clauseContext)
+
 	// EnterInline_constraint is called when entering the inline_constraint production.
 	EnterInline_constraint(c *Inline_constraintContext)
+
+	// EnterEnforced_not_enforced is called when entering the enforced_not_enforced production.
+	EnterEnforced_not_enforced(c *Enforced_not_enforcedContext)
+
+	// EnterDeferrable_not_deferrable is called when entering the deferrable_not_deferrable production.
+	EnterDeferrable_not_deferrable(c *Deferrable_not_deferrableContext)
+
+	// EnterInitially_deferred_or_immediate is called when entering the initially_deferred_or_immediate production.
+	EnterInitially_deferred_or_immediate(c *Initially_deferred_or_immediateContext)
+
+	// EnterCommon_constraint_properties is called when entering the common_constraint_properties production.
+	EnterCommon_constraint_properties(c *Common_constraint_propertiesContext)
+
+	// EnterOn_update is called when entering the on_update production.
+	EnterOn_update(c *On_updateContext)
+
+	// EnterOn_delete is called when entering the on_delete production.
+	EnterOn_delete(c *On_deleteContext)
+
+	// EnterForeign_key_match is called when entering the foreign_key_match production.
+	EnterForeign_key_match(c *Foreign_key_matchContext)
+
+	// EnterOn_action is called when entering the on_action production.
+	EnterOn_action(c *On_actionContext)
 
 	// EnterConstraint_properties is called when entering the constraint_properties production.
 	EnterConstraint_properties(c *Constraint_propertiesContext)
@@ -466,6 +550,9 @@ type SnowflakeParserListener interface {
 	// EnterUnset_tags is called when entering the unset_tags production.
 	EnterUnset_tags(c *Unset_tagsContext)
 
+	// EnterTag_list is called when entering the tag_list production.
+	EnterTag_list(c *Tag_listContext)
+
 	// EnterCreate_command is called when entering the create_command production.
 	EnterCreate_command(c *Create_commandContext)
 
@@ -493,9 +580,6 @@ type SnowflakeParserListener interface {
 	// EnterCreate_database is called when entering the create_database production.
 	EnterCreate_database(c *Create_databaseContext)
 
-	// EnterCreate_dynamic_table is called when entering the create_dynamic_table production.
-	EnterCreate_dynamic_table(c *Create_dynamic_tableContext)
-
 	// EnterClone_at_before is called when entering the clone_at_before production.
 	EnterClone_at_before(c *Clone_at_beforeContext)
 
@@ -510,6 +594,30 @@ type SnowflakeParserListener interface {
 
 	// EnterCompression is called when entering the compression production.
 	EnterCompression(c *CompressionContext)
+
+	// EnterCreate_dataset is called when entering the create_dataset production.
+	EnterCreate_dataset(c *Create_datasetContext)
+
+	// EnterCreate_dynamic_table is called when entering the create_dynamic_table production.
+	EnterCreate_dynamic_table(c *Create_dynamic_tableContext)
+
+	// EnterDynamic_table_params is called when entering the dynamic_table_params production.
+	EnterDynamic_table_params(c *Dynamic_table_paramsContext)
+
+	// EnterDynamic_table_settable_params is called when entering the dynamic_table_settable_params production.
+	EnterDynamic_table_settable_params(c *Dynamic_table_settable_paramsContext)
+
+	// EnterDynamic_table_unsettable_params is called when entering the dynamic_table_unsettable_params production.
+	EnterDynamic_table_unsettable_params(c *Dynamic_table_unsettable_paramsContext)
+
+	// EnterData_retention_params is called when entering the data_retention_params production.
+	EnterData_retention_params(c *Data_retention_paramsContext)
+
+	// EnterSet_data_retention_params is called when entering the set_data_retention_params production.
+	EnterSet_data_retention_params(c *Set_data_retention_paramsContext)
+
+	// EnterCreate_event_table is called when entering the create_event_table production.
+	EnterCreate_event_table(c *Create_event_tableContext)
 
 	// EnterCreate_external_function is called when entering the create_external_function production.
 	EnterCreate_external_function(c *Create_external_functionContext)
@@ -541,14 +649,26 @@ type SnowflakeParserListener interface {
 	// EnterArg_decl is called when entering the arg_decl production.
 	EnterArg_decl(c *Arg_declContext)
 
+	// EnterArg_default_value_clause is called when entering the arg_default_value_clause production.
+	EnterArg_default_value_clause(c *Arg_default_value_clauseContext)
+
 	// EnterCol_decl is called when entering the col_decl production.
 	EnterCol_decl(c *Col_declContext)
+
+	// EnterVirtual_column_decl is called when entering the virtual_column_decl production.
+	EnterVirtual_column_decl(c *Virtual_column_declContext)
 
 	// EnterFunction_definition is called when entering the function_definition production.
 	EnterFunction_definition(c *Function_definitionContext)
 
 	// EnterCreate_function is called when entering the create_function production.
 	EnterCreate_function(c *Create_functionContext)
+
+	// EnterCreate_git_repository is called when entering the create_git_repository production.
+	EnterCreate_git_repository(c *Create_git_repositoryContext)
+
+	// EnterCreate_git_opts is called when entering the create_git_opts production.
+	EnterCreate_git_opts(c *Create_git_optsContext)
 
 	// EnterCreate_managed_account is called when entering the create_managed_account production.
 	EnterCreate_managed_account(c *Create_managed_accountContext)
@@ -589,6 +709,9 @@ type SnowflakeParserListener interface {
 	// EnterProcedure_definition is called when entering the procedure_definition production.
 	EnterProcedure_definition(c *Procedure_definitionContext)
 
+	// EnterNot_null is called when entering the not_null production.
+	EnterNot_null(c *Not_nullContext)
+
 	// EnterCreate_procedure is called when entering the create_procedure production.
 	EnterCreate_procedure(c *Create_procedureContext)
 
@@ -606,6 +729,9 @@ type SnowflakeParserListener interface {
 
 	// EnterCreate_schema is called when entering the create_schema production.
 	EnterCreate_schema(c *Create_schemaContext)
+
+	// EnterCreate_secret is called when entering the create_secret production.
+	EnterCreate_secret(c *Create_secretContext)
 
 	// EnterCreate_security_integration_external_oauth is called when entering the create_security_integration_external_oauth production.
 	EnterCreate_security_integration_external_oauth(c *Create_security_integration_external_oauthContext)
@@ -634,11 +760,47 @@ type SnowflakeParserListener interface {
 	// EnterIncrement_by is called when entering the increment_by production.
 	EnterIncrement_by(c *Increment_byContext)
 
+	// EnterCreate_semantic_view is called when entering the create_semantic_view production.
+	EnterCreate_semantic_view(c *Create_semantic_viewContext)
+
+	// EnterLogical_table is called when entering the logical_table production.
+	EnterLogical_table(c *Logical_tableContext)
+
+	// EnterRelationship_def is called when entering the relationship_def production.
+	EnterRelationship_def(c *Relationship_defContext)
+
+	// EnterWith_synonyms_clause is called when entering the with_synonyms_clause production.
+	EnterWith_synonyms_clause(c *With_synonyms_clauseContext)
+
+	// EnterSemantic_expression_list is called when entering the semantic_expression_list production.
+	EnterSemantic_expression_list(c *Semantic_expression_listContext)
+
+	// EnterSemantic_expression is called when entering the semantic_expression production.
+	EnterSemantic_expression(c *Semantic_expressionContext)
+
+	// EnterWith_extension_clause is called when entering the with_extension_clause production.
+	EnterWith_extension_clause(c *With_extension_clauseContext)
+
 	// EnterCreate_sequence is called when entering the create_sequence production.
 	EnterCreate_sequence(c *Create_sequenceContext)
 
 	// EnterCreate_session_policy is called when entering the create_session_policy production.
 	EnterCreate_session_policy(c *Create_session_policyContext)
+
+	// EnterSession_policy_params is called when entering the session_policy_params production.
+	EnterSession_policy_params(c *Session_policy_paramsContext)
+
+	// EnterSession_policy_param_name is called when entering the session_policy_param_name production.
+	EnterSession_policy_param_name(c *Session_policy_param_nameContext)
+
+	// EnterCreate_password_policy is called when entering the create_password_policy production.
+	EnterCreate_password_policy(c *Create_password_policyContext)
+
+	// EnterPassword_policy_params is called when entering the password_policy_params production.
+	EnterPassword_policy_params(c *Password_policy_paramsContext)
+
+	// EnterPassword_policy_param_name is called when entering the password_policy_param_name production.
+	EnterPassword_policy_param_name(c *Password_policy_param_nameContext)
 
 	// EnterCreate_share is called when entering the create_share production.
 	EnterCreate_share(c *Create_shareContext)
@@ -652,8 +814,8 @@ type SnowflakeParserListener interface {
 	// EnterCopy_options is called when entering the copy_options production.
 	EnterCopy_options(c *Copy_optionsContext)
 
-	// EnterInternal_stage_params is called when entering the internal_stage_params production.
-	EnterInternal_stage_params(c *Internal_stage_paramsContext)
+	// EnterStage_encryption_opts_internal is called when entering the stage_encryption_opts_internal production.
+	EnterStage_encryption_opts_internal(c *Stage_encryption_opts_internalContext)
 
 	// EnterStage_type is called when entering the stage_type production.
 	EnterStage_type(c *Stage_typeContext)
@@ -679,6 +841,27 @@ type SnowflakeParserListener interface {
 	// EnterAws_role is called when entering the aws_role production.
 	EnterAws_role(c *Aws_roleContext)
 
+	// EnterAzure_encryption_value is called when entering the azure_encryption_value production.
+	EnterAzure_encryption_value(c *Azure_encryption_valueContext)
+
+	// EnterStage_encryption_opts_az is called when entering the stage_encryption_opts_az production.
+	EnterStage_encryption_opts_az(c *Stage_encryption_opts_azContext)
+
+	// EnterStorage_integration_eq_id is called when entering the storage_integration_eq_id production.
+	EnterStorage_integration_eq_id(c *Storage_integration_eq_idContext)
+
+	// EnterAz_credential_or_storage_integration is called when entering the az_credential_or_storage_integration production.
+	EnterAz_credential_or_storage_integration(c *Az_credential_or_storage_integrationContext)
+
+	// EnterGcp_encryption_value is called when entering the gcp_encryption_value production.
+	EnterGcp_encryption_value(c *Gcp_encryption_valueContext)
+
+	// EnterStage_encryption_opts_gcp is called when entering the stage_encryption_opts_gcp production.
+	EnterStage_encryption_opts_gcp(c *Stage_encryption_opts_gcpContext)
+
+	// EnterAws_credential_or_storage_integration is called when entering the aws_credential_or_storage_integration production.
+	EnterAws_credential_or_storage_integration(c *Aws_credential_or_storage_integrationContext)
+
 	// EnterExternal_stage_params is called when entering the external_stage_params production.
 	EnterExternal_stage_params(c *External_stage_paramsContext)
 
@@ -697,11 +880,29 @@ type SnowflakeParserListener interface {
 	// EnterNotification_integration is called when entering the notification_integration production.
 	EnterNotification_integration(c *Notification_integrationContext)
 
-	// EnterDirectory_table_params is called when entering the directory_table_params production.
-	EnterDirectory_table_params(c *Directory_table_paramsContext)
+	// EnterDirectory_table_internal_params is called when entering the directory_table_internal_params production.
+	EnterDirectory_table_internal_params(c *Directory_table_internal_paramsContext)
+
+	// EnterDirectory_table_external_params is called when entering the directory_table_external_params production.
+	EnterDirectory_table_external_params(c *Directory_table_external_paramsContext)
 
 	// EnterCreate_stage is called when entering the create_stage production.
 	EnterCreate_stage(c *Create_stageContext)
+
+	// EnterAlter_semantic_view is called when entering the alter_semantic_view production.
+	EnterAlter_semantic_view(c *Alter_semantic_viewContext)
+
+	// EnterAlter_stage is called when entering the alter_stage production.
+	EnterAlter_stage(c *Alter_stageContext)
+
+	// EnterDrop_stage is called when entering the drop_stage production.
+	EnterDrop_stage(c *Drop_stageContext)
+
+	// EnterDescribe_stage is called when entering the describe_stage production.
+	EnterDescribe_stage(c *Describe_stageContext)
+
+	// EnterShow_stages is called when entering the show_stages production.
+	EnterShow_stages(c *Show_stagesContext)
 
 	// EnterCloud_provider_params is called when entering the cloud_provider_params production.
 	EnterCloud_provider_params(c *Cloud_provider_paramsContext)
@@ -757,8 +958,8 @@ type SnowflakeParserListener interface {
 	// EnterCollate is called when entering the collate production.
 	EnterCollate(c *CollateContext)
 
-	// EnterNot_null is called when entering the not_null production.
-	EnterNot_null(c *Not_nullContext)
+	// EnterOrder_noorder is called when entering the order_noorder production.
+	EnterOrder_noorder(c *Order_noorderContext)
 
 	// EnterDefault_value is called when entering the default_value production.
 	EnterDefault_value(c *Default_valueContext)
@@ -766,11 +967,20 @@ type SnowflakeParserListener interface {
 	// EnterForeign_key is called when entering the foreign_key production.
 	EnterForeign_key(c *Foreign_keyContext)
 
+	// EnterPrimary_key is called when entering the primary_key production.
+	EnterPrimary_key(c *Primary_keyContext)
+
 	// EnterOut_of_line_constraint is called when entering the out_of_line_constraint production.
 	EnterOut_of_line_constraint(c *Out_of_line_constraintContext)
 
 	// EnterFull_col_decl is called when entering the full_col_decl production.
 	EnterFull_col_decl(c *Full_col_declContext)
+
+	// EnterMaterialized_col_decl is called when entering the materialized_col_decl production.
+	EnterMaterialized_col_decl(c *Materialized_col_declContext)
+
+	// EnterMaterialized_col_decl_list is called when entering the materialized_col_decl_list production.
+	EnterMaterialized_col_decl_list(c *Materialized_col_decl_listContext)
 
 	// EnterColumn_decl_item is called when entering the column_decl_item production.
 	EnterColumn_decl_item(c *Column_decl_itemContext)
@@ -781,11 +991,23 @@ type SnowflakeParserListener interface {
 	// EnterCreate_table is called when entering the create_table production.
 	EnterCreate_table(c *Create_tableContext)
 
+	// EnterColumn_decl_item_list_paren is called when entering the column_decl_item_list_paren production.
+	EnterColumn_decl_item_list_paren(c *Column_decl_item_list_parenContext)
+
+	// EnterCreate_table_clause is called when entering the create_table_clause production.
+	EnterCreate_table_clause(c *Create_table_clauseContext)
+
 	// EnterCreate_table_as_select is called when entering the create_table_as_select production.
 	EnterCreate_table_as_select(c *Create_table_as_selectContext)
 
+	// EnterCreate_table_like is called when entering the create_table_like production.
+	EnterCreate_table_like(c *Create_table_likeContext)
+
 	// EnterCreate_tag is called when entering the create_tag production.
 	EnterCreate_tag(c *Create_tagContext)
+
+	// EnterTag_allowed_values is called when entering the tag_allowed_values production.
+	EnterTag_allowed_values(c *Tag_allowed_valuesContext)
 
 	// EnterSession_parameter is called when entering the session_parameter production.
 	EnterSession_parameter(c *Session_parameterContext)
@@ -793,17 +1015,59 @@ type SnowflakeParserListener interface {
 	// EnterSession_parameter_list is called when entering the session_parameter_list production.
 	EnterSession_parameter_list(c *Session_parameter_listContext)
 
-	// EnterSession_parameter_init_list is called when entering the session_parameter_init_list production.
-	EnterSession_parameter_init_list(c *Session_parameter_init_listContext)
-
-	// EnterSession_parameter_init is called when entering the session_parameter_init production.
-	EnterSession_parameter_init(c *Session_parameter_initContext)
+	// EnterSession_params_list is called when entering the session_params_list production.
+	EnterSession_params_list(c *Session_params_listContext)
 
 	// EnterCreate_task is called when entering the create_task production.
 	EnterCreate_task(c *Create_taskContext)
 
+	// EnterTask_parameters is called when entering the task_parameters production.
+	EnterTask_parameters(c *Task_parametersContext)
+
+	// EnterTask_compute is called when entering the task_compute production.
+	EnterTask_compute(c *Task_computeContext)
+
+	// EnterTask_schedule is called when entering the task_schedule production.
+	EnterTask_schedule(c *Task_scheduleContext)
+
+	// EnterTask_timeout is called when entering the task_timeout production.
+	EnterTask_timeout(c *Task_timeoutContext)
+
+	// EnterTask_suspend_after_failure_number is called when entering the task_suspend_after_failure_number production.
+	EnterTask_suspend_after_failure_number(c *Task_suspend_after_failure_numberContext)
+
+	// EnterTask_error_integration is called when entering the task_error_integration production.
+	EnterTask_error_integration(c *Task_error_integrationContext)
+
+	// EnterTask_overlap is called when entering the task_overlap production.
+	EnterTask_overlap(c *Task_overlapContext)
+
 	// EnterSql is called when entering the sql production.
 	EnterSql(c *SqlContext)
+
+	// EnterTask_sql is called when entering the task_sql production.
+	EnterTask_sql(c *Task_sqlContext)
+
+	// EnterTask_scripting_block is called when entering the task_scripting_block production.
+	EnterTask_scripting_block(c *Task_scripting_blockContext)
+
+	// EnterTask_scripting_declaration_list is called when entering the task_scripting_declaration_list production.
+	EnterTask_scripting_declaration_list(c *Task_scripting_declaration_listContext)
+
+	// EnterTask_scripting_declaration is called when entering the task_scripting_declaration production.
+	EnterTask_scripting_declaration(c *Task_scripting_declarationContext)
+
+	// EnterTask_scripting_statement_list is called when entering the task_scripting_statement_list production.
+	EnterTask_scripting_statement_list(c *Task_scripting_statement_listContext)
+
+	// EnterTask_scripting_statement is called when entering the task_scripting_statement production.
+	EnterTask_scripting_statement(c *Task_scripting_statementContext)
+
+	// EnterTask_scripting_assignment is called when entering the task_scripting_assignment production.
+	EnterTask_scripting_assignment(c *Task_scripting_assignmentContext)
+
+	// EnterTask_scripting_return is called when entering the task_scripting_return production.
+	EnterTask_scripting_return(c *Task_scripting_returnContext)
 
 	// EnterCall is called when entering the call production.
 	EnterCall(c *CallContext)
@@ -819,6 +1083,12 @@ type SnowflakeParserListener interface {
 
 	// EnterCreate_warehouse is called when entering the create_warehouse production.
 	EnterCreate_warehouse(c *Create_warehouseContext)
+
+	// EnterWh_common_size is called when entering the wh_common_size production.
+	EnterWh_common_size(c *Wh_common_sizeContext)
+
+	// EnterWh_extra_size is called when entering the wh_extra_size production.
+	EnterWh_extra_size(c *Wh_extra_sizeContext)
 
 	// EnterWh_properties is called when entering the wh_properties production.
 	EnterWh_properties(c *Wh_propertiesContext)
@@ -865,6 +1135,9 @@ type SnowflakeParserListener interface {
 	// EnterDrop_function is called when entering the drop_function production.
 	EnterDrop_function(c *Drop_functionContext)
 
+	// EnterDrop_git_repository is called when entering the drop_git_repository production.
+	EnterDrop_git_repository(c *Drop_git_repositoryContext)
+
 	// EnterDrop_integration is called when entering the drop_integration production.
 	EnterDrop_integration(c *Drop_integrationContext)
 
@@ -901,17 +1174,23 @@ type SnowflakeParserListener interface {
 	// EnterDrop_schema is called when entering the drop_schema production.
 	EnterDrop_schema(c *Drop_schemaContext)
 
+	// EnterDrop_secret is called when entering the drop_secret production.
+	EnterDrop_secret(c *Drop_secretContext)
+
+	// EnterDrop_semantic_view is called when entering the drop_semantic_view production.
+	EnterDrop_semantic_view(c *Drop_semantic_viewContext)
+
 	// EnterDrop_sequence is called when entering the drop_sequence production.
 	EnterDrop_sequence(c *Drop_sequenceContext)
 
 	// EnterDrop_session_policy is called when entering the drop_session_policy production.
 	EnterDrop_session_policy(c *Drop_session_policyContext)
 
+	// EnterDrop_password_policy is called when entering the drop_password_policy production.
+	EnterDrop_password_policy(c *Drop_password_policyContext)
+
 	// EnterDrop_share is called when entering the drop_share production.
 	EnterDrop_share(c *Drop_shareContext)
-
-	// EnterDrop_stage is called when entering the drop_stage production.
-	EnterDrop_stage(c *Drop_stageContext)
 
 	// EnterDrop_stream is called when entering the drop_stream production.
 	EnterDrop_stream(c *Drop_streamContext)
@@ -979,6 +1258,9 @@ type SnowflakeParserListener interface {
 	// EnterComment_clause is called when entering the comment_clause production.
 	EnterComment_clause(c *Comment_clauseContext)
 
+	// EnterInline_comment_clause is called when entering the inline_comment_clause production.
+	EnterInline_comment_clause(c *Inline_comment_clauseContext)
+
 	// EnterIf_suspended is called when entering the if_suspended production.
 	EnterIf_suspended(c *If_suspendedContext)
 
@@ -990,6 +1272,9 @@ type SnowflakeParserListener interface {
 
 	// EnterOr_replace is called when entering the or_replace production.
 	EnterOr_replace(c *Or_replaceContext)
+
+	// EnterOr_alter is called when entering the or_alter production.
+	EnterOr_alter(c *Or_alterContext)
 
 	// EnterDescribe is called when entering the describe production.
 	EnterDescribe(c *DescribeContext)
@@ -1006,6 +1291,9 @@ type SnowflakeParserListener interface {
 	// EnterDescribe_dynamic_table is called when entering the describe_dynamic_table production.
 	EnterDescribe_dynamic_table(c *Describe_dynamic_tableContext)
 
+	// EnterDescribe_event_table is called when entering the describe_event_table production.
+	EnterDescribe_event_table(c *Describe_event_tableContext)
+
 	// EnterDescribe_external_table is called when entering the describe_external_table production.
 	EnterDescribe_external_table(c *Describe_external_tableContext)
 
@@ -1014,6 +1302,9 @@ type SnowflakeParserListener interface {
 
 	// EnterDescribe_function is called when entering the describe_function production.
 	EnterDescribe_function(c *Describe_functionContext)
+
+	// EnterDescribe_git_repository is called when entering the describe_git_repository production.
+	EnterDescribe_git_repository(c *Describe_git_repositoryContext)
 
 	// EnterDescribe_integration is called when entering the describe_integration production.
 	EnterDescribe_integration(c *Describe_integrationContext)
@@ -1045,17 +1336,20 @@ type SnowflakeParserListener interface {
 	// EnterDescribe_search_optimization is called when entering the describe_search_optimization production.
 	EnterDescribe_search_optimization(c *Describe_search_optimizationContext)
 
+	// EnterDescribe_semantic_view is called when entering the describe_semantic_view production.
+	EnterDescribe_semantic_view(c *Describe_semantic_viewContext)
+
 	// EnterDescribe_sequence is called when entering the describe_sequence production.
 	EnterDescribe_sequence(c *Describe_sequenceContext)
 
 	// EnterDescribe_session_policy is called when entering the describe_session_policy production.
 	EnterDescribe_session_policy(c *Describe_session_policyContext)
 
+	// EnterDescribe_password_policy is called when entering the describe_password_policy production.
+	EnterDescribe_password_policy(c *Describe_password_policyContext)
+
 	// EnterDescribe_share is called when entering the describe_share production.
 	EnterDescribe_share(c *Describe_shareContext)
-
-	// EnterDescribe_stage is called when entering the describe_stage production.
-	EnterDescribe_stage(c *Describe_stageContext)
 
 	// EnterDescribe_stream is called when entering the describe_stream production.
 	EnterDescribe_stream(c *Describe_streamContext)
@@ -1084,6 +1378,9 @@ type SnowflakeParserListener interface {
 	// EnterShow_alerts is called when entering the show_alerts production.
 	EnterShow_alerts(c *Show_alertsContext)
 
+	// EnterShow_channels is called when entering the show_channels production.
+	EnterShow_channels(c *Show_channelsContext)
+
 	// EnterShow_columns is called when entering the show_columns production.
 	EnterShow_columns(c *Show_columnsContext)
 
@@ -1096,6 +1393,9 @@ type SnowflakeParserListener interface {
 	// EnterLimit_rows is called when entering the limit_rows production.
 	EnterLimit_rows(c *Limit_rowsContext)
 
+	// EnterLimit_rows_2 is called when entering the limit_rows_2 production.
+	EnterLimit_rows_2(c *Limit_rows_2Context)
+
 	// EnterShow_databases is called when entering the show_databases production.
 	EnterShow_databases(c *Show_databasesContext)
 
@@ -1105,14 +1405,20 @@ type SnowflakeParserListener interface {
 	// EnterShow_databases_in_replication_group is called when entering the show_databases_in_replication_group production.
 	EnterShow_databases_in_replication_group(c *Show_databases_in_replication_groupContext)
 
+	// EnterShow_datasets is called when entering the show_datasets production.
+	EnterShow_datasets(c *Show_datasetsContext)
+
 	// EnterShow_delegated_authorizations is called when entering the show_delegated_authorizations production.
 	EnterShow_delegated_authorizations(c *Show_delegated_authorizationsContext)
 
-	// EnterShow_external_functions is called when entering the show_external_functions production.
-	EnterShow_external_functions(c *Show_external_functionsContext)
-
 	// EnterShow_dynamic_tables is called when entering the show_dynamic_tables production.
 	EnterShow_dynamic_tables(c *Show_dynamic_tablesContext)
+
+	// EnterShow_event_tables is called when entering the show_event_tables production.
+	EnterShow_event_tables(c *Show_event_tablesContext)
+
+	// EnterShow_external_functions is called when entering the show_external_functions production.
+	EnterShow_external_functions(c *Show_external_functionsContext)
 
 	// EnterShow_external_tables is called when entering the show_external_tables production.
 	EnterShow_external_tables(c *Show_external_tablesContext)
@@ -1125,6 +1431,15 @@ type SnowflakeParserListener interface {
 
 	// EnterShow_functions is called when entering the show_functions production.
 	EnterShow_functions(c *Show_functionsContext)
+
+	// EnterShow_git_branches is called when entering the show_git_branches production.
+	EnterShow_git_branches(c *Show_git_branchesContext)
+
+	// EnterShow_git_repositories is called when entering the show_git_repositories production.
+	EnterShow_git_repositories(c *Show_git_repositoriesContext)
+
+	// EnterShow_git_tags is called when entering the show_git_tags production.
+	EnterShow_git_tags(c *Show_git_tagsContext)
 
 	// EnterShow_global_accounts is called when entering the show_global_accounts production.
 	EnterShow_global_accounts(c *Show_global_accountsContext)
@@ -1152,6 +1467,9 @@ type SnowflakeParserListener interface {
 
 	// EnterIn_obj_2 is called when entering the in_obj_2 production.
 	EnterIn_obj_2(c *In_obj_2Context)
+
+	// EnterIn_obj_3 is called when entering the in_obj_3 production.
+	EnterIn_obj_3(c *In_obj_3Context)
 
 	// EnterShow_materialized_views is called when entering the show_materialized_views production.
 	EnterShow_materialized_views(c *Show_materialized_viewsContext)
@@ -1204,11 +1522,32 @@ type SnowflakeParserListener interface {
 	// EnterShow_schemas is called when entering the show_schemas production.
 	EnterShow_schemas(c *Show_schemasContext)
 
+	// EnterShow_secrets is called when entering the show_secrets production.
+	EnterShow_secrets(c *Show_secretsContext)
+
+	// EnterShow_semantic_views is called when entering the show_semantic_views production.
+	EnterShow_semantic_views(c *Show_semantic_viewsContext)
+
+	// EnterShow_semantic_dimensions is called when entering the show_semantic_dimensions production.
+	EnterShow_semantic_dimensions(c *Show_semantic_dimensionsContext)
+
+	// EnterShow_semantic_dimensions_for_metric is called when entering the show_semantic_dimensions_for_metric production.
+	EnterShow_semantic_dimensions_for_metric(c *Show_semantic_dimensions_for_metricContext)
+
+	// EnterShow_semantic_facts is called when entering the show_semantic_facts production.
+	EnterShow_semantic_facts(c *Show_semantic_factsContext)
+
+	// EnterShow_semantic_metrics is called when entering the show_semantic_metrics production.
+	EnterShow_semantic_metrics(c *Show_semantic_metricsContext)
+
 	// EnterShow_sequences is called when entering the show_sequences production.
 	EnterShow_sequences(c *Show_sequencesContext)
 
 	// EnterShow_session_policies is called when entering the show_session_policies production.
 	EnterShow_session_policies(c *Show_session_policiesContext)
+
+	// EnterShow_password_policies is called when entering the show_password_policies production.
+	EnterShow_password_policies(c *Show_password_policiesContext)
 
 	// EnterShow_shares is called when entering the show_shares production.
 	EnterShow_shares(c *Show_sharesContext)
@@ -1218,9 +1557,6 @@ type SnowflakeParserListener interface {
 
 	// EnterShow_shares_in_replication_group is called when entering the show_shares_in_replication_group production.
 	EnterShow_shares_in_replication_group(c *Show_shares_in_replication_groupContext)
-
-	// EnterShow_stages is called when entering the show_stages production.
-	EnterShow_stages(c *Show_stagesContext)
 
 	// EnterShow_streams is called when entering the show_streams production.
 	EnterShow_streams(c *Show_streamsContext)
@@ -1245,6 +1581,9 @@ type SnowflakeParserListener interface {
 
 	// EnterShow_variables is called when entering the show_variables production.
 	EnterShow_variables(c *Show_variablesContext)
+
+	// EnterShow_versions_in_dataset is called when entering the show_versions_in_dataset production.
+	EnterShow_versions_in_dataset(c *Show_versions_in_datasetContext)
 
 	// EnterShow_views is called when entering the show_views production.
 	EnterShow_views(c *Show_viewsContext)
@@ -1291,6 +1630,9 @@ type SnowflakeParserListener interface {
 	// EnterString_list is called when entering the string_list production.
 	EnterString_list(c *String_listContext)
 
+	// EnterId_fn is called when entering the id_fn production.
+	EnterId_fn(c *Id_fnContext)
+
 	// EnterId_ is called when entering the id_ production.
 	EnterId_(c *Id_Context)
 
@@ -1303,8 +1645,8 @@ type SnowflakeParserListener interface {
 	// EnterBuiltin_function is called when entering the builtin_function production.
 	EnterBuiltin_function(c *Builtin_functionContext)
 
-	// EnterList_operator is called when entering the list_operator production.
-	EnterList_operator(c *List_operatorContext)
+	// EnterUnary_or_binary_builtin_function is called when entering the unary_or_binary_builtin_function production.
+	EnterUnary_or_binary_builtin_function(c *Unary_or_binary_builtin_functionContext)
 
 	// EnterBinary_builtin_function is called when entering the binary_builtin_function production.
 	EnterBinary_builtin_function(c *Binary_builtin_functionContext)
@@ -1315,6 +1657,9 @@ type SnowflakeParserListener interface {
 	// EnterTernary_builtin_function is called when entering the ternary_builtin_function production.
 	EnterTernary_builtin_function(c *Ternary_builtin_functionContext)
 
+	// EnterList_function is called when entering the list_function production.
+	EnterList_function(c *List_functionContext)
+
 	// EnterPattern is called when entering the pattern production.
 	EnterPattern(c *PatternContext)
 
@@ -1324,8 +1669,17 @@ type SnowflakeParserListener interface {
 	// EnterColumn_list is called when entering the column_list production.
 	EnterColumn_list(c *Column_listContext)
 
+	// EnterAliased_column_list is called when entering the aliased_column_list production.
+	EnterAliased_column_list(c *Aliased_column_listContext)
+
+	// EnterColumn_list_with_comment is called when entering the column_list_with_comment production.
+	EnterColumn_list_with_comment(c *Column_list_with_commentContext)
+
 	// EnterObject_name is called when entering the object_name production.
 	EnterObject_name(c *Object_nameContext)
+
+	// EnterObject_name_or_identifier is called when entering the object_name_or_identifier production.
+	EnterObject_name_or_identifier(c *Object_name_or_identifierContext)
 
 	// EnterNum is called when entering the num production.
 	EnterNum(c *NumContext)
@@ -1339,6 +1693,9 @@ type SnowflakeParserListener interface {
 	// EnterExpr is called when entering the expr production.
 	EnterExpr(c *ExprContext)
 
+	// EnterLambda_params is called when entering the lambda_params production.
+	EnterLambda_params(c *Lambda_paramsContext)
+
 	// EnterIff_expr is called when entering the iff_expr production.
 	EnterIff_expr(c *Iff_exprContext)
 
@@ -1347,6 +1704,9 @@ type SnowflakeParserListener interface {
 
 	// EnterTry_cast_expr is called when entering the try_cast_expr production.
 	EnterTry_cast_expr(c *Try_cast_exprContext)
+
+	// EnterCast_expr is called when entering the cast_expr production.
+	EnterCast_expr(c *Cast_exprContext)
 
 	// EnterJson_literal is called when entering the json_literal production.
 	EnterJson_literal(c *Json_literalContext)
@@ -1360,8 +1720,14 @@ type SnowflakeParserListener interface {
 	// EnterArr_literal is called when entering the arr_literal production.
 	EnterArr_literal(c *Arr_literalContext)
 
+	// EnterData_type_size is called when entering the data_type_size production.
+	EnterData_type_size(c *Data_type_sizeContext)
+
 	// EnterData_type is called when entering the data_type production.
 	EnterData_type(c *Data_typeContext)
+
+	// EnterVector_element_type is called when entering the vector_element_type production.
+	EnterVector_element_type(c *Vector_element_typeContext)
 
 	// EnterPrimitive_expression is called when entering the primitive_expression production.
 	EnterPrimitive_expression(c *Primitive_expressionContext)
@@ -1377,6 +1743,15 @@ type SnowflakeParserListener interface {
 
 	// EnterFunction_call is called when entering the function_call production.
 	EnterFunction_call(c *Function_callContext)
+
+	// EnterParam_assoc_list is called when entering the param_assoc_list production.
+	EnterParam_assoc_list(c *Param_assoc_listContext)
+
+	// EnterParam_assoc is called when entering the param_assoc production.
+	EnterParam_assoc(c *Param_assocContext)
+
+	// EnterIgnore_or_repect_nulls is called when entering the ignore_or_repect_nulls production.
+	EnterIgnore_or_repect_nulls(c *Ignore_or_repect_nullsContext)
 
 	// EnterRanking_windowed_function is called when entering the ranking_windowed_function production.
 	EnterRanking_windowed_function(c *Ranking_windowed_functionContext)
@@ -1414,17 +1789,17 @@ type SnowflakeParserListener interface {
 	// EnterCommon_table_expression is called when entering the common_table_expression production.
 	EnterCommon_table_expression(c *Common_table_expressionContext)
 
-	// EnterAnchor_clause is called when entering the anchor_clause production.
-	EnterAnchor_clause(c *Anchor_clauseContext)
-
-	// EnterRecursive_clause is called when entering the recursive_clause production.
-	EnterRecursive_clause(c *Recursive_clauseContext)
-
 	// EnterSelect_statement is called when entering the select_statement production.
 	EnterSelect_statement(c *Select_statementContext)
 
 	// EnterSet_operators is called when entering the set_operators production.
 	EnterSet_operators(c *Set_operatorsContext)
+
+	// EnterBy_name is called when entering the by_name production.
+	EnterBy_name(c *By_nameContext)
+
+	// EnterSelect_statement_in_parentheses is called when entering the select_statement_in_parentheses production.
+	EnterSelect_statement_in_parentheses(c *Select_statement_in_parenthesesContext)
 
 	// EnterSelect_optional_clauses is called when entering the select_optional_clauses production.
 	EnterSelect_optional_clauses(c *Select_optional_clausesContext)
@@ -1447,8 +1822,17 @@ type SnowflakeParserListener interface {
 	// EnterSelect_list_elem is called when entering the select_list_elem production.
 	EnterSelect_list_elem(c *Select_list_elemContext)
 
+	// EnterColumn_elem_star is called when entering the column_elem_star production.
+	EnterColumn_elem_star(c *Column_elem_starContext)
+
 	// EnterColumn_elem is called when entering the column_elem production.
 	EnterColumn_elem(c *Column_elemContext)
+
+	// EnterObject_name_or_alias is called when entering the object_name_or_alias production.
+	EnterObject_name_or_alias(c *Object_name_or_aliasContext)
+
+	// EnterExclude_clause is called when entering the exclude_clause production.
+	EnterExclude_clause(c *Exclude_clauseContext)
 
 	// EnterAs_alias is called when entering the as_alias production.
 	EnterAs_alias(c *As_aliasContext)
@@ -1495,6 +1879,9 @@ type SnowflakeParserListener interface {
 	// EnterFlatten_table is called when entering the flatten_table production.
 	EnterFlatten_table(c *Flatten_tableContext)
 
+	// EnterSplited_table is called when entering the splited_table production.
+	EnterSplited_table(c *Splited_tableContext)
+
 	// EnterPrior_list is called when entering the prior_list production.
 	EnterPrior_list(c *Prior_listContext)
 
@@ -1509,6 +1896,9 @@ type SnowflakeParserListener interface {
 
 	// EnterJoin_clause is called when entering the join_clause production.
 	EnterJoin_clause(c *Join_clauseContext)
+
+	// EnterOn_using_clause is called when entering the on_using_clause production.
+	EnterOn_using_clause(c *On_using_clauseContext)
 
 	// EnterAt_before is called when entering the at_before production.
 	EnterAt_before(c *At_beforeContext)
@@ -1561,14 +1951,26 @@ type SnowflakeParserListener interface {
 	// EnterPivot_unpivot is called when entering the pivot_unpivot production.
 	EnterPivot_unpivot(c *Pivot_unpivotContext)
 
+	// EnterInclude_exclude is called when entering the include_exclude production.
+	EnterInclude_exclude(c *Include_excludeContext)
+
+	// EnterPivot_in_clause is called when entering the pivot_in_clause production.
+	EnterPivot_in_clause(c *Pivot_in_clauseContext)
+
+	// EnterDefault_on_null is called when entering the default_on_null production.
+	EnterDefault_on_null(c *Default_on_nullContext)
+
 	// EnterColumn_alias_list_in_brackets is called when entering the column_alias_list_in_brackets production.
 	EnterColumn_alias_list_in_brackets(c *Column_alias_list_in_bracketsContext)
 
 	// EnterExpr_list_in_parentheses is called when entering the expr_list_in_parentheses production.
 	EnterExpr_list_in_parentheses(c *Expr_list_in_parenthesesContext)
 
-	// EnterValues is called when entering the values production.
-	EnterValues(c *ValuesContext)
+	// EnterValues_table is called when entering the values_table production.
+	EnterValues_table(c *Values_tableContext)
+
+	// EnterValues_table_body is called when entering the values_table_body production.
+	EnterValues_table_body(c *Values_table_bodyContext)
 
 	// EnterSample_method is called when entering the sample_method production.
 	EnterSample_method(c *Sample_methodContext)
@@ -1591,6 +1993,9 @@ type SnowflakeParserListener interface {
 	// EnterNull_not_null is called when entering the null_not_null production.
 	EnterNull_not_null(c *Null_not_nullContext)
 
+	// EnterNot_distinct_from is called when entering the not_distinct_from production.
+	EnterNot_distinct_from(c *Not_distinct_fromContext)
+
 	// EnterSubquery is called when entering the subquery production.
 	EnterSubquery(c *SubqueryContext)
 
@@ -1600,8 +2005,11 @@ type SnowflakeParserListener interface {
 	// EnterWhere_clause is called when entering the where_clause production.
 	EnterWhere_clause(c *Where_clauseContext)
 
-	// EnterGroup_item is called when entering the group_item production.
-	EnterGroup_item(c *Group_itemContext)
+	// EnterGroup_by_elem is called when entering the group_by_elem production.
+	EnterGroup_by_elem(c *Group_by_elemContext)
+
+	// EnterGroup_by_list is called when entering the group_by_list production.
+	EnterGroup_by_list(c *Group_by_listContext)
 
 	// EnterGroup_by_clause is called when entering the group_by_clause production.
 	EnterGroup_by_clause(c *Group_by_clauseContext)
@@ -1626,6 +2034,12 @@ type SnowflakeParserListener interface {
 
 	// EnterLimit_clause is called when entering the limit_clause production.
 	EnterLimit_clause(c *Limit_clauseContext)
+
+	// EnterRound_mode is called when entering the round_mode production.
+	EnterRound_mode(c *Round_modeContext)
+
+	// EnterRound_expr is called when entering the round_expr production.
+	EnterRound_expr(c *Round_exprContext)
 
 	// EnterSupplement_non_reserved_words is called when entering the supplement_non_reserved_words production.
 	EnterSupplement_non_reserved_words(c *Supplement_non_reserved_wordsContext)
@@ -1666,6 +2080,9 @@ type SnowflakeParserListener interface {
 	// ExitMerge_matches is called when exiting the merge_matches production.
 	ExitMerge_matches(c *Merge_matchesContext)
 
+	// ExitMerge_cond is called when exiting the merge_cond production.
+	ExitMerge_cond(c *Merge_condContext)
+
 	// ExitMerge_update_delete is called when exiting the merge_update_delete production.
 	ExitMerge_update_delete(c *Merge_update_deleteContext)
 
@@ -1686,6 +2103,9 @@ type SnowflakeParserListener interface {
 
 	// ExitOther_command is called when exiting the other_command production.
 	ExitOther_command(c *Other_commandContext)
+
+	// ExitBegin_txn is called when exiting the begin_txn production.
+	ExitBegin_txn(c *Begin_txnContext)
 
 	// ExitCopy_into_table is called when exiting the copy_into_table production.
 	ExitCopy_into_table(c *Copy_into_tableContext)
@@ -1714,6 +2134,9 @@ type SnowflakeParserListener interface {
 	// ExitComment is called when exiting the comment production.
 	ExitComment(c *CommentContext)
 
+	// ExitFunction_signature is called when exiting the function_signature production.
+	ExitFunction_signature(c *Function_signatureContext)
+
 	// ExitCommit is called when exiting the commit production.
 	ExitCommit(c *CommitContext)
 
@@ -1722,6 +2145,9 @@ type SnowflakeParserListener interface {
 
 	// ExitExecute_task is called when exiting the execute_task production.
 	ExitExecute_task(c *Execute_taskContext)
+
+	// ExitRetry_last is called when exiting the retry_last production.
+	ExitRetry_last(c *Retry_lastContext)
 
 	// ExitExplain is called when exiting the explain production.
 	ExitExplain(c *ExplainContext)
@@ -1780,11 +2206,17 @@ type SnowflakeParserListener interface {
 	// ExitList is called when exiting the list production.
 	ExitList(c *ListContext)
 
-	// ExitInternal_stage is called when exiting the internal_stage production.
-	ExitInternal_stage(c *Internal_stageContext)
+	// ExitUser_stage is called when exiting the user_stage production.
+	ExitUser_stage(c *User_stageContext)
 
-	// ExitExternal_stage is called when exiting the external_stage production.
-	ExitExternal_stage(c *External_stageContext)
+	// ExitTable_stage is called when exiting the table_stage production.
+	ExitTable_stage(c *Table_stageContext)
+
+	// ExitNamed_stage is called when exiting the named_stage production.
+	ExitNamed_stage(c *Named_stageContext)
+
+	// ExitStage_path is called when exiting the stage_path production.
+	ExitStage_path(c *Stage_pathContext)
 
 	// ExitPut is called when exiting the put production.
 	ExitPut(c *PutContext)
@@ -1870,8 +2302,14 @@ type SnowflakeParserListener interface {
 	// ExitAccount_id_list is called when exiting the account_id_list production.
 	ExitAccount_id_list(c *Account_id_listContext)
 
+	// ExitAlter_dataset is called when exiting the alter_dataset production.
+	ExitAlter_dataset(c *Alter_datasetContext)
+
 	// ExitAlter_dynamic_table is called when exiting the alter_dynamic_table production.
 	ExitAlter_dynamic_table(c *Alter_dynamic_tableContext)
+
+	// ExitId_list is called when exiting the id_list production.
+	ExitId_list(c *Id_listContext)
 
 	// ExitAlter_external_table is called when exiting the alter_external_table production.
 	ExitAlter_external_table(c *Alter_external_tableContext)
@@ -1905,6 +2343,15 @@ type SnowflakeParserListener interface {
 
 	// ExitData_type_list is called when exiting the data_type_list production.
 	ExitData_type_list(c *Data_type_listContext)
+
+	// ExitAlter_git_repository is called when exiting the alter_git_repository production.
+	ExitAlter_git_repository(c *Alter_git_repositoryContext)
+
+	// ExitAlter_git_set_opts is called when exiting the alter_git_set_opts production.
+	ExitAlter_git_set_opts(c *Alter_git_set_optsContext)
+
+	// ExitAlter_git_unset_opts is called when exiting the alter_git_unset_opts production.
+	ExitAlter_git_unset_opts(c *Alter_git_unset_optsContext)
 
 	// ExitAlter_masking_policy is called when exiting the alter_masking_policy production.
 	ExitAlter_masking_policy(c *Alter_masking_policyContext)
@@ -1954,8 +2401,32 @@ type SnowflakeParserListener interface {
 	// ExitSchema_property is called when exiting the schema_property production.
 	ExitSchema_property(c *Schema_propertyContext)
 
-	// ExitAlter_security_integration is called when exiting the alter_security_integration production.
-	ExitAlter_security_integration(c *Alter_security_integrationContext)
+	// ExitAlter_sequence is called when exiting the alter_sequence production.
+	ExitAlter_sequence(c *Alter_sequenceContext)
+
+	// ExitAlter_secret is called when exiting the alter_secret production.
+	ExitAlter_secret(c *Alter_secretContext)
+
+	// ExitSecret_opts is called when exiting the secret_opts production.
+	ExitSecret_opts(c *Secret_optsContext)
+
+	// ExitSecret_set_opts is called when exiting the secret_set_opts production.
+	ExitSecret_set_opts(c *Secret_set_optsContext)
+
+	// ExitSecret_oauth_client_creds_opts is called when exiting the secret_oauth_client_creds_opts production.
+	ExitSecret_oauth_client_creds_opts(c *Secret_oauth_client_creds_optsContext)
+
+	// ExitSecret_oauth_auth_code_opts is called when exiting the secret_oauth_auth_code_opts production.
+	ExitSecret_oauth_auth_code_opts(c *Secret_oauth_auth_code_optsContext)
+
+	// ExitSecret_api_auth_opts is called when exiting the secret_api_auth_opts production.
+	ExitSecret_api_auth_opts(c *Secret_api_auth_optsContext)
+
+	// ExitSecret_basic_auth_opts is called when exiting the secret_basic_auth_opts production.
+	ExitSecret_basic_auth_opts(c *Secret_basic_auth_optsContext)
+
+	// ExitSecret_generic_string_opts is called when exiting the secret_generic_string_opts production.
+	ExitSecret_generic_string_opts(c *Secret_generic_string_optsContext)
 
 	// ExitAlter_security_integration_external_oauth is called when exiting the alter_security_integration_external_oauth production.
 	ExitAlter_security_integration_external_oauth(c *Alter_security_integration_external_oauthContext)
@@ -1978,20 +2449,17 @@ type SnowflakeParserListener interface {
 	// ExitSecurity_integration_scim_property is called when exiting the security_integration_scim_property production.
 	ExitSecurity_integration_scim_property(c *Security_integration_scim_propertyContext)
 
-	// ExitAlter_sequence is called when exiting the alter_sequence production.
-	ExitAlter_sequence(c *Alter_sequenceContext)
-
 	// ExitAlter_session is called when exiting the alter_session production.
 	ExitAlter_session(c *Alter_sessionContext)
 
 	// ExitAlter_session_policy is called when exiting the alter_session_policy production.
 	ExitAlter_session_policy(c *Alter_session_policyContext)
 
+	// ExitAlter_password_policy is called when exiting the alter_password_policy production.
+	ExitAlter_password_policy(c *Alter_password_policyContext)
+
 	// ExitAlter_share is called when exiting the alter_share production.
 	ExitAlter_share(c *Alter_shareContext)
-
-	// ExitAlter_stage is called when exiting the alter_stage production.
-	ExitAlter_stage(c *Alter_stageContext)
 
 	// ExitAlter_storage_integration is called when exiting the alter_storage_integration production.
 	ExitAlter_storage_integration(c *Alter_storage_integrationContext)
@@ -2002,14 +2470,44 @@ type SnowflakeParserListener interface {
 	// ExitAlter_table is called when exiting the alter_table production.
 	ExitAlter_table(c *Alter_tableContext)
 
+	// ExitRls_operations is called when exiting the rls_operations production.
+	ExitRls_operations(c *Rls_operationsContext)
+
 	// ExitClustering_action is called when exiting the clustering_action production.
 	ExitClustering_action(c *Clustering_actionContext)
 
 	// ExitTable_column_action is called when exiting the table_column_action production.
 	ExitTable_column_action(c *Table_column_actionContext)
 
+	// ExitAlter_column_clause is called when exiting the alter_column_clause production.
+	ExitAlter_column_clause(c *Alter_column_clauseContext)
+
 	// ExitInline_constraint is called when exiting the inline_constraint production.
 	ExitInline_constraint(c *Inline_constraintContext)
+
+	// ExitEnforced_not_enforced is called when exiting the enforced_not_enforced production.
+	ExitEnforced_not_enforced(c *Enforced_not_enforcedContext)
+
+	// ExitDeferrable_not_deferrable is called when exiting the deferrable_not_deferrable production.
+	ExitDeferrable_not_deferrable(c *Deferrable_not_deferrableContext)
+
+	// ExitInitially_deferred_or_immediate is called when exiting the initially_deferred_or_immediate production.
+	ExitInitially_deferred_or_immediate(c *Initially_deferred_or_immediateContext)
+
+	// ExitCommon_constraint_properties is called when exiting the common_constraint_properties production.
+	ExitCommon_constraint_properties(c *Common_constraint_propertiesContext)
+
+	// ExitOn_update is called when exiting the on_update production.
+	ExitOn_update(c *On_updateContext)
+
+	// ExitOn_delete is called when exiting the on_delete production.
+	ExitOn_delete(c *On_deleteContext)
+
+	// ExitForeign_key_match is called when exiting the foreign_key_match production.
+	ExitForeign_key_match(c *Foreign_key_matchContext)
+
+	// ExitOn_action is called when exiting the on_action production.
+	ExitOn_action(c *On_actionContext)
 
 	// ExitConstraint_properties is called when exiting the constraint_properties production.
 	ExitConstraint_properties(c *Constraint_propertiesContext)
@@ -2089,6 +2587,9 @@ type SnowflakeParserListener interface {
 	// ExitUnset_tags is called when exiting the unset_tags production.
 	ExitUnset_tags(c *Unset_tagsContext)
 
+	// ExitTag_list is called when exiting the tag_list production.
+	ExitTag_list(c *Tag_listContext)
+
 	// ExitCreate_command is called when exiting the create_command production.
 	ExitCreate_command(c *Create_commandContext)
 
@@ -2116,9 +2617,6 @@ type SnowflakeParserListener interface {
 	// ExitCreate_database is called when exiting the create_database production.
 	ExitCreate_database(c *Create_databaseContext)
 
-	// ExitCreate_dynamic_table is called when exiting the create_dynamic_table production.
-	ExitCreate_dynamic_table(c *Create_dynamic_tableContext)
-
 	// ExitClone_at_before is called when exiting the clone_at_before production.
 	ExitClone_at_before(c *Clone_at_beforeContext)
 
@@ -2133,6 +2631,30 @@ type SnowflakeParserListener interface {
 
 	// ExitCompression is called when exiting the compression production.
 	ExitCompression(c *CompressionContext)
+
+	// ExitCreate_dataset is called when exiting the create_dataset production.
+	ExitCreate_dataset(c *Create_datasetContext)
+
+	// ExitCreate_dynamic_table is called when exiting the create_dynamic_table production.
+	ExitCreate_dynamic_table(c *Create_dynamic_tableContext)
+
+	// ExitDynamic_table_params is called when exiting the dynamic_table_params production.
+	ExitDynamic_table_params(c *Dynamic_table_paramsContext)
+
+	// ExitDynamic_table_settable_params is called when exiting the dynamic_table_settable_params production.
+	ExitDynamic_table_settable_params(c *Dynamic_table_settable_paramsContext)
+
+	// ExitDynamic_table_unsettable_params is called when exiting the dynamic_table_unsettable_params production.
+	ExitDynamic_table_unsettable_params(c *Dynamic_table_unsettable_paramsContext)
+
+	// ExitData_retention_params is called when exiting the data_retention_params production.
+	ExitData_retention_params(c *Data_retention_paramsContext)
+
+	// ExitSet_data_retention_params is called when exiting the set_data_retention_params production.
+	ExitSet_data_retention_params(c *Set_data_retention_paramsContext)
+
+	// ExitCreate_event_table is called when exiting the create_event_table production.
+	ExitCreate_event_table(c *Create_event_tableContext)
 
 	// ExitCreate_external_function is called when exiting the create_external_function production.
 	ExitCreate_external_function(c *Create_external_functionContext)
@@ -2164,14 +2686,26 @@ type SnowflakeParserListener interface {
 	// ExitArg_decl is called when exiting the arg_decl production.
 	ExitArg_decl(c *Arg_declContext)
 
+	// ExitArg_default_value_clause is called when exiting the arg_default_value_clause production.
+	ExitArg_default_value_clause(c *Arg_default_value_clauseContext)
+
 	// ExitCol_decl is called when exiting the col_decl production.
 	ExitCol_decl(c *Col_declContext)
+
+	// ExitVirtual_column_decl is called when exiting the virtual_column_decl production.
+	ExitVirtual_column_decl(c *Virtual_column_declContext)
 
 	// ExitFunction_definition is called when exiting the function_definition production.
 	ExitFunction_definition(c *Function_definitionContext)
 
 	// ExitCreate_function is called when exiting the create_function production.
 	ExitCreate_function(c *Create_functionContext)
+
+	// ExitCreate_git_repository is called when exiting the create_git_repository production.
+	ExitCreate_git_repository(c *Create_git_repositoryContext)
+
+	// ExitCreate_git_opts is called when exiting the create_git_opts production.
+	ExitCreate_git_opts(c *Create_git_optsContext)
 
 	// ExitCreate_managed_account is called when exiting the create_managed_account production.
 	ExitCreate_managed_account(c *Create_managed_accountContext)
@@ -2212,6 +2746,9 @@ type SnowflakeParserListener interface {
 	// ExitProcedure_definition is called when exiting the procedure_definition production.
 	ExitProcedure_definition(c *Procedure_definitionContext)
 
+	// ExitNot_null is called when exiting the not_null production.
+	ExitNot_null(c *Not_nullContext)
+
 	// ExitCreate_procedure is called when exiting the create_procedure production.
 	ExitCreate_procedure(c *Create_procedureContext)
 
@@ -2229,6 +2766,9 @@ type SnowflakeParserListener interface {
 
 	// ExitCreate_schema is called when exiting the create_schema production.
 	ExitCreate_schema(c *Create_schemaContext)
+
+	// ExitCreate_secret is called when exiting the create_secret production.
+	ExitCreate_secret(c *Create_secretContext)
 
 	// ExitCreate_security_integration_external_oauth is called when exiting the create_security_integration_external_oauth production.
 	ExitCreate_security_integration_external_oauth(c *Create_security_integration_external_oauthContext)
@@ -2257,11 +2797,47 @@ type SnowflakeParserListener interface {
 	// ExitIncrement_by is called when exiting the increment_by production.
 	ExitIncrement_by(c *Increment_byContext)
 
+	// ExitCreate_semantic_view is called when exiting the create_semantic_view production.
+	ExitCreate_semantic_view(c *Create_semantic_viewContext)
+
+	// ExitLogical_table is called when exiting the logical_table production.
+	ExitLogical_table(c *Logical_tableContext)
+
+	// ExitRelationship_def is called when exiting the relationship_def production.
+	ExitRelationship_def(c *Relationship_defContext)
+
+	// ExitWith_synonyms_clause is called when exiting the with_synonyms_clause production.
+	ExitWith_synonyms_clause(c *With_synonyms_clauseContext)
+
+	// ExitSemantic_expression_list is called when exiting the semantic_expression_list production.
+	ExitSemantic_expression_list(c *Semantic_expression_listContext)
+
+	// ExitSemantic_expression is called when exiting the semantic_expression production.
+	ExitSemantic_expression(c *Semantic_expressionContext)
+
+	// ExitWith_extension_clause is called when exiting the with_extension_clause production.
+	ExitWith_extension_clause(c *With_extension_clauseContext)
+
 	// ExitCreate_sequence is called when exiting the create_sequence production.
 	ExitCreate_sequence(c *Create_sequenceContext)
 
 	// ExitCreate_session_policy is called when exiting the create_session_policy production.
 	ExitCreate_session_policy(c *Create_session_policyContext)
+
+	// ExitSession_policy_params is called when exiting the session_policy_params production.
+	ExitSession_policy_params(c *Session_policy_paramsContext)
+
+	// ExitSession_policy_param_name is called when exiting the session_policy_param_name production.
+	ExitSession_policy_param_name(c *Session_policy_param_nameContext)
+
+	// ExitCreate_password_policy is called when exiting the create_password_policy production.
+	ExitCreate_password_policy(c *Create_password_policyContext)
+
+	// ExitPassword_policy_params is called when exiting the password_policy_params production.
+	ExitPassword_policy_params(c *Password_policy_paramsContext)
+
+	// ExitPassword_policy_param_name is called when exiting the password_policy_param_name production.
+	ExitPassword_policy_param_name(c *Password_policy_param_nameContext)
 
 	// ExitCreate_share is called when exiting the create_share production.
 	ExitCreate_share(c *Create_shareContext)
@@ -2275,8 +2851,8 @@ type SnowflakeParserListener interface {
 	// ExitCopy_options is called when exiting the copy_options production.
 	ExitCopy_options(c *Copy_optionsContext)
 
-	// ExitInternal_stage_params is called when exiting the internal_stage_params production.
-	ExitInternal_stage_params(c *Internal_stage_paramsContext)
+	// ExitStage_encryption_opts_internal is called when exiting the stage_encryption_opts_internal production.
+	ExitStage_encryption_opts_internal(c *Stage_encryption_opts_internalContext)
 
 	// ExitStage_type is called when exiting the stage_type production.
 	ExitStage_type(c *Stage_typeContext)
@@ -2302,6 +2878,27 @@ type SnowflakeParserListener interface {
 	// ExitAws_role is called when exiting the aws_role production.
 	ExitAws_role(c *Aws_roleContext)
 
+	// ExitAzure_encryption_value is called when exiting the azure_encryption_value production.
+	ExitAzure_encryption_value(c *Azure_encryption_valueContext)
+
+	// ExitStage_encryption_opts_az is called when exiting the stage_encryption_opts_az production.
+	ExitStage_encryption_opts_az(c *Stage_encryption_opts_azContext)
+
+	// ExitStorage_integration_eq_id is called when exiting the storage_integration_eq_id production.
+	ExitStorage_integration_eq_id(c *Storage_integration_eq_idContext)
+
+	// ExitAz_credential_or_storage_integration is called when exiting the az_credential_or_storage_integration production.
+	ExitAz_credential_or_storage_integration(c *Az_credential_or_storage_integrationContext)
+
+	// ExitGcp_encryption_value is called when exiting the gcp_encryption_value production.
+	ExitGcp_encryption_value(c *Gcp_encryption_valueContext)
+
+	// ExitStage_encryption_opts_gcp is called when exiting the stage_encryption_opts_gcp production.
+	ExitStage_encryption_opts_gcp(c *Stage_encryption_opts_gcpContext)
+
+	// ExitAws_credential_or_storage_integration is called when exiting the aws_credential_or_storage_integration production.
+	ExitAws_credential_or_storage_integration(c *Aws_credential_or_storage_integrationContext)
+
 	// ExitExternal_stage_params is called when exiting the external_stage_params production.
 	ExitExternal_stage_params(c *External_stage_paramsContext)
 
@@ -2320,11 +2917,29 @@ type SnowflakeParserListener interface {
 	// ExitNotification_integration is called when exiting the notification_integration production.
 	ExitNotification_integration(c *Notification_integrationContext)
 
-	// ExitDirectory_table_params is called when exiting the directory_table_params production.
-	ExitDirectory_table_params(c *Directory_table_paramsContext)
+	// ExitDirectory_table_internal_params is called when exiting the directory_table_internal_params production.
+	ExitDirectory_table_internal_params(c *Directory_table_internal_paramsContext)
+
+	// ExitDirectory_table_external_params is called when exiting the directory_table_external_params production.
+	ExitDirectory_table_external_params(c *Directory_table_external_paramsContext)
 
 	// ExitCreate_stage is called when exiting the create_stage production.
 	ExitCreate_stage(c *Create_stageContext)
+
+	// ExitAlter_semantic_view is called when exiting the alter_semantic_view production.
+	ExitAlter_semantic_view(c *Alter_semantic_viewContext)
+
+	// ExitAlter_stage is called when exiting the alter_stage production.
+	ExitAlter_stage(c *Alter_stageContext)
+
+	// ExitDrop_stage is called when exiting the drop_stage production.
+	ExitDrop_stage(c *Drop_stageContext)
+
+	// ExitDescribe_stage is called when exiting the describe_stage production.
+	ExitDescribe_stage(c *Describe_stageContext)
+
+	// ExitShow_stages is called when exiting the show_stages production.
+	ExitShow_stages(c *Show_stagesContext)
 
 	// ExitCloud_provider_params is called when exiting the cloud_provider_params production.
 	ExitCloud_provider_params(c *Cloud_provider_paramsContext)
@@ -2380,8 +2995,8 @@ type SnowflakeParserListener interface {
 	// ExitCollate is called when exiting the collate production.
 	ExitCollate(c *CollateContext)
 
-	// ExitNot_null is called when exiting the not_null production.
-	ExitNot_null(c *Not_nullContext)
+	// ExitOrder_noorder is called when exiting the order_noorder production.
+	ExitOrder_noorder(c *Order_noorderContext)
 
 	// ExitDefault_value is called when exiting the default_value production.
 	ExitDefault_value(c *Default_valueContext)
@@ -2389,11 +3004,20 @@ type SnowflakeParserListener interface {
 	// ExitForeign_key is called when exiting the foreign_key production.
 	ExitForeign_key(c *Foreign_keyContext)
 
+	// ExitPrimary_key is called when exiting the primary_key production.
+	ExitPrimary_key(c *Primary_keyContext)
+
 	// ExitOut_of_line_constraint is called when exiting the out_of_line_constraint production.
 	ExitOut_of_line_constraint(c *Out_of_line_constraintContext)
 
 	// ExitFull_col_decl is called when exiting the full_col_decl production.
 	ExitFull_col_decl(c *Full_col_declContext)
+
+	// ExitMaterialized_col_decl is called when exiting the materialized_col_decl production.
+	ExitMaterialized_col_decl(c *Materialized_col_declContext)
+
+	// ExitMaterialized_col_decl_list is called when exiting the materialized_col_decl_list production.
+	ExitMaterialized_col_decl_list(c *Materialized_col_decl_listContext)
 
 	// ExitColumn_decl_item is called when exiting the column_decl_item production.
 	ExitColumn_decl_item(c *Column_decl_itemContext)
@@ -2404,11 +3028,23 @@ type SnowflakeParserListener interface {
 	// ExitCreate_table is called when exiting the create_table production.
 	ExitCreate_table(c *Create_tableContext)
 
+	// ExitColumn_decl_item_list_paren is called when exiting the column_decl_item_list_paren production.
+	ExitColumn_decl_item_list_paren(c *Column_decl_item_list_parenContext)
+
+	// ExitCreate_table_clause is called when exiting the create_table_clause production.
+	ExitCreate_table_clause(c *Create_table_clauseContext)
+
 	// ExitCreate_table_as_select is called when exiting the create_table_as_select production.
 	ExitCreate_table_as_select(c *Create_table_as_selectContext)
 
+	// ExitCreate_table_like is called when exiting the create_table_like production.
+	ExitCreate_table_like(c *Create_table_likeContext)
+
 	// ExitCreate_tag is called when exiting the create_tag production.
 	ExitCreate_tag(c *Create_tagContext)
+
+	// ExitTag_allowed_values is called when exiting the tag_allowed_values production.
+	ExitTag_allowed_values(c *Tag_allowed_valuesContext)
 
 	// ExitSession_parameter is called when exiting the session_parameter production.
 	ExitSession_parameter(c *Session_parameterContext)
@@ -2416,17 +3052,59 @@ type SnowflakeParserListener interface {
 	// ExitSession_parameter_list is called when exiting the session_parameter_list production.
 	ExitSession_parameter_list(c *Session_parameter_listContext)
 
-	// ExitSession_parameter_init_list is called when exiting the session_parameter_init_list production.
-	ExitSession_parameter_init_list(c *Session_parameter_init_listContext)
-
-	// ExitSession_parameter_init is called when exiting the session_parameter_init production.
-	ExitSession_parameter_init(c *Session_parameter_initContext)
+	// ExitSession_params_list is called when exiting the session_params_list production.
+	ExitSession_params_list(c *Session_params_listContext)
 
 	// ExitCreate_task is called when exiting the create_task production.
 	ExitCreate_task(c *Create_taskContext)
 
+	// ExitTask_parameters is called when exiting the task_parameters production.
+	ExitTask_parameters(c *Task_parametersContext)
+
+	// ExitTask_compute is called when exiting the task_compute production.
+	ExitTask_compute(c *Task_computeContext)
+
+	// ExitTask_schedule is called when exiting the task_schedule production.
+	ExitTask_schedule(c *Task_scheduleContext)
+
+	// ExitTask_timeout is called when exiting the task_timeout production.
+	ExitTask_timeout(c *Task_timeoutContext)
+
+	// ExitTask_suspend_after_failure_number is called when exiting the task_suspend_after_failure_number production.
+	ExitTask_suspend_after_failure_number(c *Task_suspend_after_failure_numberContext)
+
+	// ExitTask_error_integration is called when exiting the task_error_integration production.
+	ExitTask_error_integration(c *Task_error_integrationContext)
+
+	// ExitTask_overlap is called when exiting the task_overlap production.
+	ExitTask_overlap(c *Task_overlapContext)
+
 	// ExitSql is called when exiting the sql production.
 	ExitSql(c *SqlContext)
+
+	// ExitTask_sql is called when exiting the task_sql production.
+	ExitTask_sql(c *Task_sqlContext)
+
+	// ExitTask_scripting_block is called when exiting the task_scripting_block production.
+	ExitTask_scripting_block(c *Task_scripting_blockContext)
+
+	// ExitTask_scripting_declaration_list is called when exiting the task_scripting_declaration_list production.
+	ExitTask_scripting_declaration_list(c *Task_scripting_declaration_listContext)
+
+	// ExitTask_scripting_declaration is called when exiting the task_scripting_declaration production.
+	ExitTask_scripting_declaration(c *Task_scripting_declarationContext)
+
+	// ExitTask_scripting_statement_list is called when exiting the task_scripting_statement_list production.
+	ExitTask_scripting_statement_list(c *Task_scripting_statement_listContext)
+
+	// ExitTask_scripting_statement is called when exiting the task_scripting_statement production.
+	ExitTask_scripting_statement(c *Task_scripting_statementContext)
+
+	// ExitTask_scripting_assignment is called when exiting the task_scripting_assignment production.
+	ExitTask_scripting_assignment(c *Task_scripting_assignmentContext)
+
+	// ExitTask_scripting_return is called when exiting the task_scripting_return production.
+	ExitTask_scripting_return(c *Task_scripting_returnContext)
 
 	// ExitCall is called when exiting the call production.
 	ExitCall(c *CallContext)
@@ -2442,6 +3120,12 @@ type SnowflakeParserListener interface {
 
 	// ExitCreate_warehouse is called when exiting the create_warehouse production.
 	ExitCreate_warehouse(c *Create_warehouseContext)
+
+	// ExitWh_common_size is called when exiting the wh_common_size production.
+	ExitWh_common_size(c *Wh_common_sizeContext)
+
+	// ExitWh_extra_size is called when exiting the wh_extra_size production.
+	ExitWh_extra_size(c *Wh_extra_sizeContext)
 
 	// ExitWh_properties is called when exiting the wh_properties production.
 	ExitWh_properties(c *Wh_propertiesContext)
@@ -2488,6 +3172,9 @@ type SnowflakeParserListener interface {
 	// ExitDrop_function is called when exiting the drop_function production.
 	ExitDrop_function(c *Drop_functionContext)
 
+	// ExitDrop_git_repository is called when exiting the drop_git_repository production.
+	ExitDrop_git_repository(c *Drop_git_repositoryContext)
+
 	// ExitDrop_integration is called when exiting the drop_integration production.
 	ExitDrop_integration(c *Drop_integrationContext)
 
@@ -2524,17 +3211,23 @@ type SnowflakeParserListener interface {
 	// ExitDrop_schema is called when exiting the drop_schema production.
 	ExitDrop_schema(c *Drop_schemaContext)
 
+	// ExitDrop_secret is called when exiting the drop_secret production.
+	ExitDrop_secret(c *Drop_secretContext)
+
+	// ExitDrop_semantic_view is called when exiting the drop_semantic_view production.
+	ExitDrop_semantic_view(c *Drop_semantic_viewContext)
+
 	// ExitDrop_sequence is called when exiting the drop_sequence production.
 	ExitDrop_sequence(c *Drop_sequenceContext)
 
 	// ExitDrop_session_policy is called when exiting the drop_session_policy production.
 	ExitDrop_session_policy(c *Drop_session_policyContext)
 
+	// ExitDrop_password_policy is called when exiting the drop_password_policy production.
+	ExitDrop_password_policy(c *Drop_password_policyContext)
+
 	// ExitDrop_share is called when exiting the drop_share production.
 	ExitDrop_share(c *Drop_shareContext)
-
-	// ExitDrop_stage is called when exiting the drop_stage production.
-	ExitDrop_stage(c *Drop_stageContext)
 
 	// ExitDrop_stream is called when exiting the drop_stream production.
 	ExitDrop_stream(c *Drop_streamContext)
@@ -2602,6 +3295,9 @@ type SnowflakeParserListener interface {
 	// ExitComment_clause is called when exiting the comment_clause production.
 	ExitComment_clause(c *Comment_clauseContext)
 
+	// ExitInline_comment_clause is called when exiting the inline_comment_clause production.
+	ExitInline_comment_clause(c *Inline_comment_clauseContext)
+
 	// ExitIf_suspended is called when exiting the if_suspended production.
 	ExitIf_suspended(c *If_suspendedContext)
 
@@ -2613,6 +3309,9 @@ type SnowflakeParserListener interface {
 
 	// ExitOr_replace is called when exiting the or_replace production.
 	ExitOr_replace(c *Or_replaceContext)
+
+	// ExitOr_alter is called when exiting the or_alter production.
+	ExitOr_alter(c *Or_alterContext)
 
 	// ExitDescribe is called when exiting the describe production.
 	ExitDescribe(c *DescribeContext)
@@ -2629,6 +3328,9 @@ type SnowflakeParserListener interface {
 	// ExitDescribe_dynamic_table is called when exiting the describe_dynamic_table production.
 	ExitDescribe_dynamic_table(c *Describe_dynamic_tableContext)
 
+	// ExitDescribe_event_table is called when exiting the describe_event_table production.
+	ExitDescribe_event_table(c *Describe_event_tableContext)
+
 	// ExitDescribe_external_table is called when exiting the describe_external_table production.
 	ExitDescribe_external_table(c *Describe_external_tableContext)
 
@@ -2637,6 +3339,9 @@ type SnowflakeParserListener interface {
 
 	// ExitDescribe_function is called when exiting the describe_function production.
 	ExitDescribe_function(c *Describe_functionContext)
+
+	// ExitDescribe_git_repository is called when exiting the describe_git_repository production.
+	ExitDescribe_git_repository(c *Describe_git_repositoryContext)
 
 	// ExitDescribe_integration is called when exiting the describe_integration production.
 	ExitDescribe_integration(c *Describe_integrationContext)
@@ -2668,17 +3373,20 @@ type SnowflakeParserListener interface {
 	// ExitDescribe_search_optimization is called when exiting the describe_search_optimization production.
 	ExitDescribe_search_optimization(c *Describe_search_optimizationContext)
 
+	// ExitDescribe_semantic_view is called when exiting the describe_semantic_view production.
+	ExitDescribe_semantic_view(c *Describe_semantic_viewContext)
+
 	// ExitDescribe_sequence is called when exiting the describe_sequence production.
 	ExitDescribe_sequence(c *Describe_sequenceContext)
 
 	// ExitDescribe_session_policy is called when exiting the describe_session_policy production.
 	ExitDescribe_session_policy(c *Describe_session_policyContext)
 
+	// ExitDescribe_password_policy is called when exiting the describe_password_policy production.
+	ExitDescribe_password_policy(c *Describe_password_policyContext)
+
 	// ExitDescribe_share is called when exiting the describe_share production.
 	ExitDescribe_share(c *Describe_shareContext)
-
-	// ExitDescribe_stage is called when exiting the describe_stage production.
-	ExitDescribe_stage(c *Describe_stageContext)
 
 	// ExitDescribe_stream is called when exiting the describe_stream production.
 	ExitDescribe_stream(c *Describe_streamContext)
@@ -2707,6 +3415,9 @@ type SnowflakeParserListener interface {
 	// ExitShow_alerts is called when exiting the show_alerts production.
 	ExitShow_alerts(c *Show_alertsContext)
 
+	// ExitShow_channels is called when exiting the show_channels production.
+	ExitShow_channels(c *Show_channelsContext)
+
 	// ExitShow_columns is called when exiting the show_columns production.
 	ExitShow_columns(c *Show_columnsContext)
 
@@ -2719,6 +3430,9 @@ type SnowflakeParserListener interface {
 	// ExitLimit_rows is called when exiting the limit_rows production.
 	ExitLimit_rows(c *Limit_rowsContext)
 
+	// ExitLimit_rows_2 is called when exiting the limit_rows_2 production.
+	ExitLimit_rows_2(c *Limit_rows_2Context)
+
 	// ExitShow_databases is called when exiting the show_databases production.
 	ExitShow_databases(c *Show_databasesContext)
 
@@ -2728,14 +3442,20 @@ type SnowflakeParserListener interface {
 	// ExitShow_databases_in_replication_group is called when exiting the show_databases_in_replication_group production.
 	ExitShow_databases_in_replication_group(c *Show_databases_in_replication_groupContext)
 
+	// ExitShow_datasets is called when exiting the show_datasets production.
+	ExitShow_datasets(c *Show_datasetsContext)
+
 	// ExitShow_delegated_authorizations is called when exiting the show_delegated_authorizations production.
 	ExitShow_delegated_authorizations(c *Show_delegated_authorizationsContext)
 
-	// ExitShow_external_functions is called when exiting the show_external_functions production.
-	ExitShow_external_functions(c *Show_external_functionsContext)
-
 	// ExitShow_dynamic_tables is called when exiting the show_dynamic_tables production.
 	ExitShow_dynamic_tables(c *Show_dynamic_tablesContext)
+
+	// ExitShow_event_tables is called when exiting the show_event_tables production.
+	ExitShow_event_tables(c *Show_event_tablesContext)
+
+	// ExitShow_external_functions is called when exiting the show_external_functions production.
+	ExitShow_external_functions(c *Show_external_functionsContext)
 
 	// ExitShow_external_tables is called when exiting the show_external_tables production.
 	ExitShow_external_tables(c *Show_external_tablesContext)
@@ -2748,6 +3468,15 @@ type SnowflakeParserListener interface {
 
 	// ExitShow_functions is called when exiting the show_functions production.
 	ExitShow_functions(c *Show_functionsContext)
+
+	// ExitShow_git_branches is called when exiting the show_git_branches production.
+	ExitShow_git_branches(c *Show_git_branchesContext)
+
+	// ExitShow_git_repositories is called when exiting the show_git_repositories production.
+	ExitShow_git_repositories(c *Show_git_repositoriesContext)
+
+	// ExitShow_git_tags is called when exiting the show_git_tags production.
+	ExitShow_git_tags(c *Show_git_tagsContext)
 
 	// ExitShow_global_accounts is called when exiting the show_global_accounts production.
 	ExitShow_global_accounts(c *Show_global_accountsContext)
@@ -2775,6 +3504,9 @@ type SnowflakeParserListener interface {
 
 	// ExitIn_obj_2 is called when exiting the in_obj_2 production.
 	ExitIn_obj_2(c *In_obj_2Context)
+
+	// ExitIn_obj_3 is called when exiting the in_obj_3 production.
+	ExitIn_obj_3(c *In_obj_3Context)
 
 	// ExitShow_materialized_views is called when exiting the show_materialized_views production.
 	ExitShow_materialized_views(c *Show_materialized_viewsContext)
@@ -2827,11 +3559,32 @@ type SnowflakeParserListener interface {
 	// ExitShow_schemas is called when exiting the show_schemas production.
 	ExitShow_schemas(c *Show_schemasContext)
 
+	// ExitShow_secrets is called when exiting the show_secrets production.
+	ExitShow_secrets(c *Show_secretsContext)
+
+	// ExitShow_semantic_views is called when exiting the show_semantic_views production.
+	ExitShow_semantic_views(c *Show_semantic_viewsContext)
+
+	// ExitShow_semantic_dimensions is called when exiting the show_semantic_dimensions production.
+	ExitShow_semantic_dimensions(c *Show_semantic_dimensionsContext)
+
+	// ExitShow_semantic_dimensions_for_metric is called when exiting the show_semantic_dimensions_for_metric production.
+	ExitShow_semantic_dimensions_for_metric(c *Show_semantic_dimensions_for_metricContext)
+
+	// ExitShow_semantic_facts is called when exiting the show_semantic_facts production.
+	ExitShow_semantic_facts(c *Show_semantic_factsContext)
+
+	// ExitShow_semantic_metrics is called when exiting the show_semantic_metrics production.
+	ExitShow_semantic_metrics(c *Show_semantic_metricsContext)
+
 	// ExitShow_sequences is called when exiting the show_sequences production.
 	ExitShow_sequences(c *Show_sequencesContext)
 
 	// ExitShow_session_policies is called when exiting the show_session_policies production.
 	ExitShow_session_policies(c *Show_session_policiesContext)
+
+	// ExitShow_password_policies is called when exiting the show_password_policies production.
+	ExitShow_password_policies(c *Show_password_policiesContext)
 
 	// ExitShow_shares is called when exiting the show_shares production.
 	ExitShow_shares(c *Show_sharesContext)
@@ -2841,9 +3594,6 @@ type SnowflakeParserListener interface {
 
 	// ExitShow_shares_in_replication_group is called when exiting the show_shares_in_replication_group production.
 	ExitShow_shares_in_replication_group(c *Show_shares_in_replication_groupContext)
-
-	// ExitShow_stages is called when exiting the show_stages production.
-	ExitShow_stages(c *Show_stagesContext)
 
 	// ExitShow_streams is called when exiting the show_streams production.
 	ExitShow_streams(c *Show_streamsContext)
@@ -2868,6 +3618,9 @@ type SnowflakeParserListener interface {
 
 	// ExitShow_variables is called when exiting the show_variables production.
 	ExitShow_variables(c *Show_variablesContext)
+
+	// ExitShow_versions_in_dataset is called when exiting the show_versions_in_dataset production.
+	ExitShow_versions_in_dataset(c *Show_versions_in_datasetContext)
 
 	// ExitShow_views is called when exiting the show_views production.
 	ExitShow_views(c *Show_viewsContext)
@@ -2914,6 +3667,9 @@ type SnowflakeParserListener interface {
 	// ExitString_list is called when exiting the string_list production.
 	ExitString_list(c *String_listContext)
 
+	// ExitId_fn is called when exiting the id_fn production.
+	ExitId_fn(c *Id_fnContext)
+
 	// ExitId_ is called when exiting the id_ production.
 	ExitId_(c *Id_Context)
 
@@ -2926,8 +3682,8 @@ type SnowflakeParserListener interface {
 	// ExitBuiltin_function is called when exiting the builtin_function production.
 	ExitBuiltin_function(c *Builtin_functionContext)
 
-	// ExitList_operator is called when exiting the list_operator production.
-	ExitList_operator(c *List_operatorContext)
+	// ExitUnary_or_binary_builtin_function is called when exiting the unary_or_binary_builtin_function production.
+	ExitUnary_or_binary_builtin_function(c *Unary_or_binary_builtin_functionContext)
 
 	// ExitBinary_builtin_function is called when exiting the binary_builtin_function production.
 	ExitBinary_builtin_function(c *Binary_builtin_functionContext)
@@ -2938,6 +3694,9 @@ type SnowflakeParserListener interface {
 	// ExitTernary_builtin_function is called when exiting the ternary_builtin_function production.
 	ExitTernary_builtin_function(c *Ternary_builtin_functionContext)
 
+	// ExitList_function is called when exiting the list_function production.
+	ExitList_function(c *List_functionContext)
+
 	// ExitPattern is called when exiting the pattern production.
 	ExitPattern(c *PatternContext)
 
@@ -2947,8 +3706,17 @@ type SnowflakeParserListener interface {
 	// ExitColumn_list is called when exiting the column_list production.
 	ExitColumn_list(c *Column_listContext)
 
+	// ExitAliased_column_list is called when exiting the aliased_column_list production.
+	ExitAliased_column_list(c *Aliased_column_listContext)
+
+	// ExitColumn_list_with_comment is called when exiting the column_list_with_comment production.
+	ExitColumn_list_with_comment(c *Column_list_with_commentContext)
+
 	// ExitObject_name is called when exiting the object_name production.
 	ExitObject_name(c *Object_nameContext)
+
+	// ExitObject_name_or_identifier is called when exiting the object_name_or_identifier production.
+	ExitObject_name_or_identifier(c *Object_name_or_identifierContext)
 
 	// ExitNum is called when exiting the num production.
 	ExitNum(c *NumContext)
@@ -2962,6 +3730,9 @@ type SnowflakeParserListener interface {
 	// ExitExpr is called when exiting the expr production.
 	ExitExpr(c *ExprContext)
 
+	// ExitLambda_params is called when exiting the lambda_params production.
+	ExitLambda_params(c *Lambda_paramsContext)
+
 	// ExitIff_expr is called when exiting the iff_expr production.
 	ExitIff_expr(c *Iff_exprContext)
 
@@ -2970,6 +3741,9 @@ type SnowflakeParserListener interface {
 
 	// ExitTry_cast_expr is called when exiting the try_cast_expr production.
 	ExitTry_cast_expr(c *Try_cast_exprContext)
+
+	// ExitCast_expr is called when exiting the cast_expr production.
+	ExitCast_expr(c *Cast_exprContext)
 
 	// ExitJson_literal is called when exiting the json_literal production.
 	ExitJson_literal(c *Json_literalContext)
@@ -2983,8 +3757,14 @@ type SnowflakeParserListener interface {
 	// ExitArr_literal is called when exiting the arr_literal production.
 	ExitArr_literal(c *Arr_literalContext)
 
+	// ExitData_type_size is called when exiting the data_type_size production.
+	ExitData_type_size(c *Data_type_sizeContext)
+
 	// ExitData_type is called when exiting the data_type production.
 	ExitData_type(c *Data_typeContext)
+
+	// ExitVector_element_type is called when exiting the vector_element_type production.
+	ExitVector_element_type(c *Vector_element_typeContext)
 
 	// ExitPrimitive_expression is called when exiting the primitive_expression production.
 	ExitPrimitive_expression(c *Primitive_expressionContext)
@@ -3000,6 +3780,15 @@ type SnowflakeParserListener interface {
 
 	// ExitFunction_call is called when exiting the function_call production.
 	ExitFunction_call(c *Function_callContext)
+
+	// ExitParam_assoc_list is called when exiting the param_assoc_list production.
+	ExitParam_assoc_list(c *Param_assoc_listContext)
+
+	// ExitParam_assoc is called when exiting the param_assoc production.
+	ExitParam_assoc(c *Param_assocContext)
+
+	// ExitIgnore_or_repect_nulls is called when exiting the ignore_or_repect_nulls production.
+	ExitIgnore_or_repect_nulls(c *Ignore_or_repect_nullsContext)
 
 	// ExitRanking_windowed_function is called when exiting the ranking_windowed_function production.
 	ExitRanking_windowed_function(c *Ranking_windowed_functionContext)
@@ -3037,17 +3826,17 @@ type SnowflakeParserListener interface {
 	// ExitCommon_table_expression is called when exiting the common_table_expression production.
 	ExitCommon_table_expression(c *Common_table_expressionContext)
 
-	// ExitAnchor_clause is called when exiting the anchor_clause production.
-	ExitAnchor_clause(c *Anchor_clauseContext)
-
-	// ExitRecursive_clause is called when exiting the recursive_clause production.
-	ExitRecursive_clause(c *Recursive_clauseContext)
-
 	// ExitSelect_statement is called when exiting the select_statement production.
 	ExitSelect_statement(c *Select_statementContext)
 
 	// ExitSet_operators is called when exiting the set_operators production.
 	ExitSet_operators(c *Set_operatorsContext)
+
+	// ExitBy_name is called when exiting the by_name production.
+	ExitBy_name(c *By_nameContext)
+
+	// ExitSelect_statement_in_parentheses is called when exiting the select_statement_in_parentheses production.
+	ExitSelect_statement_in_parentheses(c *Select_statement_in_parenthesesContext)
 
 	// ExitSelect_optional_clauses is called when exiting the select_optional_clauses production.
 	ExitSelect_optional_clauses(c *Select_optional_clausesContext)
@@ -3070,8 +3859,17 @@ type SnowflakeParserListener interface {
 	// ExitSelect_list_elem is called when exiting the select_list_elem production.
 	ExitSelect_list_elem(c *Select_list_elemContext)
 
+	// ExitColumn_elem_star is called when exiting the column_elem_star production.
+	ExitColumn_elem_star(c *Column_elem_starContext)
+
 	// ExitColumn_elem is called when exiting the column_elem production.
 	ExitColumn_elem(c *Column_elemContext)
+
+	// ExitObject_name_or_alias is called when exiting the object_name_or_alias production.
+	ExitObject_name_or_alias(c *Object_name_or_aliasContext)
+
+	// ExitExclude_clause is called when exiting the exclude_clause production.
+	ExitExclude_clause(c *Exclude_clauseContext)
 
 	// ExitAs_alias is called when exiting the as_alias production.
 	ExitAs_alias(c *As_aliasContext)
@@ -3118,6 +3916,9 @@ type SnowflakeParserListener interface {
 	// ExitFlatten_table is called when exiting the flatten_table production.
 	ExitFlatten_table(c *Flatten_tableContext)
 
+	// ExitSplited_table is called when exiting the splited_table production.
+	ExitSplited_table(c *Splited_tableContext)
+
 	// ExitPrior_list is called when exiting the prior_list production.
 	ExitPrior_list(c *Prior_listContext)
 
@@ -3132,6 +3933,9 @@ type SnowflakeParserListener interface {
 
 	// ExitJoin_clause is called when exiting the join_clause production.
 	ExitJoin_clause(c *Join_clauseContext)
+
+	// ExitOn_using_clause is called when exiting the on_using_clause production.
+	ExitOn_using_clause(c *On_using_clauseContext)
 
 	// ExitAt_before is called when exiting the at_before production.
 	ExitAt_before(c *At_beforeContext)
@@ -3184,14 +3988,26 @@ type SnowflakeParserListener interface {
 	// ExitPivot_unpivot is called when exiting the pivot_unpivot production.
 	ExitPivot_unpivot(c *Pivot_unpivotContext)
 
+	// ExitInclude_exclude is called when exiting the include_exclude production.
+	ExitInclude_exclude(c *Include_excludeContext)
+
+	// ExitPivot_in_clause is called when exiting the pivot_in_clause production.
+	ExitPivot_in_clause(c *Pivot_in_clauseContext)
+
+	// ExitDefault_on_null is called when exiting the default_on_null production.
+	ExitDefault_on_null(c *Default_on_nullContext)
+
 	// ExitColumn_alias_list_in_brackets is called when exiting the column_alias_list_in_brackets production.
 	ExitColumn_alias_list_in_brackets(c *Column_alias_list_in_bracketsContext)
 
 	// ExitExpr_list_in_parentheses is called when exiting the expr_list_in_parentheses production.
 	ExitExpr_list_in_parentheses(c *Expr_list_in_parenthesesContext)
 
-	// ExitValues is called when exiting the values production.
-	ExitValues(c *ValuesContext)
+	// ExitValues_table is called when exiting the values_table production.
+	ExitValues_table(c *Values_tableContext)
+
+	// ExitValues_table_body is called when exiting the values_table_body production.
+	ExitValues_table_body(c *Values_table_bodyContext)
 
 	// ExitSample_method is called when exiting the sample_method production.
 	ExitSample_method(c *Sample_methodContext)
@@ -3214,6 +4030,9 @@ type SnowflakeParserListener interface {
 	// ExitNull_not_null is called when exiting the null_not_null production.
 	ExitNull_not_null(c *Null_not_nullContext)
 
+	// ExitNot_distinct_from is called when exiting the not_distinct_from production.
+	ExitNot_distinct_from(c *Not_distinct_fromContext)
+
 	// ExitSubquery is called when exiting the subquery production.
 	ExitSubquery(c *SubqueryContext)
 
@@ -3223,8 +4042,11 @@ type SnowflakeParserListener interface {
 	// ExitWhere_clause is called when exiting the where_clause production.
 	ExitWhere_clause(c *Where_clauseContext)
 
-	// ExitGroup_item is called when exiting the group_item production.
-	ExitGroup_item(c *Group_itemContext)
+	// ExitGroup_by_elem is called when exiting the group_by_elem production.
+	ExitGroup_by_elem(c *Group_by_elemContext)
+
+	// ExitGroup_by_list is called when exiting the group_by_list production.
+	ExitGroup_by_list(c *Group_by_listContext)
 
 	// ExitGroup_by_clause is called when exiting the group_by_clause production.
 	ExitGroup_by_clause(c *Group_by_clauseContext)
@@ -3249,6 +4071,12 @@ type SnowflakeParserListener interface {
 
 	// ExitLimit_clause is called when exiting the limit_clause production.
 	ExitLimit_clause(c *Limit_clauseContext)
+
+	// ExitRound_mode is called when exiting the round_mode production.
+	ExitRound_mode(c *Round_modeContext)
+
+	// ExitRound_expr is called when exiting the round_expr production.
+	ExitRound_expr(c *Round_exprContext)
 
 	// ExitSupplement_non_reserved_words is called when exiting the supplement_non_reserved_words production.
 	ExitSupplement_non_reserved_words(c *Supplement_non_reserved_wordsContext)

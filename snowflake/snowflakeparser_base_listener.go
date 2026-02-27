@@ -94,6 +94,12 @@ func (s *BaseSnowflakeParserListener) EnterMerge_matches(ctx *Merge_matchesConte
 // ExitMerge_matches is called when production merge_matches is exited.
 func (s *BaseSnowflakeParserListener) ExitMerge_matches(ctx *Merge_matchesContext) {}
 
+// EnterMerge_cond is called when production merge_cond is entered.
+func (s *BaseSnowflakeParserListener) EnterMerge_cond(ctx *Merge_condContext) {}
+
+// ExitMerge_cond is called when production merge_cond is exited.
+func (s *BaseSnowflakeParserListener) ExitMerge_cond(ctx *Merge_condContext) {}
+
 // EnterMerge_update_delete is called when production merge_update_delete is entered.
 func (s *BaseSnowflakeParserListener) EnterMerge_update_delete(ctx *Merge_update_deleteContext) {}
 
@@ -135,6 +141,12 @@ func (s *BaseSnowflakeParserListener) EnterOther_command(ctx *Other_commandConte
 
 // ExitOther_command is called when production other_command is exited.
 func (s *BaseSnowflakeParserListener) ExitOther_command(ctx *Other_commandContext) {}
+
+// EnterBegin_txn is called when production begin_txn is entered.
+func (s *BaseSnowflakeParserListener) EnterBegin_txn(ctx *Begin_txnContext) {}
+
+// ExitBegin_txn is called when production begin_txn is exited.
+func (s *BaseSnowflakeParserListener) ExitBegin_txn(ctx *Begin_txnContext) {}
 
 // EnterCopy_into_table is called when production copy_into_table is entered.
 func (s *BaseSnowflakeParserListener) EnterCopy_into_table(ctx *Copy_into_tableContext) {}
@@ -190,6 +202,12 @@ func (s *BaseSnowflakeParserListener) EnterComment(ctx *CommentContext) {}
 // ExitComment is called when production comment is exited.
 func (s *BaseSnowflakeParserListener) ExitComment(ctx *CommentContext) {}
 
+// EnterFunction_signature is called when production function_signature is entered.
+func (s *BaseSnowflakeParserListener) EnterFunction_signature(ctx *Function_signatureContext) {}
+
+// ExitFunction_signature is called when production function_signature is exited.
+func (s *BaseSnowflakeParserListener) ExitFunction_signature(ctx *Function_signatureContext) {}
+
 // EnterCommit is called when production commit is entered.
 func (s *BaseSnowflakeParserListener) EnterCommit(ctx *CommitContext) {}
 
@@ -207,6 +225,12 @@ func (s *BaseSnowflakeParserListener) EnterExecute_task(ctx *Execute_taskContext
 
 // ExitExecute_task is called when production execute_task is exited.
 func (s *BaseSnowflakeParserListener) ExitExecute_task(ctx *Execute_taskContext) {}
+
+// EnterRetry_last is called when production retry_last is entered.
+func (s *BaseSnowflakeParserListener) EnterRetry_last(ctx *Retry_lastContext) {}
+
+// ExitRetry_last is called when production retry_last is exited.
+func (s *BaseSnowflakeParserListener) ExitRetry_last(ctx *Retry_lastContext) {}
 
 // EnterExplain is called when production explain is entered.
 func (s *BaseSnowflakeParserListener) EnterExplain(ctx *ExplainContext) {}
@@ -330,17 +354,29 @@ func (s *BaseSnowflakeParserListener) EnterList(ctx *ListContext) {}
 // ExitList is called when production list is exited.
 func (s *BaseSnowflakeParserListener) ExitList(ctx *ListContext) {}
 
-// EnterInternal_stage is called when production internal_stage is entered.
-func (s *BaseSnowflakeParserListener) EnterInternal_stage(ctx *Internal_stageContext) {}
+// EnterUser_stage is called when production user_stage is entered.
+func (s *BaseSnowflakeParserListener) EnterUser_stage(ctx *User_stageContext) {}
 
-// ExitInternal_stage is called when production internal_stage is exited.
-func (s *BaseSnowflakeParserListener) ExitInternal_stage(ctx *Internal_stageContext) {}
+// ExitUser_stage is called when production user_stage is exited.
+func (s *BaseSnowflakeParserListener) ExitUser_stage(ctx *User_stageContext) {}
 
-// EnterExternal_stage is called when production external_stage is entered.
-func (s *BaseSnowflakeParserListener) EnterExternal_stage(ctx *External_stageContext) {}
+// EnterTable_stage is called when production table_stage is entered.
+func (s *BaseSnowflakeParserListener) EnterTable_stage(ctx *Table_stageContext) {}
 
-// ExitExternal_stage is called when production external_stage is exited.
-func (s *BaseSnowflakeParserListener) ExitExternal_stage(ctx *External_stageContext) {}
+// ExitTable_stage is called when production table_stage is exited.
+func (s *BaseSnowflakeParserListener) ExitTable_stage(ctx *Table_stageContext) {}
+
+// EnterNamed_stage is called when production named_stage is entered.
+func (s *BaseSnowflakeParserListener) EnterNamed_stage(ctx *Named_stageContext) {}
+
+// ExitNamed_stage is called when production named_stage is exited.
+func (s *BaseSnowflakeParserListener) ExitNamed_stage(ctx *Named_stageContext) {}
+
+// EnterStage_path is called when production stage_path is entered.
+func (s *BaseSnowflakeParserListener) EnterStage_path(ctx *Stage_pathContext) {}
+
+// ExitStage_path is called when production stage_path is exited.
+func (s *BaseSnowflakeParserListener) ExitStage_path(ctx *Stage_pathContext) {}
 
 // EnterPut is called when production put is entered.
 func (s *BaseSnowflakeParserListener) EnterPut(ctx *PutContext) {}
@@ -514,11 +550,23 @@ func (s *BaseSnowflakeParserListener) EnterAccount_id_list(ctx *Account_id_listC
 // ExitAccount_id_list is called when production account_id_list is exited.
 func (s *BaseSnowflakeParserListener) ExitAccount_id_list(ctx *Account_id_listContext) {}
 
+// EnterAlter_dataset is called when production alter_dataset is entered.
+func (s *BaseSnowflakeParserListener) EnterAlter_dataset(ctx *Alter_datasetContext) {}
+
+// ExitAlter_dataset is called when production alter_dataset is exited.
+func (s *BaseSnowflakeParserListener) ExitAlter_dataset(ctx *Alter_datasetContext) {}
+
 // EnterAlter_dynamic_table is called when production alter_dynamic_table is entered.
 func (s *BaseSnowflakeParserListener) EnterAlter_dynamic_table(ctx *Alter_dynamic_tableContext) {}
 
 // ExitAlter_dynamic_table is called when production alter_dynamic_table is exited.
 func (s *BaseSnowflakeParserListener) ExitAlter_dynamic_table(ctx *Alter_dynamic_tableContext) {}
+
+// EnterId_list is called when production id_list is entered.
+func (s *BaseSnowflakeParserListener) EnterId_list(ctx *Id_listContext) {}
+
+// ExitId_list is called when production id_list is exited.
+func (s *BaseSnowflakeParserListener) ExitId_list(ctx *Id_listContext) {}
 
 // EnterAlter_external_table is called when production alter_external_table is entered.
 func (s *BaseSnowflakeParserListener) EnterAlter_external_table(ctx *Alter_external_tableContext) {}
@@ -587,6 +635,24 @@ func (s *BaseSnowflakeParserListener) EnterData_type_list(ctx *Data_type_listCon
 
 // ExitData_type_list is called when production data_type_list is exited.
 func (s *BaseSnowflakeParserListener) ExitData_type_list(ctx *Data_type_listContext) {}
+
+// EnterAlter_git_repository is called when production alter_git_repository is entered.
+func (s *BaseSnowflakeParserListener) EnterAlter_git_repository(ctx *Alter_git_repositoryContext) {}
+
+// ExitAlter_git_repository is called when production alter_git_repository is exited.
+func (s *BaseSnowflakeParserListener) ExitAlter_git_repository(ctx *Alter_git_repositoryContext) {}
+
+// EnterAlter_git_set_opts is called when production alter_git_set_opts is entered.
+func (s *BaseSnowflakeParserListener) EnterAlter_git_set_opts(ctx *Alter_git_set_optsContext) {}
+
+// ExitAlter_git_set_opts is called when production alter_git_set_opts is exited.
+func (s *BaseSnowflakeParserListener) ExitAlter_git_set_opts(ctx *Alter_git_set_optsContext) {}
+
+// EnterAlter_git_unset_opts is called when production alter_git_unset_opts is entered.
+func (s *BaseSnowflakeParserListener) EnterAlter_git_unset_opts(ctx *Alter_git_unset_optsContext) {}
+
+// ExitAlter_git_unset_opts is called when production alter_git_unset_opts is exited.
+func (s *BaseSnowflakeParserListener) ExitAlter_git_unset_opts(ctx *Alter_git_unset_optsContext) {}
 
 // EnterAlter_masking_policy is called when production alter_masking_policy is entered.
 func (s *BaseSnowflakeParserListener) EnterAlter_masking_policy(ctx *Alter_masking_policyContext) {}
@@ -694,12 +760,66 @@ func (s *BaseSnowflakeParserListener) EnterSchema_property(ctx *Schema_propertyC
 // ExitSchema_property is called when production schema_property is exited.
 func (s *BaseSnowflakeParserListener) ExitSchema_property(ctx *Schema_propertyContext) {}
 
-// EnterAlter_security_integration is called when production alter_security_integration is entered.
-func (s *BaseSnowflakeParserListener) EnterAlter_security_integration(ctx *Alter_security_integrationContext) {
+// EnterAlter_sequence is called when production alter_sequence is entered.
+func (s *BaseSnowflakeParserListener) EnterAlter_sequence(ctx *Alter_sequenceContext) {}
+
+// ExitAlter_sequence is called when production alter_sequence is exited.
+func (s *BaseSnowflakeParserListener) ExitAlter_sequence(ctx *Alter_sequenceContext) {}
+
+// EnterAlter_secret is called when production alter_secret is entered.
+func (s *BaseSnowflakeParserListener) EnterAlter_secret(ctx *Alter_secretContext) {}
+
+// ExitAlter_secret is called when production alter_secret is exited.
+func (s *BaseSnowflakeParserListener) ExitAlter_secret(ctx *Alter_secretContext) {}
+
+// EnterSecret_opts is called when production secret_opts is entered.
+func (s *BaseSnowflakeParserListener) EnterSecret_opts(ctx *Secret_optsContext) {}
+
+// ExitSecret_opts is called when production secret_opts is exited.
+func (s *BaseSnowflakeParserListener) ExitSecret_opts(ctx *Secret_optsContext) {}
+
+// EnterSecret_set_opts is called when production secret_set_opts is entered.
+func (s *BaseSnowflakeParserListener) EnterSecret_set_opts(ctx *Secret_set_optsContext) {}
+
+// ExitSecret_set_opts is called when production secret_set_opts is exited.
+func (s *BaseSnowflakeParserListener) ExitSecret_set_opts(ctx *Secret_set_optsContext) {}
+
+// EnterSecret_oauth_client_creds_opts is called when production secret_oauth_client_creds_opts is entered.
+func (s *BaseSnowflakeParserListener) EnterSecret_oauth_client_creds_opts(ctx *Secret_oauth_client_creds_optsContext) {
 }
 
-// ExitAlter_security_integration is called when production alter_security_integration is exited.
-func (s *BaseSnowflakeParserListener) ExitAlter_security_integration(ctx *Alter_security_integrationContext) {
+// ExitSecret_oauth_client_creds_opts is called when production secret_oauth_client_creds_opts is exited.
+func (s *BaseSnowflakeParserListener) ExitSecret_oauth_client_creds_opts(ctx *Secret_oauth_client_creds_optsContext) {
+}
+
+// EnterSecret_oauth_auth_code_opts is called when production secret_oauth_auth_code_opts is entered.
+func (s *BaseSnowflakeParserListener) EnterSecret_oauth_auth_code_opts(ctx *Secret_oauth_auth_code_optsContext) {
+}
+
+// ExitSecret_oauth_auth_code_opts is called when production secret_oauth_auth_code_opts is exited.
+func (s *BaseSnowflakeParserListener) ExitSecret_oauth_auth_code_opts(ctx *Secret_oauth_auth_code_optsContext) {
+}
+
+// EnterSecret_api_auth_opts is called when production secret_api_auth_opts is entered.
+func (s *BaseSnowflakeParserListener) EnterSecret_api_auth_opts(ctx *Secret_api_auth_optsContext) {}
+
+// ExitSecret_api_auth_opts is called when production secret_api_auth_opts is exited.
+func (s *BaseSnowflakeParserListener) ExitSecret_api_auth_opts(ctx *Secret_api_auth_optsContext) {}
+
+// EnterSecret_basic_auth_opts is called when production secret_basic_auth_opts is entered.
+func (s *BaseSnowflakeParserListener) EnterSecret_basic_auth_opts(ctx *Secret_basic_auth_optsContext) {
+}
+
+// ExitSecret_basic_auth_opts is called when production secret_basic_auth_opts is exited.
+func (s *BaseSnowflakeParserListener) ExitSecret_basic_auth_opts(ctx *Secret_basic_auth_optsContext) {
+}
+
+// EnterSecret_generic_string_opts is called when production secret_generic_string_opts is entered.
+func (s *BaseSnowflakeParserListener) EnterSecret_generic_string_opts(ctx *Secret_generic_string_optsContext) {
+}
+
+// ExitSecret_generic_string_opts is called when production secret_generic_string_opts is exited.
+func (s *BaseSnowflakeParserListener) ExitSecret_generic_string_opts(ctx *Secret_generic_string_optsContext) {
 }
 
 // EnterAlter_security_integration_external_oauth is called when production alter_security_integration_external_oauth is entered.
@@ -758,12 +878,6 @@ func (s *BaseSnowflakeParserListener) EnterSecurity_integration_scim_property(ct
 func (s *BaseSnowflakeParserListener) ExitSecurity_integration_scim_property(ctx *Security_integration_scim_propertyContext) {
 }
 
-// EnterAlter_sequence is called when production alter_sequence is entered.
-func (s *BaseSnowflakeParserListener) EnterAlter_sequence(ctx *Alter_sequenceContext) {}
-
-// ExitAlter_sequence is called when production alter_sequence is exited.
-func (s *BaseSnowflakeParserListener) ExitAlter_sequence(ctx *Alter_sequenceContext) {}
-
 // EnterAlter_session is called when production alter_session is entered.
 func (s *BaseSnowflakeParserListener) EnterAlter_session(ctx *Alter_sessionContext) {}
 
@@ -776,17 +890,17 @@ func (s *BaseSnowflakeParserListener) EnterAlter_session_policy(ctx *Alter_sessi
 // ExitAlter_session_policy is called when production alter_session_policy is exited.
 func (s *BaseSnowflakeParserListener) ExitAlter_session_policy(ctx *Alter_session_policyContext) {}
 
+// EnterAlter_password_policy is called when production alter_password_policy is entered.
+func (s *BaseSnowflakeParserListener) EnterAlter_password_policy(ctx *Alter_password_policyContext) {}
+
+// ExitAlter_password_policy is called when production alter_password_policy is exited.
+func (s *BaseSnowflakeParserListener) ExitAlter_password_policy(ctx *Alter_password_policyContext) {}
+
 // EnterAlter_share is called when production alter_share is entered.
 func (s *BaseSnowflakeParserListener) EnterAlter_share(ctx *Alter_shareContext) {}
 
 // ExitAlter_share is called when production alter_share is exited.
 func (s *BaseSnowflakeParserListener) ExitAlter_share(ctx *Alter_shareContext) {}
-
-// EnterAlter_stage is called when production alter_stage is entered.
-func (s *BaseSnowflakeParserListener) EnterAlter_stage(ctx *Alter_stageContext) {}
-
-// ExitAlter_stage is called when production alter_stage is exited.
-func (s *BaseSnowflakeParserListener) ExitAlter_stage(ctx *Alter_stageContext) {}
 
 // EnterAlter_storage_integration is called when production alter_storage_integration is entered.
 func (s *BaseSnowflakeParserListener) EnterAlter_storage_integration(ctx *Alter_storage_integrationContext) {
@@ -808,6 +922,12 @@ func (s *BaseSnowflakeParserListener) EnterAlter_table(ctx *Alter_tableContext) 
 // ExitAlter_table is called when production alter_table is exited.
 func (s *BaseSnowflakeParserListener) ExitAlter_table(ctx *Alter_tableContext) {}
 
+// EnterRls_operations is called when production rls_operations is entered.
+func (s *BaseSnowflakeParserListener) EnterRls_operations(ctx *Rls_operationsContext) {}
+
+// ExitRls_operations is called when production rls_operations is exited.
+func (s *BaseSnowflakeParserListener) ExitRls_operations(ctx *Rls_operationsContext) {}
+
 // EnterClustering_action is called when production clustering_action is entered.
 func (s *BaseSnowflakeParserListener) EnterClustering_action(ctx *Clustering_actionContext) {}
 
@@ -820,11 +940,71 @@ func (s *BaseSnowflakeParserListener) EnterTable_column_action(ctx *Table_column
 // ExitTable_column_action is called when production table_column_action is exited.
 func (s *BaseSnowflakeParserListener) ExitTable_column_action(ctx *Table_column_actionContext) {}
 
+// EnterAlter_column_clause is called when production alter_column_clause is entered.
+func (s *BaseSnowflakeParserListener) EnterAlter_column_clause(ctx *Alter_column_clauseContext) {}
+
+// ExitAlter_column_clause is called when production alter_column_clause is exited.
+func (s *BaseSnowflakeParserListener) ExitAlter_column_clause(ctx *Alter_column_clauseContext) {}
+
 // EnterInline_constraint is called when production inline_constraint is entered.
 func (s *BaseSnowflakeParserListener) EnterInline_constraint(ctx *Inline_constraintContext) {}
 
 // ExitInline_constraint is called when production inline_constraint is exited.
 func (s *BaseSnowflakeParserListener) ExitInline_constraint(ctx *Inline_constraintContext) {}
+
+// EnterEnforced_not_enforced is called when production enforced_not_enforced is entered.
+func (s *BaseSnowflakeParserListener) EnterEnforced_not_enforced(ctx *Enforced_not_enforcedContext) {}
+
+// ExitEnforced_not_enforced is called when production enforced_not_enforced is exited.
+func (s *BaseSnowflakeParserListener) ExitEnforced_not_enforced(ctx *Enforced_not_enforcedContext) {}
+
+// EnterDeferrable_not_deferrable is called when production deferrable_not_deferrable is entered.
+func (s *BaseSnowflakeParserListener) EnterDeferrable_not_deferrable(ctx *Deferrable_not_deferrableContext) {
+}
+
+// ExitDeferrable_not_deferrable is called when production deferrable_not_deferrable is exited.
+func (s *BaseSnowflakeParserListener) ExitDeferrable_not_deferrable(ctx *Deferrable_not_deferrableContext) {
+}
+
+// EnterInitially_deferred_or_immediate is called when production initially_deferred_or_immediate is entered.
+func (s *BaseSnowflakeParserListener) EnterInitially_deferred_or_immediate(ctx *Initially_deferred_or_immediateContext) {
+}
+
+// ExitInitially_deferred_or_immediate is called when production initially_deferred_or_immediate is exited.
+func (s *BaseSnowflakeParserListener) ExitInitially_deferred_or_immediate(ctx *Initially_deferred_or_immediateContext) {
+}
+
+// EnterCommon_constraint_properties is called when production common_constraint_properties is entered.
+func (s *BaseSnowflakeParserListener) EnterCommon_constraint_properties(ctx *Common_constraint_propertiesContext) {
+}
+
+// ExitCommon_constraint_properties is called when production common_constraint_properties is exited.
+func (s *BaseSnowflakeParserListener) ExitCommon_constraint_properties(ctx *Common_constraint_propertiesContext) {
+}
+
+// EnterOn_update is called when production on_update is entered.
+func (s *BaseSnowflakeParserListener) EnterOn_update(ctx *On_updateContext) {}
+
+// ExitOn_update is called when production on_update is exited.
+func (s *BaseSnowflakeParserListener) ExitOn_update(ctx *On_updateContext) {}
+
+// EnterOn_delete is called when production on_delete is entered.
+func (s *BaseSnowflakeParserListener) EnterOn_delete(ctx *On_deleteContext) {}
+
+// ExitOn_delete is called when production on_delete is exited.
+func (s *BaseSnowflakeParserListener) ExitOn_delete(ctx *On_deleteContext) {}
+
+// EnterForeign_key_match is called when production foreign_key_match is entered.
+func (s *BaseSnowflakeParserListener) EnterForeign_key_match(ctx *Foreign_key_matchContext) {}
+
+// ExitForeign_key_match is called when production foreign_key_match is exited.
+func (s *BaseSnowflakeParserListener) ExitForeign_key_match(ctx *Foreign_key_matchContext) {}
+
+// EnterOn_action is called when production on_action is entered.
+func (s *BaseSnowflakeParserListener) EnterOn_action(ctx *On_actionContext) {}
+
+// ExitOn_action is called when production on_action is exited.
+func (s *BaseSnowflakeParserListener) ExitOn_action(ctx *On_actionContext) {}
 
 // EnterConstraint_properties is called when production constraint_properties is entered.
 func (s *BaseSnowflakeParserListener) EnterConstraint_properties(ctx *Constraint_propertiesContext) {}
@@ -994,6 +1174,12 @@ func (s *BaseSnowflakeParserListener) EnterUnset_tags(ctx *Unset_tagsContext) {}
 // ExitUnset_tags is called when production unset_tags is exited.
 func (s *BaseSnowflakeParserListener) ExitUnset_tags(ctx *Unset_tagsContext) {}
 
+// EnterTag_list is called when production tag_list is entered.
+func (s *BaseSnowflakeParserListener) EnterTag_list(ctx *Tag_listContext) {}
+
+// ExitTag_list is called when production tag_list is exited.
+func (s *BaseSnowflakeParserListener) ExitTag_list(ctx *Tag_listContext) {}
+
 // EnterCreate_command is called when production create_command is entered.
 func (s *BaseSnowflakeParserListener) EnterCreate_command(ctx *Create_commandContext) {}
 
@@ -1050,12 +1236,6 @@ func (s *BaseSnowflakeParserListener) EnterCreate_database(ctx *Create_databaseC
 // ExitCreate_database is called when production create_database is exited.
 func (s *BaseSnowflakeParserListener) ExitCreate_database(ctx *Create_databaseContext) {}
 
-// EnterCreate_dynamic_table is called when production create_dynamic_table is entered.
-func (s *BaseSnowflakeParserListener) EnterCreate_dynamic_table(ctx *Create_dynamic_tableContext) {}
-
-// ExitCreate_dynamic_table is called when production create_dynamic_table is exited.
-func (s *BaseSnowflakeParserListener) ExitCreate_dynamic_table(ctx *Create_dynamic_tableContext) {}
-
 // EnterClone_at_before is called when production clone_at_before is entered.
 func (s *BaseSnowflakeParserListener) EnterClone_at_before(ctx *Clone_at_beforeContext) {}
 
@@ -1085,6 +1265,60 @@ func (s *BaseSnowflakeParserListener) EnterCompression(ctx *CompressionContext) 
 
 // ExitCompression is called when production compression is exited.
 func (s *BaseSnowflakeParserListener) ExitCompression(ctx *CompressionContext) {}
+
+// EnterCreate_dataset is called when production create_dataset is entered.
+func (s *BaseSnowflakeParserListener) EnterCreate_dataset(ctx *Create_datasetContext) {}
+
+// ExitCreate_dataset is called when production create_dataset is exited.
+func (s *BaseSnowflakeParserListener) ExitCreate_dataset(ctx *Create_datasetContext) {}
+
+// EnterCreate_dynamic_table is called when production create_dynamic_table is entered.
+func (s *BaseSnowflakeParserListener) EnterCreate_dynamic_table(ctx *Create_dynamic_tableContext) {}
+
+// ExitCreate_dynamic_table is called when production create_dynamic_table is exited.
+func (s *BaseSnowflakeParserListener) ExitCreate_dynamic_table(ctx *Create_dynamic_tableContext) {}
+
+// EnterDynamic_table_params is called when production dynamic_table_params is entered.
+func (s *BaseSnowflakeParserListener) EnterDynamic_table_params(ctx *Dynamic_table_paramsContext) {}
+
+// ExitDynamic_table_params is called when production dynamic_table_params is exited.
+func (s *BaseSnowflakeParserListener) ExitDynamic_table_params(ctx *Dynamic_table_paramsContext) {}
+
+// EnterDynamic_table_settable_params is called when production dynamic_table_settable_params is entered.
+func (s *BaseSnowflakeParserListener) EnterDynamic_table_settable_params(ctx *Dynamic_table_settable_paramsContext) {
+}
+
+// ExitDynamic_table_settable_params is called when production dynamic_table_settable_params is exited.
+func (s *BaseSnowflakeParserListener) ExitDynamic_table_settable_params(ctx *Dynamic_table_settable_paramsContext) {
+}
+
+// EnterDynamic_table_unsettable_params is called when production dynamic_table_unsettable_params is entered.
+func (s *BaseSnowflakeParserListener) EnterDynamic_table_unsettable_params(ctx *Dynamic_table_unsettable_paramsContext) {
+}
+
+// ExitDynamic_table_unsettable_params is called when production dynamic_table_unsettable_params is exited.
+func (s *BaseSnowflakeParserListener) ExitDynamic_table_unsettable_params(ctx *Dynamic_table_unsettable_paramsContext) {
+}
+
+// EnterData_retention_params is called when production data_retention_params is entered.
+func (s *BaseSnowflakeParserListener) EnterData_retention_params(ctx *Data_retention_paramsContext) {}
+
+// ExitData_retention_params is called when production data_retention_params is exited.
+func (s *BaseSnowflakeParserListener) ExitData_retention_params(ctx *Data_retention_paramsContext) {}
+
+// EnterSet_data_retention_params is called when production set_data_retention_params is entered.
+func (s *BaseSnowflakeParserListener) EnterSet_data_retention_params(ctx *Set_data_retention_paramsContext) {
+}
+
+// ExitSet_data_retention_params is called when production set_data_retention_params is exited.
+func (s *BaseSnowflakeParserListener) ExitSet_data_retention_params(ctx *Set_data_retention_paramsContext) {
+}
+
+// EnterCreate_event_table is called when production create_event_table is entered.
+func (s *BaseSnowflakeParserListener) EnterCreate_event_table(ctx *Create_event_tableContext) {}
+
+// ExitCreate_event_table is called when production create_event_table is exited.
+func (s *BaseSnowflakeParserListener) ExitCreate_event_table(ctx *Create_event_tableContext) {}
 
 // EnterCreate_external_function is called when production create_external_function is entered.
 func (s *BaseSnowflakeParserListener) EnterCreate_external_function(ctx *Create_external_functionContext) {
@@ -1152,11 +1386,25 @@ func (s *BaseSnowflakeParserListener) EnterArg_decl(ctx *Arg_declContext) {}
 // ExitArg_decl is called when production arg_decl is exited.
 func (s *BaseSnowflakeParserListener) ExitArg_decl(ctx *Arg_declContext) {}
 
+// EnterArg_default_value_clause is called when production arg_default_value_clause is entered.
+func (s *BaseSnowflakeParserListener) EnterArg_default_value_clause(ctx *Arg_default_value_clauseContext) {
+}
+
+// ExitArg_default_value_clause is called when production arg_default_value_clause is exited.
+func (s *BaseSnowflakeParserListener) ExitArg_default_value_clause(ctx *Arg_default_value_clauseContext) {
+}
+
 // EnterCol_decl is called when production col_decl is entered.
 func (s *BaseSnowflakeParserListener) EnterCol_decl(ctx *Col_declContext) {}
 
 // ExitCol_decl is called when production col_decl is exited.
 func (s *BaseSnowflakeParserListener) ExitCol_decl(ctx *Col_declContext) {}
+
+// EnterVirtual_column_decl is called when production virtual_column_decl is entered.
+func (s *BaseSnowflakeParserListener) EnterVirtual_column_decl(ctx *Virtual_column_declContext) {}
+
+// ExitVirtual_column_decl is called when production virtual_column_decl is exited.
+func (s *BaseSnowflakeParserListener) ExitVirtual_column_decl(ctx *Virtual_column_declContext) {}
 
 // EnterFunction_definition is called when production function_definition is entered.
 func (s *BaseSnowflakeParserListener) EnterFunction_definition(ctx *Function_definitionContext) {}
@@ -1169,6 +1417,18 @@ func (s *BaseSnowflakeParserListener) EnterCreate_function(ctx *Create_functionC
 
 // ExitCreate_function is called when production create_function is exited.
 func (s *BaseSnowflakeParserListener) ExitCreate_function(ctx *Create_functionContext) {}
+
+// EnterCreate_git_repository is called when production create_git_repository is entered.
+func (s *BaseSnowflakeParserListener) EnterCreate_git_repository(ctx *Create_git_repositoryContext) {}
+
+// ExitCreate_git_repository is called when production create_git_repository is exited.
+func (s *BaseSnowflakeParserListener) ExitCreate_git_repository(ctx *Create_git_repositoryContext) {}
+
+// EnterCreate_git_opts is called when production create_git_opts is entered.
+func (s *BaseSnowflakeParserListener) EnterCreate_git_opts(ctx *Create_git_optsContext) {}
+
+// ExitCreate_git_opts is called when production create_git_opts is exited.
+func (s *BaseSnowflakeParserListener) ExitCreate_git_opts(ctx *Create_git_optsContext) {}
 
 // EnterCreate_managed_account is called when production create_managed_account is entered.
 func (s *BaseSnowflakeParserListener) EnterCreate_managed_account(ctx *Create_managed_accountContext) {
@@ -1260,6 +1520,12 @@ func (s *BaseSnowflakeParserListener) EnterProcedure_definition(ctx *Procedure_d
 // ExitProcedure_definition is called when production procedure_definition is exited.
 func (s *BaseSnowflakeParserListener) ExitProcedure_definition(ctx *Procedure_definitionContext) {}
 
+// EnterNot_null is called when production not_null is entered.
+func (s *BaseSnowflakeParserListener) EnterNot_null(ctx *Not_nullContext) {}
+
+// ExitNot_null is called when production not_null is exited.
+func (s *BaseSnowflakeParserListener) ExitNot_null(ctx *Not_nullContext) {}
+
 // EnterCreate_procedure is called when production create_procedure is entered.
 func (s *BaseSnowflakeParserListener) EnterCreate_procedure(ctx *Create_procedureContext) {}
 
@@ -1301,6 +1567,12 @@ func (s *BaseSnowflakeParserListener) EnterCreate_schema(ctx *Create_schemaConte
 
 // ExitCreate_schema is called when production create_schema is exited.
 func (s *BaseSnowflakeParserListener) ExitCreate_schema(ctx *Create_schemaContext) {}
+
+// EnterCreate_secret is called when production create_secret is entered.
+func (s *BaseSnowflakeParserListener) EnterCreate_secret(ctx *Create_secretContext) {}
+
+// ExitCreate_secret is called when production create_secret is exited.
+func (s *BaseSnowflakeParserListener) ExitCreate_secret(ctx *Create_secretContext) {}
 
 // EnterCreate_security_integration_external_oauth is called when production create_security_integration_external_oauth is entered.
 func (s *BaseSnowflakeParserListener) EnterCreate_security_integration_external_oauth(ctx *Create_security_integration_external_oauthContext) {
@@ -1364,6 +1636,50 @@ func (s *BaseSnowflakeParserListener) EnterIncrement_by(ctx *Increment_byContext
 // ExitIncrement_by is called when production increment_by is exited.
 func (s *BaseSnowflakeParserListener) ExitIncrement_by(ctx *Increment_byContext) {}
 
+// EnterCreate_semantic_view is called when production create_semantic_view is entered.
+func (s *BaseSnowflakeParserListener) EnterCreate_semantic_view(ctx *Create_semantic_viewContext) {}
+
+// ExitCreate_semantic_view is called when production create_semantic_view is exited.
+func (s *BaseSnowflakeParserListener) ExitCreate_semantic_view(ctx *Create_semantic_viewContext) {}
+
+// EnterLogical_table is called when production logical_table is entered.
+func (s *BaseSnowflakeParserListener) EnterLogical_table(ctx *Logical_tableContext) {}
+
+// ExitLogical_table is called when production logical_table is exited.
+func (s *BaseSnowflakeParserListener) ExitLogical_table(ctx *Logical_tableContext) {}
+
+// EnterRelationship_def is called when production relationship_def is entered.
+func (s *BaseSnowflakeParserListener) EnterRelationship_def(ctx *Relationship_defContext) {}
+
+// ExitRelationship_def is called when production relationship_def is exited.
+func (s *BaseSnowflakeParserListener) ExitRelationship_def(ctx *Relationship_defContext) {}
+
+// EnterWith_synonyms_clause is called when production with_synonyms_clause is entered.
+func (s *BaseSnowflakeParserListener) EnterWith_synonyms_clause(ctx *With_synonyms_clauseContext) {}
+
+// ExitWith_synonyms_clause is called when production with_synonyms_clause is exited.
+func (s *BaseSnowflakeParserListener) ExitWith_synonyms_clause(ctx *With_synonyms_clauseContext) {}
+
+// EnterSemantic_expression_list is called when production semantic_expression_list is entered.
+func (s *BaseSnowflakeParserListener) EnterSemantic_expression_list(ctx *Semantic_expression_listContext) {
+}
+
+// ExitSemantic_expression_list is called when production semantic_expression_list is exited.
+func (s *BaseSnowflakeParserListener) ExitSemantic_expression_list(ctx *Semantic_expression_listContext) {
+}
+
+// EnterSemantic_expression is called when production semantic_expression is entered.
+func (s *BaseSnowflakeParserListener) EnterSemantic_expression(ctx *Semantic_expressionContext) {}
+
+// ExitSemantic_expression is called when production semantic_expression is exited.
+func (s *BaseSnowflakeParserListener) ExitSemantic_expression(ctx *Semantic_expressionContext) {}
+
+// EnterWith_extension_clause is called when production with_extension_clause is entered.
+func (s *BaseSnowflakeParserListener) EnterWith_extension_clause(ctx *With_extension_clauseContext) {}
+
+// ExitWith_extension_clause is called when production with_extension_clause is exited.
+func (s *BaseSnowflakeParserListener) ExitWith_extension_clause(ctx *With_extension_clauseContext) {}
+
 // EnterCreate_sequence is called when production create_sequence is entered.
 func (s *BaseSnowflakeParserListener) EnterCreate_sequence(ctx *Create_sequenceContext) {}
 
@@ -1375,6 +1691,44 @@ func (s *BaseSnowflakeParserListener) EnterCreate_session_policy(ctx *Create_ses
 
 // ExitCreate_session_policy is called when production create_session_policy is exited.
 func (s *BaseSnowflakeParserListener) ExitCreate_session_policy(ctx *Create_session_policyContext) {}
+
+// EnterSession_policy_params is called when production session_policy_params is entered.
+func (s *BaseSnowflakeParserListener) EnterSession_policy_params(ctx *Session_policy_paramsContext) {}
+
+// ExitSession_policy_params is called when production session_policy_params is exited.
+func (s *BaseSnowflakeParserListener) ExitSession_policy_params(ctx *Session_policy_paramsContext) {}
+
+// EnterSession_policy_param_name is called when production session_policy_param_name is entered.
+func (s *BaseSnowflakeParserListener) EnterSession_policy_param_name(ctx *Session_policy_param_nameContext) {
+}
+
+// ExitSession_policy_param_name is called when production session_policy_param_name is exited.
+func (s *BaseSnowflakeParserListener) ExitSession_policy_param_name(ctx *Session_policy_param_nameContext) {
+}
+
+// EnterCreate_password_policy is called when production create_password_policy is entered.
+func (s *BaseSnowflakeParserListener) EnterCreate_password_policy(ctx *Create_password_policyContext) {
+}
+
+// ExitCreate_password_policy is called when production create_password_policy is exited.
+func (s *BaseSnowflakeParserListener) ExitCreate_password_policy(ctx *Create_password_policyContext) {
+}
+
+// EnterPassword_policy_params is called when production password_policy_params is entered.
+func (s *BaseSnowflakeParserListener) EnterPassword_policy_params(ctx *Password_policy_paramsContext) {
+}
+
+// ExitPassword_policy_params is called when production password_policy_params is exited.
+func (s *BaseSnowflakeParserListener) ExitPassword_policy_params(ctx *Password_policy_paramsContext) {
+}
+
+// EnterPassword_policy_param_name is called when production password_policy_param_name is entered.
+func (s *BaseSnowflakeParserListener) EnterPassword_policy_param_name(ctx *Password_policy_param_nameContext) {
+}
+
+// ExitPassword_policy_param_name is called when production password_policy_param_name is exited.
+func (s *BaseSnowflakeParserListener) ExitPassword_policy_param_name(ctx *Password_policy_param_nameContext) {
+}
 
 // EnterCreate_share is called when production create_share is entered.
 func (s *BaseSnowflakeParserListener) EnterCreate_share(ctx *Create_shareContext) {}
@@ -1400,11 +1754,13 @@ func (s *BaseSnowflakeParserListener) EnterCopy_options(ctx *Copy_optionsContext
 // ExitCopy_options is called when production copy_options is exited.
 func (s *BaseSnowflakeParserListener) ExitCopy_options(ctx *Copy_optionsContext) {}
 
-// EnterInternal_stage_params is called when production internal_stage_params is entered.
-func (s *BaseSnowflakeParserListener) EnterInternal_stage_params(ctx *Internal_stage_paramsContext) {}
+// EnterStage_encryption_opts_internal is called when production stage_encryption_opts_internal is entered.
+func (s *BaseSnowflakeParserListener) EnterStage_encryption_opts_internal(ctx *Stage_encryption_opts_internalContext) {
+}
 
-// ExitInternal_stage_params is called when production internal_stage_params is exited.
-func (s *BaseSnowflakeParserListener) ExitInternal_stage_params(ctx *Internal_stage_paramsContext) {}
+// ExitStage_encryption_opts_internal is called when production stage_encryption_opts_internal is exited.
+func (s *BaseSnowflakeParserListener) ExitStage_encryption_opts_internal(ctx *Stage_encryption_opts_internalContext) {
+}
 
 // EnterStage_type is called when production stage_type is entered.
 func (s *BaseSnowflakeParserListener) EnterStage_type(ctx *Stage_typeContext) {}
@@ -1456,6 +1812,60 @@ func (s *BaseSnowflakeParserListener) EnterAws_role(ctx *Aws_roleContext) {}
 // ExitAws_role is called when production aws_role is exited.
 func (s *BaseSnowflakeParserListener) ExitAws_role(ctx *Aws_roleContext) {}
 
+// EnterAzure_encryption_value is called when production azure_encryption_value is entered.
+func (s *BaseSnowflakeParserListener) EnterAzure_encryption_value(ctx *Azure_encryption_valueContext) {
+}
+
+// ExitAzure_encryption_value is called when production azure_encryption_value is exited.
+func (s *BaseSnowflakeParserListener) ExitAzure_encryption_value(ctx *Azure_encryption_valueContext) {
+}
+
+// EnterStage_encryption_opts_az is called when production stage_encryption_opts_az is entered.
+func (s *BaseSnowflakeParserListener) EnterStage_encryption_opts_az(ctx *Stage_encryption_opts_azContext) {
+}
+
+// ExitStage_encryption_opts_az is called when production stage_encryption_opts_az is exited.
+func (s *BaseSnowflakeParserListener) ExitStage_encryption_opts_az(ctx *Stage_encryption_opts_azContext) {
+}
+
+// EnterStorage_integration_eq_id is called when production storage_integration_eq_id is entered.
+func (s *BaseSnowflakeParserListener) EnterStorage_integration_eq_id(ctx *Storage_integration_eq_idContext) {
+}
+
+// ExitStorage_integration_eq_id is called when production storage_integration_eq_id is exited.
+func (s *BaseSnowflakeParserListener) ExitStorage_integration_eq_id(ctx *Storage_integration_eq_idContext) {
+}
+
+// EnterAz_credential_or_storage_integration is called when production az_credential_or_storage_integration is entered.
+func (s *BaseSnowflakeParserListener) EnterAz_credential_or_storage_integration(ctx *Az_credential_or_storage_integrationContext) {
+}
+
+// ExitAz_credential_or_storage_integration is called when production az_credential_or_storage_integration is exited.
+func (s *BaseSnowflakeParserListener) ExitAz_credential_or_storage_integration(ctx *Az_credential_or_storage_integrationContext) {
+}
+
+// EnterGcp_encryption_value is called when production gcp_encryption_value is entered.
+func (s *BaseSnowflakeParserListener) EnterGcp_encryption_value(ctx *Gcp_encryption_valueContext) {}
+
+// ExitGcp_encryption_value is called when production gcp_encryption_value is exited.
+func (s *BaseSnowflakeParserListener) ExitGcp_encryption_value(ctx *Gcp_encryption_valueContext) {}
+
+// EnterStage_encryption_opts_gcp is called when production stage_encryption_opts_gcp is entered.
+func (s *BaseSnowflakeParserListener) EnterStage_encryption_opts_gcp(ctx *Stage_encryption_opts_gcpContext) {
+}
+
+// ExitStage_encryption_opts_gcp is called when production stage_encryption_opts_gcp is exited.
+func (s *BaseSnowflakeParserListener) ExitStage_encryption_opts_gcp(ctx *Stage_encryption_opts_gcpContext) {
+}
+
+// EnterAws_credential_or_storage_integration is called when production aws_credential_or_storage_integration is entered.
+func (s *BaseSnowflakeParserListener) EnterAws_credential_or_storage_integration(ctx *Aws_credential_or_storage_integrationContext) {
+}
+
+// ExitAws_credential_or_storage_integration is called when production aws_credential_or_storage_integration is exited.
+func (s *BaseSnowflakeParserListener) ExitAws_credential_or_storage_integration(ctx *Aws_credential_or_storage_integrationContext) {
+}
+
 // EnterExternal_stage_params is called when production external_stage_params is entered.
 func (s *BaseSnowflakeParserListener) EnterExternal_stage_params(ctx *External_stage_paramsContext) {}
 
@@ -1494,12 +1904,20 @@ func (s *BaseSnowflakeParserListener) EnterNotification_integration(ctx *Notific
 func (s *BaseSnowflakeParserListener) ExitNotification_integration(ctx *Notification_integrationContext) {
 }
 
-// EnterDirectory_table_params is called when production directory_table_params is entered.
-func (s *BaseSnowflakeParserListener) EnterDirectory_table_params(ctx *Directory_table_paramsContext) {
+// EnterDirectory_table_internal_params is called when production directory_table_internal_params is entered.
+func (s *BaseSnowflakeParserListener) EnterDirectory_table_internal_params(ctx *Directory_table_internal_paramsContext) {
 }
 
-// ExitDirectory_table_params is called when production directory_table_params is exited.
-func (s *BaseSnowflakeParserListener) ExitDirectory_table_params(ctx *Directory_table_paramsContext) {
+// ExitDirectory_table_internal_params is called when production directory_table_internal_params is exited.
+func (s *BaseSnowflakeParserListener) ExitDirectory_table_internal_params(ctx *Directory_table_internal_paramsContext) {
+}
+
+// EnterDirectory_table_external_params is called when production directory_table_external_params is entered.
+func (s *BaseSnowflakeParserListener) EnterDirectory_table_external_params(ctx *Directory_table_external_paramsContext) {
+}
+
+// ExitDirectory_table_external_params is called when production directory_table_external_params is exited.
+func (s *BaseSnowflakeParserListener) ExitDirectory_table_external_params(ctx *Directory_table_external_paramsContext) {
 }
 
 // EnterCreate_stage is called when production create_stage is entered.
@@ -1507,6 +1925,36 @@ func (s *BaseSnowflakeParserListener) EnterCreate_stage(ctx *Create_stageContext
 
 // ExitCreate_stage is called when production create_stage is exited.
 func (s *BaseSnowflakeParserListener) ExitCreate_stage(ctx *Create_stageContext) {}
+
+// EnterAlter_semantic_view is called when production alter_semantic_view is entered.
+func (s *BaseSnowflakeParserListener) EnterAlter_semantic_view(ctx *Alter_semantic_viewContext) {}
+
+// ExitAlter_semantic_view is called when production alter_semantic_view is exited.
+func (s *BaseSnowflakeParserListener) ExitAlter_semantic_view(ctx *Alter_semantic_viewContext) {}
+
+// EnterAlter_stage is called when production alter_stage is entered.
+func (s *BaseSnowflakeParserListener) EnterAlter_stage(ctx *Alter_stageContext) {}
+
+// ExitAlter_stage is called when production alter_stage is exited.
+func (s *BaseSnowflakeParserListener) ExitAlter_stage(ctx *Alter_stageContext) {}
+
+// EnterDrop_stage is called when production drop_stage is entered.
+func (s *BaseSnowflakeParserListener) EnterDrop_stage(ctx *Drop_stageContext) {}
+
+// ExitDrop_stage is called when production drop_stage is exited.
+func (s *BaseSnowflakeParserListener) ExitDrop_stage(ctx *Drop_stageContext) {}
+
+// EnterDescribe_stage is called when production describe_stage is entered.
+func (s *BaseSnowflakeParserListener) EnterDescribe_stage(ctx *Describe_stageContext) {}
+
+// ExitDescribe_stage is called when production describe_stage is exited.
+func (s *BaseSnowflakeParserListener) ExitDescribe_stage(ctx *Describe_stageContext) {}
+
+// EnterShow_stages is called when production show_stages is entered.
+func (s *BaseSnowflakeParserListener) EnterShow_stages(ctx *Show_stagesContext) {}
+
+// ExitShow_stages is called when production show_stages is exited.
+func (s *BaseSnowflakeParserListener) ExitShow_stages(ctx *Show_stagesContext) {}
 
 // EnterCloud_provider_params is called when production cloud_provider_params is entered.
 func (s *BaseSnowflakeParserListener) EnterCloud_provider_params(ctx *Cloud_provider_paramsContext) {}
@@ -1624,11 +2072,11 @@ func (s *BaseSnowflakeParserListener) EnterCollate(ctx *CollateContext) {}
 // ExitCollate is called when production collate is exited.
 func (s *BaseSnowflakeParserListener) ExitCollate(ctx *CollateContext) {}
 
-// EnterNot_null is called when production not_null is entered.
-func (s *BaseSnowflakeParserListener) EnterNot_null(ctx *Not_nullContext) {}
+// EnterOrder_noorder is called when production order_noorder is entered.
+func (s *BaseSnowflakeParserListener) EnterOrder_noorder(ctx *Order_noorderContext) {}
 
-// ExitNot_null is called when production not_null is exited.
-func (s *BaseSnowflakeParserListener) ExitNot_null(ctx *Not_nullContext) {}
+// ExitOrder_noorder is called when production order_noorder is exited.
+func (s *BaseSnowflakeParserListener) ExitOrder_noorder(ctx *Order_noorderContext) {}
 
 // EnterDefault_value is called when production default_value is entered.
 func (s *BaseSnowflakeParserListener) EnterDefault_value(ctx *Default_valueContext) {}
@@ -1641,6 +2089,12 @@ func (s *BaseSnowflakeParserListener) EnterForeign_key(ctx *Foreign_keyContext) 
 
 // ExitForeign_key is called when production foreign_key is exited.
 func (s *BaseSnowflakeParserListener) ExitForeign_key(ctx *Foreign_keyContext) {}
+
+// EnterPrimary_key is called when production primary_key is entered.
+func (s *BaseSnowflakeParserListener) EnterPrimary_key(ctx *Primary_keyContext) {}
+
+// ExitPrimary_key is called when production primary_key is exited.
+func (s *BaseSnowflakeParserListener) ExitPrimary_key(ctx *Primary_keyContext) {}
 
 // EnterOut_of_line_constraint is called when production out_of_line_constraint is entered.
 func (s *BaseSnowflakeParserListener) EnterOut_of_line_constraint(ctx *Out_of_line_constraintContext) {
@@ -1655,6 +2109,20 @@ func (s *BaseSnowflakeParserListener) EnterFull_col_decl(ctx *Full_col_declConte
 
 // ExitFull_col_decl is called when production full_col_decl is exited.
 func (s *BaseSnowflakeParserListener) ExitFull_col_decl(ctx *Full_col_declContext) {}
+
+// EnterMaterialized_col_decl is called when production materialized_col_decl is entered.
+func (s *BaseSnowflakeParserListener) EnterMaterialized_col_decl(ctx *Materialized_col_declContext) {}
+
+// ExitMaterialized_col_decl is called when production materialized_col_decl is exited.
+func (s *BaseSnowflakeParserListener) ExitMaterialized_col_decl(ctx *Materialized_col_declContext) {}
+
+// EnterMaterialized_col_decl_list is called when production materialized_col_decl_list is entered.
+func (s *BaseSnowflakeParserListener) EnterMaterialized_col_decl_list(ctx *Materialized_col_decl_listContext) {
+}
+
+// ExitMaterialized_col_decl_list is called when production materialized_col_decl_list is exited.
+func (s *BaseSnowflakeParserListener) ExitMaterialized_col_decl_list(ctx *Materialized_col_decl_listContext) {
+}
 
 // EnterColumn_decl_item is called when production column_decl_item is entered.
 func (s *BaseSnowflakeParserListener) EnterColumn_decl_item(ctx *Column_decl_itemContext) {}
@@ -1674,6 +2142,20 @@ func (s *BaseSnowflakeParserListener) EnterCreate_table(ctx *Create_tableContext
 // ExitCreate_table is called when production create_table is exited.
 func (s *BaseSnowflakeParserListener) ExitCreate_table(ctx *Create_tableContext) {}
 
+// EnterColumn_decl_item_list_paren is called when production column_decl_item_list_paren is entered.
+func (s *BaseSnowflakeParserListener) EnterColumn_decl_item_list_paren(ctx *Column_decl_item_list_parenContext) {
+}
+
+// ExitColumn_decl_item_list_paren is called when production column_decl_item_list_paren is exited.
+func (s *BaseSnowflakeParserListener) ExitColumn_decl_item_list_paren(ctx *Column_decl_item_list_parenContext) {
+}
+
+// EnterCreate_table_clause is called when production create_table_clause is entered.
+func (s *BaseSnowflakeParserListener) EnterCreate_table_clause(ctx *Create_table_clauseContext) {}
+
+// ExitCreate_table_clause is called when production create_table_clause is exited.
+func (s *BaseSnowflakeParserListener) ExitCreate_table_clause(ctx *Create_table_clauseContext) {}
+
 // EnterCreate_table_as_select is called when production create_table_as_select is entered.
 func (s *BaseSnowflakeParserListener) EnterCreate_table_as_select(ctx *Create_table_as_selectContext) {
 }
@@ -1682,11 +2164,23 @@ func (s *BaseSnowflakeParserListener) EnterCreate_table_as_select(ctx *Create_ta
 func (s *BaseSnowflakeParserListener) ExitCreate_table_as_select(ctx *Create_table_as_selectContext) {
 }
 
+// EnterCreate_table_like is called when production create_table_like is entered.
+func (s *BaseSnowflakeParserListener) EnterCreate_table_like(ctx *Create_table_likeContext) {}
+
+// ExitCreate_table_like is called when production create_table_like is exited.
+func (s *BaseSnowflakeParserListener) ExitCreate_table_like(ctx *Create_table_likeContext) {}
+
 // EnterCreate_tag is called when production create_tag is entered.
 func (s *BaseSnowflakeParserListener) EnterCreate_tag(ctx *Create_tagContext) {}
 
 // ExitCreate_tag is called when production create_tag is exited.
 func (s *BaseSnowflakeParserListener) ExitCreate_tag(ctx *Create_tagContext) {}
+
+// EnterTag_allowed_values is called when production tag_allowed_values is entered.
+func (s *BaseSnowflakeParserListener) EnterTag_allowed_values(ctx *Tag_allowed_valuesContext) {}
+
+// ExitTag_allowed_values is called when production tag_allowed_values is exited.
+func (s *BaseSnowflakeParserListener) ExitTag_allowed_values(ctx *Tag_allowed_valuesContext) {}
 
 // EnterSession_parameter is called when production session_parameter is entered.
 func (s *BaseSnowflakeParserListener) EnterSession_parameter(ctx *Session_parameterContext) {}
@@ -1702,21 +2196,11 @@ func (s *BaseSnowflakeParserListener) EnterSession_parameter_list(ctx *Session_p
 func (s *BaseSnowflakeParserListener) ExitSession_parameter_list(ctx *Session_parameter_listContext) {
 }
 
-// EnterSession_parameter_init_list is called when production session_parameter_init_list is entered.
-func (s *BaseSnowflakeParserListener) EnterSession_parameter_init_list(ctx *Session_parameter_init_listContext) {
-}
+// EnterSession_params_list is called when production session_params_list is entered.
+func (s *BaseSnowflakeParserListener) EnterSession_params_list(ctx *Session_params_listContext) {}
 
-// ExitSession_parameter_init_list is called when production session_parameter_init_list is exited.
-func (s *BaseSnowflakeParserListener) ExitSession_parameter_init_list(ctx *Session_parameter_init_listContext) {
-}
-
-// EnterSession_parameter_init is called when production session_parameter_init is entered.
-func (s *BaseSnowflakeParserListener) EnterSession_parameter_init(ctx *Session_parameter_initContext) {
-}
-
-// ExitSession_parameter_init is called when production session_parameter_init is exited.
-func (s *BaseSnowflakeParserListener) ExitSession_parameter_init(ctx *Session_parameter_initContext) {
-}
+// ExitSession_params_list is called when production session_params_list is exited.
+func (s *BaseSnowflakeParserListener) ExitSession_params_list(ctx *Session_params_listContext) {}
 
 // EnterCreate_task is called when production create_task is entered.
 func (s *BaseSnowflakeParserListener) EnterCreate_task(ctx *Create_taskContext) {}
@@ -1724,11 +2208,115 @@ func (s *BaseSnowflakeParserListener) EnterCreate_task(ctx *Create_taskContext) 
 // ExitCreate_task is called when production create_task is exited.
 func (s *BaseSnowflakeParserListener) ExitCreate_task(ctx *Create_taskContext) {}
 
+// EnterTask_parameters is called when production task_parameters is entered.
+func (s *BaseSnowflakeParserListener) EnterTask_parameters(ctx *Task_parametersContext) {}
+
+// ExitTask_parameters is called when production task_parameters is exited.
+func (s *BaseSnowflakeParserListener) ExitTask_parameters(ctx *Task_parametersContext) {}
+
+// EnterTask_compute is called when production task_compute is entered.
+func (s *BaseSnowflakeParserListener) EnterTask_compute(ctx *Task_computeContext) {}
+
+// ExitTask_compute is called when production task_compute is exited.
+func (s *BaseSnowflakeParserListener) ExitTask_compute(ctx *Task_computeContext) {}
+
+// EnterTask_schedule is called when production task_schedule is entered.
+func (s *BaseSnowflakeParserListener) EnterTask_schedule(ctx *Task_scheduleContext) {}
+
+// ExitTask_schedule is called when production task_schedule is exited.
+func (s *BaseSnowflakeParserListener) ExitTask_schedule(ctx *Task_scheduleContext) {}
+
+// EnterTask_timeout is called when production task_timeout is entered.
+func (s *BaseSnowflakeParserListener) EnterTask_timeout(ctx *Task_timeoutContext) {}
+
+// ExitTask_timeout is called when production task_timeout is exited.
+func (s *BaseSnowflakeParserListener) ExitTask_timeout(ctx *Task_timeoutContext) {}
+
+// EnterTask_suspend_after_failure_number is called when production task_suspend_after_failure_number is entered.
+func (s *BaseSnowflakeParserListener) EnterTask_suspend_after_failure_number(ctx *Task_suspend_after_failure_numberContext) {
+}
+
+// ExitTask_suspend_after_failure_number is called when production task_suspend_after_failure_number is exited.
+func (s *BaseSnowflakeParserListener) ExitTask_suspend_after_failure_number(ctx *Task_suspend_after_failure_numberContext) {
+}
+
+// EnterTask_error_integration is called when production task_error_integration is entered.
+func (s *BaseSnowflakeParserListener) EnterTask_error_integration(ctx *Task_error_integrationContext) {
+}
+
+// ExitTask_error_integration is called when production task_error_integration is exited.
+func (s *BaseSnowflakeParserListener) ExitTask_error_integration(ctx *Task_error_integrationContext) {
+}
+
+// EnterTask_overlap is called when production task_overlap is entered.
+func (s *BaseSnowflakeParserListener) EnterTask_overlap(ctx *Task_overlapContext) {}
+
+// ExitTask_overlap is called when production task_overlap is exited.
+func (s *BaseSnowflakeParserListener) ExitTask_overlap(ctx *Task_overlapContext) {}
+
 // EnterSql is called when production sql is entered.
 func (s *BaseSnowflakeParserListener) EnterSql(ctx *SqlContext) {}
 
 // ExitSql is called when production sql is exited.
 func (s *BaseSnowflakeParserListener) ExitSql(ctx *SqlContext) {}
+
+// EnterTask_sql is called when production task_sql is entered.
+func (s *BaseSnowflakeParserListener) EnterTask_sql(ctx *Task_sqlContext) {}
+
+// ExitTask_sql is called when production task_sql is exited.
+func (s *BaseSnowflakeParserListener) ExitTask_sql(ctx *Task_sqlContext) {}
+
+// EnterTask_scripting_block is called when production task_scripting_block is entered.
+func (s *BaseSnowflakeParserListener) EnterTask_scripting_block(ctx *Task_scripting_blockContext) {}
+
+// ExitTask_scripting_block is called when production task_scripting_block is exited.
+func (s *BaseSnowflakeParserListener) ExitTask_scripting_block(ctx *Task_scripting_blockContext) {}
+
+// EnterTask_scripting_declaration_list is called when production task_scripting_declaration_list is entered.
+func (s *BaseSnowflakeParserListener) EnterTask_scripting_declaration_list(ctx *Task_scripting_declaration_listContext) {
+}
+
+// ExitTask_scripting_declaration_list is called when production task_scripting_declaration_list is exited.
+func (s *BaseSnowflakeParserListener) ExitTask_scripting_declaration_list(ctx *Task_scripting_declaration_listContext) {
+}
+
+// EnterTask_scripting_declaration is called when production task_scripting_declaration is entered.
+func (s *BaseSnowflakeParserListener) EnterTask_scripting_declaration(ctx *Task_scripting_declarationContext) {
+}
+
+// ExitTask_scripting_declaration is called when production task_scripting_declaration is exited.
+func (s *BaseSnowflakeParserListener) ExitTask_scripting_declaration(ctx *Task_scripting_declarationContext) {
+}
+
+// EnterTask_scripting_statement_list is called when production task_scripting_statement_list is entered.
+func (s *BaseSnowflakeParserListener) EnterTask_scripting_statement_list(ctx *Task_scripting_statement_listContext) {
+}
+
+// ExitTask_scripting_statement_list is called when production task_scripting_statement_list is exited.
+func (s *BaseSnowflakeParserListener) ExitTask_scripting_statement_list(ctx *Task_scripting_statement_listContext) {
+}
+
+// EnterTask_scripting_statement is called when production task_scripting_statement is entered.
+func (s *BaseSnowflakeParserListener) EnterTask_scripting_statement(ctx *Task_scripting_statementContext) {
+}
+
+// ExitTask_scripting_statement is called when production task_scripting_statement is exited.
+func (s *BaseSnowflakeParserListener) ExitTask_scripting_statement(ctx *Task_scripting_statementContext) {
+}
+
+// EnterTask_scripting_assignment is called when production task_scripting_assignment is entered.
+func (s *BaseSnowflakeParserListener) EnterTask_scripting_assignment(ctx *Task_scripting_assignmentContext) {
+}
+
+// ExitTask_scripting_assignment is called when production task_scripting_assignment is exited.
+func (s *BaseSnowflakeParserListener) ExitTask_scripting_assignment(ctx *Task_scripting_assignmentContext) {
+}
+
+// EnterTask_scripting_return is called when production task_scripting_return is entered.
+func (s *BaseSnowflakeParserListener) EnterTask_scripting_return(ctx *Task_scripting_returnContext) {}
+
+// ExitTask_scripting_return is called when production task_scripting_return is exited.
+func (s *BaseSnowflakeParserListener) ExitTask_scripting_return(ctx *Task_scripting_returnContext) {}
 
 // EnterCall is called when production call is entered.
 func (s *BaseSnowflakeParserListener) EnterCall(ctx *CallContext) {}
@@ -1759,6 +2347,18 @@ func (s *BaseSnowflakeParserListener) EnterCreate_warehouse(ctx *Create_warehous
 
 // ExitCreate_warehouse is called when production create_warehouse is exited.
 func (s *BaseSnowflakeParserListener) ExitCreate_warehouse(ctx *Create_warehouseContext) {}
+
+// EnterWh_common_size is called when production wh_common_size is entered.
+func (s *BaseSnowflakeParserListener) EnterWh_common_size(ctx *Wh_common_sizeContext) {}
+
+// ExitWh_common_size is called when production wh_common_size is exited.
+func (s *BaseSnowflakeParserListener) ExitWh_common_size(ctx *Wh_common_sizeContext) {}
+
+// EnterWh_extra_size is called when production wh_extra_size is entered.
+func (s *BaseSnowflakeParserListener) EnterWh_extra_size(ctx *Wh_extra_sizeContext) {}
+
+// ExitWh_extra_size is called when production wh_extra_size is exited.
+func (s *BaseSnowflakeParserListener) ExitWh_extra_size(ctx *Wh_extra_sizeContext) {}
 
 // EnterWh_properties is called when production wh_properties is entered.
 func (s *BaseSnowflakeParserListener) EnterWh_properties(ctx *Wh_propertiesContext) {}
@@ -1850,6 +2450,12 @@ func (s *BaseSnowflakeParserListener) EnterDrop_function(ctx *Drop_functionConte
 // ExitDrop_function is called when production drop_function is exited.
 func (s *BaseSnowflakeParserListener) ExitDrop_function(ctx *Drop_functionContext) {}
 
+// EnterDrop_git_repository is called when production drop_git_repository is entered.
+func (s *BaseSnowflakeParserListener) EnterDrop_git_repository(ctx *Drop_git_repositoryContext) {}
+
+// ExitDrop_git_repository is called when production drop_git_repository is exited.
+func (s *BaseSnowflakeParserListener) ExitDrop_git_repository(ctx *Drop_git_repositoryContext) {}
+
 // EnterDrop_integration is called when production drop_integration is entered.
 func (s *BaseSnowflakeParserListener) EnterDrop_integration(ctx *Drop_integrationContext) {}
 
@@ -1928,6 +2534,18 @@ func (s *BaseSnowflakeParserListener) EnterDrop_schema(ctx *Drop_schemaContext) 
 // ExitDrop_schema is called when production drop_schema is exited.
 func (s *BaseSnowflakeParserListener) ExitDrop_schema(ctx *Drop_schemaContext) {}
 
+// EnterDrop_secret is called when production drop_secret is entered.
+func (s *BaseSnowflakeParserListener) EnterDrop_secret(ctx *Drop_secretContext) {}
+
+// ExitDrop_secret is called when production drop_secret is exited.
+func (s *BaseSnowflakeParserListener) ExitDrop_secret(ctx *Drop_secretContext) {}
+
+// EnterDrop_semantic_view is called when production drop_semantic_view is entered.
+func (s *BaseSnowflakeParserListener) EnterDrop_semantic_view(ctx *Drop_semantic_viewContext) {}
+
+// ExitDrop_semantic_view is called when production drop_semantic_view is exited.
+func (s *BaseSnowflakeParserListener) ExitDrop_semantic_view(ctx *Drop_semantic_viewContext) {}
+
 // EnterDrop_sequence is called when production drop_sequence is entered.
 func (s *BaseSnowflakeParserListener) EnterDrop_sequence(ctx *Drop_sequenceContext) {}
 
@@ -1940,17 +2558,17 @@ func (s *BaseSnowflakeParserListener) EnterDrop_session_policy(ctx *Drop_session
 // ExitDrop_session_policy is called when production drop_session_policy is exited.
 func (s *BaseSnowflakeParserListener) ExitDrop_session_policy(ctx *Drop_session_policyContext) {}
 
+// EnterDrop_password_policy is called when production drop_password_policy is entered.
+func (s *BaseSnowflakeParserListener) EnterDrop_password_policy(ctx *Drop_password_policyContext) {}
+
+// ExitDrop_password_policy is called when production drop_password_policy is exited.
+func (s *BaseSnowflakeParserListener) ExitDrop_password_policy(ctx *Drop_password_policyContext) {}
+
 // EnterDrop_share is called when production drop_share is entered.
 func (s *BaseSnowflakeParserListener) EnterDrop_share(ctx *Drop_shareContext) {}
 
 // ExitDrop_share is called when production drop_share is exited.
 func (s *BaseSnowflakeParserListener) ExitDrop_share(ctx *Drop_shareContext) {}
-
-// EnterDrop_stage is called when production drop_stage is entered.
-func (s *BaseSnowflakeParserListener) EnterDrop_stage(ctx *Drop_stageContext) {}
-
-// ExitDrop_stage is called when production drop_stage is exited.
-func (s *BaseSnowflakeParserListener) ExitDrop_stage(ctx *Drop_stageContext) {}
 
 // EnterDrop_stream is called when production drop_stream is entered.
 func (s *BaseSnowflakeParserListener) EnterDrop_stream(ctx *Drop_streamContext) {}
@@ -2084,6 +2702,12 @@ func (s *BaseSnowflakeParserListener) EnterComment_clause(ctx *Comment_clauseCon
 // ExitComment_clause is called when production comment_clause is exited.
 func (s *BaseSnowflakeParserListener) ExitComment_clause(ctx *Comment_clauseContext) {}
 
+// EnterInline_comment_clause is called when production inline_comment_clause is entered.
+func (s *BaseSnowflakeParserListener) EnterInline_comment_clause(ctx *Inline_comment_clauseContext) {}
+
+// ExitInline_comment_clause is called when production inline_comment_clause is exited.
+func (s *BaseSnowflakeParserListener) ExitInline_comment_clause(ctx *Inline_comment_clauseContext) {}
+
 // EnterIf_suspended is called when production if_suspended is entered.
 func (s *BaseSnowflakeParserListener) EnterIf_suspended(ctx *If_suspendedContext) {}
 
@@ -2107,6 +2731,12 @@ func (s *BaseSnowflakeParserListener) EnterOr_replace(ctx *Or_replaceContext) {}
 
 // ExitOr_replace is called when production or_replace is exited.
 func (s *BaseSnowflakeParserListener) ExitOr_replace(ctx *Or_replaceContext) {}
+
+// EnterOr_alter is called when production or_alter is entered.
+func (s *BaseSnowflakeParserListener) EnterOr_alter(ctx *Or_alterContext) {}
+
+// ExitOr_alter is called when production or_alter is exited.
+func (s *BaseSnowflakeParserListener) ExitOr_alter(ctx *Or_alterContext) {}
 
 // EnterDescribe is called when production describe is entered.
 func (s *BaseSnowflakeParserListener) EnterDescribe(ctx *DescribeContext) {}
@@ -2140,6 +2770,12 @@ func (s *BaseSnowflakeParserListener) EnterDescribe_dynamic_table(ctx *Describe_
 func (s *BaseSnowflakeParserListener) ExitDescribe_dynamic_table(ctx *Describe_dynamic_tableContext) {
 }
 
+// EnterDescribe_event_table is called when production describe_event_table is entered.
+func (s *BaseSnowflakeParserListener) EnterDescribe_event_table(ctx *Describe_event_tableContext) {}
+
+// ExitDescribe_event_table is called when production describe_event_table is exited.
+func (s *BaseSnowflakeParserListener) ExitDescribe_event_table(ctx *Describe_event_tableContext) {}
+
 // EnterDescribe_external_table is called when production describe_external_table is entered.
 func (s *BaseSnowflakeParserListener) EnterDescribe_external_table(ctx *Describe_external_tableContext) {
 }
@@ -2159,6 +2795,14 @@ func (s *BaseSnowflakeParserListener) EnterDescribe_function(ctx *Describe_funct
 
 // ExitDescribe_function is called when production describe_function is exited.
 func (s *BaseSnowflakeParserListener) ExitDescribe_function(ctx *Describe_functionContext) {}
+
+// EnterDescribe_git_repository is called when production describe_git_repository is entered.
+func (s *BaseSnowflakeParserListener) EnterDescribe_git_repository(ctx *Describe_git_repositoryContext) {
+}
+
+// ExitDescribe_git_repository is called when production describe_git_repository is exited.
+func (s *BaseSnowflakeParserListener) ExitDescribe_git_repository(ctx *Describe_git_repositoryContext) {
+}
 
 // EnterDescribe_integration is called when production describe_integration is entered.
 func (s *BaseSnowflakeParserListener) EnterDescribe_integration(ctx *Describe_integrationContext) {}
@@ -2230,6 +2874,14 @@ func (s *BaseSnowflakeParserListener) EnterDescribe_search_optimization(ctx *Des
 func (s *BaseSnowflakeParserListener) ExitDescribe_search_optimization(ctx *Describe_search_optimizationContext) {
 }
 
+// EnterDescribe_semantic_view is called when production describe_semantic_view is entered.
+func (s *BaseSnowflakeParserListener) EnterDescribe_semantic_view(ctx *Describe_semantic_viewContext) {
+}
+
+// ExitDescribe_semantic_view is called when production describe_semantic_view is exited.
+func (s *BaseSnowflakeParserListener) ExitDescribe_semantic_view(ctx *Describe_semantic_viewContext) {
+}
+
 // EnterDescribe_sequence is called when production describe_sequence is entered.
 func (s *BaseSnowflakeParserListener) EnterDescribe_sequence(ctx *Describe_sequenceContext) {}
 
@@ -2244,17 +2896,19 @@ func (s *BaseSnowflakeParserListener) EnterDescribe_session_policy(ctx *Describe
 func (s *BaseSnowflakeParserListener) ExitDescribe_session_policy(ctx *Describe_session_policyContext) {
 }
 
+// EnterDescribe_password_policy is called when production describe_password_policy is entered.
+func (s *BaseSnowflakeParserListener) EnterDescribe_password_policy(ctx *Describe_password_policyContext) {
+}
+
+// ExitDescribe_password_policy is called when production describe_password_policy is exited.
+func (s *BaseSnowflakeParserListener) ExitDescribe_password_policy(ctx *Describe_password_policyContext) {
+}
+
 // EnterDescribe_share is called when production describe_share is entered.
 func (s *BaseSnowflakeParserListener) EnterDescribe_share(ctx *Describe_shareContext) {}
 
 // ExitDescribe_share is called when production describe_share is exited.
 func (s *BaseSnowflakeParserListener) ExitDescribe_share(ctx *Describe_shareContext) {}
-
-// EnterDescribe_stage is called when production describe_stage is entered.
-func (s *BaseSnowflakeParserListener) EnterDescribe_stage(ctx *Describe_stageContext) {}
-
-// ExitDescribe_stage is called when production describe_stage is exited.
-func (s *BaseSnowflakeParserListener) ExitDescribe_stage(ctx *Describe_stageContext) {}
 
 // EnterDescribe_stream is called when production describe_stream is entered.
 func (s *BaseSnowflakeParserListener) EnterDescribe_stream(ctx *Describe_streamContext) {}
@@ -2310,6 +2964,12 @@ func (s *BaseSnowflakeParserListener) EnterShow_alerts(ctx *Show_alertsContext) 
 // ExitShow_alerts is called when production show_alerts is exited.
 func (s *BaseSnowflakeParserListener) ExitShow_alerts(ctx *Show_alertsContext) {}
 
+// EnterShow_channels is called when production show_channels is entered.
+func (s *BaseSnowflakeParserListener) EnterShow_channels(ctx *Show_channelsContext) {}
+
+// ExitShow_channels is called when production show_channels is exited.
+func (s *BaseSnowflakeParserListener) ExitShow_channels(ctx *Show_channelsContext) {}
+
 // EnterShow_columns is called when production show_columns is entered.
 func (s *BaseSnowflakeParserListener) EnterShow_columns(ctx *Show_columnsContext) {}
 
@@ -2334,6 +2994,12 @@ func (s *BaseSnowflakeParserListener) EnterLimit_rows(ctx *Limit_rowsContext) {}
 // ExitLimit_rows is called when production limit_rows is exited.
 func (s *BaseSnowflakeParserListener) ExitLimit_rows(ctx *Limit_rowsContext) {}
 
+// EnterLimit_rows_2 is called when production limit_rows_2 is entered.
+func (s *BaseSnowflakeParserListener) EnterLimit_rows_2(ctx *Limit_rows_2Context) {}
+
+// ExitLimit_rows_2 is called when production limit_rows_2 is exited.
+func (s *BaseSnowflakeParserListener) ExitLimit_rows_2(ctx *Limit_rows_2Context) {}
+
 // EnterShow_databases is called when production show_databases is entered.
 func (s *BaseSnowflakeParserListener) EnterShow_databases(ctx *Show_databasesContext) {}
 
@@ -2356,6 +3022,12 @@ func (s *BaseSnowflakeParserListener) EnterShow_databases_in_replication_group(c
 func (s *BaseSnowflakeParserListener) ExitShow_databases_in_replication_group(ctx *Show_databases_in_replication_groupContext) {
 }
 
+// EnterShow_datasets is called when production show_datasets is entered.
+func (s *BaseSnowflakeParserListener) EnterShow_datasets(ctx *Show_datasetsContext) {}
+
+// ExitShow_datasets is called when production show_datasets is exited.
+func (s *BaseSnowflakeParserListener) ExitShow_datasets(ctx *Show_datasetsContext) {}
+
 // EnterShow_delegated_authorizations is called when production show_delegated_authorizations is entered.
 func (s *BaseSnowflakeParserListener) EnterShow_delegated_authorizations(ctx *Show_delegated_authorizationsContext) {
 }
@@ -2364,6 +3036,18 @@ func (s *BaseSnowflakeParserListener) EnterShow_delegated_authorizations(ctx *Sh
 func (s *BaseSnowflakeParserListener) ExitShow_delegated_authorizations(ctx *Show_delegated_authorizationsContext) {
 }
 
+// EnterShow_dynamic_tables is called when production show_dynamic_tables is entered.
+func (s *BaseSnowflakeParserListener) EnterShow_dynamic_tables(ctx *Show_dynamic_tablesContext) {}
+
+// ExitShow_dynamic_tables is called when production show_dynamic_tables is exited.
+func (s *BaseSnowflakeParserListener) ExitShow_dynamic_tables(ctx *Show_dynamic_tablesContext) {}
+
+// EnterShow_event_tables is called when production show_event_tables is entered.
+func (s *BaseSnowflakeParserListener) EnterShow_event_tables(ctx *Show_event_tablesContext) {}
+
+// ExitShow_event_tables is called when production show_event_tables is exited.
+func (s *BaseSnowflakeParserListener) ExitShow_event_tables(ctx *Show_event_tablesContext) {}
+
 // EnterShow_external_functions is called when production show_external_functions is entered.
 func (s *BaseSnowflakeParserListener) EnterShow_external_functions(ctx *Show_external_functionsContext) {
 }
@@ -2371,12 +3055,6 @@ func (s *BaseSnowflakeParserListener) EnterShow_external_functions(ctx *Show_ext
 // ExitShow_external_functions is called when production show_external_functions is exited.
 func (s *BaseSnowflakeParserListener) ExitShow_external_functions(ctx *Show_external_functionsContext) {
 }
-
-// EnterShow_dynamic_tables is called when production show_dynamic_tables is entered.
-func (s *BaseSnowflakeParserListener) EnterShow_dynamic_tables(ctx *Show_dynamic_tablesContext) {}
-
-// ExitShow_dynamic_tables is called when production show_dynamic_tables is exited.
-func (s *BaseSnowflakeParserListener) ExitShow_dynamic_tables(ctx *Show_dynamic_tablesContext) {}
 
 // EnterShow_external_tables is called when production show_external_tables is entered.
 func (s *BaseSnowflakeParserListener) EnterShow_external_tables(ctx *Show_external_tablesContext) {}
@@ -2401,6 +3079,24 @@ func (s *BaseSnowflakeParserListener) EnterShow_functions(ctx *Show_functionsCon
 
 // ExitShow_functions is called when production show_functions is exited.
 func (s *BaseSnowflakeParserListener) ExitShow_functions(ctx *Show_functionsContext) {}
+
+// EnterShow_git_branches is called when production show_git_branches is entered.
+func (s *BaseSnowflakeParserListener) EnterShow_git_branches(ctx *Show_git_branchesContext) {}
+
+// ExitShow_git_branches is called when production show_git_branches is exited.
+func (s *BaseSnowflakeParserListener) ExitShow_git_branches(ctx *Show_git_branchesContext) {}
+
+// EnterShow_git_repositories is called when production show_git_repositories is entered.
+func (s *BaseSnowflakeParserListener) EnterShow_git_repositories(ctx *Show_git_repositoriesContext) {}
+
+// ExitShow_git_repositories is called when production show_git_repositories is exited.
+func (s *BaseSnowflakeParserListener) ExitShow_git_repositories(ctx *Show_git_repositoriesContext) {}
+
+// EnterShow_git_tags is called when production show_git_tags is entered.
+func (s *BaseSnowflakeParserListener) EnterShow_git_tags(ctx *Show_git_tagsContext) {}
+
+// ExitShow_git_tags is called when production show_git_tags is exited.
+func (s *BaseSnowflakeParserListener) ExitShow_git_tags(ctx *Show_git_tagsContext) {}
 
 // EnterShow_global_accounts is called when production show_global_accounts is entered.
 func (s *BaseSnowflakeParserListener) EnterShow_global_accounts(ctx *Show_global_accountsContext) {}
@@ -2455,6 +3151,12 @@ func (s *BaseSnowflakeParserListener) EnterIn_obj_2(ctx *In_obj_2Context) {}
 
 // ExitIn_obj_2 is called when production in_obj_2 is exited.
 func (s *BaseSnowflakeParserListener) ExitIn_obj_2(ctx *In_obj_2Context) {}
+
+// EnterIn_obj_3 is called when production in_obj_3 is entered.
+func (s *BaseSnowflakeParserListener) EnterIn_obj_3(ctx *In_obj_3Context) {}
+
+// ExitIn_obj_3 is called when production in_obj_3 is exited.
+func (s *BaseSnowflakeParserListener) ExitIn_obj_3(ctx *In_obj_3Context) {}
 
 // EnterShow_materialized_views is called when production show_materialized_views is entered.
 func (s *BaseSnowflakeParserListener) EnterShow_materialized_views(ctx *Show_materialized_viewsContext) {
@@ -2572,6 +3274,46 @@ func (s *BaseSnowflakeParserListener) EnterShow_schemas(ctx *Show_schemasContext
 // ExitShow_schemas is called when production show_schemas is exited.
 func (s *BaseSnowflakeParserListener) ExitShow_schemas(ctx *Show_schemasContext) {}
 
+// EnterShow_secrets is called when production show_secrets is entered.
+func (s *BaseSnowflakeParserListener) EnterShow_secrets(ctx *Show_secretsContext) {}
+
+// ExitShow_secrets is called when production show_secrets is exited.
+func (s *BaseSnowflakeParserListener) ExitShow_secrets(ctx *Show_secretsContext) {}
+
+// EnterShow_semantic_views is called when production show_semantic_views is entered.
+func (s *BaseSnowflakeParserListener) EnterShow_semantic_views(ctx *Show_semantic_viewsContext) {}
+
+// ExitShow_semantic_views is called when production show_semantic_views is exited.
+func (s *BaseSnowflakeParserListener) ExitShow_semantic_views(ctx *Show_semantic_viewsContext) {}
+
+// EnterShow_semantic_dimensions is called when production show_semantic_dimensions is entered.
+func (s *BaseSnowflakeParserListener) EnterShow_semantic_dimensions(ctx *Show_semantic_dimensionsContext) {
+}
+
+// ExitShow_semantic_dimensions is called when production show_semantic_dimensions is exited.
+func (s *BaseSnowflakeParserListener) ExitShow_semantic_dimensions(ctx *Show_semantic_dimensionsContext) {
+}
+
+// EnterShow_semantic_dimensions_for_metric is called when production show_semantic_dimensions_for_metric is entered.
+func (s *BaseSnowflakeParserListener) EnterShow_semantic_dimensions_for_metric(ctx *Show_semantic_dimensions_for_metricContext) {
+}
+
+// ExitShow_semantic_dimensions_for_metric is called when production show_semantic_dimensions_for_metric is exited.
+func (s *BaseSnowflakeParserListener) ExitShow_semantic_dimensions_for_metric(ctx *Show_semantic_dimensions_for_metricContext) {
+}
+
+// EnterShow_semantic_facts is called when production show_semantic_facts is entered.
+func (s *BaseSnowflakeParserListener) EnterShow_semantic_facts(ctx *Show_semantic_factsContext) {}
+
+// ExitShow_semantic_facts is called when production show_semantic_facts is exited.
+func (s *BaseSnowflakeParserListener) ExitShow_semantic_facts(ctx *Show_semantic_factsContext) {}
+
+// EnterShow_semantic_metrics is called when production show_semantic_metrics is entered.
+func (s *BaseSnowflakeParserListener) EnterShow_semantic_metrics(ctx *Show_semantic_metricsContext) {}
+
+// ExitShow_semantic_metrics is called when production show_semantic_metrics is exited.
+func (s *BaseSnowflakeParserListener) ExitShow_semantic_metrics(ctx *Show_semantic_metricsContext) {}
+
 // EnterShow_sequences is called when production show_sequences is entered.
 func (s *BaseSnowflakeParserListener) EnterShow_sequences(ctx *Show_sequencesContext) {}
 
@@ -2583,6 +3325,14 @@ func (s *BaseSnowflakeParserListener) EnterShow_session_policies(ctx *Show_sessi
 
 // ExitShow_session_policies is called when production show_session_policies is exited.
 func (s *BaseSnowflakeParserListener) ExitShow_session_policies(ctx *Show_session_policiesContext) {}
+
+// EnterShow_password_policies is called when production show_password_policies is entered.
+func (s *BaseSnowflakeParserListener) EnterShow_password_policies(ctx *Show_password_policiesContext) {
+}
+
+// ExitShow_password_policies is called when production show_password_policies is exited.
+func (s *BaseSnowflakeParserListener) ExitShow_password_policies(ctx *Show_password_policiesContext) {
+}
 
 // EnterShow_shares is called when production show_shares is entered.
 func (s *BaseSnowflakeParserListener) EnterShow_shares(ctx *Show_sharesContext) {}
@@ -2605,12 +3355,6 @@ func (s *BaseSnowflakeParserListener) EnterShow_shares_in_replication_group(ctx 
 // ExitShow_shares_in_replication_group is called when production show_shares_in_replication_group is exited.
 func (s *BaseSnowflakeParserListener) ExitShow_shares_in_replication_group(ctx *Show_shares_in_replication_groupContext) {
 }
-
-// EnterShow_stages is called when production show_stages is entered.
-func (s *BaseSnowflakeParserListener) EnterShow_stages(ctx *Show_stagesContext) {}
-
-// ExitShow_stages is called when production show_stages is exited.
-func (s *BaseSnowflakeParserListener) ExitShow_stages(ctx *Show_stagesContext) {}
 
 // EnterShow_streams is called when production show_streams is entered.
 func (s *BaseSnowflakeParserListener) EnterShow_streams(ctx *Show_streamsContext) {}
@@ -2659,6 +3403,14 @@ func (s *BaseSnowflakeParserListener) EnterShow_variables(ctx *Show_variablesCon
 
 // ExitShow_variables is called when production show_variables is exited.
 func (s *BaseSnowflakeParserListener) ExitShow_variables(ctx *Show_variablesContext) {}
+
+// EnterShow_versions_in_dataset is called when production show_versions_in_dataset is entered.
+func (s *BaseSnowflakeParserListener) EnterShow_versions_in_dataset(ctx *Show_versions_in_datasetContext) {
+}
+
+// ExitShow_versions_in_dataset is called when production show_versions_in_dataset is exited.
+func (s *BaseSnowflakeParserListener) ExitShow_versions_in_dataset(ctx *Show_versions_in_datasetContext) {
+}
 
 // EnterShow_views is called when production show_views is entered.
 func (s *BaseSnowflakeParserListener) EnterShow_views(ctx *Show_viewsContext) {}
@@ -2750,6 +3502,12 @@ func (s *BaseSnowflakeParserListener) EnterString_list(ctx *String_listContext) 
 // ExitString_list is called when production string_list is exited.
 func (s *BaseSnowflakeParserListener) ExitString_list(ctx *String_listContext) {}
 
+// EnterId_fn is called when production id_fn is entered.
+func (s *BaseSnowflakeParserListener) EnterId_fn(ctx *Id_fnContext) {}
+
+// ExitId_fn is called when production id_fn is exited.
+func (s *BaseSnowflakeParserListener) ExitId_fn(ctx *Id_fnContext) {}
+
 // EnterId_ is called when production id_ is entered.
 func (s *BaseSnowflakeParserListener) EnterId_(ctx *Id_Context) {}
 
@@ -2774,11 +3532,13 @@ func (s *BaseSnowflakeParserListener) EnterBuiltin_function(ctx *Builtin_functio
 // ExitBuiltin_function is called when production builtin_function is exited.
 func (s *BaseSnowflakeParserListener) ExitBuiltin_function(ctx *Builtin_functionContext) {}
 
-// EnterList_operator is called when production list_operator is entered.
-func (s *BaseSnowflakeParserListener) EnterList_operator(ctx *List_operatorContext) {}
+// EnterUnary_or_binary_builtin_function is called when production unary_or_binary_builtin_function is entered.
+func (s *BaseSnowflakeParserListener) EnterUnary_or_binary_builtin_function(ctx *Unary_or_binary_builtin_functionContext) {
+}
 
-// ExitList_operator is called when production list_operator is exited.
-func (s *BaseSnowflakeParserListener) ExitList_operator(ctx *List_operatorContext) {}
+// ExitUnary_or_binary_builtin_function is called when production unary_or_binary_builtin_function is exited.
+func (s *BaseSnowflakeParserListener) ExitUnary_or_binary_builtin_function(ctx *Unary_or_binary_builtin_functionContext) {
+}
 
 // EnterBinary_builtin_function is called when production binary_builtin_function is entered.
 func (s *BaseSnowflakeParserListener) EnterBinary_builtin_function(ctx *Binary_builtin_functionContext) {
@@ -2804,6 +3564,12 @@ func (s *BaseSnowflakeParserListener) EnterTernary_builtin_function(ctx *Ternary
 func (s *BaseSnowflakeParserListener) ExitTernary_builtin_function(ctx *Ternary_builtin_functionContext) {
 }
 
+// EnterList_function is called when production list_function is entered.
+func (s *BaseSnowflakeParserListener) EnterList_function(ctx *List_functionContext) {}
+
+// ExitList_function is called when production list_function is exited.
+func (s *BaseSnowflakeParserListener) ExitList_function(ctx *List_functionContext) {}
+
 // EnterPattern is called when production pattern is entered.
 func (s *BaseSnowflakeParserListener) EnterPattern(ctx *PatternContext) {}
 
@@ -2822,11 +3588,33 @@ func (s *BaseSnowflakeParserListener) EnterColumn_list(ctx *Column_listContext) 
 // ExitColumn_list is called when production column_list is exited.
 func (s *BaseSnowflakeParserListener) ExitColumn_list(ctx *Column_listContext) {}
 
+// EnterAliased_column_list is called when production aliased_column_list is entered.
+func (s *BaseSnowflakeParserListener) EnterAliased_column_list(ctx *Aliased_column_listContext) {}
+
+// ExitAliased_column_list is called when production aliased_column_list is exited.
+func (s *BaseSnowflakeParserListener) ExitAliased_column_list(ctx *Aliased_column_listContext) {}
+
+// EnterColumn_list_with_comment is called when production column_list_with_comment is entered.
+func (s *BaseSnowflakeParserListener) EnterColumn_list_with_comment(ctx *Column_list_with_commentContext) {
+}
+
+// ExitColumn_list_with_comment is called when production column_list_with_comment is exited.
+func (s *BaseSnowflakeParserListener) ExitColumn_list_with_comment(ctx *Column_list_with_commentContext) {
+}
+
 // EnterObject_name is called when production object_name is entered.
 func (s *BaseSnowflakeParserListener) EnterObject_name(ctx *Object_nameContext) {}
 
 // ExitObject_name is called when production object_name is exited.
 func (s *BaseSnowflakeParserListener) ExitObject_name(ctx *Object_nameContext) {}
+
+// EnterObject_name_or_identifier is called when production object_name_or_identifier is entered.
+func (s *BaseSnowflakeParserListener) EnterObject_name_or_identifier(ctx *Object_name_or_identifierContext) {
+}
+
+// ExitObject_name_or_identifier is called when production object_name_or_identifier is exited.
+func (s *BaseSnowflakeParserListener) ExitObject_name_or_identifier(ctx *Object_name_or_identifierContext) {
+}
 
 // EnterNum is called when production num is entered.
 func (s *BaseSnowflakeParserListener) EnterNum(ctx *NumContext) {}
@@ -2852,6 +3640,12 @@ func (s *BaseSnowflakeParserListener) EnterExpr(ctx *ExprContext) {}
 // ExitExpr is called when production expr is exited.
 func (s *BaseSnowflakeParserListener) ExitExpr(ctx *ExprContext) {}
 
+// EnterLambda_params is called when production lambda_params is entered.
+func (s *BaseSnowflakeParserListener) EnterLambda_params(ctx *Lambda_paramsContext) {}
+
+// ExitLambda_params is called when production lambda_params is exited.
+func (s *BaseSnowflakeParserListener) ExitLambda_params(ctx *Lambda_paramsContext) {}
+
 // EnterIff_expr is called when production iff_expr is entered.
 func (s *BaseSnowflakeParserListener) EnterIff_expr(ctx *Iff_exprContext) {}
 
@@ -2869,6 +3663,12 @@ func (s *BaseSnowflakeParserListener) EnterTry_cast_expr(ctx *Try_cast_exprConte
 
 // ExitTry_cast_expr is called when production try_cast_expr is exited.
 func (s *BaseSnowflakeParserListener) ExitTry_cast_expr(ctx *Try_cast_exprContext) {}
+
+// EnterCast_expr is called when production cast_expr is entered.
+func (s *BaseSnowflakeParserListener) EnterCast_expr(ctx *Cast_exprContext) {}
+
+// ExitCast_expr is called when production cast_expr is exited.
+func (s *BaseSnowflakeParserListener) ExitCast_expr(ctx *Cast_exprContext) {}
 
 // EnterJson_literal is called when production json_literal is entered.
 func (s *BaseSnowflakeParserListener) EnterJson_literal(ctx *Json_literalContext) {}
@@ -2894,11 +3694,23 @@ func (s *BaseSnowflakeParserListener) EnterArr_literal(ctx *Arr_literalContext) 
 // ExitArr_literal is called when production arr_literal is exited.
 func (s *BaseSnowflakeParserListener) ExitArr_literal(ctx *Arr_literalContext) {}
 
+// EnterData_type_size is called when production data_type_size is entered.
+func (s *BaseSnowflakeParserListener) EnterData_type_size(ctx *Data_type_sizeContext) {}
+
+// ExitData_type_size is called when production data_type_size is exited.
+func (s *BaseSnowflakeParserListener) ExitData_type_size(ctx *Data_type_sizeContext) {}
+
 // EnterData_type is called when production data_type is entered.
 func (s *BaseSnowflakeParserListener) EnterData_type(ctx *Data_typeContext) {}
 
 // ExitData_type is called when production data_type is exited.
 func (s *BaseSnowflakeParserListener) ExitData_type(ctx *Data_typeContext) {}
+
+// EnterVector_element_type is called when production vector_element_type is entered.
+func (s *BaseSnowflakeParserListener) EnterVector_element_type(ctx *Vector_element_typeContext) {}
+
+// ExitVector_element_type is called when production vector_element_type is exited.
+func (s *BaseSnowflakeParserListener) ExitVector_element_type(ctx *Vector_element_typeContext) {}
 
 // EnterPrimitive_expression is called when production primitive_expression is entered.
 func (s *BaseSnowflakeParserListener) EnterPrimitive_expression(ctx *Primitive_expressionContext) {}
@@ -2929,6 +3741,26 @@ func (s *BaseSnowflakeParserListener) EnterFunction_call(ctx *Function_callConte
 
 // ExitFunction_call is called when production function_call is exited.
 func (s *BaseSnowflakeParserListener) ExitFunction_call(ctx *Function_callContext) {}
+
+// EnterParam_assoc_list is called when production param_assoc_list is entered.
+func (s *BaseSnowflakeParserListener) EnterParam_assoc_list(ctx *Param_assoc_listContext) {}
+
+// ExitParam_assoc_list is called when production param_assoc_list is exited.
+func (s *BaseSnowflakeParserListener) ExitParam_assoc_list(ctx *Param_assoc_listContext) {}
+
+// EnterParam_assoc is called when production param_assoc is entered.
+func (s *BaseSnowflakeParserListener) EnterParam_assoc(ctx *Param_assocContext) {}
+
+// ExitParam_assoc is called when production param_assoc is exited.
+func (s *BaseSnowflakeParserListener) ExitParam_assoc(ctx *Param_assocContext) {}
+
+// EnterIgnore_or_repect_nulls is called when production ignore_or_repect_nulls is entered.
+func (s *BaseSnowflakeParserListener) EnterIgnore_or_repect_nulls(ctx *Ignore_or_repect_nullsContext) {
+}
+
+// ExitIgnore_or_repect_nulls is called when production ignore_or_repect_nulls is exited.
+func (s *BaseSnowflakeParserListener) ExitIgnore_or_repect_nulls(ctx *Ignore_or_repect_nullsContext) {
+}
 
 // EnterRanking_windowed_function is called when production ranking_windowed_function is entered.
 func (s *BaseSnowflakeParserListener) EnterRanking_windowed_function(ctx *Ranking_windowed_functionContext) {
@@ -3008,18 +3840,6 @@ func (s *BaseSnowflakeParserListener) EnterCommon_table_expression(ctx *Common_t
 func (s *BaseSnowflakeParserListener) ExitCommon_table_expression(ctx *Common_table_expressionContext) {
 }
 
-// EnterAnchor_clause is called when production anchor_clause is entered.
-func (s *BaseSnowflakeParserListener) EnterAnchor_clause(ctx *Anchor_clauseContext) {}
-
-// ExitAnchor_clause is called when production anchor_clause is exited.
-func (s *BaseSnowflakeParserListener) ExitAnchor_clause(ctx *Anchor_clauseContext) {}
-
-// EnterRecursive_clause is called when production recursive_clause is entered.
-func (s *BaseSnowflakeParserListener) EnterRecursive_clause(ctx *Recursive_clauseContext) {}
-
-// ExitRecursive_clause is called when production recursive_clause is exited.
-func (s *BaseSnowflakeParserListener) ExitRecursive_clause(ctx *Recursive_clauseContext) {}
-
 // EnterSelect_statement is called when production select_statement is entered.
 func (s *BaseSnowflakeParserListener) EnterSelect_statement(ctx *Select_statementContext) {}
 
@@ -3031,6 +3851,20 @@ func (s *BaseSnowflakeParserListener) EnterSet_operators(ctx *Set_operatorsConte
 
 // ExitSet_operators is called when production set_operators is exited.
 func (s *BaseSnowflakeParserListener) ExitSet_operators(ctx *Set_operatorsContext) {}
+
+// EnterBy_name is called when production by_name is entered.
+func (s *BaseSnowflakeParserListener) EnterBy_name(ctx *By_nameContext) {}
+
+// ExitBy_name is called when production by_name is exited.
+func (s *BaseSnowflakeParserListener) ExitBy_name(ctx *By_nameContext) {}
+
+// EnterSelect_statement_in_parentheses is called when production select_statement_in_parentheses is entered.
+func (s *BaseSnowflakeParserListener) EnterSelect_statement_in_parentheses(ctx *Select_statement_in_parenthesesContext) {
+}
+
+// ExitSelect_statement_in_parentheses is called when production select_statement_in_parentheses is exited.
+func (s *BaseSnowflakeParserListener) ExitSelect_statement_in_parentheses(ctx *Select_statement_in_parenthesesContext) {
+}
 
 // EnterSelect_optional_clauses is called when production select_optional_clauses is entered.
 func (s *BaseSnowflakeParserListener) EnterSelect_optional_clauses(ctx *Select_optional_clausesContext) {
@@ -3076,11 +3910,29 @@ func (s *BaseSnowflakeParserListener) EnterSelect_list_elem(ctx *Select_list_ele
 // ExitSelect_list_elem is called when production select_list_elem is exited.
 func (s *BaseSnowflakeParserListener) ExitSelect_list_elem(ctx *Select_list_elemContext) {}
 
+// EnterColumn_elem_star is called when production column_elem_star is entered.
+func (s *BaseSnowflakeParserListener) EnterColumn_elem_star(ctx *Column_elem_starContext) {}
+
+// ExitColumn_elem_star is called when production column_elem_star is exited.
+func (s *BaseSnowflakeParserListener) ExitColumn_elem_star(ctx *Column_elem_starContext) {}
+
 // EnterColumn_elem is called when production column_elem is entered.
 func (s *BaseSnowflakeParserListener) EnterColumn_elem(ctx *Column_elemContext) {}
 
 // ExitColumn_elem is called when production column_elem is exited.
 func (s *BaseSnowflakeParserListener) ExitColumn_elem(ctx *Column_elemContext) {}
+
+// EnterObject_name_or_alias is called when production object_name_or_alias is entered.
+func (s *BaseSnowflakeParserListener) EnterObject_name_or_alias(ctx *Object_name_or_aliasContext) {}
+
+// ExitObject_name_or_alias is called when production object_name_or_alias is exited.
+func (s *BaseSnowflakeParserListener) ExitObject_name_or_alias(ctx *Object_name_or_aliasContext) {}
+
+// EnterExclude_clause is called when production exclude_clause is entered.
+func (s *BaseSnowflakeParserListener) EnterExclude_clause(ctx *Exclude_clauseContext) {}
+
+// ExitExclude_clause is called when production exclude_clause is exited.
+func (s *BaseSnowflakeParserListener) ExitExclude_clause(ctx *Exclude_clauseContext) {}
 
 // EnterAs_alias is called when production as_alias is entered.
 func (s *BaseSnowflakeParserListener) EnterAs_alias(ctx *As_aliasContext) {}
@@ -3174,6 +4026,12 @@ func (s *BaseSnowflakeParserListener) EnterFlatten_table(ctx *Flatten_tableConte
 // ExitFlatten_table is called when production flatten_table is exited.
 func (s *BaseSnowflakeParserListener) ExitFlatten_table(ctx *Flatten_tableContext) {}
 
+// EnterSplited_table is called when production splited_table is entered.
+func (s *BaseSnowflakeParserListener) EnterSplited_table(ctx *Splited_tableContext) {}
+
+// ExitSplited_table is called when production splited_table is exited.
+func (s *BaseSnowflakeParserListener) ExitSplited_table(ctx *Splited_tableContext) {}
+
 // EnterPrior_list is called when production prior_list is entered.
 func (s *BaseSnowflakeParserListener) EnterPrior_list(ctx *Prior_listContext) {}
 
@@ -3203,6 +4061,12 @@ func (s *BaseSnowflakeParserListener) EnterJoin_clause(ctx *Join_clauseContext) 
 
 // ExitJoin_clause is called when production join_clause is exited.
 func (s *BaseSnowflakeParserListener) ExitJoin_clause(ctx *Join_clauseContext) {}
+
+// EnterOn_using_clause is called when production on_using_clause is entered.
+func (s *BaseSnowflakeParserListener) EnterOn_using_clause(ctx *On_using_clauseContext) {}
+
+// ExitOn_using_clause is called when production on_using_clause is exited.
+func (s *BaseSnowflakeParserListener) ExitOn_using_clause(ctx *On_using_clauseContext) {}
 
 // EnterAt_before is called when production at_before is entered.
 func (s *BaseSnowflakeParserListener) EnterAt_before(ctx *At_beforeContext) {}
@@ -3306,6 +4170,24 @@ func (s *BaseSnowflakeParserListener) EnterPivot_unpivot(ctx *Pivot_unpivotConte
 // ExitPivot_unpivot is called when production pivot_unpivot is exited.
 func (s *BaseSnowflakeParserListener) ExitPivot_unpivot(ctx *Pivot_unpivotContext) {}
 
+// EnterInclude_exclude is called when production include_exclude is entered.
+func (s *BaseSnowflakeParserListener) EnterInclude_exclude(ctx *Include_excludeContext) {}
+
+// ExitInclude_exclude is called when production include_exclude is exited.
+func (s *BaseSnowflakeParserListener) ExitInclude_exclude(ctx *Include_excludeContext) {}
+
+// EnterPivot_in_clause is called when production pivot_in_clause is entered.
+func (s *BaseSnowflakeParserListener) EnterPivot_in_clause(ctx *Pivot_in_clauseContext) {}
+
+// ExitPivot_in_clause is called when production pivot_in_clause is exited.
+func (s *BaseSnowflakeParserListener) ExitPivot_in_clause(ctx *Pivot_in_clauseContext) {}
+
+// EnterDefault_on_null is called when production default_on_null is entered.
+func (s *BaseSnowflakeParserListener) EnterDefault_on_null(ctx *Default_on_nullContext) {}
+
+// ExitDefault_on_null is called when production default_on_null is exited.
+func (s *BaseSnowflakeParserListener) ExitDefault_on_null(ctx *Default_on_nullContext) {}
+
 // EnterColumn_alias_list_in_brackets is called when production column_alias_list_in_brackets is entered.
 func (s *BaseSnowflakeParserListener) EnterColumn_alias_list_in_brackets(ctx *Column_alias_list_in_bracketsContext) {
 }
@@ -3322,11 +4204,17 @@ func (s *BaseSnowflakeParserListener) EnterExpr_list_in_parentheses(ctx *Expr_li
 func (s *BaseSnowflakeParserListener) ExitExpr_list_in_parentheses(ctx *Expr_list_in_parenthesesContext) {
 }
 
-// EnterValues is called when production values is entered.
-func (s *BaseSnowflakeParserListener) EnterValues(ctx *ValuesContext) {}
+// EnterValues_table is called when production values_table is entered.
+func (s *BaseSnowflakeParserListener) EnterValues_table(ctx *Values_tableContext) {}
 
-// ExitValues is called when production values is exited.
-func (s *BaseSnowflakeParserListener) ExitValues(ctx *ValuesContext) {}
+// ExitValues_table is called when production values_table is exited.
+func (s *BaseSnowflakeParserListener) ExitValues_table(ctx *Values_tableContext) {}
+
+// EnterValues_table_body is called when production values_table_body is entered.
+func (s *BaseSnowflakeParserListener) EnterValues_table_body(ctx *Values_table_bodyContext) {}
+
+// ExitValues_table_body is called when production values_table_body is exited.
+func (s *BaseSnowflakeParserListener) ExitValues_table_body(ctx *Values_table_bodyContext) {}
 
 // EnterSample_method is called when production sample_method is entered.
 func (s *BaseSnowflakeParserListener) EnterSample_method(ctx *Sample_methodContext) {}
@@ -3370,6 +4258,12 @@ func (s *BaseSnowflakeParserListener) EnterNull_not_null(ctx *Null_not_nullConte
 // ExitNull_not_null is called when production null_not_null is exited.
 func (s *BaseSnowflakeParserListener) ExitNull_not_null(ctx *Null_not_nullContext) {}
 
+// EnterNot_distinct_from is called when production not_distinct_from is entered.
+func (s *BaseSnowflakeParserListener) EnterNot_distinct_from(ctx *Not_distinct_fromContext) {}
+
+// ExitNot_distinct_from is called when production not_distinct_from is exited.
+func (s *BaseSnowflakeParserListener) ExitNot_distinct_from(ctx *Not_distinct_fromContext) {}
+
 // EnterSubquery is called when production subquery is entered.
 func (s *BaseSnowflakeParserListener) EnterSubquery(ctx *SubqueryContext) {}
 
@@ -3388,11 +4282,17 @@ func (s *BaseSnowflakeParserListener) EnterWhere_clause(ctx *Where_clauseContext
 // ExitWhere_clause is called when production where_clause is exited.
 func (s *BaseSnowflakeParserListener) ExitWhere_clause(ctx *Where_clauseContext) {}
 
-// EnterGroup_item is called when production group_item is entered.
-func (s *BaseSnowflakeParserListener) EnterGroup_item(ctx *Group_itemContext) {}
+// EnterGroup_by_elem is called when production group_by_elem is entered.
+func (s *BaseSnowflakeParserListener) EnterGroup_by_elem(ctx *Group_by_elemContext) {}
 
-// ExitGroup_item is called when production group_item is exited.
-func (s *BaseSnowflakeParserListener) ExitGroup_item(ctx *Group_itemContext) {}
+// ExitGroup_by_elem is called when production group_by_elem is exited.
+func (s *BaseSnowflakeParserListener) ExitGroup_by_elem(ctx *Group_by_elemContext) {}
+
+// EnterGroup_by_list is called when production group_by_list is entered.
+func (s *BaseSnowflakeParserListener) EnterGroup_by_list(ctx *Group_by_listContext) {}
+
+// ExitGroup_by_list is called when production group_by_list is exited.
+func (s *BaseSnowflakeParserListener) ExitGroup_by_list(ctx *Group_by_listContext) {}
 
 // EnterGroup_by_clause is called when production group_by_clause is entered.
 func (s *BaseSnowflakeParserListener) EnterGroup_by_clause(ctx *Group_by_clauseContext) {}
@@ -3441,6 +4341,18 @@ func (s *BaseSnowflakeParserListener) EnterLimit_clause(ctx *Limit_clauseContext
 
 // ExitLimit_clause is called when production limit_clause is exited.
 func (s *BaseSnowflakeParserListener) ExitLimit_clause(ctx *Limit_clauseContext) {}
+
+// EnterRound_mode is called when production round_mode is entered.
+func (s *BaseSnowflakeParserListener) EnterRound_mode(ctx *Round_modeContext) {}
+
+// ExitRound_mode is called when production round_mode is exited.
+func (s *BaseSnowflakeParserListener) ExitRound_mode(ctx *Round_modeContext) {}
+
+// EnterRound_expr is called when production round_expr is entered.
+func (s *BaseSnowflakeParserListener) EnterRound_expr(ctx *Round_exprContext) {}
+
+// ExitRound_expr is called when production round_expr is exited.
+func (s *BaseSnowflakeParserListener) ExitRound_expr(ctx *Round_exprContext) {}
 
 // EnterSupplement_non_reserved_words is called when production supplement_non_reserved_words is entered.
 func (s *BaseSnowflakeParserListener) EnterSupplement_non_reserved_words(ctx *Supplement_non_reserved_wordsContext) {
