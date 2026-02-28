@@ -2587,6 +2587,18 @@ Integral
    : Digits
    ;
 
+BinaryIntegral
+   : '0b' Digits
+   ;
+
+OctalIntegral
+   : '0o' Digits
+   ;
+
+HexadecimalIntegral
+   : '0x' Digits
+   ;
+
 NumericFail
    : Digits '..'
    {l.HandleNumericFail();}
