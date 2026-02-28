@@ -1316,3 +1316,9 @@ SELECT pg_lsn(18446744073709551615::numeric);
 SELECT pg_lsn(-1::numeric);
 SELECT pg_lsn(18446744073709551616::numeric);
 SELECT pg_lsn('NaN'::numeric);
+
+--
+-- Tests for binary/octal/hex integer literals
+--
+SELECT abs(0b10), abs(0B10), abs(0x10), abs(0X10), abs(0o10), abs(0O10),
+       ('{1}'::int[])[0b01], 1::char(0o01), (array[1])[0x01];
