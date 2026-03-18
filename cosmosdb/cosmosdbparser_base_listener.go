@@ -38,6 +38,12 @@ func (s *BaseCosmosDBParserListener) EnterSelect_clause(ctx *Select_clauseContex
 // ExitSelect_clause is called when production select_clause is exited.
 func (s *BaseCosmosDBParserListener) ExitSelect_clause(ctx *Select_clauseContext) {}
 
+// EnterTop_clause is called when production top_clause is entered.
+func (s *BaseCosmosDBParserListener) EnterTop_clause(ctx *Top_clauseContext) {}
+
+// ExitTop_clause is called when production top_clause is exited.
+func (s *BaseCosmosDBParserListener) ExitTop_clause(ctx *Top_clauseContext) {}
+
 // EnterSelect_specification is called when production select_specification is entered.
 func (s *BaseCosmosDBParserListener) EnterSelect_specification(ctx *Select_specificationContext) {}
 
@@ -56,6 +62,36 @@ func (s *BaseCosmosDBParserListener) EnterWhere_clause(ctx *Where_clauseContext)
 // ExitWhere_clause is called when production where_clause is exited.
 func (s *BaseCosmosDBParserListener) ExitWhere_clause(ctx *Where_clauseContext) {}
 
+// EnterGroup_by_clause is called when production group_by_clause is entered.
+func (s *BaseCosmosDBParserListener) EnterGroup_by_clause(ctx *Group_by_clauseContext) {}
+
+// ExitGroup_by_clause is called when production group_by_clause is exited.
+func (s *BaseCosmosDBParserListener) ExitGroup_by_clause(ctx *Group_by_clauseContext) {}
+
+// EnterHaving_clause is called when production having_clause is entered.
+func (s *BaseCosmosDBParserListener) EnterHaving_clause(ctx *Having_clauseContext) {}
+
+// ExitHaving_clause is called when production having_clause is exited.
+func (s *BaseCosmosDBParserListener) ExitHaving_clause(ctx *Having_clauseContext) {}
+
+// EnterOrder_by_clause is called when production order_by_clause is entered.
+func (s *BaseCosmosDBParserListener) EnterOrder_by_clause(ctx *Order_by_clauseContext) {}
+
+// ExitOrder_by_clause is called when production order_by_clause is exited.
+func (s *BaseCosmosDBParserListener) ExitOrder_by_clause(ctx *Order_by_clauseContext) {}
+
+// EnterSort_expression is called when production sort_expression is entered.
+func (s *BaseCosmosDBParserListener) EnterSort_expression(ctx *Sort_expressionContext) {}
+
+// ExitSort_expression is called when production sort_expression is exited.
+func (s *BaseCosmosDBParserListener) ExitSort_expression(ctx *Sort_expressionContext) {}
+
+// EnterOffset_limit_clause is called when production offset_limit_clause is entered.
+func (s *BaseCosmosDBParserListener) EnterOffset_limit_clause(ctx *Offset_limit_clauseContext) {}
+
+// ExitOffset_limit_clause is called when production offset_limit_clause is exited.
+func (s *BaseCosmosDBParserListener) ExitOffset_limit_clause(ctx *Offset_limit_clauseContext) {}
+
 // EnterFrom_specification is called when production from_specification is entered.
 func (s *BaseCosmosDBParserListener) EnterFrom_specification(ctx *From_specificationContext) {}
 
@@ -73,6 +109,12 @@ func (s *BaseCosmosDBParserListener) EnterContainer_expression(ctx *Container_ex
 
 // ExitContainer_expression is called when production container_expression is exited.
 func (s *BaseCosmosDBParserListener) ExitContainer_expression(ctx *Container_expressionContext) {}
+
+// EnterJoin_clause is called when production join_clause is entered.
+func (s *BaseCosmosDBParserListener) EnterJoin_clause(ctx *Join_clauseContext) {}
+
+// ExitJoin_clause is called when production join_clause is exited.
+func (s *BaseCosmosDBParserListener) ExitJoin_clause(ctx *Join_clauseContext) {}
 
 // EnterContainer_name is called when production container_name is entered.
 func (s *BaseCosmosDBParserListener) EnterContainer_name(ctx *Container_nameContext) {}
@@ -104,14 +146,6 @@ func (s *BaseCosmosDBParserListener) EnterScalar_expression(ctx *Scalar_expressi
 // ExitScalar_expression is called when production scalar_expression is exited.
 func (s *BaseCosmosDBParserListener) ExitScalar_expression(ctx *Scalar_expressionContext) {}
 
-// EnterScalar_expression_in_where is called when production scalar_expression_in_where is entered.
-func (s *BaseCosmosDBParserListener) EnterScalar_expression_in_where(ctx *Scalar_expression_in_whereContext) {
-}
-
-// ExitScalar_expression_in_where is called when production scalar_expression_in_where is exited.
-func (s *BaseCosmosDBParserListener) ExitScalar_expression_in_where(ctx *Scalar_expression_in_whereContext) {
-}
-
 // EnterCreate_array_expression is called when production create_array_expression is entered.
 func (s *BaseCosmosDBParserListener) EnterCreate_array_expression(ctx *Create_array_expressionContext) {
 }
@@ -127,6 +161,12 @@ func (s *BaseCosmosDBParserListener) EnterCreate_object_expression(ctx *Create_o
 // ExitCreate_object_expression is called when production create_object_expression is exited.
 func (s *BaseCosmosDBParserListener) ExitCreate_object_expression(ctx *Create_object_expressionContext) {
 }
+
+// EnterObject_field_pair is called when production object_field_pair is entered.
+func (s *BaseCosmosDBParserListener) EnterObject_field_pair(ctx *Object_field_pairContext) {}
+
+// ExitObject_field_pair is called when production object_field_pair is exited.
+func (s *BaseCosmosDBParserListener) ExitObject_field_pair(ctx *Object_field_pairContext) {}
 
 // EnterScalar_function_expression is called when production scalar_function_expression is entered.
 func (s *BaseCosmosDBParserListener) EnterScalar_function_expression(ctx *Scalar_function_expressionContext) {
@@ -176,32 +216,6 @@ func (s *BaseCosmosDBParserListener) EnterConstant(ctx *ConstantContext) {}
 // ExitConstant is called when production constant is exited.
 func (s *BaseCosmosDBParserListener) ExitConstant(ctx *ConstantContext) {}
 
-// EnterObject_constant is called when production object_constant is entered.
-func (s *BaseCosmosDBParserListener) EnterObject_constant(ctx *Object_constantContext) {}
-
-// ExitObject_constant is called when production object_constant is exited.
-func (s *BaseCosmosDBParserListener) ExitObject_constant(ctx *Object_constantContext) {}
-
-// EnterObject_constant_field_pair is called when production object_constant_field_pair is entered.
-func (s *BaseCosmosDBParserListener) EnterObject_constant_field_pair(ctx *Object_constant_field_pairContext) {
-}
-
-// ExitObject_constant_field_pair is called when production object_constant_field_pair is exited.
-func (s *BaseCosmosDBParserListener) ExitObject_constant_field_pair(ctx *Object_constant_field_pairContext) {
-}
-
-// EnterArray_constant is called when production array_constant is entered.
-func (s *BaseCosmosDBParserListener) EnterArray_constant(ctx *Array_constantContext) {}
-
-// ExitArray_constant is called when production array_constant is exited.
-func (s *BaseCosmosDBParserListener) ExitArray_constant(ctx *Array_constantContext) {}
-
-// EnterString_constant is called when production string_constant is entered.
-func (s *BaseCosmosDBParserListener) EnterString_constant(ctx *String_constantContext) {}
-
-// ExitString_constant is called when production string_constant is exited.
-func (s *BaseCosmosDBParserListener) ExitString_constant(ctx *String_constantContext) {}
-
 // EnterUndefined_constant is called when production undefined_constant is entered.
 func (s *BaseCosmosDBParserListener) EnterUndefined_constant(ctx *Undefined_constantContext) {}
 
@@ -226,6 +240,12 @@ func (s *BaseCosmosDBParserListener) EnterNumber_constant(ctx *Number_constantCo
 // ExitNumber_constant is called when production number_constant is exited.
 func (s *BaseCosmosDBParserListener) ExitNumber_constant(ctx *Number_constantContext) {}
 
+// EnterString_constant is called when production string_constant is entered.
+func (s *BaseCosmosDBParserListener) EnterString_constant(ctx *String_constantContext) {}
+
+// ExitString_constant is called when production string_constant is exited.
+func (s *BaseCosmosDBParserListener) ExitString_constant(ctx *String_constantContext) {}
+
 // EnterString_literal is called when production string_literal is entered.
 func (s *BaseCosmosDBParserListener) EnterString_literal(ctx *String_literalContext) {}
 
@@ -243,6 +263,12 @@ func (s *BaseCosmosDBParserListener) EnterHexadecimal_literal(ctx *Hexadecimal_l
 
 // ExitHexadecimal_literal is called when production hexadecimal_literal is exited.
 func (s *BaseCosmosDBParserListener) ExitHexadecimal_literal(ctx *Hexadecimal_literalContext) {}
+
+// EnterIdentifier is called when production identifier is entered.
+func (s *BaseCosmosDBParserListener) EnterIdentifier(ctx *IdentifierContext) {}
+
+// ExitIdentifier is called when production identifier is exited.
+func (s *BaseCosmosDBParserListener) ExitIdentifier(ctx *IdentifierContext) {}
 
 // EnterProperty_name is called when production property_name is entered.
 func (s *BaseCosmosDBParserListener) EnterProperty_name(ctx *Property_nameContext) {}

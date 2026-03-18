@@ -16,6 +16,9 @@ type CosmosDBParserListener interface {
 	// EnterSelect_clause is called when entering the select_clause production.
 	EnterSelect_clause(c *Select_clauseContext)
 
+	// EnterTop_clause is called when entering the top_clause production.
+	EnterTop_clause(c *Top_clauseContext)
+
 	// EnterSelect_specification is called when entering the select_specification production.
 	EnterSelect_specification(c *Select_specificationContext)
 
@@ -25,6 +28,21 @@ type CosmosDBParserListener interface {
 	// EnterWhere_clause is called when entering the where_clause production.
 	EnterWhere_clause(c *Where_clauseContext)
 
+	// EnterGroup_by_clause is called when entering the group_by_clause production.
+	EnterGroup_by_clause(c *Group_by_clauseContext)
+
+	// EnterHaving_clause is called when entering the having_clause production.
+	EnterHaving_clause(c *Having_clauseContext)
+
+	// EnterOrder_by_clause is called when entering the order_by_clause production.
+	EnterOrder_by_clause(c *Order_by_clauseContext)
+
+	// EnterSort_expression is called when entering the sort_expression production.
+	EnterSort_expression(c *Sort_expressionContext)
+
+	// EnterOffset_limit_clause is called when entering the offset_limit_clause production.
+	EnterOffset_limit_clause(c *Offset_limit_clauseContext)
+
 	// EnterFrom_specification is called when entering the from_specification production.
 	EnterFrom_specification(c *From_specificationContext)
 
@@ -33,6 +51,9 @@ type CosmosDBParserListener interface {
 
 	// EnterContainer_expression is called when entering the container_expression production.
 	EnterContainer_expression(c *Container_expressionContext)
+
+	// EnterJoin_clause is called when entering the join_clause production.
+	EnterJoin_clause(c *Join_clauseContext)
 
 	// EnterContainer_name is called when entering the container_name production.
 	EnterContainer_name(c *Container_nameContext)
@@ -49,14 +70,14 @@ type CosmosDBParserListener interface {
 	// EnterScalar_expression is called when entering the scalar_expression production.
 	EnterScalar_expression(c *Scalar_expressionContext)
 
-	// EnterScalar_expression_in_where is called when entering the scalar_expression_in_where production.
-	EnterScalar_expression_in_where(c *Scalar_expression_in_whereContext)
-
 	// EnterCreate_array_expression is called when entering the create_array_expression production.
 	EnterCreate_array_expression(c *Create_array_expressionContext)
 
 	// EnterCreate_object_expression is called when entering the create_object_expression production.
 	EnterCreate_object_expression(c *Create_object_expressionContext)
+
+	// EnterObject_field_pair is called when entering the object_field_pair production.
+	EnterObject_field_pair(c *Object_field_pairContext)
 
 	// EnterScalar_function_expression is called when entering the scalar_function_expression production.
 	EnterScalar_function_expression(c *Scalar_function_expressionContext)
@@ -79,18 +100,6 @@ type CosmosDBParserListener interface {
 	// EnterConstant is called when entering the constant production.
 	EnterConstant(c *ConstantContext)
 
-	// EnterObject_constant is called when entering the object_constant production.
-	EnterObject_constant(c *Object_constantContext)
-
-	// EnterObject_constant_field_pair is called when entering the object_constant_field_pair production.
-	EnterObject_constant_field_pair(c *Object_constant_field_pairContext)
-
-	// EnterArray_constant is called when entering the array_constant production.
-	EnterArray_constant(c *Array_constantContext)
-
-	// EnterString_constant is called when entering the string_constant production.
-	EnterString_constant(c *String_constantContext)
-
 	// EnterUndefined_constant is called when entering the undefined_constant production.
 	EnterUndefined_constant(c *Undefined_constantContext)
 
@@ -103,6 +112,9 @@ type CosmosDBParserListener interface {
 	// EnterNumber_constant is called when entering the number_constant production.
 	EnterNumber_constant(c *Number_constantContext)
 
+	// EnterString_constant is called when entering the string_constant production.
+	EnterString_constant(c *String_constantContext)
+
 	// EnterString_literal is called when entering the string_literal production.
 	EnterString_literal(c *String_literalContext)
 
@@ -111,6 +123,9 @@ type CosmosDBParserListener interface {
 
 	// EnterHexadecimal_literal is called when entering the hexadecimal_literal production.
 	EnterHexadecimal_literal(c *Hexadecimal_literalContext)
+
+	// EnterIdentifier is called when entering the identifier production.
+	EnterIdentifier(c *IdentifierContext)
 
 	// EnterProperty_name is called when entering the property_name production.
 	EnterProperty_name(c *Property_nameContext)
@@ -130,6 +145,9 @@ type CosmosDBParserListener interface {
 	// ExitSelect_clause is called when exiting the select_clause production.
 	ExitSelect_clause(c *Select_clauseContext)
 
+	// ExitTop_clause is called when exiting the top_clause production.
+	ExitTop_clause(c *Top_clauseContext)
+
 	// ExitSelect_specification is called when exiting the select_specification production.
 	ExitSelect_specification(c *Select_specificationContext)
 
@@ -139,6 +157,21 @@ type CosmosDBParserListener interface {
 	// ExitWhere_clause is called when exiting the where_clause production.
 	ExitWhere_clause(c *Where_clauseContext)
 
+	// ExitGroup_by_clause is called when exiting the group_by_clause production.
+	ExitGroup_by_clause(c *Group_by_clauseContext)
+
+	// ExitHaving_clause is called when exiting the having_clause production.
+	ExitHaving_clause(c *Having_clauseContext)
+
+	// ExitOrder_by_clause is called when exiting the order_by_clause production.
+	ExitOrder_by_clause(c *Order_by_clauseContext)
+
+	// ExitSort_expression is called when exiting the sort_expression production.
+	ExitSort_expression(c *Sort_expressionContext)
+
+	// ExitOffset_limit_clause is called when exiting the offset_limit_clause production.
+	ExitOffset_limit_clause(c *Offset_limit_clauseContext)
+
 	// ExitFrom_specification is called when exiting the from_specification production.
 	ExitFrom_specification(c *From_specificationContext)
 
@@ -147,6 +180,9 @@ type CosmosDBParserListener interface {
 
 	// ExitContainer_expression is called when exiting the container_expression production.
 	ExitContainer_expression(c *Container_expressionContext)
+
+	// ExitJoin_clause is called when exiting the join_clause production.
+	ExitJoin_clause(c *Join_clauseContext)
 
 	// ExitContainer_name is called when exiting the container_name production.
 	ExitContainer_name(c *Container_nameContext)
@@ -163,14 +199,14 @@ type CosmosDBParserListener interface {
 	// ExitScalar_expression is called when exiting the scalar_expression production.
 	ExitScalar_expression(c *Scalar_expressionContext)
 
-	// ExitScalar_expression_in_where is called when exiting the scalar_expression_in_where production.
-	ExitScalar_expression_in_where(c *Scalar_expression_in_whereContext)
-
 	// ExitCreate_array_expression is called when exiting the create_array_expression production.
 	ExitCreate_array_expression(c *Create_array_expressionContext)
 
 	// ExitCreate_object_expression is called when exiting the create_object_expression production.
 	ExitCreate_object_expression(c *Create_object_expressionContext)
+
+	// ExitObject_field_pair is called when exiting the object_field_pair production.
+	ExitObject_field_pair(c *Object_field_pairContext)
 
 	// ExitScalar_function_expression is called when exiting the scalar_function_expression production.
 	ExitScalar_function_expression(c *Scalar_function_expressionContext)
@@ -193,18 +229,6 @@ type CosmosDBParserListener interface {
 	// ExitConstant is called when exiting the constant production.
 	ExitConstant(c *ConstantContext)
 
-	// ExitObject_constant is called when exiting the object_constant production.
-	ExitObject_constant(c *Object_constantContext)
-
-	// ExitObject_constant_field_pair is called when exiting the object_constant_field_pair production.
-	ExitObject_constant_field_pair(c *Object_constant_field_pairContext)
-
-	// ExitArray_constant is called when exiting the array_constant production.
-	ExitArray_constant(c *Array_constantContext)
-
-	// ExitString_constant is called when exiting the string_constant production.
-	ExitString_constant(c *String_constantContext)
-
 	// ExitUndefined_constant is called when exiting the undefined_constant production.
 	ExitUndefined_constant(c *Undefined_constantContext)
 
@@ -217,6 +241,9 @@ type CosmosDBParserListener interface {
 	// ExitNumber_constant is called when exiting the number_constant production.
 	ExitNumber_constant(c *Number_constantContext)
 
+	// ExitString_constant is called when exiting the string_constant production.
+	ExitString_constant(c *String_constantContext)
+
 	// ExitString_literal is called when exiting the string_literal production.
 	ExitString_literal(c *String_literalContext)
 
@@ -225,6 +252,9 @@ type CosmosDBParserListener interface {
 
 	// ExitHexadecimal_literal is called when exiting the hexadecimal_literal production.
 	ExitHexadecimal_literal(c *Hexadecimal_literalContext)
+
+	// ExitIdentifier is called when exiting the identifier production.
+	ExitIdentifier(c *IdentifierContext)
 
 	// ExitProperty_name is called when exiting the property_name production.
 	ExitProperty_name(c *Property_nameContext)
