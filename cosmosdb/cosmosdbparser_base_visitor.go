@@ -19,6 +19,10 @@ func (v *BaseCosmosDBParserVisitor) VisitSelect_clause(ctx *Select_clauseContext
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCosmosDBParserVisitor) VisitTop_clause(ctx *Top_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCosmosDBParserVisitor) VisitSelect_specification(ctx *Select_specificationContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -31,6 +35,26 @@ func (v *BaseCosmosDBParserVisitor) VisitWhere_clause(ctx *Where_clauseContext) 
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCosmosDBParserVisitor) VisitGroup_by_clause(ctx *Group_by_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCosmosDBParserVisitor) VisitHaving_clause(ctx *Having_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCosmosDBParserVisitor) VisitOrder_by_clause(ctx *Order_by_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCosmosDBParserVisitor) VisitSort_expression(ctx *Sort_expressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCosmosDBParserVisitor) VisitOffset_limit_clause(ctx *Offset_limit_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCosmosDBParserVisitor) VisitFrom_specification(ctx *From_specificationContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -40,6 +64,10 @@ func (v *BaseCosmosDBParserVisitor) VisitFrom_source(ctx *From_sourceContext) in
 }
 
 func (v *BaseCosmosDBParserVisitor) VisitContainer_expression(ctx *Container_expressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCosmosDBParserVisitor) VisitJoin_clause(ctx *Join_clauseContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -63,15 +91,15 @@ func (v *BaseCosmosDBParserVisitor) VisitScalar_expression(ctx *Scalar_expressio
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCosmosDBParserVisitor) VisitScalar_expression_in_where(ctx *Scalar_expression_in_whereContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BaseCosmosDBParserVisitor) VisitCreate_array_expression(ctx *Create_array_expressionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
 func (v *BaseCosmosDBParserVisitor) VisitCreate_object_expression(ctx *Create_object_expressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCosmosDBParserVisitor) VisitObject_field_pair(ctx *Object_field_pairContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -87,7 +115,19 @@ func (v *BaseCosmosDBParserVisitor) VisitBuiltin_function_expression(ctx *Builti
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCosmosDBParserVisitor) VisitBinary_operator(ctx *Binary_operatorContext) interface{} {
+func (v *BaseCosmosDBParserVisitor) VisitMultiplicative_operator(ctx *Multiplicative_operatorContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCosmosDBParserVisitor) VisitAdditive_operator(ctx *Additive_operatorContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCosmosDBParserVisitor) VisitShift_operator(ctx *Shift_operatorContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCosmosDBParserVisitor) VisitComparison_operator(ctx *Comparison_operatorContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -100,22 +140,6 @@ func (v *BaseCosmosDBParserVisitor) VisitParameter_name(ctx *Parameter_nameConte
 }
 
 func (v *BaseCosmosDBParserVisitor) VisitConstant(ctx *ConstantContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseCosmosDBParserVisitor) VisitObject_constant(ctx *Object_constantContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseCosmosDBParserVisitor) VisitObject_constant_field_pair(ctx *Object_constant_field_pairContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseCosmosDBParserVisitor) VisitArray_constant(ctx *Array_constantContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseCosmosDBParserVisitor) VisitString_constant(ctx *String_constantContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -135,6 +159,10 @@ func (v *BaseCosmosDBParserVisitor) VisitNumber_constant(ctx *Number_constantCon
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCosmosDBParserVisitor) VisitString_constant(ctx *String_constantContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCosmosDBParserVisitor) VisitString_literal(ctx *String_literalContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -144,6 +172,10 @@ func (v *BaseCosmosDBParserVisitor) VisitDecimal_literal(ctx *Decimal_literalCon
 }
 
 func (v *BaseCosmosDBParserVisitor) VisitHexadecimal_literal(ctx *Hexadecimal_literalContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCosmosDBParserVisitor) VisitIdentifier(ctx *IdentifierContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

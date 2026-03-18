@@ -16,6 +16,9 @@ type CosmosDBParserVisitor interface {
 	// Visit a parse tree produced by CosmosDBParser#select_clause.
 	VisitSelect_clause(ctx *Select_clauseContext) interface{}
 
+	// Visit a parse tree produced by CosmosDBParser#top_clause.
+	VisitTop_clause(ctx *Top_clauseContext) interface{}
+
 	// Visit a parse tree produced by CosmosDBParser#select_specification.
 	VisitSelect_specification(ctx *Select_specificationContext) interface{}
 
@@ -25,6 +28,21 @@ type CosmosDBParserVisitor interface {
 	// Visit a parse tree produced by CosmosDBParser#where_clause.
 	VisitWhere_clause(ctx *Where_clauseContext) interface{}
 
+	// Visit a parse tree produced by CosmosDBParser#group_by_clause.
+	VisitGroup_by_clause(ctx *Group_by_clauseContext) interface{}
+
+	// Visit a parse tree produced by CosmosDBParser#having_clause.
+	VisitHaving_clause(ctx *Having_clauseContext) interface{}
+
+	// Visit a parse tree produced by CosmosDBParser#order_by_clause.
+	VisitOrder_by_clause(ctx *Order_by_clauseContext) interface{}
+
+	// Visit a parse tree produced by CosmosDBParser#sort_expression.
+	VisitSort_expression(ctx *Sort_expressionContext) interface{}
+
+	// Visit a parse tree produced by CosmosDBParser#offset_limit_clause.
+	VisitOffset_limit_clause(ctx *Offset_limit_clauseContext) interface{}
+
 	// Visit a parse tree produced by CosmosDBParser#from_specification.
 	VisitFrom_specification(ctx *From_specificationContext) interface{}
 
@@ -33,6 +51,9 @@ type CosmosDBParserVisitor interface {
 
 	// Visit a parse tree produced by CosmosDBParser#container_expression.
 	VisitContainer_expression(ctx *Container_expressionContext) interface{}
+
+	// Visit a parse tree produced by CosmosDBParser#join_clause.
+	VisitJoin_clause(ctx *Join_clauseContext) interface{}
 
 	// Visit a parse tree produced by CosmosDBParser#container_name.
 	VisitContainer_name(ctx *Container_nameContext) interface{}
@@ -49,14 +70,14 @@ type CosmosDBParserVisitor interface {
 	// Visit a parse tree produced by CosmosDBParser#scalar_expression.
 	VisitScalar_expression(ctx *Scalar_expressionContext) interface{}
 
-	// Visit a parse tree produced by CosmosDBParser#scalar_expression_in_where.
-	VisitScalar_expression_in_where(ctx *Scalar_expression_in_whereContext) interface{}
-
 	// Visit a parse tree produced by CosmosDBParser#create_array_expression.
 	VisitCreate_array_expression(ctx *Create_array_expressionContext) interface{}
 
 	// Visit a parse tree produced by CosmosDBParser#create_object_expression.
 	VisitCreate_object_expression(ctx *Create_object_expressionContext) interface{}
+
+	// Visit a parse tree produced by CosmosDBParser#object_field_pair.
+	VisitObject_field_pair(ctx *Object_field_pairContext) interface{}
 
 	// Visit a parse tree produced by CosmosDBParser#scalar_function_expression.
 	VisitScalar_function_expression(ctx *Scalar_function_expressionContext) interface{}
@@ -67,8 +88,17 @@ type CosmosDBParserVisitor interface {
 	// Visit a parse tree produced by CosmosDBParser#builtin_function_expression.
 	VisitBuiltin_function_expression(ctx *Builtin_function_expressionContext) interface{}
 
-	// Visit a parse tree produced by CosmosDBParser#binary_operator.
-	VisitBinary_operator(ctx *Binary_operatorContext) interface{}
+	// Visit a parse tree produced by CosmosDBParser#multiplicative_operator.
+	VisitMultiplicative_operator(ctx *Multiplicative_operatorContext) interface{}
+
+	// Visit a parse tree produced by CosmosDBParser#additive_operator.
+	VisitAdditive_operator(ctx *Additive_operatorContext) interface{}
+
+	// Visit a parse tree produced by CosmosDBParser#shift_operator.
+	VisitShift_operator(ctx *Shift_operatorContext) interface{}
+
+	// Visit a parse tree produced by CosmosDBParser#comparison_operator.
+	VisitComparison_operator(ctx *Comparison_operatorContext) interface{}
 
 	// Visit a parse tree produced by CosmosDBParser#unary_operator.
 	VisitUnary_operator(ctx *Unary_operatorContext) interface{}
@@ -78,18 +108,6 @@ type CosmosDBParserVisitor interface {
 
 	// Visit a parse tree produced by CosmosDBParser#constant.
 	VisitConstant(ctx *ConstantContext) interface{}
-
-	// Visit a parse tree produced by CosmosDBParser#object_constant.
-	VisitObject_constant(ctx *Object_constantContext) interface{}
-
-	// Visit a parse tree produced by CosmosDBParser#object_constant_field_pair.
-	VisitObject_constant_field_pair(ctx *Object_constant_field_pairContext) interface{}
-
-	// Visit a parse tree produced by CosmosDBParser#array_constant.
-	VisitArray_constant(ctx *Array_constantContext) interface{}
-
-	// Visit a parse tree produced by CosmosDBParser#string_constant.
-	VisitString_constant(ctx *String_constantContext) interface{}
 
 	// Visit a parse tree produced by CosmosDBParser#undefined_constant.
 	VisitUndefined_constant(ctx *Undefined_constantContext) interface{}
@@ -103,6 +121,9 @@ type CosmosDBParserVisitor interface {
 	// Visit a parse tree produced by CosmosDBParser#number_constant.
 	VisitNumber_constant(ctx *Number_constantContext) interface{}
 
+	// Visit a parse tree produced by CosmosDBParser#string_constant.
+	VisitString_constant(ctx *String_constantContext) interface{}
+
 	// Visit a parse tree produced by CosmosDBParser#string_literal.
 	VisitString_literal(ctx *String_literalContext) interface{}
 
@@ -111,6 +132,9 @@ type CosmosDBParserVisitor interface {
 
 	// Visit a parse tree produced by CosmosDBParser#hexadecimal_literal.
 	VisitHexadecimal_literal(ctx *Hexadecimal_literalContext) interface{}
+
+	// Visit a parse tree produced by CosmosDBParser#identifier.
+	VisitIdentifier(ctx *IdentifierContext) interface{}
 
 	// Visit a parse tree produced by CosmosDBParser#property_name.
 	VisitProperty_name(ctx *Property_nameContext) interface{}
