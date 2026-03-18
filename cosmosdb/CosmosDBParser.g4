@@ -59,12 +59,17 @@ property_alias: identifier;
 
 // Unified scalar_expression - used in both SELECT projections and WHERE clause.
 // https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/query/scalar-expressions
+// Alternatives are ordered from highest precedence (first) to lowest (last) per ANTLR4 semantics.
 scalar_expression:
 	constant
 	| input_alias
 	| parameter_name
-	| scalar_expression AND_SYMBOL scalar_expression
-	| scalar_expression OR_SYMBOL scalar_expression
+	| scalar_function_expression
+	| create_object_expression
+	| create_array_expression
+	| LR_BRACKET_SYMBOL scalar_expression RR_BRACKET_SYMBOL
+	| LR_BRACKET_SYMBOL select RR_BRACKET_SYMBOL
+	| EXISTS_SYMBOL LR_BRACKET_SYMBOL select RR_BRACKET_SYMBOL
 	| scalar_expression DOT_SYMBOL property_name
 	| scalar_expression LS_BRACKET_SYMBOL (
 		DOUBLE_QUOTE_STRING_LITERAL
@@ -73,19 +78,22 @@ scalar_expression:
 	) RS_BRACKET_SYMBOL
 	| unary_operator scalar_expression
 	| NOT_SYMBOL scalar_expression
-	| scalar_expression binary_operator scalar_expression
+	| scalar_expression multiplicative_operator scalar_expression
+	| scalar_expression additive_operator scalar_expression
+	| scalar_expression shift_operator scalar_expression
+	| scalar_expression BIT_AND_SYMBOL scalar_expression
+	| scalar_expression BIT_XOR_SYMBOL scalar_expression
+	| scalar_expression BIT_OR_SYMBOL scalar_expression
+	| scalar_expression DOUBLE_BAR_SYMBOL scalar_expression
+	| scalar_expression comparison_operator scalar_expression
 	| scalar_expression NOT_SYMBOL? IN_SYMBOL LR_BRACKET_SYMBOL (
 		scalar_expression (COMMA_SYMBOL scalar_expression)*
 	)? RR_BRACKET_SYMBOL
 	| scalar_expression NOT_SYMBOL? BETWEEN_SYMBOL scalar_expression AND_SYMBOL scalar_expression
 	| scalar_expression NOT_SYMBOL? LIKE_SYMBOL scalar_expression
-	| EXISTS_SYMBOL LR_BRACKET_SYMBOL select RR_BRACKET_SYMBOL
-	| scalar_expression QUESTION_MARK_SYMBOL scalar_expression COLON_SYMBOL scalar_expression
-	| scalar_function_expression
-	| create_object_expression
-	| create_array_expression
-	| LR_BRACKET_SYMBOL scalar_expression RR_BRACKET_SYMBOL
-	| LR_BRACKET_SYMBOL select RR_BRACKET_SYMBOL;
+	| scalar_expression AND_SYMBOL scalar_expression
+	| scalar_expression OR_SYMBOL scalar_expression
+	| scalar_expression QUESTION_MARK_SYMBOL scalar_expression COLON_SYMBOL scalar_expression;
 
 create_array_expression:
 	LS_BRACKET_SYMBOL (
@@ -116,25 +124,25 @@ builtin_function_expression:
 		)*
 	)? RR_BRACKET_SYMBOL;
 
-binary_operator:
+multiplicative_operator:
 	MULTIPLY_OPERATOR
 	| DIVIDE_SYMBOL
-	| MODULO_SYMBOL
-	| PLUS_SYMBOL
-	| MINUS_SYMBOL
-	| BIT_AND_SYMBOL
-	| BIT_XOR_SYMBOL
-	| BIT_OR_SYMBOL
-	| DOUBLE_BAR_SYMBOL
-	| EQUAL_SYMBOL
+	| MODULO_SYMBOL;
+
+additive_operator: PLUS_SYMBOL | MINUS_SYMBOL;
+
+shift_operator:
+	LEFT_SHIFT_OPERATOR
+	| RIGHT_SHIFT_OPERATOR
+	| ZERO_FILL_RIGHT_SHIFT_OPERATOR;
+
+comparison_operator:
+	EQUAL_SYMBOL
 	| NOT_EQUAL_OPERATOR
 	| LESS_THAN_OPERATOR
 	| LESS_THAN_EQUAL_OPERATOR
 	| GREATER_THAN_OPERATOR
-	| GREATER_THAN_EQUAL_OPERATOR
-	| LEFT_SHIFT_OPERATOR
-	| RIGHT_SHIFT_OPERATOR
-	| ZERO_FILL_RIGHT_SHIFT_OPERATOR;
+	| GREATER_THAN_EQUAL_OPERATOR;
 
 unary_operator: BIT_NOT_SYMBOL | PLUS_SYMBOL | MINUS_SYMBOL;
 

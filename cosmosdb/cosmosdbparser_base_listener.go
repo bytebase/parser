@@ -192,11 +192,31 @@ func (s *BaseCosmosDBParserListener) EnterBuiltin_function_expression(ctx *Built
 func (s *BaseCosmosDBParserListener) ExitBuiltin_function_expression(ctx *Builtin_function_expressionContext) {
 }
 
-// EnterBinary_operator is called when production binary_operator is entered.
-func (s *BaseCosmosDBParserListener) EnterBinary_operator(ctx *Binary_operatorContext) {}
+// EnterMultiplicative_operator is called when production multiplicative_operator is entered.
+func (s *BaseCosmosDBParserListener) EnterMultiplicative_operator(ctx *Multiplicative_operatorContext) {
+}
 
-// ExitBinary_operator is called when production binary_operator is exited.
-func (s *BaseCosmosDBParserListener) ExitBinary_operator(ctx *Binary_operatorContext) {}
+// ExitMultiplicative_operator is called when production multiplicative_operator is exited.
+func (s *BaseCosmosDBParserListener) ExitMultiplicative_operator(ctx *Multiplicative_operatorContext) {
+}
+
+// EnterAdditive_operator is called when production additive_operator is entered.
+func (s *BaseCosmosDBParserListener) EnterAdditive_operator(ctx *Additive_operatorContext) {}
+
+// ExitAdditive_operator is called when production additive_operator is exited.
+func (s *BaseCosmosDBParserListener) ExitAdditive_operator(ctx *Additive_operatorContext) {}
+
+// EnterShift_operator is called when production shift_operator is entered.
+func (s *BaseCosmosDBParserListener) EnterShift_operator(ctx *Shift_operatorContext) {}
+
+// ExitShift_operator is called when production shift_operator is exited.
+func (s *BaseCosmosDBParserListener) ExitShift_operator(ctx *Shift_operatorContext) {}
+
+// EnterComparison_operator is called when production comparison_operator is entered.
+func (s *BaseCosmosDBParserListener) EnterComparison_operator(ctx *Comparison_operatorContext) {}
+
+// ExitComparison_operator is called when production comparison_operator is exited.
+func (s *BaseCosmosDBParserListener) ExitComparison_operator(ctx *Comparison_operatorContext) {}
 
 // EnterUnary_operator is called when production unary_operator is entered.
 func (s *BaseCosmosDBParserListener) EnterUnary_operator(ctx *Unary_operatorContext) {}

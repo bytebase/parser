@@ -88,8 +88,17 @@ type CosmosDBParserListener interface {
 	// EnterBuiltin_function_expression is called when entering the builtin_function_expression production.
 	EnterBuiltin_function_expression(c *Builtin_function_expressionContext)
 
-	// EnterBinary_operator is called when entering the binary_operator production.
-	EnterBinary_operator(c *Binary_operatorContext)
+	// EnterMultiplicative_operator is called when entering the multiplicative_operator production.
+	EnterMultiplicative_operator(c *Multiplicative_operatorContext)
+
+	// EnterAdditive_operator is called when entering the additive_operator production.
+	EnterAdditive_operator(c *Additive_operatorContext)
+
+	// EnterShift_operator is called when entering the shift_operator production.
+	EnterShift_operator(c *Shift_operatorContext)
+
+	// EnterComparison_operator is called when entering the comparison_operator production.
+	EnterComparison_operator(c *Comparison_operatorContext)
 
 	// EnterUnary_operator is called when entering the unary_operator production.
 	EnterUnary_operator(c *Unary_operatorContext)
@@ -217,8 +226,17 @@ type CosmosDBParserListener interface {
 	// ExitBuiltin_function_expression is called when exiting the builtin_function_expression production.
 	ExitBuiltin_function_expression(c *Builtin_function_expressionContext)
 
-	// ExitBinary_operator is called when exiting the binary_operator production.
-	ExitBinary_operator(c *Binary_operatorContext)
+	// ExitMultiplicative_operator is called when exiting the multiplicative_operator production.
+	ExitMultiplicative_operator(c *Multiplicative_operatorContext)
+
+	// ExitAdditive_operator is called when exiting the additive_operator production.
+	ExitAdditive_operator(c *Additive_operatorContext)
+
+	// ExitShift_operator is called when exiting the shift_operator production.
+	ExitShift_operator(c *Shift_operatorContext)
+
+	// ExitComparison_operator is called when exiting the comparison_operator production.
+	ExitComparison_operator(c *Comparison_operatorContext)
 
 	// ExitUnary_operator is called when exiting the unary_operator production.
 	ExitUnary_operator(c *Unary_operatorContext)

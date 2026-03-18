@@ -88,8 +88,17 @@ type CosmosDBParserVisitor interface {
 	// Visit a parse tree produced by CosmosDBParser#builtin_function_expression.
 	VisitBuiltin_function_expression(ctx *Builtin_function_expressionContext) interface{}
 
-	// Visit a parse tree produced by CosmosDBParser#binary_operator.
-	VisitBinary_operator(ctx *Binary_operatorContext) interface{}
+	// Visit a parse tree produced by CosmosDBParser#multiplicative_operator.
+	VisitMultiplicative_operator(ctx *Multiplicative_operatorContext) interface{}
+
+	// Visit a parse tree produced by CosmosDBParser#additive_operator.
+	VisitAdditive_operator(ctx *Additive_operatorContext) interface{}
+
+	// Visit a parse tree produced by CosmosDBParser#shift_operator.
+	VisitShift_operator(ctx *Shift_operatorContext) interface{}
+
+	// Visit a parse tree produced by CosmosDBParser#comparison_operator.
+	VisitComparison_operator(ctx *Comparison_operatorContext) interface{}
 
 	// Visit a parse tree produced by CosmosDBParser#unary_operator.
 	VisitUnary_operator(ctx *Unary_operatorContext) interface{}

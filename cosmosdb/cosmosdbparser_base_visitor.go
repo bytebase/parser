@@ -115,7 +115,19 @@ func (v *BaseCosmosDBParserVisitor) VisitBuiltin_function_expression(ctx *Builti
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCosmosDBParserVisitor) VisitBinary_operator(ctx *Binary_operatorContext) interface{} {
+func (v *BaseCosmosDBParserVisitor) VisitMultiplicative_operator(ctx *Multiplicative_operatorContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCosmosDBParserVisitor) VisitAdditive_operator(ctx *Additive_operatorContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCosmosDBParserVisitor) VisitShift_operator(ctx *Shift_operatorContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCosmosDBParserVisitor) VisitComparison_operator(ctx *Comparison_operatorContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
