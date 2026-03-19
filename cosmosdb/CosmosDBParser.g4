@@ -34,18 +34,30 @@ order_by_clause:
 		COMMA_SYMBOL sort_expression
 	)*;
 
-sort_expression: scalar_expression (ASC_SYMBOL | DESC_SYMBOL)?;
+sort_expression:
+	scalar_expression (ASC_SYMBOL | DESC_SYMBOL)?
+	| RANK_SYMBOL scalar_expression;
 
 offset_limit_clause: OFFSET_SYMBOL DECIMAL LIMIT_SYMBOL DECIMAL;
 
-from_specification: from_source;
+from_specification: from_source (join_clause)*;
 
-from_source: container_expression (join_clause)*;
+from_source:
+	container_expression (AS_SYMBOL? identifier)?
+	| identifier IN_SYMBOL container_expression;
 
-container_expression: container_name (AS_SYMBOL? identifier)?;
+container_expression:
+	ROOT_SYMBOL
+	| container_name
+	| container_expression DOT_SYMBOL property_name
+	| container_expression LS_BRACKET_SYMBOL (
+		DOUBLE_QUOTE_STRING_LITERAL
+		| SINGLE_QUOTE_STRING_LITERAL
+		| array_index
+	) RS_BRACKET_SYMBOL
+	| LR_BRACKET_SYMBOL select RR_BRACKET_SYMBOL;
 
-join_clause:
-	JOIN_SYMBOL identifier IN_SYMBOL scalar_expression;
+join_clause: JOIN_SYMBOL from_source;
 
 container_name: identifier;
 
@@ -70,11 +82,13 @@ scalar_expression:
 	| LR_BRACKET_SYMBOL scalar_expression RR_BRACKET_SYMBOL
 	| LR_BRACKET_SYMBOL select RR_BRACKET_SYMBOL
 	| EXISTS_SYMBOL LR_BRACKET_SYMBOL select RR_BRACKET_SYMBOL
+	| ARRAY_SYMBOL LR_BRACKET_SYMBOL select RR_BRACKET_SYMBOL
 	| scalar_expression DOT_SYMBOL property_name
 	| scalar_expression LS_BRACKET_SYMBOL (
 		DOUBLE_QUOTE_STRING_LITERAL
 		| SINGLE_QUOTE_STRING_LITERAL
 		| array_index
+		| parameter_name
 	) RS_BRACKET_SYMBOL
 	| unary_operator scalar_expression
 	| NOT_SYMBOL scalar_expression
@@ -90,9 +104,10 @@ scalar_expression:
 		scalar_expression (COMMA_SYMBOL scalar_expression)*
 	)? RR_BRACKET_SYMBOL
 	| scalar_expression NOT_SYMBOL? BETWEEN_SYMBOL scalar_expression AND_SYMBOL scalar_expression
-	| scalar_expression NOT_SYMBOL? LIKE_SYMBOL scalar_expression
+	| scalar_expression NOT_SYMBOL? LIKE_SYMBOL scalar_expression (ESCAPE_SYMBOL scalar_expression)?
 	| scalar_expression AND_SYMBOL scalar_expression
 	| scalar_expression OR_SYMBOL scalar_expression
+	| scalar_expression DOUBLE_QUESTION_MARK_SYMBOL scalar_expression
 	| scalar_expression QUESTION_MARK_SYMBOL scalar_expression COLON_SYMBOL scalar_expression;
 
 create_array_expression:
@@ -139,6 +154,7 @@ shift_operator:
 comparison_operator:
 	EQUAL_SYMBOL
 	| NOT_EQUAL_OPERATOR
+	| NOT_EQUAL_OPERATOR_2
 	| LESS_THAN_OPERATOR
 	| LESS_THAN_EQUAL_OPERATOR
 	| GREATER_THAN_OPERATOR
@@ -162,7 +178,7 @@ null_constant: NULL_SYMBOL;
 
 boolean_constant: TRUE_SYMBOL | FALSE_SYMBOL;
 
-number_constant: decimal_literal | hexadecimal_literal;
+number_constant: decimal_literal | hexadecimal_literal | INFINITY_SYMBOL | NAN_SYMBOL;
 
 string_constant: string_literal;
 
@@ -192,9 +208,31 @@ identifier:
 	| EXISTS_SYMBOL
 	| LIKE_SYMBOL
 	| HAVING_SYMBOL
-	| JOIN_SYMBOL;
+	| JOIN_SYMBOL
+	| ESCAPE_SYMBOL
+	| ARRAY_SYMBOL
+	| ROOT_SYMBOL
+	| RANK_SYMBOL;
 
-property_name: identifier;
+property_name:
+	identifier
+	| SELECT_SYMBOL
+	| FROM_SYMBOL
+	| WHERE_SYMBOL
+	| NOT_SYMBOL
+	| AND_SYMBOL
+	| OR_SYMBOL
+	| AS_SYMBOL
+	| TRUE_SYMBOL
+	| FALSE_SYMBOL
+	| NULL_SYMBOL
+	| UNDEFINED_SYMBOL
+	| UDF_SYMBOL
+	| DISTINCT_SYMBOL
+	| ARRAY_SYMBOL
+	| ROOT_SYMBOL
+	| ESCAPE_SYMBOL
+	| RANK_SYMBOL;
 
 array_index: DECIMAL;
 

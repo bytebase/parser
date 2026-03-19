@@ -61,6 +61,10 @@ EXISTS_SYMBOL: 'EXISTS';
 LIKE_SYMBOL: 'LIKE';
 HAVING_SYMBOL: 'HAVING';
 JOIN_SYMBOL: 'JOIN';
+ESCAPE_SYMBOL: 'ESCAPE';
+ARRAY_SYMBOL: 'ARRAY';
+ROOT_SYMBOL: 'ROOT';
+RANK_SYMBOL: 'RANK';
 
 AT_SYMBOL: '@';
 LC_BRACKET_SYMBOL: '{';
@@ -73,6 +77,7 @@ SINGLE_QUOTE_SYMBOL: '\'';
 DOUBLE_QUOTE_SYMBOL: '"';
 COMMA_SYMBOL: ',';
 DOT_SYMBOL: '.';
+DOUBLE_QUESTION_MARK_SYMBOL: '??';
 QUESTION_MARK_SYMBOL: '?';
 COLON_SYMBOL: ':';
 PLUS_SYMBOL: '+';
@@ -93,7 +98,12 @@ LEFT_SHIFT_OPERATOR: '<<';
 RIGHT_SHIFT_OPERATOR: '>>';
 ZERO_FILL_RIGHT_SHIFT_OPERATOR: '>>>';
 NOT_EQUAL_OPERATOR: '!=';
+NOT_EQUAL_OPERATOR_2: '<>';
 
+
+/* Constants */
+INFINITY_SYMBOL options { caseInsensitive = false; }: 'Infinity';
+NAN_SYMBOL options { caseInsensitive = false; }: 'NaN';
 
 /* Identifiers */
 IDENTIFIER: [a-z_] [a-z_0-9]*;
@@ -101,6 +111,8 @@ IDENTIFIER: [a-z_] [a-z_0-9]*;
 // White space handling
 WHITESPACE:
 	[ \t\f\r\n] -> channel(HIDDEN); // Ignore whitespaces.
+
+LINE_COMMENT: '--' ~[\r\n]* -> channel(HIDDEN);
 
 // Decimal literal.
 fragment DEC_DIGIT: [0-9];
