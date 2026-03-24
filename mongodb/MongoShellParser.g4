@@ -819,9 +819,9 @@ longHelper
     : (LONG | NUMBER_LONG) LPAREN (NUMBER | stringLiteral) RPAREN
     ;
 
-// Int32(n), NumberInt(n)
+// Int32(n), Int32("n"), NumberInt(n), NumberInt("n")
 int32Helper
-    : (INT32 | NUMBER_INT) LPAREN NUMBER RPAREN
+    : (INT32 | NUMBER_INT) LPAREN (NUMBER | stringLiteral) RPAREN
     ;
 
 // Double(n)
