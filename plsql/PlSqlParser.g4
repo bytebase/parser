@@ -3769,6 +3769,7 @@ storage_clause
          | FLASH_CACHE (KEEP | NONE | DEFAULT)
          | CELL_FLASH_CACHE (KEEP | NONE | DEFAULT)
          | ENCRYPT
+         | MAXSIZE (UNLIMITED | size_clause)
          )+
        RIGHT_PAREN
     ;
