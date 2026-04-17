@@ -3558,6 +3558,62 @@ func (s *BasePlSqlParserListener) EnterSystem_partitioning(ctx *System_partition
 // ExitSystem_partitioning is called when production system_partitioning is exited.
 func (s *BasePlSqlParserListener) ExitSystem_partitioning(ctx *System_partitioningContext) {}
 
+// EnterConsistent_hash_partitions is called when production consistent_hash_partitions is entered.
+func (s *BasePlSqlParserListener) EnterConsistent_hash_partitions(ctx *Consistent_hash_partitionsContext) {
+}
+
+// ExitConsistent_hash_partitions is called when production consistent_hash_partitions is exited.
+func (s *BasePlSqlParserListener) ExitConsistent_hash_partitions(ctx *Consistent_hash_partitionsContext) {
+}
+
+// EnterConsistent_hash_with_subpartitions is called when production consistent_hash_with_subpartitions is entered.
+func (s *BasePlSqlParserListener) EnterConsistent_hash_with_subpartitions(ctx *Consistent_hash_with_subpartitionsContext) {
+}
+
+// ExitConsistent_hash_with_subpartitions is called when production consistent_hash_with_subpartitions is exited.
+func (s *BasePlSqlParserListener) ExitConsistent_hash_with_subpartitions(ctx *Consistent_hash_with_subpartitionsContext) {
+}
+
+// EnterPartitionset_clauses is called when production partitionset_clauses is entered.
+func (s *BasePlSqlParserListener) EnterPartitionset_clauses(ctx *Partitionset_clausesContext) {}
+
+// ExitPartitionset_clauses is called when production partitionset_clauses is exited.
+func (s *BasePlSqlParserListener) ExitPartitionset_clauses(ctx *Partitionset_clausesContext) {}
+
+// EnterRange_partitionset_clause is called when production range_partitionset_clause is entered.
+func (s *BasePlSqlParserListener) EnterRange_partitionset_clause(ctx *Range_partitionset_clauseContext) {
+}
+
+// ExitRange_partitionset_clause is called when production range_partitionset_clause is exited.
+func (s *BasePlSqlParserListener) ExitRange_partitionset_clause(ctx *Range_partitionset_clauseContext) {
+}
+
+// EnterRange_partitionset_desc is called when production range_partitionset_desc is entered.
+func (s *BasePlSqlParserListener) EnterRange_partitionset_desc(ctx *Range_partitionset_descContext) {}
+
+// ExitRange_partitionset_desc is called when production range_partitionset_desc is exited.
+func (s *BasePlSqlParserListener) ExitRange_partitionset_desc(ctx *Range_partitionset_descContext) {}
+
+// EnterList_partitionset_clause is called when production list_partitionset_clause is entered.
+func (s *BasePlSqlParserListener) EnterList_partitionset_clause(ctx *List_partitionset_clauseContext) {
+}
+
+// ExitList_partitionset_clause is called when production list_partitionset_clause is exited.
+func (s *BasePlSqlParserListener) ExitList_partitionset_clause(ctx *List_partitionset_clauseContext) {
+}
+
+// EnterList_partitionset_desc is called when production list_partitionset_desc is entered.
+func (s *BasePlSqlParserListener) EnterList_partitionset_desc(ctx *List_partitionset_descContext) {}
+
+// ExitList_partitionset_desc is called when production list_partitionset_desc is exited.
+func (s *BasePlSqlParserListener) ExitList_partitionset_desc(ctx *List_partitionset_descContext) {}
+
+// EnterPartitionset_name is called when production partitionset_name is entered.
+func (s *BasePlSqlParserListener) EnterPartitionset_name(ctx *Partitionset_nameContext) {}
+
+// ExitPartitionset_name is called when production partitionset_name is exited.
+func (s *BasePlSqlParserListener) ExitPartitionset_name(ctx *Partitionset_nameContext) {}
+
 // EnterRange_partition_desc is called when production range_partition_desc is entered.
 func (s *BasePlSqlParserListener) EnterRange_partition_desc(ctx *Range_partition_descContext) {}
 
@@ -3642,11 +3698,31 @@ func (s *BasePlSqlParserListener) EnterRange_values_clause(ctx *Range_values_cla
 // ExitRange_values_clause is called when production range_values_clause is exited.
 func (s *BasePlSqlParserListener) ExitRange_values_clause(ctx *Range_values_clauseContext) {}
 
+// EnterRange_partition_value is called when production range_partition_value is entered.
+func (s *BasePlSqlParserListener) EnterRange_partition_value(ctx *Range_partition_valueContext) {}
+
+// ExitRange_partition_value is called when production range_partition_value is exited.
+func (s *BasePlSqlParserListener) ExitRange_partition_value(ctx *Range_partition_valueContext) {}
+
 // EnterList_values_clause is called when production list_values_clause is entered.
 func (s *BasePlSqlParserListener) EnterList_values_clause(ctx *List_values_clauseContext) {}
 
 // ExitList_values_clause is called when production list_values_clause is exited.
 func (s *BasePlSqlParserListener) ExitList_values_clause(ctx *List_values_clauseContext) {}
+
+// EnterList_partition_value is called when production list_partition_value is entered.
+func (s *BasePlSqlParserListener) EnterList_partition_value(ctx *List_partition_valueContext) {}
+
+// ExitList_partition_value is called when production list_partition_value is exited.
+func (s *BasePlSqlParserListener) ExitList_partition_value(ctx *List_partition_valueContext) {}
+
+// EnterList_partition_value_item is called when production list_partition_value_item is entered.
+func (s *BasePlSqlParserListener) EnterList_partition_value_item(ctx *List_partition_value_itemContext) {
+}
+
+// ExitList_partition_value_item is called when production list_partition_value_item is exited.
+func (s *BasePlSqlParserListener) ExitList_partition_value_item(ctx *List_partition_value_itemContext) {
+}
 
 // EnterTable_partition_description is called when production table_partition_description is entered.
 func (s *BasePlSqlParserListener) EnterTable_partition_description(ctx *Table_partition_descriptionContext) {

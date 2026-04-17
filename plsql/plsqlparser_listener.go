@@ -1678,6 +1678,30 @@ type PlSqlParserListener interface {
 	// EnterSystem_partitioning is called when entering the system_partitioning production.
 	EnterSystem_partitioning(c *System_partitioningContext)
 
+	// EnterConsistent_hash_partitions is called when entering the consistent_hash_partitions production.
+	EnterConsistent_hash_partitions(c *Consistent_hash_partitionsContext)
+
+	// EnterConsistent_hash_with_subpartitions is called when entering the consistent_hash_with_subpartitions production.
+	EnterConsistent_hash_with_subpartitions(c *Consistent_hash_with_subpartitionsContext)
+
+	// EnterPartitionset_clauses is called when entering the partitionset_clauses production.
+	EnterPartitionset_clauses(c *Partitionset_clausesContext)
+
+	// EnterRange_partitionset_clause is called when entering the range_partitionset_clause production.
+	EnterRange_partitionset_clause(c *Range_partitionset_clauseContext)
+
+	// EnterRange_partitionset_desc is called when entering the range_partitionset_desc production.
+	EnterRange_partitionset_desc(c *Range_partitionset_descContext)
+
+	// EnterList_partitionset_clause is called when entering the list_partitionset_clause production.
+	EnterList_partitionset_clause(c *List_partitionset_clauseContext)
+
+	// EnterList_partitionset_desc is called when entering the list_partitionset_desc production.
+	EnterList_partitionset_desc(c *List_partitionset_descContext)
+
+	// EnterPartitionset_name is called when entering the partitionset_name production.
+	EnterPartitionset_name(c *Partitionset_nameContext)
+
 	// EnterRange_partition_desc is called when entering the range_partition_desc production.
 	EnterRange_partition_desc(c *Range_partition_descContext)
 
@@ -1717,8 +1741,17 @@ type PlSqlParserListener interface {
 	// EnterRange_values_clause is called when entering the range_values_clause production.
 	EnterRange_values_clause(c *Range_values_clauseContext)
 
+	// EnterRange_partition_value is called when entering the range_partition_value production.
+	EnterRange_partition_value(c *Range_partition_valueContext)
+
 	// EnterList_values_clause is called when entering the list_values_clause production.
 	EnterList_values_clause(c *List_values_clauseContext)
+
+	// EnterList_partition_value is called when entering the list_partition_value production.
+	EnterList_partition_value(c *List_partition_valueContext)
+
+	// EnterList_partition_value_item is called when entering the list_partition_value_item production.
+	EnterList_partition_value_item(c *List_partition_value_itemContext)
 
 	// EnterTable_partition_description is called when entering the table_partition_description production.
 	EnterTable_partition_description(c *Table_partition_descriptionContext)
@@ -5344,6 +5377,30 @@ type PlSqlParserListener interface {
 	// ExitSystem_partitioning is called when exiting the system_partitioning production.
 	ExitSystem_partitioning(c *System_partitioningContext)
 
+	// ExitConsistent_hash_partitions is called when exiting the consistent_hash_partitions production.
+	ExitConsistent_hash_partitions(c *Consistent_hash_partitionsContext)
+
+	// ExitConsistent_hash_with_subpartitions is called when exiting the consistent_hash_with_subpartitions production.
+	ExitConsistent_hash_with_subpartitions(c *Consistent_hash_with_subpartitionsContext)
+
+	// ExitPartitionset_clauses is called when exiting the partitionset_clauses production.
+	ExitPartitionset_clauses(c *Partitionset_clausesContext)
+
+	// ExitRange_partitionset_clause is called when exiting the range_partitionset_clause production.
+	ExitRange_partitionset_clause(c *Range_partitionset_clauseContext)
+
+	// ExitRange_partitionset_desc is called when exiting the range_partitionset_desc production.
+	ExitRange_partitionset_desc(c *Range_partitionset_descContext)
+
+	// ExitList_partitionset_clause is called when exiting the list_partitionset_clause production.
+	ExitList_partitionset_clause(c *List_partitionset_clauseContext)
+
+	// ExitList_partitionset_desc is called when exiting the list_partitionset_desc production.
+	ExitList_partitionset_desc(c *List_partitionset_descContext)
+
+	// ExitPartitionset_name is called when exiting the partitionset_name production.
+	ExitPartitionset_name(c *Partitionset_nameContext)
+
 	// ExitRange_partition_desc is called when exiting the range_partition_desc production.
 	ExitRange_partition_desc(c *Range_partition_descContext)
 
@@ -5383,8 +5440,17 @@ type PlSqlParserListener interface {
 	// ExitRange_values_clause is called when exiting the range_values_clause production.
 	ExitRange_values_clause(c *Range_values_clauseContext)
 
+	// ExitRange_partition_value is called when exiting the range_partition_value production.
+	ExitRange_partition_value(c *Range_partition_valueContext)
+
 	// ExitList_values_clause is called when exiting the list_values_clause production.
 	ExitList_values_clause(c *List_values_clauseContext)
+
+	// ExitList_partition_value is called when exiting the list_partition_value production.
+	ExitList_partition_value(c *List_partition_valueContext)
+
+	// ExitList_partition_value_item is called when exiting the list_partition_value_item production.
+	ExitList_partition_value_item(c *List_partition_value_itemContext)
 
 	// ExitTable_partition_description is called when exiting the table_partition_description production.
 	ExitTable_partition_description(c *Table_partition_descriptionContext)
