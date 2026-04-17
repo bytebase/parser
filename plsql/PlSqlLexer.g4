@@ -1299,6 +1299,7 @@ PARTITION_LIST:               'PARTITION_LIST';
 PARTITION:                    'PARTITION';
 PARTITION_RANGE:              'PARTITION_RANGE';
 PARTITIONS:                   'PARTITIONS';
+PARTITIONSET:                 'PARTITIONSET';
 PARTNUMINST:                  'PART$NUM$INST';
 PASSING:                      'PASSING';
 PASSWORD_GRACE_TIME:          'PASSWORD_GRACE_TIME';
@@ -2303,9 +2304,7 @@ ORACLE_DATAPUMP:              'ORACLE_DATAPUMP';
 ORACLE_HDFS:                  'ORACLE_HDFS';
 ORACLE_HIVE:                  'ORACLE_HIVE';
 ORACLE_LOADER:                'ORACLE_LOADER';
-SHA2_512_Q:                   '"SHA2_512"';
 SHARDED:                      'SHARDED';
-V1_Q:                         '"V1"';
 
 ISOLATE:                      'ISOLATE';
 ROOT:                         'ROOT';

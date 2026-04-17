@@ -2235,6 +2235,38 @@ func (v *BasePlSqlParserVisitor) VisitSystem_partitioning(ctx *System_partitioni
 	return v.VisitChildren(ctx)
 }
 
+func (v *BasePlSqlParserVisitor) VisitConsistent_hash_partitions(ctx *Consistent_hash_partitionsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitConsistent_hash_with_subpartitions(ctx *Consistent_hash_with_subpartitionsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitPartitionset_clauses(ctx *Partitionset_clausesContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitRange_partitionset_clause(ctx *Range_partitionset_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitRange_partitionset_desc(ctx *Range_partitionset_descContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitList_partitionset_clause(ctx *List_partitionset_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitList_partitionset_desc(ctx *List_partitionset_descContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitPartitionset_name(ctx *Partitionset_nameContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BasePlSqlParserVisitor) VisitRange_partition_desc(ctx *Range_partition_descContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -2287,7 +2319,15 @@ func (v *BasePlSqlParserVisitor) VisitRange_values_clause(ctx *Range_values_clau
 	return v.VisitChildren(ctx)
 }
 
+func (v *BasePlSqlParserVisitor) VisitRange_partition_value(ctx *Range_partition_valueContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BasePlSqlParserVisitor) VisitList_values_clause(ctx *List_values_clauseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BasePlSqlParserVisitor) VisitList_partition_value(ctx *List_partition_valueContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

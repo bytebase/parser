@@ -1678,6 +1678,30 @@ type PlSqlParserVisitor interface {
 	// Visit a parse tree produced by PlSqlParser#system_partitioning.
 	VisitSystem_partitioning(ctx *System_partitioningContext) interface{}
 
+	// Visit a parse tree produced by PlSqlParser#consistent_hash_partitions.
+	VisitConsistent_hash_partitions(ctx *Consistent_hash_partitionsContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#consistent_hash_with_subpartitions.
+	VisitConsistent_hash_with_subpartitions(ctx *Consistent_hash_with_subpartitionsContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#partitionset_clauses.
+	VisitPartitionset_clauses(ctx *Partitionset_clausesContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#range_partitionset_clause.
+	VisitRange_partitionset_clause(ctx *Range_partitionset_clauseContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#range_partitionset_desc.
+	VisitRange_partitionset_desc(ctx *Range_partitionset_descContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#list_partitionset_clause.
+	VisitList_partitionset_clause(ctx *List_partitionset_clauseContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#list_partitionset_desc.
+	VisitList_partitionset_desc(ctx *List_partitionset_descContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#partitionset_name.
+	VisitPartitionset_name(ctx *Partitionset_nameContext) interface{}
+
 	// Visit a parse tree produced by PlSqlParser#range_partition_desc.
 	VisitRange_partition_desc(ctx *Range_partition_descContext) interface{}
 
@@ -1717,8 +1741,14 @@ type PlSqlParserVisitor interface {
 	// Visit a parse tree produced by PlSqlParser#range_values_clause.
 	VisitRange_values_clause(ctx *Range_values_clauseContext) interface{}
 
+	// Visit a parse tree produced by PlSqlParser#range_partition_value.
+	VisitRange_partition_value(ctx *Range_partition_valueContext) interface{}
+
 	// Visit a parse tree produced by PlSqlParser#list_values_clause.
 	VisitList_values_clause(ctx *List_values_clauseContext) interface{}
+
+	// Visit a parse tree produced by PlSqlParser#list_partition_value.
+	VisitList_partition_value(ctx *List_partition_valueContext) interface{}
 
 	// Visit a parse tree produced by PlSqlParser#table_partition_description.
 	VisitTable_partition_description(ctx *Table_partition_descriptionContext) interface{}

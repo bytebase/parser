@@ -3295,7 +3295,7 @@ create_table
             | IMMUTABLE? BLOCKCHAIN
             | IMMUTABLE
             )?
-        TABLE (schema_name PERIOD)? table_name
+        TABLE (IF NOT EXISTS)? (schema_name PERIOD)? table_name
         (SHARING EQUALS_OP (METADATA | EXTENDED? DATA | NONE))?
         (relational_table | object_table | xmltype_table)
         (MEMOPTIMIZE FOR READ)?
@@ -3395,7 +3395,7 @@ immutable_table_no_delete_clause
     ;
 
 blockchain_table_clauses
-    : blockchain_drop_table_clause blockchain_row_retention_clause blockchain_hash_and_data_format_clause
+    : blockchain_drop_table_clause? blockchain_row_retention_clause? blockchain_hash_and_data_format_clause
     ;
 
 blockchain_drop_table_clause
@@ -3403,11 +3403,11 @@ blockchain_drop_table_clause
     ;
 
 blockchain_row_retention_clause
-    : NO DELETE (LOCKED? | UNTIL numeric DAYS AFTER INSERT LOCKED?)
+    : NO DELETE (LOCKED? | UNTIL numeric DAYS (IDLE | AFTER INSERT) LOCKED?)
     ;
 
 blockchain_hash_and_data_format_clause
-    : HASHING USING SHA2_512_Q VERSION V1_Q
+    : HASHING USING (CHAR_STRING | DELIMITED_ID) VERSION (CHAR_STRING | DELIMITED_ID)
     ;
 
 collation_name
@@ -3512,6 +3512,9 @@ table_partitioning_clauses
     | composite_hash_partitions
     | reference_partitioning
     | system_partitioning
+    | consistent_hash_partitions
+    | consistent_hash_with_subpartitions
+    | partitionset_clauses
     ;
 
 range_partitions
@@ -3521,7 +3524,8 @@ range_partitions
     ;
 
 list_partitions
-    : PARTITION BY LIST LEFT_PAREN column_name RIGHT_PAREN
+    : PARTITION BY LIST LEFT_PAREN column_name (COMMA column_name)* RIGHT_PAREN
+        AUTOMATIC?
         LEFT_PAREN PARTITION partition_name? list_values_clause table_partition_description  (COMMA PARTITION partition_name? list_values_clause table_partition_description )* RIGHT_PAREN
     ;
 
@@ -3553,7 +3557,8 @@ composite_range_partitions
     ;
 
 composite_list_partitions
-    : PARTITION BY LIST LEFT_PAREN column_name RIGHT_PAREN
+    : PARTITION BY LIST LEFT_PAREN column_name (COMMA column_name)* RIGHT_PAREN
+       AUTOMATIC?
        (subpartition_by_range | subpartition_by_list | subpartition_by_hash)
         LEFT_PAREN list_partition_desc (COMMA list_partition_desc)* RIGHT_PAREN
     ;
@@ -3576,6 +3581,51 @@ reference_partition_desc
 system_partitioning
     : PARTITION BY SYSTEM
        (PARTITIONS UNSIGNED_INTEGER | reference_partition_desc (COMMA reference_partition_desc)*)?
+    ;
+
+consistent_hash_partitions
+    : PARTITION BY CONSISTENT HASH LEFT_PAREN column_name (COMMA column_name)* RIGHT_PAREN
+        PARTITIONS AUTO
+    ;
+
+consistent_hash_with_subpartitions
+    : PARTITION BY CONSISTENT HASH LEFT_PAREN column_name (COMMA column_name)* RIGHT_PAREN
+        PARTITIONS AUTO
+        SUBPARTITION BY
+        ( RANGE LEFT_PAREN column_name (COMMA column_name)* RIGHT_PAREN
+        | LIST LEFT_PAREN column_name (COMMA column_name)* RIGHT_PAREN
+        )
+        SUBPARTITIONS AUTO
+    ;
+
+partitionset_clauses
+    : PARTITION BY PARTITIONSET (range_partitionset_clause | list_partitionset_clause)
+    ;
+
+range_partitionset_clause
+    : RANGE LEFT_PAREN column_name (COMMA column_name)* RIGHT_PAREN
+        LEFT_PAREN range_partitionset_desc (COMMA range_partitionset_desc)* RIGHT_PAREN
+    ;
+
+range_partitionset_desc
+    : PARTITIONSET partitionset_name
+        VALUES LESS THAN LEFT_PAREN range_partition_value (COMMA range_partition_value)* RIGHT_PAREN
+        LEFT_PAREN range_partition_desc (COMMA range_partition_desc)* RIGHT_PAREN
+    ;
+
+list_partitionset_clause
+    : LIST LEFT_PAREN column_name (COMMA column_name)* RIGHT_PAREN
+        LEFT_PAREN list_partitionset_desc (COMMA list_partitionset_desc)* RIGHT_PAREN
+    ;
+
+list_partitionset_desc
+    : PARTITIONSET partitionset_name
+        VALUES LEFT_PAREN (list_partition_value (COMMA list_partition_value)* | DEFAULT) RIGHT_PAREN
+        LEFT_PAREN list_partition_desc (COMMA list_partition_desc)* RIGHT_PAREN
+    ;
+
+partitionset_name
+    : identifier
     ;
 
 range_partition_desc
@@ -3623,7 +3673,7 @@ subpartition_by_range
     ;
 
 subpartition_by_list
-    : SUBPARTITION BY LIST LEFT_PAREN column_name RIGHT_PAREN subpartition_template?
+    : SUBPARTITION BY LIST LEFT_PAREN column_name (COMMA column_name)* RIGHT_PAREN subpartition_template?
     ;
 
 subpartition_by_hash
@@ -3638,15 +3688,15 @@ subpartition_name
     ;
 
 range_subpartition_desc
-    : SUBPARTITION subpartition_name? range_values_clause partitioning_storage_clause?
+    : SUBPARTITION subpartition_name? range_values_clause read_only_clause? indexing_clause? partitioning_storage_clause?
     ;
 
 list_subpartition_desc
-    : SUBPARTITION subpartition_name? list_values_clause partitioning_storage_clause?
+    : SUBPARTITION subpartition_name? list_values_clause read_only_clause? indexing_clause? partitioning_storage_clause?
     ;
 
 individual_hash_subparts
-    : SUBPARTITION subpartition_name? partitioning_storage_clause?
+    : SUBPARTITION subpartition_name? read_only_clause? indexing_clause? partitioning_storage_clause?
     ;
 
 hash_subparts_by_quantity
@@ -3654,11 +3704,28 @@ hash_subparts_by_quantity
     ;
 
 range_values_clause
-    : VALUES LESS THAN LEFT_PAREN literal (COMMA literal)* RIGHT_PAREN
+    : VALUES LESS THAN LEFT_PAREN range_partition_value (COMMA range_partition_value)* RIGHT_PAREN
+    ;
+
+// expression already covers MAXVALUE via constant_without_variable; kept as an explicit
+// alternative purely for clarity — the intended terminals in this context are expression or MAXVALUE.
+range_partition_value
+    : expression
+    | MAXVALUE
     ;
 
 list_values_clause
-    : VALUES LEFT_PAREN (literal (COMMA literal)* | TIMESTAMP literal (COMMA TIMESTAMP literal)* | DEFAULT) RIGHT_PAREN
+    : VALUES LEFT_PAREN (list_partition_value (COMMA list_partition_value)* | DEFAULT) RIGHT_PAREN
+    ;
+
+// expression already covers NULL (and, pragmatically, DEFAULT) via constant/regular_id;
+// semantic validity of `DEFAULT` mixed with other values is checked by the server,
+// matching how other SQL grammars in this repo over-accept at the parser level.
+// Tuple form for multi-column LIST partitioning is handled by expression -> atom
+// (`LEFT_PAREN expressions RIGHT_PAREN`), so no dedicated tuple rule is needed.
+list_partition_value
+    : expression
+    | NULL_
     ;
 
 table_partition_description
@@ -5255,6 +5322,7 @@ column_definition
          (DEFAULT (ON NULL_)? expression | identity_clause)?
          (ENCRYPT encryption_spec)?
          (inline_constraint+ | inline_ref_constraint)?
+         annotations_clause?
     ;
 
 column_collation_name
@@ -9023,6 +9091,7 @@ non_reserved_keywords_pre12c
     | PARTITION
     | PARTITION_RANGE
     | PARTITIONS
+    | PARTITIONSET
     | PARTNUMINST
     | PASSING
     | PASSWORD_GRACE_TIME
