@@ -3707,6 +3707,8 @@ range_values_clause
     : VALUES LESS THAN LEFT_PAREN range_partition_value (COMMA range_partition_value)* RIGHT_PAREN
     ;
 
+// expression already covers MAXVALUE via constant_without_variable; kept as an explicit
+// alternative purely for clarity — the intended terminals in this context are expression or MAXVALUE.
 range_partition_value
     : expression
     | MAXVALUE
@@ -3716,16 +3718,14 @@ list_values_clause
     : VALUES LEFT_PAREN (list_partition_value (COMMA list_partition_value)* | DEFAULT) RIGHT_PAREN
     ;
 
+// expression already covers NULL (and, pragmatically, DEFAULT) via constant/regular_id;
+// semantic validity of `DEFAULT` mixed with other values is checked by the server,
+// matching how other SQL grammars in this repo over-accept at the parser level.
+// Tuple form for multi-column LIST partitioning is handled by expression -> atom
+// (`LEFT_PAREN expressions RIGHT_PAREN`), so no dedicated tuple rule is needed.
 list_partition_value
     : expression
     | NULL_
-    | LEFT_PAREN list_partition_value_item (COMMA list_partition_value_item)* RIGHT_PAREN
-    ;
-
-list_partition_value_item
-    : expression
-    | NULL_
-    | DEFAULT
     ;
 
 table_partition_description

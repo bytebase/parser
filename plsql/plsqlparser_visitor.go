@@ -1750,9 +1750,6 @@ type PlSqlParserVisitor interface {
 	// Visit a parse tree produced by PlSqlParser#list_partition_value.
 	VisitList_partition_value(ctx *List_partition_valueContext) interface{}
 
-	// Visit a parse tree produced by PlSqlParser#list_partition_value_item.
-	VisitList_partition_value_item(ctx *List_partition_value_itemContext) interface{}
-
 	// Visit a parse tree produced by PlSqlParser#table_partition_description.
 	VisitTable_partition_description(ctx *Table_partition_descriptionContext) interface{}
 

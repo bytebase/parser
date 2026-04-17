@@ -3716,14 +3716,6 @@ func (s *BasePlSqlParserListener) EnterList_partition_value(ctx *List_partition_
 // ExitList_partition_value is called when production list_partition_value is exited.
 func (s *BasePlSqlParserListener) ExitList_partition_value(ctx *List_partition_valueContext) {}
 
-// EnterList_partition_value_item is called when production list_partition_value_item is entered.
-func (s *BasePlSqlParserListener) EnterList_partition_value_item(ctx *List_partition_value_itemContext) {
-}
-
-// ExitList_partition_value_item is called when production list_partition_value_item is exited.
-func (s *BasePlSqlParserListener) ExitList_partition_value_item(ctx *List_partition_value_itemContext) {
-}
-
 // EnterTable_partition_description is called when production table_partition_description is entered.
 func (s *BasePlSqlParserListener) EnterTable_partition_description(ctx *Table_partition_descriptionContext) {
 }

@@ -2331,10 +2331,6 @@ func (v *BasePlSqlParserVisitor) VisitList_partition_value(ctx *List_partition_v
 	return v.VisitChildren(ctx)
 }
 
-func (v *BasePlSqlParserVisitor) VisitList_partition_value_item(ctx *List_partition_value_itemContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BasePlSqlParserVisitor) VisitTable_partition_description(ctx *Table_partition_descriptionContext) interface{} {
 	return v.VisitChildren(ctx)
 }

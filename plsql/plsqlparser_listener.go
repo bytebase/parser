@@ -1750,9 +1750,6 @@ type PlSqlParserListener interface {
 	// EnterList_partition_value is called when entering the list_partition_value production.
 	EnterList_partition_value(c *List_partition_valueContext)
 
-	// EnterList_partition_value_item is called when entering the list_partition_value_item production.
-	EnterList_partition_value_item(c *List_partition_value_itemContext)
-
 	// EnterTable_partition_description is called when entering the table_partition_description production.
 	EnterTable_partition_description(c *Table_partition_descriptionContext)
 
@@ -5448,9 +5445,6 @@ type PlSqlParserListener interface {
 
 	// ExitList_partition_value is called when exiting the list_partition_value production.
 	ExitList_partition_value(c *List_partition_valueContext)
-
-	// ExitList_partition_value_item is called when exiting the list_partition_value_item production.
-	ExitList_partition_value_item(c *List_partition_value_itemContext)
 
 	// ExitTable_partition_description is called when exiting the table_partition_description production.
 	ExitTable_partition_description(c *Table_partition_descriptionContext)
